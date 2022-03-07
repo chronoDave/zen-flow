@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["esnext"],
+    
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "declaration": true,
+    "outDir": "./test/build"
+  },
+  "include": [
+    "src",
+    "test",
+    ".eslintrc.js",
+    "rollup.config.js"
+  ]
+}
