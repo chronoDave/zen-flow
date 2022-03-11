@@ -1,4 +1,8 @@
-export type Item = [ingredient: string, n: number];
+import { ENCHANTMENTS, COLOURS, FORMATS } from './const';
+
+export type Ingredients = [ingredient: string, n: number];
+
+export type Item = string | Ingredients;
 
 export type RecipeShaped = Partial<{
   1: string
@@ -15,3 +19,14 @@ export type RecipeShaped = Partial<{
 export type RecipeShapeless = string[];
 
 export type Recipe = RecipeShaped | RecipeShapeless;
+
+export type Enchantment = [keyof typeof ENCHANTMENTS, number];
+
+export type TextFormatOptions = {
+  colour: typeof COLOURS[number],
+  format: typeof FORMATS[number]
+};
+
+export type TextFormat = [text: string, options: Partial<TextFormatOptions>];
+
+export type Text = string | TextFormat;

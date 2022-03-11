@@ -1,5 +1,5 @@
 import { Item } from '../types';
-import { format } from '../format';
+import { formatArgs } from '../format';
 import { clamp, fill } from '../utils';
 
 export type RecipeComposter = [
@@ -26,7 +26,7 @@ export type RecipeSieve = Record<string, number>;
  *  - Fill must be between `0` and `1`
  */
 export const addComposter = (recipe: RecipeComposter) => {
-  const out = format(
+  const out = formatArgs(
     recipe[0],
     clamp(0, 1, recipe[1]),
     recipe[2] && `"${recipe[2]}"`
@@ -39,7 +39,7 @@ export const removeComposter = (ingredient: string) =>
   `mods.exnihilo.Composting.removeRecipe(${ingredient});`;
 
 export const addCrucible = (recipe: RecipeCrucible) =>
-  `mods.exnihilo.Crucible.addRecipe(${format(...recipe)});`;
+  `mods.exnihilo.Crucible.addRecipe(${formatArgs(...recipe)});`;
 
 export const removeCrucible = (liquid: string) =>
   `mods.exnihilo.Crucible.removeRecipe(${liquid});`;
@@ -48,12 +48,12 @@ export const removeCrucible = (liquid: string) =>
  * - Heat must be between `0` and `1`
  */
 export const addCrucibleHeat = (recipe: RecipeCrucibleHeat) => {
-  const out = format(
+  const out = formatArgs(
     recipe[0],
     clamp(0, 1, recipe[1])
   );
 
-  return `mods.exnihilo.Crucible.addHeatSource(${format(out)})`;
+  return `mods.exnihilo.Crucible.addHeatSource(${formatArgs(out)});`;
 };
 
 export const removeCrucibleHeat = (ingredient: string) =>
@@ -71,7 +71,7 @@ export const addHammer = (ingredient: string, recipe: RecipeHammer) => {
     })))
     .flat();
 
-  const out = format(
+  const out = formatArgs(
     ingredient,
     items.map(item => item.ingredient),
     items.map(item => item.chance),
@@ -96,7 +96,7 @@ export const addSieve = (ingredient: string, recipe: RecipeSieve) => {
     })))
     .flat();
 
-  const out = format(
+  const out = formatArgs(
     ingredient,
     items.map(item => item.ingredient),
     items.map(item => item.chance)

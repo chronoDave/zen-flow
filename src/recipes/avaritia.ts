@@ -1,5 +1,5 @@
 import { Item } from '../types';
-import { format, formatIngredient } from '../format';
+import { formatArgs, formatIngredient } from '../format';
 
 export type RecipeCompressor = {
   in: Item
@@ -19,18 +19,18 @@ export type RecipeExtreme = [
 ];
 
 export const addCompressor = (recipe: RecipeCompressor) =>
-  `mods.avaritia.Compressor.add(${format(recipe.out, recipe.in[0], recipe.in[1])});`;
+  `mods.avaritia.Compressor.add(${formatArgs(recipe.out, recipe.in[0], recipe.in[1])});`;
 
 export const removeCompressor = (ingredient: string) =>
   `mods.avaritia.Compressor.remove(${ingredient});`;
 
-export const addExtreme = (ingredient: string, recipe: RecipeExtreme) => {
-  const out = format(
-    ingredient,
-    recipe.map(row => format(row.map(formatIngredient)))
+export const addExtreme = (item: Item, recipe: RecipeExtreme) => {
+  const out = formatArgs(
+    item,
+    recipe.map(row => formatArgs(row.map(formatIngredient)))
   );
 
-  return `mods.avaritia.ExtremeCrafting.addShaped(${out})`;
+  return `mods.avaritia.ExtremeCrafting.addShaped(${out});`;
 };
 
 export const removeExtreme = (ingredient: string) =>
