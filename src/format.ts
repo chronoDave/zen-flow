@@ -53,9 +53,9 @@ export const formatTooltip = (texts: Text | Text[]): string => {
 
 export const formatRecipeShaped = (recipe: RecipeShaped) => {
   const matrix = [
-    [recipe[1], recipe[2], recipe[3]],
-    [recipe[4], recipe[5], recipe[6]],
-    [recipe[7], recipe[8], recipe[9]]
+    [recipe.corner || recipe[1], recipe.edge || recipe[2], recipe.corner || recipe[3]],
+    [recipe.edge || recipe[4], recipe.center || recipe[5], recipe.edge || recipe[6]],
+    [recipe.corner || recipe[7], recipe.edge || recipe[8], recipe.corner || recipe[9]]
   ].map(row => formatList(row.map(formatIngredient)));
 
   return `[\n\t${matrix.join(',\n\t')}\n]`;

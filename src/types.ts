@@ -14,6 +14,9 @@ export type RecipeShaped = Partial<{
   7: string
   8: string
   9: string
+  corner: string
+  edge: string
+  center: string
 }>;
 
 export type RecipeShapeless = string[];

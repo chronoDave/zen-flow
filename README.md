@@ -45,7 +45,17 @@ vanilla.add('<minecraft:saddle>', {
  * 	[<ore:ingotIron>, <minecraft:string>, <ore:ingotIron>],
  * 	[null, null, null]
  * ]);
- * /
+ **/
+
+vanilla.add('<minecraft:saddle>', { edge: '<minecraft:leather>' });
+
+/**
+ * recipes.addShaped(<minecraft:saddle>, [
+ * 	[null, <minecraft:leather>, null],
+ * 	[<minecraft:leather>, null, <minecraft:leather>],
+ * 	[null, <minecraft:leather>, null]
+ * ]);
+ **/
 ```
 
 <b>Extra Utilities generators</b>
