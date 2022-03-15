@@ -1,6 +1,6 @@
 {
   "name": "zen-flow",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "MineTweaker ZenScript made easy.",
   "main": "dist/zenflow.cjs",
   "module": "dist/zenflow.mjs",
