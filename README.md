@@ -97,6 +97,9 @@ Array.from({ length: 11 })
  - `remove` - Removes both shaped and shapeless recipes
  - `removeShaped` - Removes only shaped recipes
  - `removeShapeless` - Removes only shaped recipes
+ - `replace` - Replaced crafting recipe
+    - Shaped recipe: `object`
+    - Shapeless recipe: `Array`
  - `addFurnace` - Adds furnace recipe
  - `removeFurnace` - Removes furnace recipe
 

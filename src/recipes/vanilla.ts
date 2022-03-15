@@ -26,3 +26,12 @@ export const addFurnace = (recipe: RecipeFurnace) =>
 
 export const removeFurnace = (ingredient: string) =>
   `furnace.remove(${ingredient});`;
+
+export const replace = (item: Item, recipe: Recipe) => {
+  const ingredient = Array.isArray(item) ? item[0] : item;
+
+  return [
+    Array.isArray(recipe) ? removeShapeless(ingredient) : removeShaped(ingredient),
+    add(item, recipe)
+  ].join('\n');
+};
