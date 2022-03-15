@@ -47,16 +47,16 @@ export const removeCrucible = (liquid: string) =>
 /**
  * - Heat must be between `0` and `1`
  */
-export const addCrucibleHeat = (recipe: RecipeCrucibleHeat) => {
+export const addCrucibleSource = (recipe: RecipeCrucibleHeat) => {
   const out = formatArgs(
     recipe[0],
     clamp(0, 1, recipe[1])
   );
 
-  return `mods.exnihilo.Crucible.addHeatSource(${formatArgs(out)});`;
+  return `mods.exnihilo.Crucible.addHeatSource(${out});`;
 };
 
-export const removeCrucibleHeat = (ingredient: string) =>
+export const removeCrucibleSource = (ingredient: string) =>
   `mods.exnihilo.Crucible.removeHeatSource(${ingredient});`;
 
 /**
@@ -85,14 +85,15 @@ export const removeHammer = (ingredient: string) =>
   `mods.exnihilo.Hammer.removeRecipe(${ingredient});`;
 
 /**
- * - Chance in `%`
- * - Chance must be bigger than `1`
+ * - Chance must be bigger than `0`
  */
 export const addSieve = (ingredient: string, recipe: RecipeSieve) => {
   const items = Object.entries(recipe)
-    .map(entry => fill(Math.ceil(Math.max(1, entry[1]) / 100)).map(i => ({
+    .map(entry => fill(Math.ceil(entry[1])).map(i => ({
       ingredient: entry[0],
-      chance: Math.floor(100 / clamp(1, 100, entry[1] - (i * 100)))
+      chance: entry[1] - i < 1 ?
+        Math.round(1 / (entry[1] - i)) :
+        1
     })))
     .flat();
 

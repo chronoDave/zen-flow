@@ -9,10 +9,10 @@ import { Enchantment, Text } from '../types';
 export const withName = (ingredient: string, name: Text | Text[]) =>
   `${ingredient}.displayName = ${formatName(name)};`;
 
-export const withTooltip = (ingredient: string, tooltip: Text) =>
+export const withTooltip = (ingredient: string, tooltip: Text | Text[]) =>
   `${ingredient}.addTooltip(${formatTooltip(tooltip)});`;
 
-export const withTooltipShift = (ingredient: string, tooltip: Text) =>
+export const withTooltipShift = (ingredient: string, tooltip: Text | Text[]) =>
   `${ingredient}.addShiftTooltip(${formatTooltip(tooltip)});`;
 
 export const withTag = (tag: string) => (ingredient: string) =>
