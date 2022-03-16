@@ -163,7 +163,9 @@ Shaped crafting recipes support the following shorthand patterns, in order:
  
  - `withName` - Change item name
  - `withTooltip` - Add item tooltip*
+    - [Colours / formats](https://minecraft.fandom.com/wiki/Formatting_codes)
  - `withTooltipShift` - Add shift item tooltip*
+    - [Colours / formats](https://minecraft.fandom.com/wiki/Formatting_codes)
  - `withTag` - Add item NBT tag data
    - [Display properties](https://minecraft.fandom.com/wiki/Player.dat_format#Display_Properties)
  - `withEnchantment` - Add item enchantment
