@@ -89,6 +89,7 @@ Array.from({ length: 11 })
 
  - MineCraft
    - [Vanilla](#vanilla)
+      - [Crafting patterns](#craftingpatterns)
    - [Items](#items)
       - [Formatting](#formatting)
  - Mods
@@ -112,6 +113,50 @@ Array.from({ length: 11 })
     - Shapeless recipe: `Array`
  - `addFurnace` - Adds furnace recipe
  - `removeFurnace` - Removes furnace recipe
+
+### Crafting patterns
+
+Shaped crafting recipes support the following shorthand patterns:
+
+<b>Default</b>
+
+```TypeScript
+[
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+]
+```
+
+<b>Square</b>
+
+```TypeScript
+[
+  [square, square, null],
+  [square, square, null],
+  [null, null, null]
+]
+```
+
+<b>Ring</b>
+
+```TypeScript
+[
+  [ring, ring, ring],
+  [ring, center, ring],
+  [ring, ring, ring]
+]
+```
+
+<b>Edge / Corner</b>
+
+```TypeScript
+[
+  [corner, edge, corner],
+  [edge, center, edge],
+  [corner, edge, corner]
+]
+```
 
 ## Items
  

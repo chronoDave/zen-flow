@@ -4,6 +4,21 @@ export type Ingredients = [ingredient: string, n: number];
 
 export type Item = string | Ingredients;
 
+export type RecipePatternEdge = {
+  corner: string
+  edge: string
+  center: string
+};
+
+export type RecipePatternRing = {
+  ring: string
+  center: string
+};
+
+export type RecipePatternSquare = {
+  square: string
+};
+
 export type RecipeShaped = Partial<{
   1: string
   2: string
@@ -14,10 +29,7 @@ export type RecipeShaped = Partial<{
   7: string
   8: string
   9: string
-  corner: string
-  edge: string
-  center: string
-}>;
+} | RecipePatternEdge | RecipePatternRing | RecipePatternSquare>;
 
 export type RecipeShapeless = string[];
 

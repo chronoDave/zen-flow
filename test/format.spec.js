@@ -55,6 +55,21 @@ test('[format.formatRecipeShaped] return formatted string', t => {
     '[\n\t[<minecraft:stick>, null, null],\n\t[null, <minecraft:stick>, null],\n\t[null, null, <minecraft:stick>]\n]'
   );
 
+  t.equal(
+    formatRecipeShaped({ corner: stick, center: stick }),
+    '[\n\t[<minecraft:stick>, null, <minecraft:stick>],\n\t[null, <minecraft:stick>, null],\n\t[<minecraft:stick>, null, <minecraft:stick>]\n]'
+  );
+
+  t.equal(
+    formatRecipeShaped({ ring: stick }),
+    '[\n\t[<minecraft:stick>, <minecraft:stick>, <minecraft:stick>],\n\t[<minecraft:stick>, null, <minecraft:stick>],\n\t[<minecraft:stick>, <minecraft:stick>, <minecraft:stick>]\n]'
+  );
+
+  t.equal(
+    formatRecipeShaped({ square: stick }),
+    '[\n\t[<minecraft:stick>, <minecraft:stick>, null],\n\t[<minecraft:stick>, <minecraft:stick>, null],\n\t[null, null, null]\n]'
+  );
+
   t.end();
 });
 

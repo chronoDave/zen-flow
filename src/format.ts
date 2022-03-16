@@ -52,11 +52,31 @@ export const formatTooltip = (texts: Text | Text[]): string => {
 };
 
 export const formatRecipeShaped = (recipe: RecipeShaped) => {
-  const matrix = [
-    [recipe.corner || recipe[1], recipe.edge || recipe[2], recipe.corner || recipe[3]],
-    [recipe.edge || recipe[4], recipe.center || recipe[5], recipe.edge || recipe[6]],
-    [recipe.corner || recipe[7], recipe.edge || recipe[8], recipe.corner || recipe[9]]
-  ].map(row => formatList(row.map(formatIngredient)));
+  const getSlot = (slot: number, patterns: string[]): string | undefined => {
+    for (let i = 0; i < patterns.length; i += 1) {
+      if (patterns[i] in recipe) return recipe[patterns[i] as keyof RecipeShaped];
+    }
+    return recipe[slot as keyof RecipeShaped];
+  };
+
+  /**
+   * [corner, ring, square] [edge, ring, square] [corner, ring]
+   * [edge,   ring, square] [center, square    ] [edge,   ring]
+   * [corner, ring        ] [edge, ring        ] [corner, ring]
+   */
+  const matrix = [[
+    getSlot(1, ['corner', 'ring', 'square']),
+    getSlot(2, ['edge', 'ring', 'square']),
+    getSlot(3, ['corner', 'ring'])
+  ], [
+    getSlot(4, ['edge', 'ring', 'square']),
+    getSlot(5, ['center', 'square']),
+    getSlot(6, ['edge', 'ring'])
+  ], [
+    getSlot(7, ['corner', 'ring']),
+    getSlot(8, ['edge', 'ring']),
+    getSlot(9, ['corner', 'ring'])
+  ]].map(row => formatList(row.map(formatIngredient)));
 
   return `[\n\t${matrix.join(',\n\t')}\n]`;
 };
