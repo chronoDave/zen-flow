@@ -46,7 +46,7 @@ export type RecipeSmelter = {
 export type RecipeTransposerFill = {
   rf: number
   in: string,
-  out: Ingredients
+  out: string
   liquid: Ingredients
 };
 
