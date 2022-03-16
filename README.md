@@ -111,7 +111,7 @@ Array.from({ length: 11 })
  - `replace` - Replaced crafting recipe
     - Shaped recipe: `object`
     - Shapeless recipe: `Array`
- - `replaceAll` - Remove all recipes and all multiple recipes
+ - `replaceMany` - Remove all recipes and add multiple recipes
  - `addFurnace` - Adds furnace recipe
  - `removeFurnace` - Removes furnace recipe
 
