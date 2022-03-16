@@ -1,5 +1,10 @@
 import { formatArgs } from '../format';
-import { Item, Recipe } from '../types';
+import {
+  Item,
+  Recipe,
+  RecipeShaped,
+  RecipeShapeless
+} from '../types';
 
 type RecipeFurnace = {
   in: string,
@@ -15,11 +20,11 @@ export const add = (item: Item, recipe: Recipe) => {
 export const remove = (ingredient: string) =>
   `recipes.remove(${ingredient});`;
 
-export const removeShaped = (ingredient: string) =>
-  `recipes.removeShaped(${ingredient});`;
+export const removeShaped = (ingredient: string, recipe?: RecipeShaped) =>
+  `recipes.removeShaped(${formatArgs(ingredient, recipe)});`;
 
-export const removeShapeless = (ingredient: string) =>
-  `recipes.removeShapeless(${ingredient});`;
+export const removeShapeless = (ingredient: string, recipe?: RecipeShapeless) =>
+  `recipes.removeShapeless(${formatArgs(ingredient, recipe)});`;
 
 export const addFurnace = (recipe: RecipeFurnace) =>
   `furnace.addRecipe(${formatArgs(recipe.out, recipe.in)});`;
