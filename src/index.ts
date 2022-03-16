@@ -71,5 +71,5 @@ export {
   addFurnace,
   removeFurnace,
   replace,
-  replaceAll
+  replaceMany
 } from './recipes/vanilla';
