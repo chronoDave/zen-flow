@@ -157,8 +157,8 @@ withName('<minecraft:bread>', [
  - `addComposter` - Add item that can be composted to dirt
     - `fill` must be a value between `0` and `1`
  - `removeComposter` - Remove item that can be composted to dirt
- - `addCrucible` - Add crucible recipe
- - `removeCrucible` - Remove crucible recipe
+ - `addCrucibleNihilo` - Add crucible recipe
+ - `removeCrucibleNihilo` - Remove crucible recipe
  - `addCrucibleSource` - Add crucible heat source
      - `heat` must be a value between `0` and `1`
  - `removeCrucibleSource` - Remove crucible heat source
@@ -204,14 +204,14 @@ exnihilo.addSieve('<minecraft:cobblestone>', {
 ## NEI
 
  - `hide` - Hide item from NEI
- - `add` - Add item to NEI
+ - `addNEI` - Add item to NEI
 
 ## ThermalExpansion
 
- - `addCrucible` - Add Magma Crucible recipe
- - `removeCrucible` - Remove Magma Crucible recipe
- - `addFurnace` - Add Redstone Furnace recipe
- - `removeFurnace` - Remove Redstone Furnace recipe
+ - `addCrucibleThermal` - Add Magma Crucible recipe
+ - `removeCrucibleThermal` - Remove Magma Crucible recipe
+ - `addFurnaceThermal` - Add Redstone Furnace recipe
+ - `removeFurnaceThermal` - Remove Redstone Furnace recipe
  - `addInsolator` - Add Phytogenic Insolator recipe
  - `removeInsolator` - Remove Phytogenic Insolator recipe
  - `addPulverizer` - Add Pulverizer recipe

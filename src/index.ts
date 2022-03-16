@@ -8,8 +8,8 @@ export {
 export {
   addComposter,
   removeComposter,
-  addCrucible as addCrucibleExNihilo,
-  removeCrucible as removeCrucibleExNihilo,
+  addCrucible as addCrucibleNihilo,
+  removeCrucible as removeCrucibleNihilo,
   addCrucibleSource,
   removeCrucibleSource,
   addHammer,
