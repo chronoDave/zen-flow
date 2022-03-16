@@ -1,5 +1,5 @@
 import { formatArgs } from '../format';
-import { Ingredients } from '../types';
+import { Bonus, Ingredients, Item } from '../types';
 
 export type RecipeCrucible = {
   rf: number
@@ -10,37 +10,37 @@ export type RecipeCrucible = {
 export type RecipeFurnace = {
   rf: number
   in: string
-  out: Ingredients
+  out: Item
 };
 
 export type RecipeInsolator = {
   rf: number
-  left: Ingredients
-  right: Ingredients
-  out: Ingredients
-  bonus?: Ingredients
+  left: Item
+  right: Item
+  out: Item
+  bonus?: Bonus
 };
 
 export type RecipePulverizer = {
   rf: number
   in: string
-  out: Ingredients
-  bonus?: Ingredients
+  out: Item
+  bonus?: Bonus
 };
 
 export type RecipeSawmill = {
   rf: number
   in: string
-  out: Ingredients
-  bonus?: Ingredients
+  out: Item
+  bonus?: Bonus
 };
 
 export type RecipeSmelter = {
   rf: number
-  left: Ingredients
-  right: Ingredients
-  out: Ingredients
-  bonus?: Ingredients
+  left: Item
+  right: Item
+  out: Item
+  bonus?: Bonus
 };
 
 export type RecipeTransposerFill = {
@@ -54,7 +54,7 @@ export type RecipeTransposerExtract = {
   rf: number
   in: string,
   liquid: Ingredients
-  bonus?: Ingredients
+  bonus?: Bonus
 };
 
 /**
@@ -106,7 +106,8 @@ export const addInsolator = (recipe: RecipeInsolator) => {
     recipe.left,
     recipe.right,
     recipe.out,
-    recipe.bonus
+    recipe.bonus && recipe.bonus[0],
+    recipe.bonus && recipe.bonus[1]
   );
 
   return `mods.thermalexpansion.Insolator.addRecipe(${out});`;
@@ -128,7 +129,8 @@ export const addPulverizer = (recipe: RecipePulverizer) => {
     recipe.rf,
     recipe.in,
     recipe.out,
-    recipe.bonus
+    recipe.bonus && recipe.bonus[0],
+    recipe.bonus && recipe.bonus[1]
   );
 
   return `mods.thermalexpansion.Pulverizer.addRecipe(${out});`;
@@ -142,7 +144,8 @@ export const addSawmill = (recipe: RecipeSawmill) => {
     recipe.rf,
     recipe.in,
     recipe.out,
-    recipe.bonus
+    recipe.bonus && recipe.bonus[0],
+    recipe.bonus && recipe.bonus[1]
   );
 
   return `mods.thermalexpansion.Sawmill.addRecipe(${out});`;
@@ -165,7 +168,8 @@ export const addSmelter = (recipe: RecipeSmelter) => {
     recipe.right,
     recipe.left,
     recipe.out,
-    recipe.bonus
+    recipe.bonus && recipe.bonus[0],
+    recipe.bonus && recipe.bonus[1]
   );
 
   return `mods.thermalexpansion.Smelter.addRecipe(${out});`;
@@ -207,7 +211,8 @@ export const addTransposerExtract = (recipe: RecipeTransposerExtract) => {
     recipe.rf,
     recipe.in,
     recipe.liquid,
-    recipe.bonus
+    recipe.bonus && recipe.bonus[0],
+    recipe.bonus && recipe.bonus[1]
   );
 
   return `mods.thermalexpansion.Transposer.addExtractRecipe(${out});`;

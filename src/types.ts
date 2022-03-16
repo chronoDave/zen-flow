@@ -4,6 +4,8 @@ export type Ingredients = [ingredient: string, n: number];
 
 export type Item = string | Ingredients;
 
+export type Bonus = [item: Item, chance: number];
+
 export type RecipeShaped = Partial<{
   1: string
   2: string
