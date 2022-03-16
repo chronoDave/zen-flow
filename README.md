@@ -166,6 +166,7 @@ Shaped crafting recipes support the following shorthand patterns, in order:
  - `withTooltipShift` - Add shift item tooltip*
  - `withTag` - Add item NBT tag data
    - [Display properties](https://minecraft.fandom.com/wiki/Player.dat_format#Display_Properties)
+ - `withEnchantment` - Add item enchantment
  - `withEnchantments` - Add item enchantments
 
 <i>* It is currently not possible to remove item tooltips.</i>
