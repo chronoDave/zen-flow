@@ -12,5 +12,5 @@ export const addLaserPreferred = (lens: keyof typeof MFR_LASER_LENSES, ingredien
   .map(ingredient => `MiningLaser.addPreferredOre(${formatArgs(MFR_LASER_LENSES[lens], ingredient)});`)
   .join('\n');
 
-export const removedLaserPreferred = (lens: keyof typeof MFR_LASER_LENSES, ingredient: string) =>
+export const removeLaserPreferred = (lens: keyof typeof MFR_LASER_LENSES, ingredient: string) =>
   `MiningLaser.removePreferredOre(${formatArgs(MFR_LASER_LENSES[lens], ingredient)});`;

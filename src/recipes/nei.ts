@@ -1,5 +1,5 @@
 export const hide = (ingredient: string) =>
   `NEI.hide(${ingredient});`;
 
-export const add = (ingredient: string) =>
+export const addNEI = (ingredient: string) =>
   `NEI.addEntry(${ingredient});`;
