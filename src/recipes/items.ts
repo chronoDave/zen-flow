@@ -16,7 +16,7 @@ export const withTooltipShift = (ingredient: string, tooltip: Text | Text[]) =>
   `${ingredient}.addShiftTooltip(${formatTooltip(tooltip)});`;
 
 export const withTag = (tag: string) => (ingredient: string) =>
-  `${ingredient}.withTag(${tag});`;
+  `${ingredient}.withTag(${tag})`;
 
 export const withEnchantment = (enchantment: Enchantment) =>
   withTag(`{ ench: ${formatList([formatEnchantment(enchantment)])} }`);
