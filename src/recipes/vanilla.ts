@@ -35,3 +35,8 @@ export const replace = (item: Item, recipe: Recipe) => {
     add(item, recipe)
   ].join('\n');
 };
+
+export const replaceAll = (item: Item, recipes: Recipe[]) => [
+  remove(Array.isArray(item) ? item[0] : item),
+  recipes.map(recipe => add(item, recipe))
+].join('\n');
