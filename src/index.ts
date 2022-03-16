@@ -69,5 +69,6 @@ export {
   removeShapeless,
   addFurnace,
   removeFurnace,
-  replace
+  replace,
+  replaceAll
 } from './recipes/vanilla';
