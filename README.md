@@ -116,17 +116,7 @@ Array.from({ length: 11 })
 
 ### Crafting patterns
 
-Shaped crafting recipes support the following shorthand patterns:
-
-<b>Default</b>
-
-```TypeScript
-[
-  [1, 2, 3],
-  [4, 5, 6],
-  [7, 8, 9]
-]
-```
+Shaped crafting recipes support the following shorthand patterns, in order:
 
 <b>Square</b>
 
@@ -155,6 +145,16 @@ Shaped crafting recipes support the following shorthand patterns:
   [corner, edge, corner],
   [edge, center, edge],
   [corner, edge, corner]
+]
+```
+
+<b>Default</b>
+
+```TypeScript
+[
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
 ]
 ```
 
