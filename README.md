@@ -242,6 +242,7 @@ exnihilo.addSieve('<minecraft:cobblestone>', {
  - `addQED` - Add QED recipe
     - QED only accepts <b>shaped</b> recipes
  - `removeQED` - Remove QED recipe
+ - `replaceQED` - Replace QED recipe
 
 ## MineFactoryReloaded
 

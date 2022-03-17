@@ -20,7 +20,8 @@ export {
 
 export {
   addQED,
-  removeQED
+  removeQED,
+  replaceQED
 } from './recipes/extraUtilities';
 
 export {
