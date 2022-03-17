@@ -28,7 +28,6 @@ export {
   withTooltip,
   withTooltipShift,
   withTag,
-  withEnchantment,
   withEnchantments
 } from './recipes/items';
 

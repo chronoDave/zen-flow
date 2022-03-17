@@ -27,7 +27,11 @@ export type RecipeShapeless = string[];
 
 export type Recipe = RecipeShaped | RecipeShapeless;
 
-export type Enchantment = [keyof typeof ENCHANTMENTS, number];
+export type Enchantment = {
+  type: keyof typeof ENCHANTMENTS
+  level?: number
+  short?: boolean
+};
 
 export type TextFormatOptions = {
   colour: typeof COLOURS[number],

@@ -19,7 +19,12 @@ import { isItem, isRecipeShaped, isTextFormat } from './validation';
 export const formatItem = (item: Item) => `${item[0]} * ${item[1]}`;
 export const formatList = (list: string[] | number[]) => `[${list.join(', ')}]`;
 export const formatIngredient = (ingredient?: string) => ingredient ?? 'null';
-export const formatEnchantment = (enchantment: Enchantment) => `{ id: ${ENCHANTMENTS[enchantment[0]]}, lvl: ${enchantment[1]} }`;
+export const formatEnchantment = (enchantment: Enchantment) => {
+  const id = `${ENCHANTMENTS[enchantment.type]}${enchantment.short ? ' as short' : ''}`;
+  const lvl = `${enchantment.level ?? 1}${enchantment.level ? ' as short' : ''}`;
+
+  return `{ id: ${id}, lvl: ${lvl} }`;
+};
 
 export const formatName = (texts: Text | Text[]) => {
   const format = (text: TextFormat) => [
