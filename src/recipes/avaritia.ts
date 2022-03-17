@@ -19,7 +19,7 @@ export type RecipeExtreme = [
 ];
 
 export const addCompressor = (recipe: RecipeCompressor) =>
-  `mods.avaritia.Compressor.add(${formatArgs(recipe.out, recipe.in[0], recipe.in[1])});`;
+  `mods.avaritia.Compressor.add(${formatArgs(recipe.out, recipe.in[1], recipe.in[0])});`;
 
 export const removeCompressor = (ingredient: string) =>
   `mods.avaritia.Compressor.remove(${ingredient});`;
