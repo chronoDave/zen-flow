@@ -45,7 +45,7 @@ export const formatTooltip = (texts: Text | Text[]): string => {
   const format = (text: string, options?: Partial<TextFormatOptions>) =>
     TOOLTIP_COLOUR[options?.colour ?? 'gray'](options?.format ? TOOLTIP_FORMAT[options.format](`"${text}"`) : `"${text}"`);
 
-  if (!Array.isArray(texts)) return `"${texts}"`;
+  if (!Array.isArray(texts)) return format(texts);
   if (isTextFormat(texts)) return format(...texts);
 
   return texts.map(formatTooltip).join(' + ');
