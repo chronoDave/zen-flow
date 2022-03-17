@@ -113,7 +113,7 @@ export const addInsolator = (recipe: RecipeInsolator) => {
   return `mods.thermalexpansion.Insolator.addRecipe(${out});`;
 };
 
-export const removeInsolator = (left: string, right: string) =>
+export const removeInsolator = (left: Item, right: Item) =>
   `mods.thermalexpansion.Insolator.removeRecipe(${formatArgs(left, right)});`;
 
 /**
@@ -175,7 +175,7 @@ export const addSmelter = (recipe: RecipeSmelter) => {
   return `mods.thermalexpansion.Smelter.addRecipe(${out});`;
 };
 
-export const removeSmelter = (left: string, right: string) =>
+export const removeSmelter = (left: Item, right: Item) =>
   `mods.thermalexpansion.Smelter.removeRecipe(${formatArgs(left, right)});`;
 
 /**
