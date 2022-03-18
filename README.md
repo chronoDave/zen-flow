@@ -115,6 +115,7 @@ Array.from({ length: 11 })
  - `replaceMany` - Remove all recipes and add multiple recipes
  - `addFurnace` - Adds furnace recipe
  - `removeFurnace` - Removes furnace recipe
+ - `removeFurnaceAll` - Removes all furnace recipe
 
 ### Crafting patterns
 

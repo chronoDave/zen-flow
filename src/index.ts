@@ -70,6 +70,7 @@ export {
   removeShapeless,
   addFurnace,
   removeFurnace,
+  removeFurnaceAll,
   replace,
   replaceAll,
   replaceMany
