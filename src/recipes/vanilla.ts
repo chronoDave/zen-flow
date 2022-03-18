@@ -25,7 +25,7 @@ export const addFurnace = (recipe: RecipeFurnace) =>
   `furnace.addRecipe(${formatArgs(recipe.out, recipe.in)});`;
 
 export const removeFurnace = (ingredient: string) =>
-  `furnace.remove(${ingredient});`;
+  `furnace.remove(<*>, ${ingredient});`;
 
 export const replace = (item: Item, recipe: Recipe) => {
   const ingredient = Array.isArray(item) ? item[0] : item;
