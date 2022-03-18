@@ -156,10 +156,11 @@ export const removeSawmill = (ingredient: string) =>
 
 /**
 * Common values (RF):
-*  - Ores: `1600RF ~ 3200RF`
-*  - Tools: `5000RF ~ 7400RF`
 *  - Dust: `200RF ~ 1600RF`
+*  - Ores: `1600RF ~ 3200RF`
+*  - Alloys: `2400RF`
 *  - Infused Dust: `4000RF ~ 8000RF`
+*  - Tools: `5000RF ~ 7400RF`
 *  - Slag: `7200RF`
 */
 export const addSmelter = (recipe: RecipeSmelter) => {
