@@ -10,6 +10,10 @@ export const addDict = (dict: string, ingredients: string[]) => ingredients
   .map(ingredient => `${dict}.add(${ingredient});`)
   .join('\n');
 
+export const removeDict = (dict: string, ingredients: string[]) => ingredients
+  .map(ingredient => `${dict}.remove(${ingredient});`)
+  .join('\n');
+
 export const withName = (ingredient: string, name: Text | Text[]) =>
   `${ingredient}.displayName = ${formatName(name)};`;
 

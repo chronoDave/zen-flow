@@ -26,6 +26,7 @@ export {
 
 export {
   addDict,
+  removeDict,
   withName,
   withTooltip,
   withTooltipShift,
