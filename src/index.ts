@@ -25,6 +25,7 @@ export {
 } from './recipes/extraUtilities';
 
 export {
+  addDict,
   withName,
   withTooltip,
   withTooltipShift,

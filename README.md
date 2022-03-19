@@ -163,6 +163,7 @@ Shaped crafting recipes support the following shorthand patterns, in order:
 
 ## Items
  
+ - `addDict` - Add ingredients to ore dictionary
  - `withName` - Change item name
  - `withTooltip` - Add item tooltip*
     - [Colours / formats](https://minecraft.fandom.com/wiki/Formatting_codes)
