@@ -251,8 +251,8 @@ exnihilo.addSieve('<minecraft:cobblestone>', {
 
  - `addLaser` - Add ore to the Mining Laser ore table
  - `removeLaser` - Remove ore from the Mining Laser ore table
- - `addLaserPreferred` - Add ore to the Mining Laser lens
- - `removeLaserPreferred` - Remove ore from the Mining Laser lens
+ - `addLaserPreferred` - Add ores to the Mining Laser lens
+ - `removeLaserPreferred` - Remove ores from the Mining Laser lens
 
 ## NEI
 
