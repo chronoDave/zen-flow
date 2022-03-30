@@ -4,6 +4,9 @@ import { Item, RecipeShaped } from '../types';
 export const addQED = (item: Item, recipe: RecipeShaped) =>
   `mods.extraUtils.QED.addShapedRecipe(${formatArgs(item, recipe)});`;
 
+/**
+ * @param ingredient QED output
+ */
 export const removeQED = (ingredient: string) =>
   `mods.extraUtils.QED.removeRecipe(${ingredient});`;
 

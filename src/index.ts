@@ -77,3 +77,16 @@ export {
   replaceAll,
   replaceMany
 } from './recipes/vanilla';
+
+export type {
+  Ingredients,
+  Item,
+  Bonus,
+  RecipeShaped,
+  RecipeShapeless,
+  Recipe,
+  Enchantment,
+  TextFormatOptions,
+  TextFormat,
+  Text,
+} from './types';

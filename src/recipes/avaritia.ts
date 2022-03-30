@@ -21,6 +21,9 @@ export type RecipeExtreme = [
 export const addCompressor = (recipe: RecipeCompressor) =>
   `mods.avaritia.Compressor.add(${formatArgs(recipe.out, recipe.in[1], recipe.in[0])});`;
 
+/**
+ * @param ingredient Compressor output
+ */
 export const removeCompressor = (ingredient: string) =>
   `mods.avaritia.Compressor.remove(${ingredient});`;
 
@@ -33,5 +36,8 @@ export const addExtreme = (item: Item, recipe: RecipeExtreme) => {
   return `mods.avaritia.ExtremeCrafting.addShaped(${out});`;
 };
 
+/**
+ * @param ingredient Extreme Crafting output
+ */
 export const removeExtreme = (ingredient: string) =>
   `mods.avaritia.ExtremeCrafting.remove(${ingredient});`;

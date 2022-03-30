@@ -6,10 +6,16 @@ import {
 } from '../format';
 import { Enchantment, Text } from '../types';
 
+/**
+ * @param dict Valid ore dictionary value: http://minetweaker3.powerofbytes.com/wiki/Tutorial:Ore_Dictionary
+ */
 export const addDict = (dict: string, ingredients: string[]) => ingredients
   .map(ingredient => `${dict}.add(${ingredient});`)
   .join('\n');
 
+/**
+* @param dict Valid ore dictionary value: http://minetweaker3.powerofbytes.com/wiki/Tutorial:Ore_Dictionary
+*/
 export const removeDict = (dict: string, ingredients: string[]) => ingredients
   .map(ingredient => `${dict}.remove(${ingredient});`)
   .join('\n');
