@@ -1,5 +1,11 @@
-export const hide = (ingredient: string) =>
-  `NEI.hide(${ingredient});`;
+/**
+ * Requires: `import mods.nei.NEI;`
+ */
+export const hide = (id: string) =>
+  `NEI.hide(${id});`;
 
-export const addNEI = (ingredient: string) =>
-  `NEI.addEntry(${ingredient});`;
+/**
+ * Requires: `import mods.nei.NEI;`
+ */
+export const addNEI = (id: string) =>
+  `NEI.addEntry(${id});`;

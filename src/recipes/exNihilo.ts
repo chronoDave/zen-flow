@@ -1,24 +1,24 @@
-import { Item } from '../types';
-import { formatArgs } from '../format';
-import { clamp, fill } from '../utils';
+import { Stack } from '../types';
+import { formatArgs, formatStack } from '../format';
+import {
+  clamp,
+  fill,
+  isObject,
+  toArray
+} from '../utils';
 
-export type RecipeComposter = [
-  ingredient: string,
+export type RecipeComposter = {
+  id: string,
   fill: number,
   hex?: string
-];
+};
 
-export type RecipeCrucible = [
-  ingredient: string,
-  liquid: Item
-];
+export type RecipeCrucible = {
+  id: string,
+  liquid: Stack
+};
 
-export type RecipeCrucibleHeat = [
-  ingredient: string,
-  heat: number
-];
-
-export type RecipeHammer = Record<string, Array<number | [n: number, mod: number]>>;
+export type RecipeHammer = Record<string, Array<number | { chance: number, modifier: number }>>;
 
 export type RecipeSieve = Record<string, number>;
 
@@ -27,53 +27,66 @@ export type RecipeSieve = Record<string, number>;
  */
 export const addComposter = (recipe: RecipeComposter) => {
   const out = formatArgs(
-    recipe[0],
-    clamp(0, 1, recipe[1]),
-    recipe[2] && `"${recipe[2]}"`
+    recipe.id,
+    clamp(0, 1, recipe.fill),
+    recipe.hex && `"${recipe.hex}"`
   );
 
   return `mods.exnihilo.Composting.addRecipe(${out});`;
 };
 
-export const removeComposter = (ingredient: string) =>
-  `mods.exnihilo.Composting.removeRecipe(${ingredient});`;
+export const removeComposter = (id: string) =>
+  `mods.exnihilo.Composting.removeRecipe(${id});`;
 
-export const addCrucible = (recipe: RecipeCrucible) =>
-  `mods.exnihilo.Crucible.addRecipe(${formatArgs(...recipe)});`;
+export const addCrucible = (recipe: RecipeCrucible) => {
+  const out = formatArgs(
+    recipe.id,
+    formatStack(recipe.liquid)
+  );
 
-export const removeCrucible = (liquid: string) =>
-  `mods.exnihilo.Crucible.removeRecipe(${liquid});`;
+  return `mods.exnihilo.Crucible.addRecipe(${out});`;
+};
+
+export const removeCrucible = (id: string) =>
+  `mods.exnihilo.Crucible.removeRecipe(${id});`;
 
 /**
- * - Heat must be between `0` and `1`
+ * - `n` must be between `0` and `1`
  */
-export const addCrucibleSource = (recipe: RecipeCrucibleHeat) => {
+export const addCrucibleSource = (recipe: Stack) => {
   const out = formatArgs(
-    recipe[0],
-    clamp(0, 1, recipe[1])
+    recipe.id,
+    clamp(0, 1, recipe.n)
   );
 
   return `mods.exnihilo.Crucible.addHeatSource(${out});`;
 };
 
-export const removeCrucibleSource = (ingredient: string) =>
-  `mods.exnihilo.Crucible.removeHeatSource(${ingredient});`;
+export const removeCrucibleSource = (id: string) =>
+  `mods.exnihilo.Crucible.removeHeatSource(${id});`;
 
 /**
  * - Chance must be between `0` and `1`
  */
-export const addHammer = (ingredient: string, recipe: RecipeHammer) => {
+export const addHammer = (id: string, recipe: RecipeHammer) => {
   const items = Object.entries(recipe)
-    .map(entry => entry[1].map(chance => ({
-      ingredient: entry[0],
-      chance: clamp(0, 1, Array.isArray(chance) ? chance[0] : chance),
-      modifier: Array.isArray(chance) ? chance[1] : 1
+    .map(entry => toArray(entry[1]).map(chance => ({
+      id: entry[0],
+      chance: clamp(0, 1, isObject(chance) ? chance.chance : chance),
+      modifier: isObject(chance) ? chance.modifier : 1
     })))
     .flat();
+  // const items = Object.entries(recipe)
+  //   .map(entry => toArray(fill(entry[1].length, entry[1])).map(chance => ({
+  //     id: entry[0],
+  //     chance: clamp(0, 1, isObject(chance) ? chance.chance : chance),
+  //     modifier: isObject(chance) ? chance.modifier : 1
+  //   })))
+  //   .flat();
 
   const out = formatArgs(
-    ingredient,
-    items.map(item => item.ingredient),
+    id,
+    items.map(item => item.id),
     items.map(item => item.chance),
     items.map(item => item.modifier)
   );
@@ -81,16 +94,16 @@ export const addHammer = (ingredient: string, recipe: RecipeHammer) => {
   return `mods.exnihilo.Hammer.addRecipe(${out});`;
 };
 
-export const removeHammer = (ingredient: string) =>
-  `mods.exnihilo.Hammer.removeRecipe(${ingredient});`;
+export const removeHammer = (id: string) =>
+  `mods.exnihilo.Hammer.removeRecipe(${id});`;
 
 /**
  * - Chance must be bigger than `0`
  */
-export const addSieve = (ingredient: string, recipe: RecipeSieve) => {
+export const addSieve = (id: string, recipe: RecipeSieve) => {
   const items = Object.entries(recipe)
     .map(entry => fill(Math.ceil(entry[1])).map(i => ({
-      ingredient: entry[0],
+      id: entry[0],
       chance: entry[1] - i < 1 ?
         Math.round(1 / (entry[1] - i)) :
         1
@@ -98,13 +111,13 @@ export const addSieve = (ingredient: string, recipe: RecipeSieve) => {
     .flat();
 
   const out = formatArgs(
-    ingredient,
-    items.map(item => item.ingredient),
+    id,
+    items.map(item => item.id),
     items.map(item => item.chance)
   );
 
   return `mods.exnihilo.Sieve.addRecipe(${out});`;
 };
 
-export const removeSieve = (ingredient: string) =>
-  `mods.exnihilo.Sieve.removeRecipe(${ingredient});`;
+export const removeSieve = (id: string) =>
+  `mods.exnihilo.Sieve.removeRecipe(${id});`;

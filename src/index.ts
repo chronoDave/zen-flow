@@ -31,7 +31,7 @@ export {
   withTooltip,
   withTooltipShift,
   withTag,
-  withEnchantments
+  withEnchantment
 } from './recipes/items';
 
 export {
@@ -78,14 +78,12 @@ export {
 } from './recipes/vanilla';
 
 export type {
-  Ingredients,
-  Item,
-  Bonus,
+  Ingredient,
+  Stack,
   RecipeShaped,
   RecipeShapeless,
   Recipe,
   Enchantment,
-  TextFormatOptions,
-  TextFormat,
+  TextRich,
   Text,
 } from './types';

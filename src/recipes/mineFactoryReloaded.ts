@@ -1,23 +1,32 @@
 import { MFR_FOCI } from '../const';
-import { formatArgs } from '../format';
-import { Item } from '../types';
-
-export const addLaser = (item: Item) =>
-  `MiningLaser.addOre(${formatArgs(item)});`;
+import { formatArgs, formatIngredient } from '../format';
+import { Ingredient } from '../types';
 
 /**
- * @param ingredient - Laser output
+ * Requires: `import mods.mfr.MiningLaser;`
  */
-export const removeLaser = (ingredient: string) =>
-  `MiningLaser.removeOre(${ingredient});`;
+export const addLaser = (ingredient: Ingredient) =>
+  `MiningLaser.addOre(${formatArgs(formatIngredient(ingredient))});`;
 
-export const addFoci = (lens: keyof typeof MFR_FOCI, ingredients: string[]) => ingredients
-  .map(ingredient => `MiningLaser.addPreferredOre(${formatArgs(MFR_FOCI[lens], ingredient)});`)
+/**
+ *  - Requires: `import mods.mfr.MiningLaser;`
+ *  - Accepts ore dictionary
+ * @param id - Laser output
+ */
+export const removeLaser = (id: string) =>
+  `MiningLaser.removeOre(${id});`;
+
+/**
+ * Requires: `import mods.mfr.MiningLaser;`
+ */
+export const addFoci = (foci: keyof typeof MFR_FOCI, ids: string[]) => ids
+  .map(id => `MiningLaser.addPreferredOre(${formatArgs(MFR_FOCI[foci], id)});`)
   .join('\n');
 
 /**
-* @param ingredient - Laser output
-*/
-export const removeFoci = (lens: keyof typeof MFR_FOCI, ingredients: string[]) => ingredients
-  .map(ingredient => `MiningLaser.removePreferredOre(${formatArgs(MFR_FOCI[lens], ingredient)});`)
+ * Requires: `import mods.mfr.MiningLaser;`
+ * @param ids - Laser output
+ */
+export const removeFoci = (foci: keyof typeof MFR_FOCI, ids: string[]) => ids
+  .map(id => `MiningLaser.removePreferredOre(${formatArgs(MFR_FOCI[foci], id)});`)
   .join('\n');

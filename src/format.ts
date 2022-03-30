@@ -1,24 +1,35 @@
 import {
   ENCHANTMENTS,
-  NAME_COLOUR,
+  NAME_COLOR,
   NAME_FORMAT,
-  TOOLTIP_COLOUR,
+  TOOLTIP_COLOR,
   TOOLTIP_FORMAT
 } from './const';
 import {
   Enchantment,
-  Item,
-  Recipe,
+  Ingredient,
+  Stack,
   RecipeShaped,
-  Text,
-  TextFormat,
-  TextFormatOptions
+  Text
 } from './types';
-import { isItem, isRecipeShaped, isTextFormat } from './validation';
+import { isObject, toArray } from './utils';
 
-export const formatItem = (item: Item) => `${item[0]} * ${item[1]}`;
-export const formatList = (list: string[] | number[]) => `[${list.join(', ')}]`;
-export const formatIngredient = (ingredient?: string) => ingredient ?? 'null';
+export const formatFloat = (n: number) => n % 1 === 0 ?
+  `${n}.0` :
+  `${n}`;
+export const formatLiteral = (x: string) => `"${x}"`;
+
+export const formatId = (id?: string) =>
+  id ?? 'null';
+export const formatStack = (stack: Stack) =>
+  `${stack.id} * ${stack.n}`;
+export const formatIngredient = (ingredient: Ingredient) => isObject(ingredient) ?
+  formatStack(ingredient) :
+  ingredient;
+
+export const formatList = (list: Array<string | number>) =>
+  `[${list.join(', ')}]`;
+
 export const formatEnchantment = (enchantment: Enchantment) => {
   const id = `${ENCHANTMENTS[enchantment.type]}${enchantment.short ? ' as short' : ''}`;
   const lvl = `${enchantment.level ?? 1}${enchantment.level ? ' as short' : ''}`;
@@ -27,36 +38,36 @@ export const formatEnchantment = (enchantment: Enchantment) => {
 };
 
 export const formatName = (texts: Text | Text[]) => {
-  const format = (text: TextFormat) => [
-    text[1].colour && NAME_COLOUR[text[1].colour],
-    text[1].format && NAME_FORMAT[text[1].format],
-    text[0],
-    (text[1].colour || text[1].format) && NAME_FORMAT.reset
-  ]
-    .filter(x => x)
-    .join('');
-
-  if (typeof texts === 'string') return `"${texts}"`;
-  if (isTextFormat(texts)) return `"${format(texts)}"`;
-
-  const formatted = texts
-    .map(text => (typeof text === 'string' ? text : format(text)))
+  const formatted = toArray(texts)
+    .map(text => {
+      if (typeof text === 'string') return text;
+      return [
+        text.color && NAME_COLOR[text.color],
+        text.format && NAME_FORMAT[text.format],
+        text.text,
+        (text.color || text.format) && NAME_FORMAT.reset
+      ]
+        .filter(x => x)
+        .join('');
+    })
     .join('');
 
   return `"${formatted}"`;
 };
 
-export const formatTooltip = (texts: Text | Text[]): string => {
-  const format = (text: string, options?: Partial<TextFormatOptions>) =>
-    TOOLTIP_COLOUR[options?.colour ?? 'gray'](options?.format ? TOOLTIP_FORMAT[options.format](`"${text}"`) : `"${text}"`);
+export const formatTooltip = (texts: Text | Text[]) => toArray(texts)
+  .map(text => {
+    if (typeof text === 'string') return formatLiteral(text);
 
-  if (!Array.isArray(texts)) return format(texts);
-  if (isTextFormat(texts)) return format(...texts);
+    const format = text.format ?
+      TOOLTIP_FORMAT[text.format](formatLiteral(text.text)) :
+      formatLiteral(text.text);
 
-  return texts.map(formatTooltip).join(' + ');
-};
+    return TOOLTIP_COLOR[text.color ?? 'gray'](format);
+  })
+  .join(' + ');
 
-export const formatRecipeShaped = (recipe: RecipeShaped) => {
+export const formatRecipe = (recipe: RecipeShaped) => {
   /**
    * [corner, ring, square] [edge, ring, square] [corner, ring]
    * [edge,   ring, square] [center, square    ] [edge,   ring]
@@ -74,27 +85,15 @@ export const formatRecipeShaped = (recipe: RecipeShaped) => {
     recipe.ring || recipe.corner || recipe[7],
     recipe.ring || recipe.edge || recipe[8],
     recipe.ring || recipe.corner || recipe[9]
-  ]].map(row => formatList(row.map(formatIngredient)));
+  ]].map(row => formatList(row.map(formatId)));
 
   return `[\n\t${matrix.join(',\n\t')}\n]`;
 };
 
-export const formatFloat = (n: number) => (
-  n % 1 === 0 ?
-    `${n}.0` :
-    `${n}`
-);
-
-export const formatArgs = (...args: Partial<Array<string | null | number | Item | string[] | number[] | Recipe>>) => {
+export const formatArgs = <T extends Array<string | number | string[] | number[]>>(...args: Partial<T>) => {
   const list = args
-    .filter(arg => arg !== undefined)
-    .map(arg => {
-      if (typeof arg === 'number') return `${arg}`;
-      if (isRecipeShaped(arg)) return formatRecipeShaped(arg);
-      if (isItem(arg)) return formatItem(arg);
-      if (Array.isArray(arg)) return formatList(arg);
-      return arg;
-    });
+    .filter(x => x)
+    .map(x => Array.isArray(x) ? formatList(x) : x) as T;
 
   return list.length > 3 ?
     `\n\t${list.join(',\n\t')}\n` :

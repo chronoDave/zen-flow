@@ -1,8 +1,13 @@
-import { Item } from '../types';
-import { formatArgs, formatIngredient } from '../format';
+import { Ingredient, Stack } from '../types';
+import {
+  formatArgs,
+  formatId,
+  formatIngredient,
+  formatList
+} from '../format';
 
 export type RecipeCompressor = {
-  in: Item
+  in: Stack
   out: string
 };
 
@@ -19,25 +24,25 @@ export type RecipeExtreme = [
 ];
 
 export const addCompressor = (recipe: RecipeCompressor) =>
-  `mods.avaritia.Compressor.add(${formatArgs(recipe.out, recipe.in[1], recipe.in[0])});`;
+  `mods.avaritia.Compressor.add(${formatArgs(recipe.out, recipe.in.n, recipe.in.id)});`;
 
 /**
- * @param ingredient Compressor output
+ * @param id Compressor output
  */
-export const removeCompressor = (ingredient: string) =>
-  `mods.avaritia.Compressor.remove(${ingredient});`;
+export const removeCompressor = (id: string) =>
+  `mods.avaritia.Compressor.remove(${id});`;
 
-export const addExtreme = (item: Item, recipe: RecipeExtreme) => {
+export const addExtreme = (ingredient: Ingredient, recipe: RecipeExtreme) => {
   const out = formatArgs(
-    item,
-    recipe.map(row => formatArgs(row.map(formatIngredient)))
+    formatIngredient(ingredient),
+    recipe.map(row => formatList(row.map(formatId)))
   );
 
   return `mods.avaritia.ExtremeCrafting.addShaped(${out});`;
 };
 
 /**
- * @param ingredient Extreme Crafting output
+ * @param id Extreme Crafting output
  */
-export const removeExtreme = (ingredient: string) =>
-  `mods.avaritia.ExtremeCrafting.remove(${ingredient});`;
+export const removeExtreme = (id: string) =>
+  `mods.avaritia.ExtremeCrafting.remove(${id});`;

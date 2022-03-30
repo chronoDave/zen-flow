@@ -5,37 +5,35 @@ import {
   formatTooltip
 } from '../format';
 import { Enchantment, Text } from '../types';
+import { toArray } from '../utils';
 
 /**
  * @param dict Valid ore dictionary value: http://minetweaker3.powerofbytes.com/wiki/Tutorial:Ore_Dictionary
  */
-export const addDict = (dict: string, ingredients: string[]) => ingredients
-  .map(ingredient => `${dict}.add(${ingredient});`)
+export const addDict = (dict: string, ids: string[]) => ids
+  .map(id => `${dict}.add(${id});`)
   .join('\n');
 
 /**
 * @param dict Valid ore dictionary value: http://minetweaker3.powerofbytes.com/wiki/Tutorial:Ore_Dictionary
 */
-export const removeDict = (dict: string, ingredients: string[]) => ingredients
-  .map(ingredient => `${dict}.remove(${ingredient});`)
+export const removeDict = (dict: string, ids: string[]) => ids
+  .map(id => `${dict}.remove(${id});`)
   .join('\n');
 
-export const withName = (ingredient: string, name: Text | Text[]) =>
-  `${ingredient}.displayName = ${formatName(name)};`;
+export const withName = (id: string, name: Text) =>
+  `${id}.displayName = ${formatName(name)};`;
 
-export const withTooltip = (ingredient: string, tooltip: Text | Text[]) =>
-  `${ingredient}.addTooltip(${formatTooltip(tooltip)});`;
+export const withTooltip = (id: string, tooltips: Text | Text[]) => toArray(tooltips)
+  .map(tooltip => `${id}.addTooltip(${formatTooltip(tooltip)});`)
+  .join('\n');
 
-export const withTooltipShift = (ingredient: string, tooltip: Text | Text[]) =>
-  `${ingredient}.addShiftTooltip(${formatTooltip(tooltip)});`;
+export const withTooltipShift = (id: string, tooltips: Text | Text[]) => toArray(tooltips)
+  .map(tooltip => `${id}.addShiftTooltip(${formatTooltip(tooltip)});`)
+  .join('\n');
 
-export const withTag = (tag: string) => (ingredient: string) =>
-  `${ingredient}.withTag(${tag})`;
+export const withTag = (tag: string) => (id: string) =>
+  `${id}.withTag(${tag})`;
 
-export const withEnchantments = (enchantment: Enchantment | Enchantment[]) => {
-  const enchantments = Array.isArray(enchantment) ?
-    enchantment :
-    [enchantment];
-
-  return withTag(`{ ench: ${formatList(enchantments.map(formatEnchantment))} }`);
-};
+export const withEnchantment = (enchantments: Enchantment | Enchantment[]) =>
+  withTag(`{ ench: ${formatList(toArray(enchantments).map(formatEnchantment))} }`);

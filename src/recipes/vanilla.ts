@@ -1,9 +1,15 @@
-import { formatArgs } from '../format';
-import { Item, Recipe } from '../types';
+import {
+  formatArgs,
+  formatIngredient,
+  formatList,
+  formatRecipe
+} from '../format';
+import { Ingredient, Recipe } from '../types';
+import { isObject } from '../utils';
 
 type RecipeFurnace = {
   in: string,
-  out: Item
+  out: Ingredient
 };
 
 /**
@@ -12,32 +18,44 @@ type RecipeFurnace = {
  * - Recipe: `{}` => Shaped recipe
  * - Recipe: `[]` => Shapeless recipe
  */
-export const add = (item: Item, recipe: Recipe) => {
+export const add = (item: Ingredient, recipe: Recipe) => {
   const type = Array.isArray(recipe) ? 'Shapeless' : 'Shaped';
+  const out = formatArgs(
+    formatIngredient(item),
+    Array.isArray(recipe) ?
+      formatList(recipe) :
+      formatRecipe(recipe)
+  );
 
-  return `recipes.add${type}(${formatArgs(item, recipe)});`;
+  return `recipes.add${type}(${out});`;
 };
 
 /**
  * Remove all crafting recipes (shaped & shapeless)
  */
-export const remove = (ingredient: string) =>
-  `recipes.remove(${ingredient});`;
+export const remove = (id: string) =>
+  `recipes.remove(${id});`;
 
 /**
 * Remove all shaped crafting recipes
 */
-export const removeShaped = (ingredient: string) =>
-  `recipes.removeShaped(${ingredient});`;
+export const removeShaped = (id: string) =>
+  `recipes.removeShaped(${id});`;
 
 /**
 * Remove all shapeless crafting recipes
 */
-export const removeShapeless = (ingredient: string) =>
-  `recipes.removeShapeless(${ingredient});`;
+export const removeShapeless = (id: string) =>
+  `recipes.removeShapeless(${id});`;
 
-export const addFurnace = (recipe: RecipeFurnace) =>
-  `furnace.addRecipe(${formatArgs(recipe.out, recipe.in)});`;
+export const addFurnace = (recipe: RecipeFurnace) => {
+  const out = formatArgs(
+    formatIngredient(recipe.out),
+    recipe.in
+  );
+
+  return `furnace.addRecipe(${out});`;
+};
 
 /**
  * Remove furnace recipe
@@ -56,24 +74,28 @@ export const removeFurnace = (recipe: string | { in: string, out: string }) => {
  * - Recipe: `{}` => Replaces all shaped recipes
  * - Recipe: `[]` => Replaces all shapeless recipes
  */
-export const replace = (item: Item, recipe: Recipe) => {
-  const ingredient = Array.isArray(item) ? item[0] : item;
+export const replace = (ingredient: Ingredient, recipe: Recipe) => {
+  const id = isObject(ingredient) ?
+    ingredient.id :
+    ingredient;
 
   return [
-    Array.isArray(recipe) ? removeShapeless(ingredient) : removeShaped(ingredient),
-    add(item, recipe)
+    Array.isArray(recipe) ?
+      removeShapeless(id) :
+      removeShaped(id),
+    add(ingredient, recipe)
   ].join('\n');
 };
 
 /**
  * Replace all crafting recipe
  */
-export const replaceAll = (item: Item, recipe: Recipe) => [
-  remove(Array.isArray(item) ? item[0] : item),
-  add(item, recipe)
+export const replaceAll = (ingredient: Ingredient, recipe: Recipe) => [
+  remove(isObject(ingredient) ? ingredient.id : ingredient),
+  add(ingredient, recipe)
 ].join('\n');
 
-export const replaceMany = (item: Item, recipes: Recipe[]) => [
-  remove(Array.isArray(item) ? item[0] : item),
-  ...recipes.map(recipe => add(item, recipe))
+export const replaceMany = (ingredient: Ingredient, recipes: Recipe[]) => [
+  remove(isObject(ingredient) ? ingredient.id : ingredient),
+  ...recipes.map(recipe => add(ingredient, recipe))
 ].join('\n');

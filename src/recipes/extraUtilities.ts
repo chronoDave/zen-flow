@@ -1,16 +1,22 @@
-import { formatArgs } from '../format';
-import { Item, RecipeShaped } from '../types';
+import { formatArgs, formatIngredient, formatRecipe } from '../format';
+import { Ingredient, RecipeShaped } from '../types';
 
-export const addQED = (item: Item, recipe: RecipeShaped) =>
-  `mods.extraUtils.QED.addShapedRecipe(${formatArgs(item, recipe)});`;
+export const addQED = (ingredient: Ingredient, recipe: RecipeShaped) => {
+  const out = formatArgs(
+    formatIngredient(ingredient),
+    formatRecipe(recipe)
+  );
+
+  return `mods.extraUtils.QED.addShapedRecipe(${out});`;
+};
 
 /**
- * @param ingredient QED output
+ * @param id QED output
  */
-export const removeQED = (ingredient: string) =>
-  `mods.extraUtils.QED.removeRecipe(${ingredient});`;
+export const removeQED = (id: string) =>
+  `mods.extraUtils.QED.removeRecipe(${id});`;
 
-export const replaceQED = (item: Item, recipe: RecipeShaped) => [
-  removeQED(Array.isArray(item) ? item[0] : item),
-  addQED(item, recipe)
+export const replaceQED = (ingredient: Ingredient, recipe: RecipeShaped) => [
+  removeQED(Array.isArray(ingredient) ? ingredient[0] : ingredient),
+  addQED(ingredient, recipe)
 ].join('\n');

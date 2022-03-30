@@ -4,7 +4,7 @@ const createCode = (code: string) =>
 const createFormat = (type: string) => (tooltip: string) =>
   `format.${type}(${tooltip})`;
 
-export const COLOURS = [
+export const COLORS = [
   'black',
   'darkBlue',
   'darkGreen',
@@ -32,7 +32,7 @@ export const FORMATS = [
   'italic'
 ] as const;
 
-export const NAME_COLOUR: Record<typeof COLOURS[number], string> = {
+export const NAME_COLOR: Record<typeof COLORS[number], string> = {
   black: createCode('0'),
   darkBlue: createCode('1'),
   darkGreen: createCode('2'),
@@ -51,7 +51,16 @@ export const NAME_COLOUR: Record<typeof COLOURS[number], string> = {
   white: createCode('f'),
 } as const;
 
-export const TOOLTIP_COLOUR: Record<typeof COLOURS[number], (tooltip: string) => string> = {
+export const NAME_FORMAT: Record<typeof FORMATS[number] | 'reset', string> = {
+  obfuscated: createCode('k'),
+  bold: createCode('l'),
+  strikethrough: createCode('m'),
+  underline: createCode('n'),
+  italic: createCode('o'),
+  reset: createCode('r')
+} as const;
+
+export const TOOLTIP_COLOR: Record<typeof COLORS[number], (tooltip: string) => string> = {
   black: createFormat('black'),
   darkBlue: createFormat('darkBlue'),
   darkGreen: createFormat('darkGreen'),
@@ -68,15 +77,6 @@ export const TOOLTIP_COLOUR: Record<typeof COLOURS[number], (tooltip: string) =>
   lightPurple: createFormat('lightPurple'),
   yellow: createFormat('yellow'),
   white: createFormat('white'),
-} as const;
-
-export const NAME_FORMAT: Record<typeof FORMATS[number] | 'reset', string> = {
-  obfuscated: createCode('k'),
-  bold: createCode('l'),
-  strikethrough: createCode('m'),
-  underline: createCode('n'),
-  italic: createCode('o'),
-  reset: createCode('r')
 } as const;
 
 export const TOOLTIP_FORMAT: Record<typeof FORMATS[number], (tooltip: string) => string> = {

@@ -1,60 +1,60 @@
-import { formatArgs } from '../format';
-import { Bonus, Ingredients, Item } from '../types';
+import { formatArgs, formatIngredient, formatStack } from '../format';
+import { Ingredient, Stack } from '../types';
 
 export type RecipeCrucible = {
   rf: number
   in: string
-  liquid: Ingredients
+  liquid: Stack
 };
 
 export type RecipeFurnace = {
   rf: number
   in: string
-  out: Item
+  out: Ingredient
 };
 
 export type RecipeInsolator = {
   rf: number
-  left: Item
-  right: Item
-  out: Item
-  bonus?: Bonus
+  left: Ingredient
+  right: Ingredient
+  out: Ingredient
+  bonus?: Stack
 };
 
 export type RecipePulverizer = {
   rf: number
   in: string
-  out: Item
-  bonus?: Bonus
+  out: Ingredient
+  bonus?: Stack
 };
 
 export type RecipeSawmill = {
   rf: number
   in: string
-  out: Item
-  bonus?: Bonus
+  out: Ingredient
+  bonus?: Stack
 };
 
 export type RecipeSmelter = {
   rf: number
-  left: Item
-  right: Item
-  out: Item
-  bonus?: Bonus
+  left: Ingredient
+  right: Ingredient
+  out: Ingredient
+  bonus?: Stack
 };
 
 export type RecipeTransposerFill = {
   rf: number
   in: string,
   out: string
-  liquid: Ingredients
+  liquid: Stack
 };
 
 export type RecipeTransposerExtract = {
   rf: number
   in: string,
-  liquid: Ingredients
-  bonus?: Bonus
+  liquid: Stack
+  bonus?: Stack
 };
 
 /**
@@ -67,14 +67,14 @@ export const addCrucible = (recipe: RecipeCrucible) => {
   const out = formatArgs(
     recipe.rf,
     recipe.in,
-    recipe.liquid
+    formatStack(recipe.liquid)
   );
 
   return `mods.thermalexpansion.Crucible.addRecipe(${out});`;
 };
 
-export const removeCrucible = (ingredient: string) =>
-  `mods.thermalexpansion.Crucible.removeRecipe(${ingredient});`;
+export const removeCrucible = (id: string) =>
+  `mods.thermalexpansion.Crucible.removeRecipe(${id});`;
 
 /**
  * Common values:
@@ -86,14 +86,14 @@ export const addFurnace = (recipe: RecipeFurnace) => {
   const out = formatArgs(
     recipe.rf,
     recipe.in,
-    recipe.out
+    formatIngredient(recipe.out)
   );
 
   return `mods.thermalexpansion.Furnace.addRecipe(${out});`;
 };
 
-export const removeFurnace = (ingredient: string) =>
-  `mods.thermalexpansion.Furnace.removeRecipe(${ingredient});`;
+export const removeFurnace = (id: string) =>
+  `mods.thermalexpansion.Furnace.removeRecipe(${id});`;
 
 /**
  * Common values:
@@ -103,18 +103,24 @@ export const removeFurnace = (ingredient: string) =>
 export const addInsolator = (recipe: RecipeInsolator) => {
   const out = formatArgs(
     recipe.rf,
-    recipe.left,
-    recipe.right,
-    recipe.out,
-    recipe.bonus && recipe.bonus[0],
-    recipe.bonus && recipe.bonus[1]
+    formatIngredient(recipe.left),
+    formatIngredient(recipe.right),
+    formatIngredient(recipe.out),
+    recipe.bonus && recipe.bonus.id,
+    recipe.bonus && recipe.bonus.n
   );
 
   return `mods.thermalexpansion.Insolator.addRecipe(${out});`;
 };
 
-export const removeInsolator = (left: Item, right: Item) =>
-  `mods.thermalexpansion.Insolator.removeRecipe(${formatArgs(left, right)});`;
+export const removeInsolator = (left: Ingredient, right: Ingredient) => {
+  const out = formatArgs(
+    formatIngredient(left),
+    formatIngredient(right)
+  );
+
+  return `mods.thermalexpansion.Insolator.removeRecipe(${out});`;
+};
 
 /**
  * Common values:
@@ -128,31 +134,31 @@ export const addPulverizer = (recipe: RecipePulverizer) => {
   const out = formatArgs(
     recipe.rf,
     recipe.in,
-    recipe.out,
-    recipe.bonus && recipe.bonus[0],
-    recipe.bonus && recipe.bonus[1]
+    formatIngredient(recipe.out),
+    recipe.bonus && recipe.bonus.id,
+    recipe.bonus && recipe.bonus.n
   );
 
   return `mods.thermalexpansion.Pulverizer.addRecipe(${out});`;
 };
 
-export const removePulverizer = (ingredient: string) =>
-  `mods.thermalexpansion.Pulverizer.removeRecipe(${ingredient});`;
+export const removePulverizer = (id: string) =>
+  `mods.thermalexpansion.Pulverizer.removeRecipe(${id});`;
 
 export const addSawmill = (recipe: RecipeSawmill) => {
   const out = formatArgs(
     recipe.rf,
     recipe.in,
-    recipe.out,
-    recipe.bonus && recipe.bonus[0],
-    recipe.bonus && recipe.bonus[1]
+    formatIngredient(recipe.out),
+    recipe.bonus && recipe.bonus.id,
+    recipe.bonus && recipe.bonus.n
   );
 
   return `mods.thermalexpansion.Sawmill.addRecipe(${out});`;
 };
 
-export const removeSawmill = (ingredient: string) =>
-  `mods.thermalexpansion.Sawmill.removeRecipe(${ingredient});`;
+export const removeSawmill = (id: string) =>
+  `mods.thermalexpansion.Sawmill.removeRecipe(${id});`;
 
 /**
 * Common values (RF):
@@ -166,18 +172,24 @@ export const removeSawmill = (ingredient: string) =>
 export const addSmelter = (recipe: RecipeSmelter) => {
   const out = formatArgs(
     recipe.rf,
-    recipe.right,
-    recipe.left,
-    recipe.out,
-    recipe.bonus && recipe.bonus[0],
-    recipe.bonus && recipe.bonus[1]
+    formatIngredient(recipe.right),
+    formatIngredient(recipe.left),
+    formatIngredient(recipe.out),
+    recipe.bonus && recipe.bonus.id,
+    recipe.bonus && recipe.bonus.n
   );
 
   return `mods.thermalexpansion.Smelter.addRecipe(${out});`;
 };
 
-export const removeSmelter = (left: Item, right: Item) =>
-  `mods.thermalexpansion.Smelter.removeRecipe(${formatArgs(left, right)});`;
+export const removeSmelter = (left: Ingredient, right: Ingredient) => {
+  const out = formatArgs(
+    formatIngredient(left),
+    formatIngredient(right)
+  );
+
+  return `mods.thermalexpansion.Smelter.removeRecipe(${out});`;
+};
 
 /**
 * Common values
@@ -193,14 +205,14 @@ export const addTransposerFill = (recipe: RecipeTransposerFill) => {
     recipe.rf,
     recipe.in,
     recipe.out,
-    recipe.liquid
+    formatStack(recipe.liquid)
   );
 
   return `mods.thermalexpansion.Transposer.addFillRecipe(${out});`;
 };
 
-export const removeTransposerFill = (ingredient: string, liquid: string) =>
-  `mods.thermalexpansion.Transposer.removeFillRecipe(${formatArgs(ingredient, liquid)});`;
+export const removeTransposerFill = (id: string, liquid: string) =>
+  `mods.thermalexpansion.Transposer.removeFillRecipe(${formatArgs(id, liquid)});`;
 
 /**
 * Common values
@@ -211,13 +223,13 @@ export const addTransposerExtract = (recipe: RecipeTransposerExtract) => {
   const out = formatArgs(
     recipe.rf,
     recipe.in,
-    recipe.liquid,
-    recipe.bonus && recipe.bonus[0],
-    recipe.bonus && recipe.bonus[1]
+    formatStack(recipe.liquid),
+    recipe.bonus && recipe.bonus.id,
+    recipe.bonus && recipe.bonus.n,
   );
 
   return `mods.thermalexpansion.Transposer.addExtractRecipe(${out});`;
 };
 
-export const removeTransposerExtract = (ingredient: string) =>
-  `mods.thermalexpansion.Transposer.removeExtractRecipe(${ingredient});`;
+export const removeTransposerExtract = (id: string) =>
+  `mods.thermalexpansion.Transposer.removeExtractRecipe(${id});`;

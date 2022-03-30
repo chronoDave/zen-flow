@@ -1,10 +1,7 @@
-import { ENCHANTMENTS, COLOURS, FORMATS } from './const';
+import { ENCHANTMENTS, COLORS, FORMATS } from './const';
 
-export type Ingredients = [ingredient: string, n: number];
-
-export type Item = string | Ingredients;
-
-export type Bonus = [item: Item, chance: number];
+export type Stack = { id: string, n: number };
+export type Ingredient = string | Stack;
 
 export type RecipeShaped = Partial<{
   1: string
@@ -29,15 +26,14 @@ export type Recipe = RecipeShaped | RecipeShapeless;
 
 export type Enchantment = {
   type: keyof typeof ENCHANTMENTS
-  level?: number
+  level?: number | string
   short?: boolean
 };
 
-export type TextFormatOptions = {
-  colour: typeof COLOURS[number],
-  format: typeof FORMATS[number]
+export type TextRich = {
+  text: string
+  color?: typeof COLORS[number],
+  format?: typeof FORMATS[number]
 };
 
-export type TextFormat = [text: string, options: Partial<TextFormatOptions>];
-
-export type Text = string | TextFormat;
+export type Text = string | TextRich;

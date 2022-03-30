@@ -1,20 +1,20 @@
 const { test } = require('tape');
 
 const {
-  formatItem,
+  formatStack,
   formatList,
   formatFloat,
   formatName,
   formatTooltip,
-  formatIngredient,
-  formatRecipeShaped
+  formatId,
+  formatRecipe
 } = require('./build/format');
 
 const stick = '<minecraft:stick>';
 
-test('[format.formatItem] returns formatted string', t => {
+test('[format.formatStack] returns formatted string', t => {
   t.equal(
-    formatItem([stick, 4]),
+    formatStack({ id: stick, n: 4 }),
     '<minecraft:stick> * 4'
   );
 
@@ -30,43 +30,43 @@ test('[format.formatList] returns formatted string', t => {
   t.end();
 });
 
-test('[format.formatIngredient] return formatted string', t => {
+test('[format.formatId] return formatted string', t => {
   t.equal(
-    formatIngredient(stick),
+    formatId(stick),
     '<minecraft:stick>'
   );
 
   t.equal(
-    formatIngredient(null),
+    formatId(null),
     'null'
   );
 
   t.equal(
-    formatIngredient(),
+    formatId(),
     'null'
   );
 
   t.end();
 });
 
-test('[format.formatRecipeShaped] return formatted string', t => {
+test('[format.formatRecipe] return formatted string', t => {
   t.equal(
-    formatRecipeShaped({ 1: stick, 5: stick, 9: stick }),
+    formatRecipe({ 1: stick, 5: stick, 9: stick }),
     '[\n\t[<minecraft:stick>, null, null],\n\t[null, <minecraft:stick>, null],\n\t[null, null, <minecraft:stick>]\n]'
   );
 
   t.equal(
-    formatRecipeShaped({ corner: stick, center: stick }),
+    formatRecipe({ corner: stick, center: stick }),
     '[\n\t[<minecraft:stick>, null, <minecraft:stick>],\n\t[null, <minecraft:stick>, null],\n\t[<minecraft:stick>, null, <minecraft:stick>]\n]'
   );
 
   t.equal(
-    formatRecipeShaped({ ring: stick }),
+    formatRecipe({ ring: stick }),
     '[\n\t[<minecraft:stick>, <minecraft:stick>, <minecraft:stick>],\n\t[<minecraft:stick>, null, <minecraft:stick>],\n\t[<minecraft:stick>, <minecraft:stick>, <minecraft:stick>]\n]'
   );
 
   t.equal(
-    formatRecipeShaped({ square: stick }),
+    formatRecipe({ square: stick }),
     '[\n\t[<minecraft:stick>, <minecraft:stick>, null],\n\t[<minecraft:stick>, <minecraft:stick>, null],\n\t[null, null, null]\n]'
   );
 
@@ -83,17 +83,17 @@ test('[format.formatFloat] returns formatted string', t => {
 test('[format.formatName] returns formatted string', t => {
   t.equal(formatName('Bread'), '"Bread"');
   t.equal(
-    formatName(['Bread', { colour: 'red' }]),
+    formatName({ text: 'Bread', color: 'red' }),
     '"\\u00A7cBread\\u00A7r"'
   );
   t.equal(
-    formatName(['Bread', { colour: 'yellow', format: 'bold' }]),
+    formatName({ text: 'Bread', color: 'yellow', format: 'bold' }),
     '"\\u00A7e\\u00A7lBread\\u00A7r"'
   );
   t.equal(
     formatName([
       'Bread',
-      ['with butter', { colour: 'yellow', format: 'bold' }]
+      { text: 'with butter', color: 'yellow', format: 'bold' }
     ]),
     '"Bread\\u00A7e\\u00A7lwith butter\\u00A7r"'
   );
@@ -104,17 +104,17 @@ test('[format.formatName] returns formatted string', t => {
 test('[format.formatTooltip] returns formatted string', t => {
   t.equal(formatTooltip('Bread'), '"Bread"');
   t.equal(
-    formatTooltip(['Bread', { colour: 'red' }]),
+    formatTooltip({ text: 'Bread', color: 'red' }),
     'format.red("Bread")'
   );
   t.equal(
-    formatTooltip(['Bread', { colour: 'yellow', format: 'bold' }]),
+    formatTooltip({ text: 'Bread', color: 'yellow', format: 'bold' }),
     'format.yellow(format.bold("Bread"))'
   );
   t.equal(
     formatTooltip([
       'Bread',
-      ['with butter', { colour: 'yellow', format: 'bold' }]
+      { text: 'with butter', color: 'yellow', format: 'bold' }
     ]),
     '"Bread" + format.yellow(format.bold("with butter"))'
   );

@@ -17,6 +17,7 @@ module.exports = {
     'implicit-arrow-linebreak': 'off',
     'linebreak-style': 'off',
     'comma-dangle': 'off',
+    'no-confusing-arrow': 'off',
     'arrow-body-style': 'warn',
     'arrow-parens': ['error', 'as-needed'],
     'no-nested-ternary': 'off',
