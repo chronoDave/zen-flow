@@ -37,8 +37,8 @@ export {
 export {
   addLaser,
   removeLaser,
-  addLaserPreferred,
-  removeLaserPreferred
+  addFoci,
+  removeFoci
 } from './recipes/mineFactoryReloaded';
 
 export {
@@ -72,7 +72,6 @@ export {
   removeShapeless,
   addFurnace,
   removeFurnace,
-  removeFurnaceAll,
   replace,
   replaceAll,
   replaceMany

@@ -39,11 +39,16 @@ export const removeShapeless = (ingredient: string) =>
 export const addFurnace = (recipe: RecipeFurnace) =>
   `furnace.addRecipe(${formatArgs(recipe.out, recipe.in)});`;
 
-export const removeFurnace = (ingredient: string) =>
-  `furnace.remove(<*>, ${ingredient});`;
-
-export const removeFurnaceAll = (ingredient: string) =>
-  `furnace.remove(${ingredient});`;
+/**
+ * Remove furnace recipe
+ *
+ * - Recipe: `string` => Remove all recipes that create this ingredient
+ * - Recipe `{}` => Remove this specific recipe
+ */
+export const removeFurnace = (recipe: string | { in: string, out: string }) => {
+  if (typeof recipe === 'string') return `furnace.remove(<*>, ${recipe});`;
+  return `furnace.remove(${formatArgs(recipe.out, recipe.in)})`;
+};
 
 /**
  * Replace crafting recipe

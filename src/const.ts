@@ -112,7 +112,7 @@ export const ENCHANTMENTS = {
   infinity: 51,
 } as const;
 
-export const MFR_LASER_LENSES = {
+export const MFR_FOCI = {
   white: 0,
   orange: 1,
   magenta: 2,

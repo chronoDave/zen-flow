@@ -1,4 +1,4 @@
-import { MFR_LASER_LENSES } from '../const';
+import { MFR_FOCI } from '../const';
 import { formatArgs } from '../format';
 import { Item } from '../types';
 
@@ -11,13 +11,13 @@ export const addLaser = (item: Item) =>
 export const removeLaser = (ingredient: string) =>
   `MiningLaser.removeOre(${ingredient});`;
 
-export const addLaserPreferred = (lens: keyof typeof MFR_LASER_LENSES, ingredients: string[]) => ingredients
-  .map(ingredient => `MiningLaser.addPreferredOre(${formatArgs(MFR_LASER_LENSES[lens], ingredient)});`)
+export const addFoci = (lens: keyof typeof MFR_FOCI, ingredients: string[]) => ingredients
+  .map(ingredient => `MiningLaser.addPreferredOre(${formatArgs(MFR_FOCI[lens], ingredient)});`)
   .join('\n');
 
 /**
 * @param ingredient - Laser output
 */
-export const removeLaserPreferred = (lens: keyof typeof MFR_LASER_LENSES, ingredients: string[]) => ingredients
-  .map(ingredient => `MiningLaser.removePreferredOre(${formatArgs(MFR_LASER_LENSES[lens], ingredient)});`)
+export const removeFoci = (lens: keyof typeof MFR_FOCI, ingredients: string[]) => ingredients
+  .map(ingredient => `MiningLaser.removePreferredOre(${formatArgs(MFR_FOCI[lens], ingredient)});`)
   .join('\n');

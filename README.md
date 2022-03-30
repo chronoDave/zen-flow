@@ -115,7 +115,6 @@ Array.from({ length: 11 })
  - `replaceMany` - Remove all recipes and add multiple recipes
  - `addFurnace` - Adds furnace recipe
  - `removeFurnace` - Removes furnace recipe
- - `removeFurnaceAll` - Removes all furnace recipe
 
 ### Crafting patterns
 
@@ -251,8 +250,8 @@ exnihilo.addSieve('<minecraft:cobblestone>', {
 
  - `addLaser` - Add ore to the Mining Laser ore table
  - `removeLaser` - Remove ore from the Mining Laser ore table
- - `addLaserPreferred` - Add ores to the Mining Laser lens
- - `removeLaserPreferred` - Remove ores from the Mining Laser lens
+ - `addFoci` - Add ores to the Laser Focus ore table
+ - `removeFoci` - Remove ores from the Laser Focus ore table
 
 ## NEI
 
