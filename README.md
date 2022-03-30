@@ -184,15 +184,15 @@ Shaped crafting recipes support the following shorthand patterns, in order:
 withName('<minecraft:bread>', 'Bread');
 
 // Bread (with red text)
-withName('<minecraft:bread>', ['Bread', { colour: 'red' }]);
+withName('<minecraft:bread>', { text: 'Bread', colour: 'red' });
 
 // Bread (bold red text)
-withName('<minecraft:bread>', ['Bread', { colour: 'red', format: 'bold' }]);
+withName('<minecraft:bread>', { text: 'Bread', colour: 'red', format: 'bold' });
 
 // Bread (normal text) with butter (yellow italic text)
 withName('<minecraft:bread>', [
   'Bread',
-  ['with butter', { colour: 'yellow', format: 'italic' }]
+  { text: 'with butter', colour: 'yellow', format: 'italic' }
 ]);
 ```
 
@@ -227,10 +227,10 @@ withName('<minecraft:bread>', [
 import { exnihilo } from 'zen-flow';
 
 exnilo.addHammer('<minecraft:cobblestone>', {
-  '<minecraft:stick>': [0.5], // 50%
+  '<minecraft:stick>': 0.5, // 50%
   '<minecraft:bread>': [1, 1, 0.5] // 100%, 100%, 50%
-  '<minecraft:stone>': [[1, 2], [0.5, 1]] // 100% with 2x modifier, 50% with 1x modifier
-  '<minecraft:coal>': [[1, 2], 1] // 100% with 2x modifier, 100% 
+  '<minecraft:stone>': [{ chance: 1, modifier: 2 }, { chance: 0.5, modifier: 1 }] // 100% with 2x modifier, 50% with 1x modifier
+  '<minecraft:coal>': [{ chance: 1, modifier: 2 }, 1] // 100% with 2x modifier, 100% 
 });
 
 exnihilo.addSieve('<minecraft:cobblestone>', {
