@@ -26,6 +26,5 @@ export default [{
   output: {
     file: output('d.ts'),
     format: 'es'
-  },
-  external: ['fs']
+  }
 }];
