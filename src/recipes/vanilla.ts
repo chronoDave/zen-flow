@@ -65,7 +65,7 @@ export const addFurnace = (recipe: RecipeFurnace) => {
  */
 export const removeFurnace = (recipe: string | { in: string, out: string }) => {
   if (typeof recipe === 'string') return `furnace.remove(<*>, ${recipe});`;
-  return `furnace.remove(${formatArgs(recipe.out, recipe.in)})`;
+  return `furnace.remove(${formatArgs(recipe.out, recipe.in)});`;
 };
 
 /**
