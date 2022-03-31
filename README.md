@@ -87,6 +87,7 @@ Array.from({ length: 11 })
 
 ## API
 
+ - Types(#types)
  - MineCraft
    - [Vanilla](#vanilla)
       - [Crafting patterns](#craftingpatterns)
@@ -99,6 +100,52 @@ Array.from({ length: 11 })
     - [MineFactoryReloaded](#minefactoryreloaded)
     - [NEI](#nei)
     - [ThermalExpansion](#thermalexpansion)
+
+## Types
+
+```TS
+type Stack = {
+  id: string,
+  n: number
+};
+
+type Ingredient = string | Stack;
+
+type RecipeShaped = Partial<{
+  1: string
+  2: string
+  3: string
+  4: string
+  5: string
+  6: string
+  7: string
+  8: string
+  9: string
+  corner: string
+  edge: string
+  ring: string
+  square: string
+  center: string
+}>;
+
+type RecipeShapeless = string[];
+
+type Recipe = RecipeShaped | RecipeShapeless;
+
+type Enchantment = {
+  type: keyof typeof ENCHANTMENTS
+  level?: number | string
+  short?: boolean
+};
+
+type TextRich = {
+  text: string
+  color?: typeof COLORS[number],
+  format?: typeof FORMATS[number]
+};
+
+type Text = string | TextRich;
+```
 
 ## Vanilla
 
@@ -276,3 +323,5 @@ exnihilo.addSieve('<minecraft:cobblestone>', {
  - `removeTransposerFill` - Remove Fluid Transposer fill recipe
  - `addTransposerExtract` - Add Fluid Transposer extract recipe
  - `removeTransposerExtract` - Remove Fluid Transposer extract recipe
+
+<i>* All bonus properties take a number between 1 and 100</i>

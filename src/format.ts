@@ -47,7 +47,7 @@ export const formatName = (texts: Text | Text[]) => {
         text.text,
         (text.color || text.format) && NAME_FORMAT.reset
       ]
-        .filter(x => x)
+        .filter(x => x !== undefined)
         .join('');
     })
     .join('');
@@ -92,7 +92,7 @@ export const formatRecipe = (recipe: RecipeShaped) => {
 
 export const formatArgs = <T extends Array<string | number | string[] | number[]>>(...args: Partial<T>) => {
   const list = args
-    .filter(x => x)
+    .filter(x => x !== undefined)
     .map(x => Array.isArray(x) ? formatList(x) : x) as T;
 
   return list.length > 3 ?
