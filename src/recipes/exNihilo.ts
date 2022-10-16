@@ -76,13 +76,6 @@ export const addHammer = (id: string, recipe: RecipeHammer) => {
       modifier: isObject(chance) ? chance.modifier : 1
     })))
     .flat();
-  // const items = Object.entries(recipe)
-  //   .map(entry => toArray(fill(entry[1].length, entry[1])).map(chance => ({
-  //     id: entry[0],
-  //     chance: clamp(0, 1, isObject(chance) ? chance.chance : chance),
-  //     modifier: isObject(chance) ? chance.modifier : 1
-  //   })))
-  //   .flat();
 
   const out = formatArgs(
     id,
