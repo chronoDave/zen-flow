@@ -87,7 +87,7 @@ Array.from({ length: 11 })
 
 ## API
 
- - Types(#types)
+ - [Types](#types)
  - MineCraft
    - [Vanilla](#vanilla)
       - [Crafting patterns](#craftingpatterns)
