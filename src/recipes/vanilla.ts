@@ -1,11 +1,15 @@
-import { RecipeShaped, RecipeShapeless } from '..';
 import {
   formatArgs,
   formatIngredient,
   formatList,
   formatRecipe
 } from '../format';
-import { Ingredient, Recipe } from '../types';
+import {
+  Ingredient,
+  Recipe,
+  RecipeShaped,
+  RecipeShapeless
+} from '../types';
 import { isObject } from '../utils';
 
 type RecipeFurnace = {
