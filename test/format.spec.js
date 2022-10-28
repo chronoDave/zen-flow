@@ -67,7 +67,12 @@ test('[format.formatRecipe] return formatted string', t => {
 
   t.equal(
     formatRecipe({ square: stick }),
-    '[\n\t[<minecraft:stick>, <minecraft:stick>, null],\n\t[<minecraft:stick>, <minecraft:stick>, null],\n\t[null, null, null]\n]'
+    '[\n\t[<minecraft:stick>, <minecraft:stick>],\n\t[<minecraft:stick>, <minecraft:stick>]\n]'
+  );
+
+  t.equal(
+    formatRecipe({ square: stick, 9: stick }),
+    '[\n\t[<minecraft:stick>, <minecraft:stick>, null],\n\t[<minecraft:stick>, <minecraft:stick>, null],\n\t[null, null, <minecraft:stick>]\n]'
   );
 
   t.end();

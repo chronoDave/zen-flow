@@ -85,9 +85,20 @@ export const formatRecipe = (recipe: RecipeShaped) => {
     recipe.ring || recipe.corner || recipe[7],
     recipe.ring || recipe.edge || recipe[8],
     recipe.ring || recipe.corner || recipe[9]
-  ]].map(row => formatList(row.map(formatId)));
+  ]];
 
-  return `[\n\t${matrix.join(',\n\t')}\n]`;
+  // 2x2 recipes
+  if (
+    !matrix[0][2] &&
+    !matrix[1][2] &&
+    matrix[2].every(x => !x)
+  ) {
+    matrix[0].splice(-1);
+    matrix[1].splice(-1);
+    matrix.splice(-1);
+  }
+
+  return `[\n\t${matrix.map(row => formatList(row.map(formatId))).join(',\n\t')}\n]`;
 };
 
 export const formatArgs = <T extends Array<string | number | string[] | number[]>>(...args: Partial<T>) => {

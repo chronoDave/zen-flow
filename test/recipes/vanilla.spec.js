@@ -14,7 +14,7 @@ test('[vanilla.removeShaped] does not append recipe if not provided', t => {
 test('[vanilla.removeShaped] appends recipe if provided', t => {
   t.equal(
     removeShaped('<minecraft:stick>', { 1: '<tile.wood:*>', 4: '<tile.wood:*>' }),
-    'recipes.removeShaped(<minecraft:stick>, [\n\t[<tile.wood:*>, null, null],\n\t[<tile.wood:*>, null, null],\n\t[null, null, null]\n]);'
+    'recipes.removeShaped(<minecraft:stick>, [\n\t[<tile.wood:*>, null],\n\t[<tile.wood:*>, null]\n]);'
   );
 
   t.end();
