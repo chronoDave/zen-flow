@@ -1,3 +1,4 @@
+import { RecipeShaped, RecipeShapeless } from '..';
 import {
   formatArgs,
   formatIngredient,
@@ -39,14 +40,14 @@ export const remove = (id: string) =>
 /**
 * Remove all shaped crafting recipes
 */
-export const removeShaped = (id: string) =>
-  `recipes.removeShaped(${id});`;
+export const removeShaped = (id: string, recipe?: RecipeShaped) =>
+  `recipes.removeShaped(${id}${recipe ? `, ${formatRecipe(recipe)}` : ''});`;
 
 /**
 * Remove all shapeless crafting recipes
 */
-export const removeShapeless = (id: string) =>
-  `recipes.removeShapeless(${id});`;
+export const removeShapeless = (id: string, recipe?: RecipeShapeless) =>
+  `recipes.removeShapeless(${id}${recipe ? `, ${formatList(recipe)}` : ''});`;
 
 export const addFurnace = (recipe: RecipeFurnace) => {
   const out = formatArgs(
