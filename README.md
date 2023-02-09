@@ -6,7 +6,7 @@
   <a href="/LICENSE">
     <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-blue.svg" />
   </a>
-  <a href="/https://www.npmjs.com/package/zen-flow">
+  <a href="https://www.npmjs.com/package/zen-flow">
     <img alt="NPM - ZenFlow" src="https://img.shields.io/npm/v/zen-flow" />
   </a>
 </div>
