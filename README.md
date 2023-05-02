@@ -74,7 +74,7 @@ Array.from({ length: 11 })
   .map(generator => [
     vanilla.remove(generator),
     nei.hide(generator)
-  ].join('\n'))
+  ].join('\n'));
 
 /**
  * recipes.remove(<ExtraUtilities:generator>);
@@ -82,7 +82,7 @@ Array.from({ length: 11 })
  * [...]
  * recipes.remove(<ExtraUtilities:generator.64:10>);
  * NEI.hide(<ExtraUtilities:generator.64:10>);
- * /
+ **/
 ```
 
 ## API
@@ -90,7 +90,7 @@ Array.from({ length: 11 })
  - [Types](#types)
  - MineCraft
    - [Vanilla](#vanilla)
-      - [Crafting patterns](#craftingpatterns)
+      - [Crafting patterns](#crafting-patterns)
    - [Items](#items)
       - [Formatting](#formatting)
  - Mods
