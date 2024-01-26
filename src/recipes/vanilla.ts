@@ -36,6 +36,18 @@ export const add = (item: Ingredient, recipe: Recipe) => {
 };
 
 /**
+ * Add shaped crafint recipe with mirror
+ */
+export const addMirror = (item: Ingredient, recipe: RecipeShaped) => {
+  const out = formatArgs(
+    formatIngredient(item),
+    formatRecipe(recipe)
+  );
+
+  return `recipes.addShapedMirrored(${out});`;
+};
+
+/**
  * Remove all crafting recipes (shaped & shapeless)
  */
 export const remove = (id: string) =>

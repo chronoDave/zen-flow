@@ -152,6 +152,7 @@ type Text = string | TextRich;
  - `add` - Add a crafting table recipe.
     - Shaped recipe: `object`
     - Shapeless recipe: `Array`
+ - `addMirror` - Adds a shaped crafting table recipe with mirrored variant.
  - `remove` - Removes both shaped and shapeless recipes
  - `removeShaped` - Removes only shaped recipes
  - `removeShapeless` - Removes only shaped recipes

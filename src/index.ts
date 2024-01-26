@@ -67,6 +67,7 @@ export {
 
 export {
   add,
+  addMirror,
   remove,
   removeShaped,
   removeShapeless,
