@@ -45,8 +45,8 @@ export type RecipeSmelter = {
 
 export type RecipeTransposerFill = {
   rf: number
-  in: string,
-  out: string
+  in: Ingredient,
+  out: Ingredient
   liquid: Stack
 };
 
@@ -203,8 +203,8 @@ export const removeSmelter = (left: Ingredient, right: Ingredient) => {
 export const addTransposerFill = (recipe: RecipeTransposerFill) => {
   const out = formatArgs(
     recipe.rf,
-    recipe.in,
-    recipe.out,
+    formatIngredient(recipe.in),
+    formatIngredient(recipe.out),
     formatStack(recipe.liquid)
   );
 
