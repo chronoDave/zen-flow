@@ -22,6 +22,11 @@ export type RecipeInscriber = {
   type: 'inscribe' | 'press'
 };
 
+/**
+ * Common values:
+ *  - Ingot: `2 turns`
+ *  - Ore: `4 turns`
+ */
 export const addGrinder = (recipe: RecipeGrinder) => {
   const out = formatArgs(
     formatIngredient(recipe.in),
