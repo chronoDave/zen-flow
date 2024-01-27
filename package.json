@@ -19,7 +19,10 @@
   "files": [
     "dist/**/*"
   ],
-  "repository": "https://github.com/chronoDave/zen-flow.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chronoDave/zen-flow.git"
+  },
   "author": "Chronocide",
   "license": "MIT",
   "engines": {
