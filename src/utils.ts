@@ -11,3 +11,6 @@ export const isObject = (x: unknown): x is Record<string, unknown> => (
   typeof x === 'object' &&
   !Array.isArray(x)
 );
+
+export const capitalize = (x: string) =>
+  `${x[0].toUpperCase()}${x.slice(1)}`;

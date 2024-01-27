@@ -101,7 +101,7 @@ export const formatRecipe = (recipe: RecipeShaped) => {
   return `[\n\t${matrix.map(row => formatList(row.map(formatId))).join(',\n\t')}\n]`;
 };
 
-export const formatArgs = <T extends Array<string | number | string[] | number[]>>(...args: Partial<T>) => {
+export const formatArgs = <T extends Array<string | number | boolean | string[] | number[]>>(...args: Partial<T>) => {
   const list = args
     .filter(x => x !== undefined)
     .map(x => Array.isArray(x) ? formatList(x) : x) as T;

@@ -87,84 +87,20 @@ Array.from({ length: 11 })
 
 ## API
 
- - [Types](#types)
- - MineCraft
-   - [Vanilla](#vanilla)
-      - [Crafting patterns](#crafting-patterns)
-   - [Items](#items)
-      - [Formatting](#formatting)
- - Mods
-    - [Avaritia](#avaritia)
-    - [ExNihilo](#exnihilo)
-    - [ExtraUtilities](#extrautilities)
-    - [MineFactoryReloaded](#minefactoryreloaded)
-    - [NEI](#nei)
-    - [ThermalExpansion](#thermalexpansion)
+- [Patterns](#crafting-patterns)
+- [Recipes](#recipes)
+  - [Items](#items)
+    - [Formatting](#formatting)
+  - [Vanilla](#vanilla)
+  - [Applied Energistics 2](#appliedenergistics2)
+  - [Avaritia](#avaritia)
+  - [ExNihilo](#exnihilo)
+  - [ExtraUtilities](#extrautilities)
+  - [MineFactoryReloaded](#minefactoryreloaded)
+  - [NEI](#nei)
+  - [ThermalExpansion](#thermalexpansion)
 
-## Types
-
-```TS
-type Stack = {
-  id: string,
-  n: number
-};
-
-type Ingredient = string | Stack;
-
-type RecipeShaped = Partial<{
-  1: string
-  2: string
-  3: string
-  4: string
-  5: string
-  6: string
-  7: string
-  8: string
-  9: string
-  corner: string
-  edge: string
-  ring: string
-  square: string
-  center: string
-}>;
-
-type RecipeShapeless = string[];
-
-type Recipe = RecipeShaped | RecipeShapeless;
-
-type Enchantment = {
-  type: keyof typeof ENCHANTMENTS
-  level?: number | string
-  short?: boolean
-};
-
-type TextRich = {
-  text: string
-  color?: typeof COLORS[number],
-  format?: typeof FORMATS[number]
-};
-
-type Text = string | TextRich;
-```
-
-## Vanilla
-
- - `add` - Add a crafting table recipe.
-    - Shaped recipe: `object`
-    - Shapeless recipe: `Array`
- - `addMirror` - Adds a shaped crafting table recipe with mirrored variant.
- - `remove` - Removes both shaped and shapeless recipes
- - `removeShaped` - Removes only shaped recipes
- - `removeShapeless` - Removes only shaped recipes
- - `replace` - Replaced crafting recipe
-    - Shaped recipe: `object`
-    - Shapeless recipe: `Array`
- - `replaceAll` - Replace all recipes
- - `replaceMany` - Remove all recipes and add multiple recipes
- - `addFurnace` - Adds furnace recipe
- - `removeFurnace` - Removes furnace recipe
-
-### Crafting patterns
+### Patterns
 
 Shaped crafting recipes support the following shorthand patterns, in order:
 
@@ -207,8 +143,9 @@ Shaped crafting recipes support the following shorthand patterns, in order:
   [7, 8, 9]
 ]
 ```
+### Recipes
 
-## Items
+#### Items
  
  - `addDict` - Add ingredients to ore dictionary
  - `removeDict` - Remove ingredients from ore dictionary
@@ -223,7 +160,7 @@ Shaped crafting recipes support the following shorthand patterns, in order:
 
 <i>* It is currently not possible to remove item tooltips.</i>
 
-### Formatting
+##### Formatting
 
 `withName`, `withTooltip` and `withTooltipShift` accept formatting strings:
 
@@ -243,15 +180,38 @@ withName('<minecraft:bread>', [
   { text: 'with butter', colour: 'yellow', format: 'italic' }
 ]);
 ```
+#### Vanilla
 
-## Avaritia
+ - `add` - Add a crafting table recipe.
+    - Shaped recipe: `object`
+    - Shapeless recipe: `Array`
+ - `addMirror` - Adds a shaped crafting table recipe with mirrored variant.
+ - `remove` - Removes both shaped and shapeless recipes
+ - `removeShaped` - Removes only shaped recipes
+ - `removeShapeless` - Removes only shaped recipes
+ - `replace` - Replaced crafting recipe
+    - Shaped recipe: `object`
+    - Shapeless recipe: `Array`
+ - `replaceAll` - Replace all recipes
+ - `replaceMany` - Remove all recipes and add multiple recipes
+ - `addFurnace` - Adds furnace recipe
+ - `removeFurnace` - Removes furnace recipe
+
+#### Applied Energistics 2
+
+ - `addGrinder` - Add Quartz Grindstone recipe
+ - `removeGrinder` - Remove Quartz Grindstone recipe
+ - `addInscriber` - Add Inscriber recipe
+ - `removeInscriber` - Remove Inscriber recipe
+
+#### Avaritia
 
  - `addCompressor` - Add Neutronium Compressor recipe
  - `removeCompressor` - Remove Neutronium Compressor recipe
  - `addExtreme` - Add Extreme Crafting recipe
  - `removeExtreme` - Remove Extreme Crafting recipe
 
-## ExNihilo
+#### ExNihilo
 
  - `addComposter` - Add item that can be composted to dirt
     - `fill` must be a value between `0` and `1`
@@ -269,7 +229,7 @@ withName('<minecraft:bread>', [
         - `0.13 => 1 / 0.13 => ~7.69 => 8 (12.5%)`
  - `removeSieve` - Remove sieve recipe
 
-### Examples
+###### Examples
 
 ```TypeScript
 import { exnihilo } from 'zen-flow';
@@ -287,26 +247,26 @@ exnihilo.addSieve('<minecraft:cobblestone>', {
 });
 ```
 
-## ExtraUtilities
+#### ExtraUtilities
 
  - `addQED` - Add QED recipe
     - QED only accepts <b>shaped</b> recipes
  - `removeQED` - Remove QED recipe
  - `replaceQED` - Replace QED recipe
 
-## MineFactoryReloaded
+#### MineFactoryReloaded
 
  - `addLaser` - Add ore to the Mining Laser ore table
  - `removeLaser` - Remove ore from the Mining Laser ore table
  - `addFoci` - Add ores to the Laser Focus ore table
  - `removeFoci` - Remove ores from the Laser Focus ore table
 
-## NEI
+#### NEI
 
  - `hide` - Hide item from NEI
  - `addNEI` - Add item to NEI
 
-## ThermalExpansion
+#### ThermalExpansion
 
  - `addCrucibleThermal` - Add Magma Crucible recipe
  - `removeCrucibleThermal` - Remove Magma Crucible recipe

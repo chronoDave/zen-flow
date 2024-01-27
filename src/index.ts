@@ -1,4 +1,11 @@
 export {
+  addGrinder,
+  removeGrinder,
+  addInscriber,
+  removeInscriber
+} from './recipes/appliedEnergistics';
+
+export {
   addCompressor,
   removeCompressor,
   addExtreme,
