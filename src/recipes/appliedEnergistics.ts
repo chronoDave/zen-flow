@@ -26,6 +26,8 @@ export type RecipeInscriber = {
  * Common values:
  *  - Ingot: `2 turns`
  *  - Ore: `4 turns`
+ *
+ * Bonus `n` must be between `0` and `1`
  */
 export const addGrinder = (recipe: RecipeGrinder) => {
   const out = formatArgs(

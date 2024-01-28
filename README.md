@@ -200,6 +200,7 @@ withName('<minecraft:bread>', [
 #### Applied Energistics 2
 
  - `addGrinder` - Add Quartz Grindstone recipe
+    - `bonus` must be a value between `0` and `1`
  - `removeGrinder` - Remove Quartz Grindstone recipe
  - `addInscriber` - Add Inscriber recipe
  - `removeInscriber` - Remove Inscriber recipe
