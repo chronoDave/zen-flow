@@ -1,5 +1,5 @@
 import { Ingredient, Stack } from '../types';
-import { formatArgs, formatIngredient, formatStack } from '../format';
+import { formatArgs, formatIngredient } from '../format';
 import { capitalize } from '../utils';
 
 export type RecipeGrinder = {
@@ -30,12 +30,14 @@ export type RecipeInscriber = {
  * Bonus `n` must be between `0` and `1`
  */
 export const addGrinder = (recipe: RecipeGrinder) => {
+  const formatBonus = (stack: Stack) => `${stack.id}, ${stack.n}`;
+
   const out = formatArgs(
     formatIngredient(recipe.in),
     formatIngredient(recipe.out),
     recipe.turns,
-    recipe.bonus && formatStack(recipe.bonus.primary),
-    recipe.bonus?.secondary && formatStack(recipe.bonus.secondary)
+    recipe.bonus && formatBonus(recipe.bonus.primary),
+    recipe.bonus?.secondary && formatBonus(recipe.bonus.secondary)
   );
 
   return `mods.appeng.Grinder.addRecipe(${out});`;
