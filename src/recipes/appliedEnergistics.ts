@@ -44,7 +44,7 @@ export const addGrinder = (recipe: RecipeGrinder) => {
 };
 
 export const removeGrinder = (id: string) =>
-  `mods.appeng.Grinder.removeRecipe(${id})`;
+  `mods.appeng.Grinder.removeRecipe(${id});`;
 
 export const addInscriber = (recipe: RecipeInscriber) => {
   const out = formatArgs(
