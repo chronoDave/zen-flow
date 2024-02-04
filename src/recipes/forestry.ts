@@ -1,9 +1,9 @@
-import { formatArgs, formatIngredient, formatStack } from '../format';
-import { Stack, Ingredient } from '../types';
+import { formatArgs, formatIngredient, formatRecipe, formatStack } from '../format';
+import { Stack, Ingredient, RecipeShaped } from '../types';
 import { isObject } from '../utils';
 
 export type RecipeCarpenter = {
-  in: string[],
+  recipe: RecipeShaped,
   top: Stack,
   ticks: number
   liquid?: Stack,
@@ -56,7 +56,7 @@ export type RecipeFabricatorFuel = {
 export const addCarpenter = (ingredient: Ingredient, recipe: RecipeCarpenter) => {
   const out = formatArgs(
     formatIngredient(ingredient),
-    recipe.in,
+    formatRecipe(recipe.recipe),
     recipe.liquid && formatStack(recipe.liquid),
     recipe.ticks,
     formatStack(recipe.top)
@@ -68,7 +68,7 @@ export const addCarpenter = (ingredient: Ingredient, recipe: RecipeCarpenter) =>
 export const removeCarpenter = (id: string, liquid?: string) =>
   `mods.forestry.Carpenter.removeRecipe(${formatArgs(id, liquid)});`;
 
-export const addCentrifuge = (ingredients: Ingredient[], recipe: RecipeCarpenter) => {
+export const addCentrifuge = (ingredients: Ingredient[], recipe: RecipeCentrifuge) => {
   const out = formatArgs(
     ingredients.map(ingredient => (isObject(ingredient) ?
       `${ingredient.id} % ${ingredient.n}` :
