@@ -92,6 +92,7 @@ Array.from({ length: 11 })
   - [Items](#items)
     - [Formatting](#formatting)
   - [Vanilla](#vanilla)
+  - [Forestry](#forestry)
   - [Applied Energistics 2](#appliedenergistics2)
   - [Avaritia](#avaritia)
   - [ExNihilo](#exnihilo)
@@ -196,6 +197,27 @@ withName('<minecraft:bread>', [
  - `replaceMany` - Remove all recipes and add multiple recipes
  - `addFurnace` - Adds furnace recipe
  - `removeFurnace` - Removes furnace recipe
+
+#### Forestry
+
+ - `addCarpenter` - Add Carpenter recipe
+ - `removeCarpenter` - Remove Carpenter recipe
+ - `addCentrifuge` - Add Centrifuge recipe
+ - `removeCentrifuge` - Remove Centrifuge recipe
+ - `addFermenter` - Add Fermenter recipe
+ - `removeFermenter` - Remove Fermenter recipe
+ - `addFermenterFuel` - Add Fermenter fuel
+ - `removeFermenterFuel` - Remove Fermenter fuel
+ - `addMoistener` - Add Moistener recipe
+ - `removeMoistener` - Remove Moistener recipe
+ - `addSqueezer` - Add Squeezer recipe
+ - `removeSqueezer` - Remove Squeezer recipe
+ - `addStill` - Add Still recipe
+ - `removeStill` - Remove Still recipe
+ - `addFabricator` - Add Thermionic Fabricator recipe
+ - `removeFabricator` - Remove Thermionic Fabricator recipe
+ - `addFabricatorFuel` - Add Thermionic Fabricator glass source
+ - `removeFabricatorFuel` - Remove Thermionic Fabricator glass source
 
 #### Applied Energistics 2
 
