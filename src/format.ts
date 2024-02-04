@@ -26,6 +26,8 @@ export const formatStack = (stack: Stack) =>
 export const formatIngredient = (ingredient: Ingredient) => isObject(ingredient) ?
   formatStack(ingredient) :
   ingredient;
+export const formatWeight = (weight: number) => (id: string) =>
+  `${id}.weight(${weight})`;
 
 export const formatList = (list: Array<string | number>) =>
   `[${list.join(', ')}]`;

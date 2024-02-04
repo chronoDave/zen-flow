@@ -1,17 +1,25 @@
 import { MFR_FOCI } from '../const';
-import { formatArgs, formatIngredient } from '../format';
+import { formatArgs, formatIngredient, formatWeight } from '../format';
 import { Ingredient } from '../types';
 
 /**
  * Requires: `import mods.mfr.MiningLaser;`
  */
-export const addLaser = (ingredient: Ingredient) =>
-  `MiningLaser.addOre(${formatArgs(formatIngredient(ingredient))});`;
+export const addLaser = (ingredient: Ingredient, weight?: number) => {
+  const out = formatArgs(
+    weight ?
+      formatWeight(weight)(formatIngredient(ingredient)) :
+      formatIngredient(ingredient)
+  );
+
+  return `MiningLaser.addOre(${out});`;
+};
 
 /**
- *  - Requires: `import mods.mfr.MiningLaser;`
+ *  Requires: `import mods.mfr.MiningLaser;`
+ *
  *  - Accepts ore dictionary
- * @param id - Laser output
+ * @param id Ore
  */
 export const removeLaser = (id: string) =>
   `MiningLaser.removeOre(${id});`;
@@ -25,7 +33,7 @@ export const addFoci = (foci: keyof typeof MFR_FOCI, ids: string[]) => ids
 
 /**
  * Requires: `import mods.mfr.MiningLaser;`
- * @param ids - Laser output
+ * @param ids Ores
  */
 export const removeFoci = (foci: keyof typeof MFR_FOCI, ids: string[]) => ids
   .map(id => `MiningLaser.removePreferredOre(${formatArgs(MFR_FOCI[foci], id)});`)
