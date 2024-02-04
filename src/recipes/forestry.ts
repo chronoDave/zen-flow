@@ -4,7 +4,7 @@ import { isObject } from '../utils';
 
 export type RecipeCarpenter = {
   recipe: RecipeShaped,
-  top: Stack,
+  top?: Stack,
   ticks: number
   liquid?: Stack,
 };
@@ -59,7 +59,7 @@ export const addCarpenter = (ingredient: Ingredient, recipe: RecipeCarpenter) =>
     formatRecipe(recipe.recipe),
     recipe.liquid && formatStack(recipe.liquid),
     recipe.ticks,
-    formatStack(recipe.top)
+    recipe.top && formatStack(recipe.top)
   );
 
   return `mods.forestry.Carpenter.addRecipe(${out});`;
