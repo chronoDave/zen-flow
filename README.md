@@ -23,7 +23,7 @@ $ npm i zen-flow -D
 
  - Easy to use API, written in <b>TypeScript</b>.
  - <b>Polymorphic</b> and <b>variadic</b>; do more with less code.
- - Supports both [MineTweaker3](https://minetweaker3.aizistral.com/wiki/Main_Page) and [ModTweaker](https://web.archive.org/web/20200219174745/http://minetweaker3.powerofbytes.com/wiki/ModTweaker#Currently_Supported_Mods_1.7.10).
+ - Supports both [MineTweaker3](https://minetweaker3.aizistral.com/wiki/Main_Page) and [ModTweaker](https://minetweaker3.aizistral.com/wiki/ModTweaker).
  - <b>Formatted output</b>; makes debugging easier.
 
 ## Getting started
