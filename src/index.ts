@@ -32,6 +32,26 @@ export {
 } from './recipes/extraUtilities';
 
 export {
+  addCarpenter,
+  removeCarpenter,
+  addCentrifuge,
+  removeCentrifuge,
+  addFermenter,
+  removeFermenter,
+  addFermenterFuel,
+  removeFermenterFuel,
+  removeMoistener,
+  addSqueezer,
+  removeSqueezer,
+  addStill,
+  removeStill,
+  addFabricator,
+  removeFabricator,
+  addFabricatorFuel,
+  removeFabricatorFuel
+} from './recipes/forestry';
+
+export {
   addDict,
   removeDict,
   withName,
