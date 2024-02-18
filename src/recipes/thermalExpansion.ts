@@ -54,7 +54,7 @@ export type RecipeTransposerExtract = {
   rf: number
   in: string,
   liquid: Stack
-  bonus?: Stack
+  bonus: Stack
 };
 
 /**
@@ -224,8 +224,8 @@ export const addTransposerExtract = (recipe: RecipeTransposerExtract) => {
     recipe.rf,
     recipe.in,
     formatStack(recipe.liquid),
-    recipe.bonus && recipe.bonus.id,
-    recipe.bonus && recipe.bonus.n,
+    recipe.bonus.id,
+    recipe.bonus.n,
   );
 
   return `mods.thermalexpansion.Transposer.addExtractRecipe(${out});`;
