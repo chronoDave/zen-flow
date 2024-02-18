@@ -15,8 +15,9 @@ export type RecipeCentrifuge = {
 };
 
 export type RecipeFermenter = {
-  in: string,
-  liquid: Stack,
+  in: Stack
+  out: Stack
+  top: string
 };
 
 export type RecipeFermenterFuel = {
@@ -84,13 +85,13 @@ export const addCentrifuge = (ingredients: Ingredient[], recipe: RecipeCentrifug
 export const removeCentrifuge = (id: string) =>
   `mods.forestry.Centrifuge.removeRecipe(${id});`;
 
-export const addFermenter = (liquid: Stack, recipe: RecipeFermenter) => {
+export const addFermenter = (recipe: RecipeFermenter) => {
   const out = formatArgs(
-    liquid.id,
-    recipe.in,
-    recipe.liquid.id,
-    liquid.n,
-    recipe.liquid.n
+    recipe.out.id,
+    recipe.top,
+    recipe.in.id,
+    recipe.in.n,
+    recipe.out.n / recipe.in.n
   );
 
   return `mods.forestry.Fermenter.addRecipe(${out});`;
