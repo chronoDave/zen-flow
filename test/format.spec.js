@@ -107,7 +107,7 @@ test('[format.formatName] returns formatted string', t => {
 });
 
 test('[format.formatTooltip] returns formatted string', t => {
-  t.equal(formatTooltip('Bread'), '"Bread"');
+  t.equal(formatTooltip('Bread'), 'format.gray("Bread")');
   t.equal(
     formatTooltip({ text: 'Bread', color: 'red' }),
     'format.red("Bread")'
@@ -121,7 +121,7 @@ test('[format.formatTooltip] returns formatted string', t => {
       'Bread',
       { text: 'with butter', color: 'yellow', format: 'bold' }
     ]),
-    '"Bread" + format.yellow(format.bold("with butter"))'
+    'format.gray("Bread") + format.yellow(format.bold("with butter"))'
   );
 
   t.end();

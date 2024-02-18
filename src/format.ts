@@ -59,7 +59,7 @@ export const formatName = (texts: Text | Text[]) => {
 
 export const formatTooltip = (texts: Text | Text[]) => toArray(texts)
   .map(text => {
-    if (typeof text === 'string') return formatLiteral(text);
+    if (typeof text === 'string') return TOOLTIP_COLOR.gray(formatLiteral(text));
 
     const format = text.format ?
       TOOLTIP_FORMAT[text.format](formatLiteral(text.text)) :
