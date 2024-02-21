@@ -1,10 +1,15 @@
-import { formatArgs, formatIngredient, formatRecipe, formatStack } from '../format';
+import {
+  formatArgs,
+  formatIngredient,
+  formatRecipe,
+  formatStack
+} from '../format';
 import { Stack, Ingredient, RecipeShaped } from '../types';
 import { isObject } from '../utils';
 
 export type RecipeCarpenter = {
   recipe: RecipeShaped,
-  top?: Stack,
+  top?: Ingredient,
   ticks: number
   liquid?: Stack,
 };
@@ -60,7 +65,7 @@ export const addCarpenter = (ingredient: Ingredient, recipe: RecipeCarpenter) =>
     formatRecipe(recipe.recipe),
     recipe.liquid && formatStack(recipe.liquid),
     recipe.ticks,
-    recipe.top && formatStack(recipe.top)
+    recipe.top && formatIngredient(recipe.top)
   );
 
   return `mods.forestry.Carpenter.addRecipe(${out});`;
