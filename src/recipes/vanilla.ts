@@ -105,7 +105,7 @@ export const removeFurnace = (recipe: string | { in: string, out: string }) => {
  *  - Stick: `100`
  */
 export const addFurnaceFuel = (id: string, n: number) =>
-  `furnace.setFuel(${formatArgs(id, n)})`;
+  `furnace.setFuel(${formatArgs(id, n)});`;
 
 export const removeFurnaceFuel = (id: string) =>
   addFurnaceFuel(id, 0);
