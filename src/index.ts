@@ -102,7 +102,9 @@ export {
   removeFurnace,
   replace,
   replaceAll,
-  replaceMany
+  replaceMany,
+  addFurnaceFuel,
+  removeFurnaceFuel
 } from './recipes/vanilla';
 
 export type {
