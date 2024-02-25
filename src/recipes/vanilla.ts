@@ -15,6 +15,7 @@ import { isObject } from '../utils';
 type RecipeFurnace = {
   in: string,
   out: Ingredient
+  xp: number
 };
 
 /**
@@ -65,10 +66,21 @@ export const removeShaped = (id: string, recipe?: RecipeShaped) =>
 export const removeShapeless = (id: string, recipe?: RecipeShapeless) =>
   `recipes.removeShapeless(${id}${recipe ? `, ${formatList(recipe)}` : ''});`;
 
+/**
+ * Adds furnace recipe
+ *
+ * - Coal: `0.1xp`
+ * - Blocks: `0.1xp`
+ * - Food: `0.35xp`
+ * - Iron Ingot: `0.7xp`
+ * - Gold Ingot: `1xp`
+ * - Gems: `1xp`
+ */
 export const addFurnace = (recipe: RecipeFurnace) => {
   const out = formatArgs(
     formatIngredient(recipe.out),
-    recipe.in
+    recipe.in,
+    recipe.xp
   );
 
   return `furnace.addRecipe(${out});`;
@@ -84,6 +96,19 @@ export const removeFurnace = (recipe: string | { in: string, out: string }) => {
   if (typeof recipe === 'string') return `furnace.remove(<*>, ${recipe});`;
   return `furnace.remove(${formatArgs(recipe.out, recipe.in)});`;
 };
+
+/**
+ * Add furnace fuel
+ *
+ *  - Coal: `1600`
+ *  - Planks: `300`
+ *  - Stick: `100`
+ */
+export const addFurnaceFuel = (id: string, n: number) =>
+  `furnace.setFuel(${formatArgs(id, n)})`;
+
+export const removeFurnaceFuel = (id: string) =>
+  addFurnaceFuel(id, 0);
 
 /**
  * Replace crafting recipe

@@ -197,6 +197,8 @@ withName('<minecraft:bread>', [
  - `replaceMany` - Remove all recipes and add multiple recipes
  - `addFurnace` - Adds furnace recipe
  - `removeFurnace` - Removes furnace recipe
+ - `addFurnaceFuel` - Add furnace fuel (excluding vanilla fuels)
+ - `removeFurnaceFuel` - Removes furnace fuel (excluding vanilla fuels)
 
 #### Forestry
 
