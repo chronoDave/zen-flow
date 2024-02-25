@@ -15,7 +15,7 @@ import { isObject } from '../utils';
 type RecipeFurnace = {
   in: string,
   out: Ingredient
-  xp: number
+  xp?: number
 };
 
 /**
