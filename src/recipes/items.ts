@@ -24,11 +24,13 @@ export const removeDict = (dict: string, ids: string[]) => ids
 export const withName = (id: string, name: Text) =>
   `${id}.displayName = ${formatName(name)};`;
 
-export const withTooltip = (id: string, tooltip: Text | Text[]) =>
-  `${id}.addTooltip(${formatTooltip(tooltip)});`;
+export const withTooltip = (id: string, ...tooltips: Array<Text | Text[]>) => tooltips
+  .map(tooltip => `${id}.addTooltip(${formatTooltip(tooltip)});`)
+  .join('\n');
 
-export const withTooltipShift = (id: string, tooltip: Text | Text[]) =>
-  `${id}.addShiftTooltip(${formatTooltip(tooltip)});`;
+export const withTooltipShift = (id: string, ...tooltips: Array<Text | Text[]>) => tooltips
+  .map(tooltip => `${id}.addShiftTooltip(${formatTooltip(tooltip)});`)
+  .join('\n');
 
 export const withTag = (tag: string) => (id: string) =>
   `${id}.withTag(${tag})`;
