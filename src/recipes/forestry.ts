@@ -8,14 +8,16 @@ import { Stack, Ingredient, RecipeShaped } from '../types';
 import { isObject } from '../utils';
 
 export type RecipeCarpenter = {
-  recipe: RecipeShaped,
-  top?: Ingredient,
+  out: Ingredient
+  recipe: RecipeShaped
   ticks: number
-  liquid?: Stack,
+  top?: Ingredient
+  liquid?: Stack
 };
 
 export type RecipeCentrifuge = {
   in: string,
+  out: Ingredient[]
   ticks: number
 };
 
@@ -32,23 +34,27 @@ export type RecipeFermenterFuel = {
 };
 
 export type RecipeMoistener = {
+  out: string
   id: string
   ticks: number
 };
 
 export type RecipeSqueezer = {
+  out: Stack
   in: Ingredient[]
   bonus: Ingredient,
   ticks: number
 };
 
 export type RecipeStill = {
-  liquid: Stack,
+  in: Stack
+  out: Stack,
   ticks: number
 };
 
 export type RecipeFabricator = {
-  in: string[]
+  out: Ingredient,
+  recipe: RecipeShaped
   mb: number
   cast?: string
 };
@@ -59,9 +65,9 @@ export type RecipeFabricatorFuel = {
   temp: number
 };
 
-export const addCarpenter = (ingredient: Ingredient, recipe: RecipeCarpenter) => {
+export const addCarpenter = (recipe: RecipeCarpenter) => {
   const out = formatArgs(
-    formatIngredient(ingredient),
+    formatIngredient(recipe.out),
     formatRecipe(recipe.recipe),
     recipe.liquid && formatStack(recipe.liquid),
     recipe.ticks,
@@ -74,9 +80,9 @@ export const addCarpenter = (ingredient: Ingredient, recipe: RecipeCarpenter) =>
 export const removeCarpenter = (id: string, liquid?: string) =>
   `mods.forestry.Carpenter.removeRecipe(${formatArgs(id, liquid)});`;
 
-export const addCentrifuge = (ingredients: Ingredient[], recipe: RecipeCentrifuge) => {
+export const addCentrifuge = (recipe: RecipeCentrifuge) => {
   const out = formatArgs(
-    ingredients.map(ingredient => (isObject(ingredient) ?
+    recipe.out.map(ingredient => (isObject(ingredient) ?
       `${ingredient.id} % ${ingredient.n}` :
       ingredient
     )),
@@ -118,9 +124,9 @@ export const addFermenterFuel = (recipe: RecipeFermenterFuel) => {
 export const removeFermenterFuel = (id: string) =>
   `mods.forestry.Fermenter.removeFuel(${id});`;
 
-export const addMoistener = (id: string, recipe: RecipeMoistener) => {
+export const addMoistener = (recipe: RecipeMoistener) => {
   const out = formatArgs(
-    id,
+    recipe.out,
     recipe.id,
     recipe.ticks
   );
@@ -131,9 +137,9 @@ export const addMoistener = (id: string, recipe: RecipeMoistener) => {
 export const removeMoistener = (id: string) =>
   `mods.forestry.Moistener.removeRecipe(${id});`;
 
-export const addSqueezer = (liquid: Stack, recipe: RecipeSqueezer) => {
+export const addSqueezer = (recipe: RecipeSqueezer) => {
   const out = formatArgs(
-    formatStack(liquid),
+    formatStack(recipe.out),
     formatIngredient(recipe.bonus),
     recipe.in.map(formatIngredient),
     recipe.ticks
@@ -153,10 +159,10 @@ export const removeSqueezer = (recipe: string | { in: string[], out: string }) =
   return `mods.forestry.Squeezer.removeRecipe(${formatArgs(recipe.out, recipe.in)});`;
 };
 
-export const addStill = (liquid: Stack, recipe: RecipeStill) => {
+export const addStill = (recipe: RecipeStill) => {
   const out = formatArgs(
-    formatStack(liquid),
-    formatStack(recipe.liquid),
+    formatStack(recipe.out),
+    formatStack(recipe.in),
     recipe.ticks
   );
 
@@ -174,10 +180,10 @@ export const removeStill = (recipe: string | { in: string, out: string }) => {
   return `mods.forestry.Still.removeRecipe(${formatArgs(recipe.out, recipe.in)});`;
 };
 
-export const addFabricator = (id: string, recipe: RecipeFabricator) => {
+export const addFabricator = (recipe: RecipeFabricator) => {
   const out = formatArgs(
-    id,
-    recipe.in,
+    formatIngredient(recipe.out),
+    formatRecipe(recipe.recipe),
     recipe.mb,
     recipe.cast
   );
