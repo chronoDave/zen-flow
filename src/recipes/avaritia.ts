@@ -1,13 +1,14 @@
-import { Ingredient, Stack } from '../types';
+import { Ingredient } from '../types';
 import {
   formatArgs,
   formatId,
   formatIngredient,
   formatList
 } from '../format';
+import { isObject } from '../utils';
 
 export type RecipeCompressor = {
-  in: Stack
+  in: Ingredient
   out: string
 };
 
@@ -23,8 +24,18 @@ export type RecipeExtreme = [
   Partial<[string, string, string, string, string, string, string, string, string]>
 ];
 
-export const addCompressor = (recipe: RecipeCompressor) =>
-  `mods.avaritia.Compressor.add(${formatArgs(recipe.out, recipe.in.n, recipe.in.id)});`;
+export const addCompressor = (recipe: RecipeCompressor) => {
+  const input = isObject(recipe.in) ?
+    recipe.in :
+    { id: recipe.in, n: 1 };
+  const out = formatArgs(
+    recipe.out,
+    input.n,
+    input.id
+  );
+
+  return `mods.avaritia.Compressor.add(${out});`;
+};
 
 /**
  * @param id Compressor output
