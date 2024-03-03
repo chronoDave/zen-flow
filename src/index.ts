@@ -117,3 +117,8 @@ export type {
   TextRich,
   Text,
 } from './types';
+
+export {
+  ENCHANTMENTS,
+  MFR_FOCI
+} from './const';
