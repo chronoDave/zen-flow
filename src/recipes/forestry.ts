@@ -5,7 +5,7 @@ import {
   formatStack
 } from '../format';
 import { Stack, Ingredient, RecipeShaped } from '../types';
-import { isObject } from '../utils';
+import { isObject, toArray } from '../utils';
 
 export type RecipeCarpenter = {
   out: Ingredient
@@ -41,9 +41,9 @@ export type RecipeMoistener = {
 
 export type RecipeSqueezer = {
   out: Stack
-  in: Ingredient[]
-  bonus: Ingredient,
+  in: Ingredient | Ingredient[]
   ticks: number
+  bonus: Stack,
 };
 
 export type RecipeStill = {
@@ -137,11 +137,14 @@ export const addMoistener = (recipe: RecipeMoistener) => {
 export const removeMoistener = (id: string) =>
   `mods.forestry.Moistener.removeRecipe(${id});`;
 
+/**
+ * @param recipe.bonus - Unfortunately `bonus` is required as optional is not supported by ModTweaker
+ */
 export const addSqueezer = (recipe: RecipeSqueezer) => {
   const out = formatArgs(
     formatStack(recipe.out),
-    formatIngredient(recipe.bonus),
-    recipe.in.map(formatIngredient),
+    formatStack(recipe.bonus),
+    toArray(recipe.in).map(formatIngredient),
     recipe.ticks
   );
 

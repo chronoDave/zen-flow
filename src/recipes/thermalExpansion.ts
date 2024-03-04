@@ -145,6 +145,11 @@ export const addPulverizer = (recipe: RecipePulverizer) => {
 export const removePulverizer = (id: string) =>
   `mods.thermalexpansion.Pulverizer.removeRecipe(${id});`;
 
+/**
+ * Common values:
+ *  - Log: `800RF`
+ *  - Tools: `1600RF`
+ */
 export const addSawmill = (recipe: RecipeSawmill) => {
   const out = formatArgs(
     recipe.rf,
