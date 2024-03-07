@@ -105,7 +105,7 @@ export {
   replaceMany,
   addFurnaceFuel,
   removeFurnaceFuel
-} from './recipes/vanilla';
+} from './recipes/minecraft';
 
 export type {
   Ingredient,

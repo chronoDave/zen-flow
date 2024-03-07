@@ -8,7 +8,7 @@ const {
   formatTooltip,
   formatId,
   formatRecipe
-} = require('./build/format');
+} = require('./build/lib/format');
 
 const stick = '<minecraft:stick>';
 

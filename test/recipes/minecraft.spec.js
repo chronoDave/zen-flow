@@ -1,8 +1,8 @@
 const { test } = require('tape');
 
-const { removeShaped, removeShapeless } = require('../build/recipes/vanilla');
+const { removeShaped, removeShapeless } = require('../build/recipes/minecraft');
 
-test('[vanilla.removeShaped] does not append recipe if not provided', t => {
+test('[minecraft.removeShaped] does not append recipe if not provided', t => {
   t.equal(
     removeShaped('<minecraft:stick>'),
     'recipes.removeShaped(<minecraft:stick>);'
@@ -11,7 +11,7 @@ test('[vanilla.removeShaped] does not append recipe if not provided', t => {
   t.end();
 });
 
-test('[vanilla.removeShaped] appends recipe if provided', t => {
+test('[minecraft.removeShaped] appends recipe if provided', t => {
   t.equal(
     removeShaped('<minecraft:stick>', { 1: '<tile.wood:*>', 4: '<tile.wood:*>' }),
     'recipes.removeShaped(<minecraft:stick>, [\n\t[<tile.wood:*>, null],\n\t[<tile.wood:*>, null]\n]);'
@@ -20,7 +20,7 @@ test('[vanilla.removeShaped] appends recipe if provided', t => {
   t.end();
 });
 
-test('[vanilla.removeShapeless] does not append recipe if not provided', t => {
+test('[minecraft.removeShapeless] does not append recipe if not provided', t => {
   t.equal(
     removeShapeless('<minecraft:stick>'),
     'recipes.removeShapeless(<minecraft:stick>);'
@@ -29,7 +29,7 @@ test('[vanilla.removeShapeless] does not append recipe if not provided', t => {
   t.end();
 });
 
-test('[vanilla.removeShapeless] appends recipe if provided', t => {
+test('[minecraft.removeShapeless] appends recipe if provided', t => {
   t.equal(
     removeShapeless('<minecraft:stick>', ['<tile.wood:*>', '<tile.wood:*>']),
     'recipes.removeShapeless(<minecraft:stick>, [<tile.wood:*>, <tile.wood:*>]);'
