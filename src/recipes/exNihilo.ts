@@ -1,11 +1,8 @@
 import { Stack } from '../types';
 import { formatArgs, formatStack } from '../format';
-import {
-  clamp,
-  fill,
-  isObject,
-  toArray
-} from '../utils';
+import { clamp } from '../lib/math';
+import { fill, toArray } from '../lib/array';
+import { isObject } from '../lib/assert';
 
 export type RecipeComposter = {
   id: string,

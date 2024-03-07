@@ -10,7 +10,7 @@ import {
   RecipeShaped,
   RecipeShapeless
 } from '../types';
-import { isObject } from '../utils';
+import { isObject } from '../lib/assert';
 
 type RecipeFurnace = {
   in: string,

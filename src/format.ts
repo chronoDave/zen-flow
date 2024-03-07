@@ -12,7 +12,8 @@ import {
   RecipeShaped,
   Text
 } from './types';
-import { isObject, toArray } from './utils';
+import { isObject } from './lib/assert';
+import { toArray } from './lib/array';
 
 export const formatFloat = (n: number) => n % 1 === 0 ?
   `${n}.0` :

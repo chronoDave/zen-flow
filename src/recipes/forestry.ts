@@ -5,7 +5,8 @@ import {
   formatStack
 } from '../format';
 import { Stack, Ingredient, RecipeShaped } from '../types';
-import { isObject, toArray } from '../utils';
+import { isObject } from '../lib/assert';
+import { toArray } from '../lib/array';
 
 export type RecipeCarpenter = {
   out: Ingredient

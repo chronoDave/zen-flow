@@ -5,7 +5,7 @@ import {
   formatTooltip
 } from '../format';
 import { Enchantment, Text } from '../types';
-import { toArray } from '../utils';
+import { toArray } from '../lib/array';
 
 /**
  * @param dict Valid ore dictionary value: http://minetweaker3.powerofbytes.com/wiki/Tutorial:Ore_Dictionary

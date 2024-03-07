@@ -5,7 +5,7 @@ import {
   formatIngredient,
   formatList
 } from '../format';
-import { isObject } from '../utils';
+import { isObject } from '../lib/assert';
 
 export type RecipeCompressor = {
   in: Ingredient
