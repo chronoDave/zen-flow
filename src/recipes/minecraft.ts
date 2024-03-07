@@ -37,7 +37,7 @@ export const add = (item: Ingredient, recipe: Recipe) => {
 };
 
 /**
- * Add shaped crafint recipe with mirror
+ * Add shaped crafing recipe with mirror
  */
 export const addMirror = (item: Ingredient, recipe: RecipeShaped) => {
   const out = formatArgs(
