@@ -1,4 +1,4 @@
-import { formatArgs, formatIngredient, formatStack } from '../format';
+import { formatArgs, formatIngredient, formatStack } from '../lib/format';
 import { Ingredient, Stack } from '../types';
 
 export type RecipeCrucible = {

@@ -1,4 +1,4 @@
-import { formatArgs, formatIngredient, formatRecipe } from '../format';
+import { formatArgs, formatIngredient, formatRecipe } from '../lib/format';
 import { Ingredient, RecipeShaped } from '../types';
 
 export const addQED = (ingredient: Ingredient, recipe: RecipeShaped) => {

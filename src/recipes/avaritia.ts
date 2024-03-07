@@ -4,7 +4,7 @@ import {
   formatId,
   formatIngredient,
   formatList
-} from '../format';
+} from '../lib/format';
 import { isObject } from '../lib/assert';
 
 export type RecipeCompressor = {

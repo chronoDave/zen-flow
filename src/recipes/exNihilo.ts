@@ -1,5 +1,5 @@
 import { Stack } from '../types';
-import { formatArgs, formatStack } from '../format';
+import { formatArgs, formatStack } from '../lib/format';
 import { clamp } from '../lib/math';
 import { fill, toArray } from '../lib/array';
 import { isObject } from '../lib/assert';

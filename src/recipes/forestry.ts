@@ -3,7 +3,7 @@ import {
   formatIngredient,
   formatRecipe,
   formatStack
-} from '../format';
+} from '../lib/format';
 import { Stack, Ingredient, RecipeShaped } from '../types';
 import { isObject } from '../lib/assert';
 import { toArray } from '../lib/array';

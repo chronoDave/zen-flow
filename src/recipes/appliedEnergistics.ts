@@ -1,5 +1,5 @@
 import { Ingredient, Stack } from '../types';
-import { formatArgs, formatIngredient } from '../format';
+import { formatArgs, formatIngredient } from '../lib/format';
 import { capitalize } from '../lib/string';
 
 export type RecipeGrinder = {

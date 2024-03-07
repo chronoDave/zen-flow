@@ -3,7 +3,7 @@ import {
   formatList,
   formatName,
   formatTooltip
-} from '../format';
+} from '../lib/format';
 import { Enchantment, Text } from '../types';
 import { toArray } from '../lib/array';
 

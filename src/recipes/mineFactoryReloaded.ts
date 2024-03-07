@@ -1,5 +1,5 @@
 import { MFR_FOCI } from '../const';
-import { formatArgs, formatIngredient, formatWeight } from '../format';
+import { formatArgs, formatIngredient, formatWeight } from '../lib/format';
 import { Ingredient } from '../types';
 
 /**

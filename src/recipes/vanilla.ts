@@ -3,7 +3,7 @@ import {
   formatIngredient,
   formatList,
   formatRecipe
-} from '../format';
+} from '../lib/format';
 import {
   Ingredient,
   Recipe,

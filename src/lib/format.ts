@@ -4,16 +4,17 @@ import {
   NAME_FORMAT,
   TOOLTIP_COLOR,
   TOOLTIP_FORMAT
-} from './const';
+} from '../const';
 import {
   Enchantment,
   Ingredient,
   Stack,
   RecipeShaped,
   Text
-} from './types';
-import { isObject } from './lib/assert';
-import { toArray } from './lib/array';
+} from '../types';
+
+import { isObject } from './assert';
+import { toArray } from './array';
 
 export const formatFloat = (n: number) => n % 1 === 0 ?
   `${n}.0` :
