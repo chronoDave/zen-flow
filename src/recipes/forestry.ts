@@ -139,7 +139,7 @@ export const removeMoistener = (id: string) =>
   `mods.forestry.Moistener.removeRecipe(${id});`;
 
 /**
- * @param recipe.bonus - Unfortunately `bonus` is required as optional is not supported by ModTweaker
+ * @param recipe.bonus - ModTweaker does not support optional `bonus`
  */
 export const addSqueezer = (recipe: RecipeSqueezer) => {
   const out = formatArgs(
@@ -158,10 +158,8 @@ export const addSqueezer = (recipe: RecipeSqueezer) => {
  * - Recipe: `string` => Remove all recipes
  * - Recipe: `object` => Remove specific recipe
  */
-export const removeSqueezer = (recipe: string | { in: string[], out: string }) => {
-  if (typeof recipe === 'string') return `mods.forestry.Squeezer.removeRecipe(${recipe});`;
-  return `mods.forestry.Squeezer.removeRecipe(${formatArgs(recipe.out, recipe.in)});`;
-};
+export const removeSqueezer = (id: string | string[], liquid: string) =>
+  `mods.forestry.Squeezer.removeRecipe(${formatArgs(liquid, toArray(id))});`;
 
 export const addStill = (recipe: RecipeStill) => {
   const out = formatArgs(
@@ -179,10 +177,8 @@ export const addStill = (recipe: RecipeStill) => {
  * - Recipe: `string` => Remove all recipes
  * - Recipe: `object` => Remove specific recipe
  */
-export const removeStill = (recipe: string | { in: string, out: string }) => {
-  if (typeof recipe === 'string') return `mods.forestry.Still.removeRecipe(${recipe});`;
-  return `mods.forestry.Still.removeRecipe(${formatArgs(recipe.out, recipe.in)});`;
-};
+export const removeStill = (id: string, liquid?: string) =>
+  `mods.forestry.Still.removeRecipe(${formatArgs(id, liquid)});`;
 
 export const addFabricator = (recipe: RecipeFabricator) => {
   const out = formatArgs(
