@@ -100,6 +100,7 @@ Array.from({ length: 11 })
   - [MineFactoryReloaded](#minefactoryreloaded)
   - [NEI](#nei)
   - [ThermalExpansion](#thermalexpansion)
+  - [Tinkers' Construct](#tinkersconstruct)
 
 ### Patterns
 
@@ -311,3 +312,40 @@ exnihilo.addSieve('<minecraft:cobblestone>', {
  - `removeTransposerExtract` - Remove Fluid Transposer extract recipe
 
 <i>* All bonus properties take a number between 1 and 100</i>
+
+#### Tinkers' Construct
+
+  - `addCastBasin` - Add Casting Basin recipe
+  - `removeCastBasin` - Remove Casting Basin recipe
+  - `addCastTable` - Add Casting Table recipe
+  - `removeCastTable` - Remove Casting Table recipe
+  - `addDryingRack` - Add Drying Rack recipe
+  - `removeDryingRack` - Remove Drying Rack recipe
+  - `removeModifier` - Removes [modifier](https://tinkers-construct.fandom.com/wiki/Modifiers)
+  - `addSmeltery` - Add Smeltery recipe
+  - `removeSmeltery` - Remove Smeltery recipe
+  - `addSmelteryAlloy` - Add Smeltery alloy recipe
+  - `removeSmelteryAlloy` - Remove Smeltery alloy recipe
+  - `addSmelteryFuel` - Add Smeltery fuel
+  - `removeSmelteryFuel` - Remove Smeltery fuel
+  - `addRepair` - Add repair material
+  - `removeRepair` - Remove repair material
+  - `setMaterialStats` - Set material stats
+  - `setMaterialName` - Set material name
+  - `setMaterialLevelHarvest` - Set material harvest level
+  - `setMaterialDurability` - Set material durability
+  - `setMaterialSpeed` - Set material speed
+  - `setMaterialDamage` - Set material damage
+  - `setMaterialModifierHandle` - Set material handle modifier
+  - `setMaterialLevelReinforced` - Set material reinforced level
+  - `setMaterialLevelStonebound` - Set material stonebound level
+  - `setMaterialStyle` - Set material style
+  - `setMaterialAbility` - Set material ability
+  - `setBowStats` - Set bow stats
+  - `setBowDurability` - Set bow durability
+  - `setBowDrawSpeed` - Set bow draw speed
+  - `setBowFlightSpeed` - Set bow flight speed
+  - `setArrowStats` - Set arrow stats
+  - `setArrowMass` - Set arrow mass
+  - `setArrowBreak`, - Set arrow break percentage
+  - `setArrowAccuracy` - set arrow accuracy

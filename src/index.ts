@@ -107,6 +107,43 @@ export {
   removeFurnaceFuel
 } from './recipes/minecraft';
 
+export {
+  addCastBasin,
+  removeCastBasin,
+  addCastTable,
+  removeCastTable,
+  addDryingRack,
+  removeDryingRack,
+  removeModifier,
+  addSmeltery,
+  removeSmeltery,
+  addSmelteryAlloy,
+  removeSmelteryAlloy,
+  addSmelteryFuel,
+  removeSmelteryFuel,
+  addRepair,
+  removeRepair,
+  setMaterialStats,
+  setMaterialName,
+  setMaterialLevelHarvest,
+  setMaterialDurability,
+  setMaterialSpeed,
+  setMaterialDamage,
+  setMaterialModifierHandle,
+  setMaterialLevelReinforced,
+  setMaterialLevelStonebound,
+  setMaterialStyle,
+  setMaterialAbility,
+  setBowStats,
+  setBowDurability,
+  setBowDrawSpeed,
+  setBowFlightSpeed,
+  setArrowStats,
+  setArrowMass,
+  setArrowBreak,
+  setArrowAccuracy
+} from './recipes/tinkersConstruct';
+
 export type {
   Ingredient,
   Stack,

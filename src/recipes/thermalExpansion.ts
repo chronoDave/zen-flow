@@ -92,6 +92,11 @@ export const addFurnace = (recipe: RecipeFurnace) => {
   return `mods.thermalexpansion.Furnace.addRecipe(${out});`;
 };
 
+/**
+ * Removes all furnace outputs from input item
+ *
+ * For example, `<minecraft:potato>` will remove the baked potato recipe
+ * */
 export const removeFurnace = (id: string) =>
   `mods.thermalexpansion.Furnace.removeRecipe(${id});`;
 
