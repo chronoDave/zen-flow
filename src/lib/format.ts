@@ -108,7 +108,11 @@ export const formatRecipe = (recipe: RecipeShaped) => {
 export const formatArgs = <T extends Array<string | number | boolean | null | string[] | number[]>>(...args: Partial<T>) => {
   const list = args
     .filter(x => x !== undefined)
-    .map(x => Array.isArray(x) ? formatList(x) : x) as T;
+    .map(x => {
+      if (Array.isArray(x)) return formatList(x);
+      if (x === null) return 'null';
+      return x;
+    }) as T;
 
   return list.length > 3 ?
     `\n\t${list.join(',\n\t')}\n` :
