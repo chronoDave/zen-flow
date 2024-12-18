@@ -152,7 +152,7 @@ export type {
   Recipe,
   Enchantment,
   TextRich,
-  Text,
+  Text
 } from './types';
 
 export {

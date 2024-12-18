@@ -1,21 +1,21 @@
-import { Stack } from '../types';
+import type { Stack } from '../types';
 import { formatArgs, formatStack } from '../lib/format';
 import { clamp } from '../lib/math';
 import { fill, toArray } from '../lib/array';
 import { isObject } from '../lib/assert';
 
 export type RecipeComposter = {
-  id: string,
-  fill: number,
-  hex?: string
+  id: string;
+  fill: number;
+  hex?: string;
 };
 
 export type RecipeCrucible = {
-  id: string,
-  liquid: Stack
+  id: string;
+  liquid: Stack;
 };
 
-export type RecipeHammer = Record<string, Array<number | { chance: number, modifier: number }>>;
+export type RecipeHammer = Record<string, Array<number | { chance: number; modifier: number }>>;
 
 export type RecipeSieve = Record<string, number>;
 

@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2022",
     "lib": ["esnext"],
+    "module": "es2015",
+    "moduleResolution": "bundler",
     
     "strict": true,
     "noImplicitAny": true,

@@ -1,5 +1,5 @@
 import { formatArgs, formatIngredient, formatRecipe } from '../lib/format';
-import { Ingredient, RecipeShaped } from '../types';
+import type { Ingredient, RecipeShaped } from '../types';
 
 export const addQED = (ingredient: Ingredient, recipe: RecipeShaped) => {
   const out = formatArgs(

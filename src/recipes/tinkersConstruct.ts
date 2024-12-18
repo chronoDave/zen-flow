@@ -1,4 +1,4 @@
-import { Stack } from '../types';
+import type { Stack } from '../types';
 import {
   formatArgs,
   formatFloat,
@@ -11,7 +11,7 @@ export type RecipeCast = {
   out: string;
   catalyst?: {
     id: string;
-    consume?: boolean
+    consume?: boolean;
   };
   ticks: number;
 };
@@ -75,7 +75,7 @@ export type RecipeSmeltery = {
   in: string;
   liquid: Stack;
   temperature: number;
-  render?: string
+  render?: string;
 };
 
 export const addSmeltery = (recipe: RecipeSmeltery) => {
@@ -152,15 +152,15 @@ export type RecipeToolStats = {
     harvest: number;
     reinforced: number;
     stonebound: number;
-  }
+  };
   value: {
     durability: number;
     speed: number;
     damage: number;
-  }
+  };
   modifier: {
     handle: number;
-  }
+  };
 };
 
 export const setMaterialStats = (material: string, recipe: RecipeToolStats) => {
@@ -276,7 +276,7 @@ export type RecipeBowStats = {
   speed: {
     draw: number;
     flight: number;
-  }
+  };
 };
 
 export const setBowStats = (material: string, recipe: RecipeBowStats) => {

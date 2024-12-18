@@ -1,4 +1,4 @@
-import { Ingredient } from '../types';
+import type { Ingredient } from '../types';
 import {
   formatArgs,
   formatId,
@@ -8,8 +8,8 @@ import {
 import { isObject } from '../lib/assert';
 
 export type RecipeCompressor = {
-  in: Ingredient
-  out: string
+  in: Ingredient;
+  out: string;
 };
 
 export type RecipeExtreme = [

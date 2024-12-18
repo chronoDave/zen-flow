@@ -5,7 +5,7 @@ import {
   TOOLTIP_COLOR,
   TOOLTIP_FORMAT
 } from '../const';
-import {
+import type {
   Enchantment,
   Ingredient,
   Stack,

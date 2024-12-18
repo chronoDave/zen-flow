@@ -1,12 +1,12 @@
-const { test } = require('tape');
+import test from 'tape';
 
-const { addSieve, addHammer } = require('./build/recipes/exNihilo');
+import { addSieve, addHammer } from './exNihilo';
 
 test('[exNihilo.addHammer] creates recipe', t => {
   t.equal(
     addHammer('<minecraft:stick>', {
-      '<minecraft:bread>': 0.5,
-      '<minecraft:stick>': { chance: 2, modifier: 0.5 },
+      '<minecraft:bread>': [0.5],
+      '<minecraft:stick>': [{ chance: 2, modifier: 0.5 }],
       '<minecraft:coal>': [{ chance: 2, modifier: 2 }, 1]
     }),
     'mods.exnihilo.Hammer.addRecipe(\n\t<minecraft:stick>,\n\t[<minecraft:bread>, <minecraft:stick>, <minecraft:coal>, <minecraft:coal>],\n\t[0.5, 1, 1, 1],\n\t[1, 0.5, 2, 1]\n);'

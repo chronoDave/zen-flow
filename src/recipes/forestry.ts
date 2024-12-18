@@ -4,66 +4,66 @@ import {
   formatRecipe,
   formatStack
 } from '../lib/format';
-import { Stack, Ingredient, RecipeShaped } from '../types';
+import type { Stack, Ingredient, RecipeShaped } from '../types';
 import { isObject } from '../lib/assert';
 import { toArray } from '../lib/array';
 
 export type RecipeCarpenter = {
-  out: Ingredient
-  recipe: RecipeShaped
-  ticks: number
-  top?: Ingredient
-  liquid?: Stack
+  out: Ingredient;
+  recipe: RecipeShaped;
+  ticks: number;
+  top?: Ingredient;
+  liquid?: Stack;
 };
 
 export type RecipeCentrifuge = {
-  in: string,
-  out: Ingredient[]
-  ticks: number
+  in: string;
+  out: Ingredient[];
+  ticks: number;
 };
 
 export type RecipeFermenter = {
-  in: Stack
-  out: Stack
-  top: string
+  in: Stack;
+  out: Stack;
+  top: string;
 };
 
 export type RecipeFermenterFuel = {
-  id: string
-  cycle: number
-  burn: number
+  id: string;
+  cycle: number;
+  burn: number;
 };
 
 export type RecipeMoistener = {
-  out: string
-  id: string
-  ticks: number
+  out: string;
+  id: string;
+  ticks: number;
 };
 
 export type RecipeSqueezer = {
-  out: Stack
-  in: Ingredient | Ingredient[]
-  ticks: number
-  bonus: Stack,
+  out: Stack;
+  in: Ingredient | Ingredient[];
+  ticks: number;
+  bonus: Stack;
 };
 
 export type RecipeStill = {
-  in: Stack
-  out: Stack,
-  ticks: number
+  in: Stack;
+  out: Stack;
+  ticks: number;
 };
 
 export type RecipeFabricator = {
-  out: Ingredient,
-  recipe: RecipeShaped
-  mb: number
-  cast?: string
+  out: Ingredient;
+  recipe: RecipeShaped;
+  mb: number;
+  cast?: string;
 };
 
 export type RecipeFabricatorFuel = {
-  id: string
-  mb: number
-  temp: number
+  id: string;
+  mb: number;
+  temp: number;
 };
 
 export const addCarpenter = (recipe: RecipeCarpenter) => {

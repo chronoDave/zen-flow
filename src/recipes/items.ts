@@ -4,7 +4,7 @@ import {
   formatName,
   formatTooltip
 } from '../lib/format';
-import { Enchantment, Text } from '../types';
+import type { Enchantment, Text } from '../types';
 import { toArray } from '../lib/array';
 
 /**

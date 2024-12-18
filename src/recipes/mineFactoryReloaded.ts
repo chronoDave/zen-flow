@@ -1,6 +1,6 @@
 import { MFR_FOCI } from '../const';
 import { formatArgs, formatIngredient, formatWeight } from '../lib/format';
-import { Ingredient } from '../types';
+import type { Ingredient } from '../types';
 
 /**
  * Requires: `import mods.mfr.MiningLaser;`

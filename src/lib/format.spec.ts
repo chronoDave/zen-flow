@@ -1,6 +1,6 @@
-const { test } = require('tape');
+import test from 'tape';
 
-const {
+import {
   formatStack,
   formatList,
   formatFloat,
@@ -8,7 +8,7 @@ const {
   formatTooltip,
   formatId,
   formatRecipe
-} = require('./build/lib/format');
+} from './format';
 
 const stick = '<minecraft:stick>';
 
@@ -34,11 +34,6 @@ test('[format.formatId] return formatted string', t => {
   t.equal(
     formatId(stick),
     '<minecraft:stick>'
-  );
-
-  t.equal(
-    formatId(null),
-    'null'
   );
 
   t.equal(

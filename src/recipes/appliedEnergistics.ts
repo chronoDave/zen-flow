@@ -1,25 +1,25 @@
-import { Ingredient, Stack } from '../types';
+import type { Ingredient, Stack } from '../types';
 import { formatArgs, formatIngredient } from '../lib/format';
 import { capitalize } from '../lib/string';
 
 export type RecipeGrinder = {
-  in: Ingredient,
-  out: Ingredient,
-  turns: number,
+  in: Ingredient;
+  out: Ingredient;
+  turns: number;
   bonus?: {
-    primary: Stack
-    secondary?: Stack
-  }
+    primary: Stack;
+    secondary?: Stack;
+  };
 };
 
 export type RecipeInscriber = {
-  in: Ingredient
+  in: Ingredient;
   plate: {
-    top: string
-    bottom?: string
-  }
-  out: Ingredient
-  type: 'inscribe' | 'press'
+    top: string;
+    bottom?: string;
+  };
+  out: Ingredient;
+  type: 'inscribe' | 'press';
 };
 
 /**

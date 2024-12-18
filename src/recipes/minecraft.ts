@@ -4,7 +4,7 @@ import {
   formatList,
   formatRecipe
 } from '../lib/format';
-import {
+import type {
   Ingredient,
   Recipe,
   RecipeShaped,
@@ -13,9 +13,9 @@ import {
 import { isObject } from '../lib/assert';
 
 type RecipeFurnace = {
-  in: string,
-  out: Ingredient
-  xp?: number
+  in: string;
+  out: Ingredient;
+  xp?: number;
 };
 
 /**
@@ -92,7 +92,7 @@ export const addFurnace = (recipe: RecipeFurnace) => {
  * - Recipe: `string` => Remove all recipes that create this ingredient
  * - Recipe `{}` => Remove this specific recipe
  */
-export const removeFurnace = (recipe: string | { in: string, out: string }) => {
+export const removeFurnace = (recipe: string | { in: string; out: string }) => {
   if (typeof recipe === 'string') return `furnace.remove(<*>, ${recipe});`;
   return `furnace.remove(${formatArgs(recipe.out, recipe.in)});`;
 };

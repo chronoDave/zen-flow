@@ -1,6 +1,6 @@
-const { test } = require('tape');
+import test from 'tape';
 
-const { removeShaped, removeShapeless } = require('../build/recipes/minecraft');
+import { removeShaped, removeShapeless } from './minecraft';
 
 test('[minecraft.removeShaped] does not append recipe if not provided', t => {
   t.equal(

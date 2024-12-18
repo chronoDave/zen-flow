@@ -48,7 +48,7 @@ export const NAME_COLOR: Record<typeof COLORS[number], string> = {
   red: createCode('c'),
   lightPurple: createCode('d'),
   yellow: createCode('e'),
-  white: createCode('f'),
+  white: createCode('f')
 } as const;
 
 export const NAME_FORMAT: Record<typeof FORMATS[number] | 'reset', string> = {
@@ -76,7 +76,7 @@ export const TOOLTIP_COLOR: Record<typeof COLORS[number], (tooltip: string) => s
   red: createFormat('red'),
   lightPurple: createFormat('lightPurple'),
   yellow: createFormat('yellow'),
-  white: createFormat('white'),
+  white: createFormat('white')
 } as const;
 
 export const TOOLTIP_FORMAT: Record<typeof FORMATS[number], (tooltip: string) => string> = {
@@ -109,7 +109,7 @@ export const ENCHANTMENTS = {
   power: 48,
   punch: 49,
   flame: 50,
-  infinity: 51,
+  infinity: 51
 } as const;
 
 export const MFR_FOCI = {

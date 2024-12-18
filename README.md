@@ -17,7 +17,7 @@
 $ npm i zen-flow -D
 ```
 
-<i>Note: This package requires Node >10.12.0 and Minecraft 1.7.10.</i>
+***Note**: This package requires Node >10.12.0 and Minecraft 1.7.10.*
 
 ## Features
 
