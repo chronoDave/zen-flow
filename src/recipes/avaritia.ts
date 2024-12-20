@@ -17,7 +17,7 @@ export type RecipeCompressor = {
 export const addCompressor = (id: string, recipe: RecipeCompressor) => {
   const out = formatArgs(
     id,
-    recipe.in.n,
+    Math.max(1, recipe.in.n),
     recipe.in.id,
     recipe.exact
   );

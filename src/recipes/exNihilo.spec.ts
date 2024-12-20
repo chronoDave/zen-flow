@@ -1,27 +1,83 @@
 import test from 'tape';
 
-import { addSieve, addHammer } from './exNihilo';
+import {
+  addComposter,
+  removeComposter,
+  addCrucible,
+  removeCrucible,
+  addCrucibleFuel,
+  removeCrucibleFuel,
+  addHammer,
+  removeHammer,
+  addSieve,
+  removeSieve
+} from './exNihilo';
 
-test('[exNihilo.addHammer] creates recipe', t => {
+test('[exNihilo]', t => {
   t.equal(
-    addHammer('<minecraft:stick>', {
-      '<minecraft:bread>': [0.5],
-      '<minecraft:stick>': [{ chance: 2, modifier: 0.5 }],
-      '<minecraft:coal>': [{ chance: 2, modifier: 2 }, 1]
-    }),
-    'mods.exnihilo.Hammer.addRecipe(\n\t<minecraft:stick>,\n\t[<minecraft:bread>, <minecraft:stick>, <minecraft:coal>, <minecraft:coal>],\n\t[0.5, 1, 1, 1],\n\t[1, 0.5, 2, 1]\n);'
+    addComposter('<minecraft:hay_block>', { n: 0.72, colour: 'E3E162' }),
+    'mods.exnihilo.Composting.addRecipe(<minecraft:hay_block>, 0.72, "E3E162");',
+    'addComposter'
   );
 
-  t.end();
-});
-
-test('[exNihilo.addSieve] creates recipe', t => {
   t.equal(
-    addSieve('<minecraft:stick>', {
-      '<minecraft:bread>': 0.33,
-      '<minecraft:stick>': 2.5
+    removeComposter('<minecraft:sapling>'),
+    'mods.exnihilo.Composting.removeRecipe(<minecraft:sapling>);',
+    'removeComposter'
+  );
+
+  t.equal(
+    addCrucible({ id: '<liquid:water>', n: 1000 }, '<minecraft:packed_ice>'),
+    'mods.exnihilo.Crucible.addRecipe(<minecraft:packed_ice>, <liquid:water> * 1000);',
+    'addCrucible'
+  );
+
+  t.equal(
+    removeCrucible('<liquid:lava>'),
+    'mods.exnihilo.Crucible.removeRecipe(<liquid:lava>);',
+    'removeCrucible'
+  );
+
+  t.equal(
+    addCrucibleFuel('<minecraft:coal_block>', 0.1),
+    'mods.exnihilo.Crucible.addHeatSource(<minecraft:coal_block>, 0.1);',
+    'addCrucibleFuel'
+  );
+
+  t.equal(
+    removeCrucibleFuel('<minecraft:lava>'),
+    'mods.exnihilo.Crucible.removeHeatSource(<minecraft:lava>);',
+    'removeCrucibleFuel'
+  );
+
+  t.equal(
+    addHammer('<minecraft:tnt>', {
+      '<minecraft:gunpowder>': 0.25,
+      '<minecraft:sand>': { n: 0.5, modifier: 1.5 }
     }),
-    'mods.exnihilo.Sieve.addRecipe(<minecraft:stick>, [<minecraft:bread>, <minecraft:stick>, <minecraft:stick>, <minecraft:stick>], [3, 1, 1, 2]);'
+    'mods.exnihilo.Hammer.addRecipe(\n\t<minecraft:tnt>,\n\t[<minecraft:gunpowder>, <minecraft:sand>],\n\t[0.25, 0.5],\n\t[1, 1.5]\n);',
+    'addHammer'
+  );
+
+  t.equal(
+    removeHammer('<minecraft:sand>'),
+    'mods.exnihilo.Hammer.removeRecipe(<minecraft:sand>);',
+    'removeHammer'
+  );
+
+  t.equal(
+    addSieve('<minecraft:mycelium>', {
+      '<minecraft:red_mushroom>': 0.5,
+      '<minecraft:brown_mushroom>': 0.5
+    }),
+    'mods.exnihilo.Sieve.addRecipe(<minecraft:mycelium>, [<minecraft:red_mushroom>, <minecraft:brown_mushroom>], [2, 2]);',
+    'addSieve'
+  );
+
+  t.equal(
+    removeSieve('<minecraft:dirt>'),
+    'mods.exnihilo.Sieve.removeRecipe(<minecraft:dirt>);',
+    'removeSieve'
   );
 
   t.end();

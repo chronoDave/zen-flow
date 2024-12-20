@@ -1,75 +1,89 @@
-import type { Stack } from '../types';
-import { formatArgs, formatStack } from '../lib/format';
-import { clamp } from '../lib/math';
 import { fill, toArray } from '../lib/array';
+import { formatArgs, formatLiteral, formatStack } from '../lib/format';
 import { isObject } from '../lib/assert';
+import { clamp } from '../lib/math';
+import { Stack } from '../types';
 
 export type RecipeComposter = {
-  id: string;
-  fill: number;
-  hex?: string;
+  n: number;
+  colour?: string;
 };
-
-export type RecipeCrucible = {
-  id: string;
-  liquid: Stack;
-};
-
-export type RecipeHammer = Record<string, Array<number | { chance: number; modifier: number }>>;
-
-export type RecipeSieve = Record<string, number>;
 
 /**
- *  - Fill must be between `0` and `1`
+ * Add [Composter](https://ftb.fandom.com/wiki/Barrel_(Ex_Nihilo)) recipe
+ * 
+ * `fill` must be between 0 and 1
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Ex_Nihilo_Support
  */
-export const addComposter = (recipe: RecipeComposter) => {
+export const addComposter = (id: string, recipe: RecipeComposter) => {
   const out = formatArgs(
-    recipe.id,
-    clamp(0, 1, recipe.fill),
-    recipe.hex && `"${recipe.hex}"`
+    id,
+    clamp(0, 1, recipe.n),
+    recipe.colour && formatLiteral(recipe.colour)
   );
 
   return `mods.exnihilo.Composting.addRecipe(${out});`;
-};
+}
 
+/**
+ * Remove [Composter](https://ftb.fandom.com/wiki/Barrel_(Ex_Nihilo)) recipe
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Ex_Nihilo_Support
+ */
 export const removeComposter = (id: string) =>
   `mods.exnihilo.Composting.removeRecipe(${id});`;
 
-export const addCrucible = (recipe: RecipeCrucible) => {
-  const out = formatArgs(
-    recipe.id,
-    formatStack(recipe.liquid)
-  );
+/**
+ * Add [Crucible](https://ftb.fandom.com/wiki/Crucible_(Ex_Nihilo)) recipe
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Ex_Nihilo_Support
+ */
+export const addCrucible = (liquid: Stack, id: string) => {
+  const out = formatArgs(id, formatStack(liquid));
 
   return `mods.exnihilo.Crucible.addRecipe(${out});`;
 };
 
+/**
+ * Remove [Crucible](https://ftb.fandom.com/wiki/Crucible_(Ex_Nihilo)) recipe
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Ex_Nihilo_Support
+ */
 export const removeCrucible = (id: string) =>
   `mods.exnihilo.Crucible.removeRecipe(${id});`;
 
 /**
- * - `n` must be between `0` and `1`
+ * Add [Crucible](https://ftb.fandom.com/wiki/Crucible_(Ex_Nihilo)) fuel source
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Ex_Nihilo_Support
  */
-export const addCrucibleSource = (recipe: Stack) => {
-  const out = formatArgs(
-    recipe.id,
-    clamp(0, 1, recipe.n)
-  );
+export const addCrucibleFuel = (id: string, n: number) => {
+  const out = formatArgs(id, clamp(0, 1, n));
 
   return `mods.exnihilo.Crucible.addHeatSource(${out});`;
-};
-
-export const removeCrucibleSource = (id: string) =>
-  `mods.exnihilo.Crucible.removeHeatSource(${id});`;
+}
 
 /**
- * - Chance must be between `0` and `1`
+ * Remove [Crucible](https://ftb.fandom.com/wiki/Crucible_(Ex_Nihilo)) fuel source
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Ex_Nihilo_Support
+ */
+export const removeCrucibleFuel = (id: string) =>
+  `mods.exnihilo.Crucible.removeHeatSource(${id});`;
+
+export type RecipeHammer = Record<string, number | { n: number; modifier: number }>;
+
+/**
+ * Add [Hammer](https://ftb.fandom.com/wiki/Hammer_(Ex_Nihilo)) recipe
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Ex_Nihilo_Support
  */
 export const addHammer = (id: string, recipe: RecipeHammer) => {
   const items = Object.entries(recipe)
     .map(entry => toArray(entry[1]).map(chance => ({
       id: entry[0],
-      chance: clamp(0, 1, isObject(chance) ? chance.chance : chance),
+      chance: clamp(0, 1, isObject(chance) ? chance.n : chance),
       modifier: isObject(chance) ? chance.modifier : 1
     })))
     .flat();
@@ -84,11 +98,22 @@ export const addHammer = (id: string, recipe: RecipeHammer) => {
   return `mods.exnihilo.Hammer.addRecipe(${out});`;
 };
 
+/**
+ * Remove [Hammer](https://ftb.fandom.com/wiki/Hammer_(Ex_Nihilo)) recipe
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Ex_Nihilo_Support
+ */
 export const removeHammer = (id: string) =>
   `mods.exnihilo.Hammer.removeRecipe(${id});`;
 
+export type RecipeSieve = Record<string, number>;
+
 /**
- * - Chance must be bigger than `0`
+ * Add [Sieve](https://ftb.fandom.com/wiki/Sieve_(Ex_Nihilo)) recipe
+ * 
+ * Chance is calculated as `1 / chance`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Ex_Nihilo_Support
  */
 export const addSieve = (id: string, recipe: RecipeSieve) => {
   const items = Object.entries(recipe)
@@ -109,5 +134,10 @@ export const addSieve = (id: string, recipe: RecipeSieve) => {
   return `mods.exnihilo.Sieve.addRecipe(${out});`;
 };
 
+/**
+ * Remove [Sieve](https://ftb.fandom.com/wiki/Sieve_(Ex_Nihilo)) recipe
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Ex_Nihilo_Support
+ */
 export const removeSieve = (id: string) =>
   `mods.exnihilo.Sieve.removeRecipe(${id});`;
