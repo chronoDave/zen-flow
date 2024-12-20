@@ -1,16 +1,35 @@
-import type { Ingredient } from '../types';
+import type { Ingredient, Stack } from '../types';
 import {
   formatArgs,
   formatId,
   formatIngredient,
   formatList
 } from '../lib/format';
-import { isObject } from '../lib/assert';
 
 export type RecipeCompressor = {
-  in: Ingredient;
-  out: string;
+  in: Stack;
+  exact?: boolean;
 };
+
+/**
+ * Add [Neutronium Compressor](https://ftb.fandom.com/wiki/Neutronium_Compressor) recipe
+ */
+export const addCompressor = (id: string, recipe: RecipeCompressor) => {
+  const out = formatArgs(
+    id,
+    recipe.in.n,
+    recipe.in.id,
+    recipe.exact
+  );
+
+  return `mods.avaritia.Compressor.add(${out});`;
+}
+
+/**
+ * Remove [Neutronium Compressor](https://ftb.fandom.com/wiki/Neutronium_Compressor) recipe
+ */
+export const removeCompressor = (id: string) =>
+  `mods.avaritia.Compressor.remove(${id});`;
 
 export type RecipeExtreme = [
   Partial<[string, string, string, string, string, string, string, string, string]>,
@@ -24,25 +43,9 @@ export type RecipeExtreme = [
   Partial<[string, string, string, string, string, string, string, string, string]>
 ];
 
-export const addCompressor = (recipe: RecipeCompressor) => {
-  const input = isObject(recipe.in) ?
-    recipe.in :
-    { id: recipe.in, n: 1 };
-  const out = formatArgs(
-    recipe.out,
-    input.n,
-    input.id
-  );
-
-  return `mods.avaritia.Compressor.add(${out});`;
-};
-
 /**
- * @param id Compressor output
+ * Add shaped [Extreme Crafting Table](https://ftb.fandom.com/wiki/Extreme_Crafting_Table) recipe
  */
-export const removeCompressor = (id: string) =>
-  `mods.avaritia.Compressor.remove(${id});`;
-
 export const addExtreme = (ingredient: Ingredient, recipe: RecipeExtreme) => {
   const out = formatArgs(
     formatIngredient(ingredient),
@@ -53,7 +56,7 @@ export const addExtreme = (ingredient: Ingredient, recipe: RecipeExtreme) => {
 };
 
 /**
- * @param id Extreme Crafting output
+ * Remove [Extreme Crafting Table](https://ftb.fandom.com/wiki/Extreme_Crafting_Table) recipe
  */
 export const removeExtreme = (id: string) =>
   `mods.avaritia.ExtremeCrafting.remove(${id});`;
