@@ -1,6 +1,11 @@
 import { formatArgs, formatIngredient, formatRecipe } from '../lib/format';
 import type { Ingredient, RecipeShaped } from '../types';
 
+/**
+ * Adds [QED](https://ftb.fandom.com/wiki/QED) recipe
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Extra_Utilities_Support
+ */
 export const addQED = (ingredient: Ingredient, recipe: RecipeShaped) => {
   const out = formatArgs(
     formatIngredient(ingredient),
@@ -11,12 +16,9 @@ export const addQED = (ingredient: Ingredient, recipe: RecipeShaped) => {
 };
 
 /**
- * @param id QED output
+ * Remove [QED](https://ftb.fandom.com/wiki/QED) recipe
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Extra_Utilities_Support
  */
 export const removeQED = (id: string) =>
   `mods.extraUtils.QED.removeRecipe(${id});`;
-
-export const replaceQED = (ingredient: Ingredient, recipe: RecipeShaped) => [
-  removeQED(Array.isArray(ingredient) ? ingredient[0] : ingredient),
-  addQED(ingredient, recipe)
-].join('\n');
