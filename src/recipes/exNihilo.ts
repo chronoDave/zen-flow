@@ -1,8 +1,9 @@
+import type { Stack } from '../types';
+
 import { fill, toArray } from '../lib/array';
 import { formatArgs, formatLiteral, formatStack } from '../lib/format';
 import { isObject } from '../lib/assert';
 import { clamp } from '../lib/math';
-import { Stack } from '../types';
 
 export type RecipeComposter = {
   n: number;
@@ -24,7 +25,7 @@ export const addComposter = (id: string, recipe: RecipeComposter) => {
   );
 
   return `mods.exnihilo.Composting.addRecipe(${out});`;
-}
+};
 
 /**
  * Remove [Composter](https://ftb.fandom.com/wiki/Barrel_(Ex_Nihilo)) recipe
@@ -62,7 +63,7 @@ export const addCrucibleFuel = (id: string, n: number) => {
   const out = formatArgs(id, clamp(0, 1, n));
 
   return `mods.exnihilo.Crucible.addHeatSource(${out});`;
-}
+};
 
 /**
  * Remove [Crucible](https://ftb.fandom.com/wiki/Crucible_(Ex_Nihilo)) fuel source

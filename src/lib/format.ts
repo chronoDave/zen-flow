@@ -20,7 +20,7 @@ export const formatFloat = (n: number) => n % 1 === 0 ?
   `${n}.0` :
   `${n}`;
 export const formatLiteral = (x: string) => `"${x}"`;
-
+export const formatBonus = (x: Stack) => `${x.id} % ${Math.round(x.n * 100)}`;
 export const formatId = (id?: string) =>
   id ?? 'null';
 export const formatStack = (stack: Stack) =>
@@ -49,7 +49,7 @@ export const formatName = (texts: Text | Text[]) => {
         text.color && NAME_COLOR[text.color],
         text.format && NAME_FORMAT[text.format],
         text.text,
-        (text.color || text.format) && NAME_FORMAT.reset
+        (text.color ?? text.format) && NAME_FORMAT.reset
       ]
         .filter(x => x !== undefined)
         .join('');
