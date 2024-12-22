@@ -10,12 +10,61 @@ import type {
   RecipeShaped,
   RecipeShapeless
 } from '../types';
-import { isObject } from '../lib/assert';
 
-type RecipeFurnace = {
-  in: string;
-  out: Ingredient;
-  xp?: number;
+/**
+ * Add shaped crafting recipe
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
+ */
+export const addShaped = (item: Ingredient, recipe: RecipeShaped) => {
+  const out = formatArgs(
+    formatIngredient(item),
+    formatRecipe(recipe)
+  );
+
+  return `recipes.addShaped(${out});`;
+};
+
+/**
+* Remove shaped crafting recipe
+* 
+* @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
+*/
+export const removeShaped = (id: string, recipe?: RecipeShaped) => {
+  const out = formatArgs(
+    id,
+    recipe && formatRecipe(recipe)
+  );
+
+  return `recipes.removeShaped(${out});`;
+};
+
+/**
+ * Add shapeless crafting recipe
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
+ */
+export const addShapeless = (item: Ingredient, recipe: RecipeShapeless) => {
+  const out = formatArgs(
+    formatIngredient(item),
+    formatList(recipe)
+  );
+
+  return `recipes.addShapeless(${out});`;
+};
+
+/**
+* Remove shapeless crafting recipe
+* 
+* @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
+*/
+export const removeShapeless = (id: string, recipe?: RecipeShapeless) => {
+  const out = formatArgs(
+    id,
+    recipe && formatList(recipe)
+  );
+
+  return `recipes.removeShapeless(${out});`;
 };
 
 /**
@@ -23,21 +72,26 @@ type RecipeFurnace = {
  *
  * - Recipe: `{}` => Shaped recipe
  * - Recipe: `[]` => Shapeless recipe
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
 export const add = (item: Ingredient, recipe: Recipe) => {
-  const type = Array.isArray(recipe) ? 'Shapeless' : 'Shaped';
-  const out = formatArgs(
-    formatIngredient(item),
-    Array.isArray(recipe) ?
-      formatList(recipe) :
-      formatRecipe(recipe)
-  );
-
-  return `recipes.add${type}(${out});`;
+  if (Array.isArray(recipe)) return addShapeless(item, recipe);
+  return addShaped(item, recipe);
 };
 
 /**
+ * Remove all crafting recipes (shaped & shapeless)
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
+ */
+export const remove = (id: string) =>
+  `recipes.remove(${id});`;
+
+/**
  * Add shaped crafing recipe with mirror
+ * 
+ * @see @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
 export const addMirror = (item: Ingredient, recipe: RecipeShaped) => {
   const out = formatArgs(
@@ -48,96 +102,57 @@ export const addMirror = (item: Ingredient, recipe: RecipeShaped) => {
   return `recipes.addShapedMirrored(${out});`;
 };
 
-/**
- * Remove all crafting recipes (shaped & shapeless)
- */
-export const remove = (id: string) =>
-  `recipes.remove(${id});`;
+type RecipeFurnace = {
+  in: string;
+  xp?: number;
+};
 
 /**
-* Remove all shaped crafting recipes
-*/
-export const removeShaped = (id: string, recipe?: RecipeShaped) =>
-  `recipes.removeShaped(${id}${recipe ? `, ${formatRecipe(recipe)}` : ''});`;
-
-/**
-* Remove all shapeless crafting recipes
-*/
-export const removeShapeless = (id: string, recipe?: RecipeShapeless) =>
-  `recipes.removeShapeless(${id}${recipe ? `, ${formatList(recipe)}` : ''});`;
-
-/**
- * Adds furnace recipe
+ * Add furnace recipe
  *
+ * Common values:
  * - Coal: `0.1xp`
  * - Blocks: `0.1xp`
  * - Food: `0.35xp`
  * - Iron Ingot: `0.7xp`
  * - Gold Ingot: `1xp`
  * - Gems: `1xp`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
-export const addFurnace = (recipe: RecipeFurnace) => {
-  const out = formatArgs(
-    formatIngredient(recipe.out),
-    recipe.in,
-    recipe.xp
-  );
-
-  return `furnace.addRecipe(${out});`;
-};
+export const addFurnace = (id: string, recipe: RecipeFurnace) =>
+  `furnace.addRecipe(${formatArgs(id, recipe.in, recipe.xp)});`;
 
 /**
  * Remove furnace recipe
  *
  * - Recipe: `string` => Remove all recipes that create this ingredient
  * - Recipe `{}` => Remove this specific recipe
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
-export const removeFurnace = (recipe: string | { in: string; out: string }) => {
-  if (typeof recipe === 'string') return `furnace.remove(<*>, ${recipe});`;
-  return `furnace.remove(${formatArgs(recipe.out, recipe.in)});`;
+export const removeFurnace = (id: string, recipe?: string) => {
+  if (typeof recipe === 'string') return `furnace.remove(${formatArgs(id, recipe)});`;
+  return `furnace.remove(${formatArgs(id)});`;
 };
 
 /**
  * Add furnace fuel
  *
+ * Common values:
  *  - Coal: `1600`
  *  - Planks: `300`
  *  - Stick: `100`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
 export const addFurnaceFuel = (id: string, n: number) =>
   `furnace.setFuel(${formatArgs(id, n)});`;
 
+/**
+ * Remove furnace fuel, with the exception of vanilla fuels
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
+ */
 export const removeFurnaceFuel = (id: string) =>
   addFurnaceFuel(id, 0);
-
-/**
- * Replace crafting recipe
- *
- * - Recipe: `{}` => Replaces all shaped recipes
- * - Recipe: `[]` => Replaces all shapeless recipes
- */
-export const replace = (ingredient: Ingredient, recipe: Recipe) => {
-  const id = isObject(ingredient) ?
-    ingredient.id :
-    ingredient;
-
-  return [
-    Array.isArray(recipe) ?
-      removeShapeless(id) :
-      removeShaped(id),
-    add(ingredient, recipe)
-  ].join('\n');
-};
-
-/**
- * Replace all crafting recipe
- */
-export const replaceAll = (ingredient: Ingredient, recipe: Recipe) => [
-  remove(isObject(ingredient) ? ingredient.id : ingredient),
-  add(ingredient, recipe)
-].join('\n');
-
-export const replaceMany = (ingredient: Ingredient, recipes: Recipe[]) => [
-  remove(isObject(ingredient) ? ingredient.id : ingredient),
-  ...recipes.map(recipe => add(ingredient, recipe))
-].join('\n');
