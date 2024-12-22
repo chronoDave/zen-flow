@@ -10,7 +10,8 @@ import type {
   Ingredient,
   Stack,
   RecipeShaped,
-  Text
+  Text,
+  Bonus
 } from '../types';
 
 import { isObject } from './assert';
@@ -20,7 +21,7 @@ export const formatFloat = (n: number) => n % 1 === 0 ?
   `${n}.0` :
   `${n}`;
 export const formatLiteral = (x: string) => `"${x}"`;
-export const formatBonus = (x: Stack) => `${x.id} % ${Math.round(x.n * 100)}`;
+export const formatBonus = (x: Bonus) => `${x.id} % ${Math.round(x.chance * 100)}`;
 export const formatId = (id?: string) =>
   id ?? 'null';
 export const formatStack = (stack: Stack) =>
