@@ -1,245 +1,346 @@
+import type { Bonus, Ingredient, Stack } from '../types';
+
 import { formatArgs, formatIngredient, formatStack } from '../lib/format';
-import type { Ingredient, Stack } from '../types';
 
-export type RecipeCrucible = {
-  rf: number;
-  in: string;
-  liquid: Stack;
-};
+const formatBonus = (bonus?: Bonus): Array<string | number> => bonus ? [
+  bonus.id,
+  Math.round(bonus.chance * 100)
+] : [];
 
-export type RecipeFurnace = {
+export type RecipeMagmaCrucible = {
   rf: number;
-  in: string;
-  out: Ingredient;
-};
-
-export type RecipeInsolator = {
-  rf: number;
-  left: Ingredient;
-  right: Ingredient;
-  out: Ingredient;
-  bonus?: Stack;
-};
-
-export type RecipePulverizer = {
-  rf: number;
-  in: string;
-  out: Ingredient;
-  bonus?: Stack;
-};
-
-export type RecipeSawmill = {
-  rf: number;
-  in: string;
-  out: Ingredient;
-  bonus?: Stack;
-};
-
-export type RecipeSmelter = {
-  rf: number;
-  left: Ingredient;
-  right: Ingredient;
-  out: Ingredient;
-  bonus?: Stack;
-};
-
-export type RecipeTransposerFill = {
-  rf: number;
-  in: Ingredient;
-  out: Ingredient;
-  liquid: Stack;
-};
-
-export type RecipeTransposerExtract = {
-  rf: number;
-  in: string;
-  liquid: Stack;
-  bonus: Stack;
+  input: string;
 };
 
 /**
+ * Add [Magma Crucible](https://oldcofh.github.io/docs/thermal-expansion/machines/magma-crucible/) recipe
+ * 
  * Common values:
- *  - Dust: `8000RF, 100mB ~ 250mB`
- *  - Items: `20.000RF, 250mB`
- *  - Rocks: `80.000RF ~ 320.000RF, 1000mB`
+ *  - Cobblestone => `1000mB`, `320.000 RF`
+ *  - Stone => `1000mB`, `320.000 RF`
+ *  - Obsidian =>	`1000mB`, `320.000 RF`
+ *  - Netherrack => `1000mB`, `120.000 RF`
+ *  - Blaze Rod => `250mB`, `20.000 RF`
+ *  - Snowball => `125mB`, `200 RF`
+ *  - Snow (block) => `500mB`, `800 RF`
+ *  - Ice => `1000mB`, `1600 RF`
+ *  - Redstone (dust) => `100mB`, `8000 RF`
+ *  - Block of Redstone => `900mB`, `72.000 RF`
+ *  - Glowstone Dust => `250mB`, `20.000 RF`
+ *  - Glowstone (block) => `1000mB`, `80.000 RF`
+ *  - Ender Pearl => `250mB`, `20.000 RF`
+ *  - Pulverized Coal => `100mB`, `8000 RF`
+ *  - Pyrotheum Dust => `250mB`, `8000 RF`
+ *  - Cryotheum Dust => `250mB`, `8000 RF`
+ *  - Aerotheum Dust => `250mB`, `8000 RF`
+ *  - Petrotheum Dust => `250mB`, `8000 RF`
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Crucible`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const addCrucible = (recipe: RecipeCrucible) => {
+export const addMagmaCrucible = (liquid: Stack, recipe: RecipeMagmaCrucible) => {
   const out = formatArgs(
     recipe.rf,
-    recipe.in,
-    formatStack(recipe.liquid)
+    recipe.input,
+    formatStack(liquid)
   );
 
   return `mods.thermalexpansion.Crucible.addRecipe(${out});`;
 };
 
-export const removeCrucible = (id: string) =>
+/**
+ * Remove [Magma Crucible](https://oldcofh.github.io/docs/thermal-expansion/machines/magma-crucible/) recipe
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Crucible`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
+ */
+export const removeMagmaCrucible = (id: string) =>
   `mods.thermalexpansion.Crucible.removeRecipe(${id});`;
 
+export type RecipeRedstoneFurnace = {
+  rf: number;
+  input: string;
+};
+
 /**
+ * Add [Redstone Furnace](https://oldcofh.github.io/docs/thermal-expansion/machines/redstone-furnace/) recipe
+ * 
  * Common values:
- *  - Food: `800RF`
- *  - Dust: `1000RF`
- *  - Blocks: `1600RF`
+ * - Most Furnace recipes => `1600 RF`
+ * - Pulverized metals (dusts) => `1000 RF`
+ * - Raw food => `800 RF`
+ * - Cactus => `800 RF`
+ * - Redstone Ore => `1600 RF`
+ * - Lapis Lazuli Ore => `1600 RF`
+ * - Hay Bale => `3200 RF`
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Furnace`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const addFurnace = (recipe: RecipeFurnace) => {
+export const addRedstoneFurnace = (item: Ingredient, recipe: RecipeRedstoneFurnace) => {
   const out = formatArgs(
     recipe.rf,
-    recipe.in,
-    formatIngredient(recipe.out)
+    recipe.input,
+    formatIngredient(item)
   );
 
   return `mods.thermalexpansion.Furnace.addRecipe(${out});`;
 };
 
 /**
- * Removes all furnace outputs from input item
- *
- * For example, `<minecraft:potato>` will remove the baked potato recipe
- * */
-export const removeFurnace = (id: string) =>
+ * Remove [Redstone Furnace](https://oldcofh.github.io/docs/thermal-expansion/machines/redstone-furnace/) recipe
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Furnace`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
+ */
+export const removeRedstoneFurnace = (id: string) =>
   `mods.thermalexpansion.Furnace.removeRecipe(${id});`;
 
+export type RecipePhytogenicInsolator = {
+  rf: number;
+  input: {
+    left: Ingredient;
+    right: Ingredient;
+  };
+  bonus?: Bonus;
+};
+
 /**
- * Common values:
- *  - Phyto-gro: `7200RF`
- *  - Rich phyto-gro: `9600RF`
+ * Add [Phytogenic Insolator](https://oldcofh.github.io/docs/thermal-expansion/machines/phytogenic-insolator/) recipe
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Insolator`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const addInsolator = (recipe: RecipeInsolator) => {
+export const addPhytogenicInsolator = (item: Ingredient, recipe: RecipePhytogenicInsolator) => {
   const out = formatArgs(
     recipe.rf,
-    formatIngredient(recipe.left),
-    formatIngredient(recipe.right),
-    formatIngredient(recipe.out),
-    recipe.bonus?.id,
-    recipe.bonus?.n
+    formatIngredient(recipe.input.left),
+    formatIngredient(recipe.input.right),
+    formatIngredient(item),
+    ...formatBonus(recipe.bonus)
   );
 
   return `mods.thermalexpansion.Insolator.addRecipe(${out});`;
 };
 
-export const removeInsolator = (left: Ingredient, right: Ingredient) => {
-  const out = formatArgs(
-    formatIngredient(left),
-    formatIngredient(right)
-  );
+/**
+ * Remove [Phytogenic Insolator](https://oldcofh.github.io/docs/thermal-expansion/machines/phytogenic-insolator/) recipe
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Insolator`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
+ */
+export const removePhytogenicInsolator = (input: { left: string; right: string }) =>
+  `mods.thermalexpansion.Insolator.removeRecipe(${formatArgs(input.left, input.right)});`;
 
-  return `mods.thermalexpansion.Insolator.removeRecipe(${out});`;
+export type RecipePulverizer = {
+  rf: number;
+  input: string;
+  bonus?: Bonus;
 };
 
 /**
+ * Add [Pulverizer](https://oldcofh.github.io/docs/thermal-expansion/machines/pulverizer/) recipe
+ * 
  * Common values:
- *  - Plants: `1600RF`
- *  - Items: `1600RF`
- *  - Wool: `1600RF`
- *  - Ingots: `2400RF`
- *  - Ores: `3200RF`
+ *  - Ores => `4000RF`
+ *  - Minerals / Gems => `2400RF`
+ *  - Redstone => `3200RF`
+ *  - Ingots => `2400RF`
+ *  - Wood => `1600RF`
+ *  - Stone = > `3200RF`
+ *  - Rods => `1600RF`
+ *  - Wool => `1600RF`
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Pulverizer`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const addPulverizer = (recipe: RecipePulverizer) => {
+export const addPulverizer = (item: Ingredient, recipe: RecipePulverizer) => {
   const out = formatArgs(
     recipe.rf,
-    recipe.in,
-    formatIngredient(recipe.out),
-    recipe.bonus?.id,
-    recipe.bonus?.n
+    recipe.input,
+    formatIngredient(item),
+    ...formatBonus(recipe.bonus)
   );
 
   return `mods.thermalexpansion.Pulverizer.addRecipe(${out});`;
 };
 
+/**
+ * Remove [Pulverizer](https://oldcofh.github.io/docs/thermal-expansion/machines/pulverizer/) recipe
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Pulverizer`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
+ */
 export const removePulverizer = (id: string) =>
   `mods.thermalexpansion.Pulverizer.removeRecipe(${id});`;
 
+export type RecipeSawmill = {
+  rf: number;
+  input: string;
+  bonus?: Bonus;
+};
+
 /**
+ * Add [Sawmill](https://oldcofh.github.io/docs/thermal-expansion/machines/sawmill/) recipe
+ * 
  * Common values:
- *  - Log: `800RF`
- *  - Tools: `1600RF`
+ *  - Log => `800RF`
+ *  - Rubber Log => `1200RF`
+ *  - Blocks => `2400RF`
+ *  - Items => `2400RF`
+ *  - Tools => `1600RF`
+ *  - Melon => `800RF`
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Sawmill`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const addSawmill = (recipe: RecipeSawmill) => {
+export const addSawmill = (item: Ingredient, recipe: RecipeSawmill) => {
   const out = formatArgs(
     recipe.rf,
-    recipe.in,
-    formatIngredient(recipe.out),
-    recipe.bonus?.id,
-    recipe.bonus?.n
+    recipe.input,
+    formatIngredient(item),
+    ...formatBonus(recipe.bonus)
   );
 
   return `mods.thermalexpansion.Sawmill.addRecipe(${out});`;
 };
 
+/**
+ * Remove [Sawmill](https://oldcofh.github.io/docs/thermal-expansion/machines/sawmill/) recipe
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Sawmill`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
+ */
 export const removeSawmill = (id: string) =>
   `mods.thermalexpansion.Sawmill.removeRecipe(${id});`;
 
+export type RecipeInductionSmelter = {
+  rf: number;
+  input: {
+    left: Ingredient;
+    right: Ingredient;
+  };
+  bonus?: Bonus;
+};
+
 /**
-* Common values (RF):
-*  - Dust: `200RF ~ 1600RF`
-*  - Ores: `1600RF ~ 3200RF`
-*  - Alloys: `2400RF`
-*  - Infused Dust: `4000RF ~ 8000RF`
-*  - Tools: `5000RF ~ 7400RF`
-*  - Slag: `7200RF`
-*/
-export const addSmelter = (recipe: RecipeSmelter) => {
+ * Add [Induction Smelter](https://oldcofh.github.io/docs/thermal-expansion/machines/induction-smelter/) recipe
+ * 
+ * Common values:
+ *  - Alloys => `1600RF`, `2400RF`
+ *  - Sand + Dust => `800RF`
+ *  - Sand + Ore => `3200RF`
+ *  - Cinnabar + Ore => `4000RF`
+ *  - Pyrotheum + Ore => `4000RF`, `8000RF`
+ *  - Slag + Ore => `4000RF`
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Smelter`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
+ */
+export const addInductionSmelter = (item: Ingredient, recipe: RecipeInductionSmelter) => {
   const out = formatArgs(
     recipe.rf,
-    formatIngredient(recipe.right),
-    formatIngredient(recipe.left),
-    formatIngredient(recipe.out),
-    recipe.bonus?.id,
-    recipe.bonus?.n
+    formatIngredient(recipe.input.left),
+    formatIngredient(recipe.input.right),
+    formatIngredient(item),
+    ...formatBonus(recipe.bonus)
   );
 
   return `mods.thermalexpansion.Smelter.addRecipe(${out});`;
 };
 
-export const removeSmelter = (left: Ingredient, right: Ingredient) => {
-  const out = formatArgs(
-    formatIngredient(left),
-    formatIngredient(right)
-  );
+/**
+ * Remove [Induction Smelter](https://oldcofh.github.io/docs/thermal-expansion/machines/induction-smelter/) recipe
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Smelter`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
+ */
+export const removeInductionSmelter = (input: { left: string; right: string }) =>
+  `mods.thermalexpansion.Smelter.removeRecipe(${formatArgs(input.left, input.right)});`;
 
-  return `mods.thermalexpansion.Smelter.removeRecipe(${out});`;
+export type RecipeFluidTransposerFill = {
+  rf: number;
+  input: string;
+  liquid: Stack;
 };
 
 /**
-* Common values
-*  - Duct: `800RF, 200mB`
-*  - Bucket: `800RF, 1000mB`
-*  - Florb: `1600RF, 1000mB`
-*  - Plate: `2000RF, 1000mB`
-*  - Infusion: `4000RF ~ 8000RF, 200mB`
-*  - Frame: `16.000RF, 4000mB`
-*/
-export const addTransposerFill = (recipe: RecipeTransposerFill) => {
+ * Add [Fluid Transposer](https://oldcofh.github.io/docs/thermal-expansion/machines/fluid-transposer/) fill recipe
+ * 
+ * Common values:
+ *  - Ducts => `800RF`
+ *  - Frame => `16.000RF`
+ *  - Blend => `4000RF`
+ *  - Powder => `4000RF`
+ *  - Stone => `8000RF`
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Transposer`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
+ */
+export const addFluidTransposerFill = (item: Ingredient, recipe: RecipeFluidTransposerFill) => {
   const out = formatArgs(
     recipe.rf,
-    formatIngredient(recipe.in),
-    formatIngredient(recipe.out),
+    recipe.input,
+    formatIngredient(item),
     formatStack(recipe.liquid)
   );
 
   return `mods.thermalexpansion.Transposer.addFillRecipe(${out});`;
 };
 
-export const removeTransposerFill = (id: string, liquid: string) =>
-  `mods.thermalexpansion.Transposer.removeFillRecipe(${formatArgs(id, liquid)});`;
+/**
+ * Remove [Fluid Transposer](https://oldcofh.github.io/docs/thermal-expansion/machines/fluid-transposer/) fill recipe
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Transposer`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
+ */
+export const removeFluidTransposerFill = (input: { id: string; liquid: string }) =>
+  `mods.thermalexpansion.Transposer.removeFillRecipe(${formatArgs(input.id, input.liquid)});`;
+
+export type RecipeFluidTransposerExtract = {
+  rf: number;
+  input: string;
+  bonus?: Bonus;
+};
 
 /**
-* Common values
-*  - Bucket: `800RF, 1000mB`
-*  - Bottle: `1600RF, 1000mB`
-*/
-export const addTransposerExtract = (recipe: RecipeTransposerExtract) => {
+ * Add [Fluid Transposer](https://oldcofh.github.io/docs/thermal-expansion/machines/fluid-transposer/) extract recipe
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Transposer`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
+ */
+export const addFluidTransposerExtract = (liquid: Stack, recipe: RecipeFluidTransposerExtract) => {
   const out = formatArgs(
     recipe.rf,
-    recipe.in,
-    formatStack(recipe.liquid),
-    recipe.bonus.id,
-    recipe.bonus.n
+    recipe.input,
+    formatStack(liquid),
+    ...formatBonus(recipe.bonus)
   );
 
   return `mods.thermalexpansion.Transposer.addExtractRecipe(${out});`;
 };
 
-export const removeTransposerExtract = (id: string) =>
+/**
+ * Remove [Fluid Transposer](https://oldcofh.github.io/docs/thermal-expansion/machines/fluid-transposer/) extract recipe
+ * 
+ * A list of recipes can be generated using `/mt thermalexpansion Transposer`
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
+ */
+export const removeFluidTransposerExtract = (id: string) =>
   `mods.thermalexpansion.Transposer.removeExtractRecipe(${id});`;
