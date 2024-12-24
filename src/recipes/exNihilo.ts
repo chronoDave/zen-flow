@@ -1,6 +1,5 @@
 import type { Stack } from '../types';
 
-import { fill, toArray } from '../lib/array';
 import { formatArgs, formatLiteral, formatStack } from '../lib/format';
 import { isObject } from '../lib/assert';
 import { clamp } from '../lib/math';
@@ -82,11 +81,11 @@ export type RecipeHammer = Record<string, number | { n: number; modifier: number
  */
 export const addHammer = (id: string, recipe: RecipeHammer) => {
   const items = Object.entries(recipe)
-    .map(entry => toArray(entry[1]).map(chance => ({
+    .map(entry => ({
       id: entry[0],
-      chance: clamp(0, 1, isObject(chance) ? chance.n : chance),
-      modifier: isObject(chance) ? chance.modifier : 1
-    })))
+      chance: clamp(0, 1, isObject(entry[1]) ? entry[1].n : entry[1]),
+      modifier: isObject(entry[1]) ? entry[1].modifier : 1
+    }))
     .flat();
 
   const out = formatArgs(
@@ -118,7 +117,7 @@ export type RecipeSieve = Record<string, number>;
  */
 export const addSieve = (id: string, recipe: RecipeSieve) => {
   const items = Object.entries(recipe)
-    .map(entry => fill(Math.ceil(entry[1])).map(i => ({
+    .map(entry => Array.from({ length: Math.ceil(entry[1]) }).map((_, i) => ({
       id: entry[0],
       chance: entry[1] - i < 1 ?
         Math.round(1 / (entry[1] - i)) :

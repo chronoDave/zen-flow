@@ -1,5 +1,6 @@
-import { formatArgs, formatIngredient, formatRecipeShaped } from '../lib/format';
 import type { Ingredient, RecipeShaped } from '../types';
+
+import { formatArgs, formatIngredient, formatRecipeShaped } from '../lib/format';
 
 /**
  * Adds [QED](https://ftb.fandom.com/wiki/QED) recipe

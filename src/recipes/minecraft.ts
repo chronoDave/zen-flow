@@ -1,15 +1,16 @@
-import {
-  formatArgs,
-  formatIngredient,
-  formatArray,
-  formatRecipeShaped
-} from '../lib/format';
 import type {
   Ingredient,
   Recipe,
   RecipeShaped,
   RecipeShapeless
 } from '../types';
+
+import {
+  formatArgs,
+  formatIngredient,
+  formatArray,
+  formatRecipeShaped
+} from '../lib/format';
 
 /**
  * Add shaped crafting recipe

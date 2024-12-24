@@ -1,10 +1,20 @@
-import type { ENCHANTMENTS, COLORS, FORMATS } from './const';
+export type Stack = {
+  id: string;
+  n: number;
+};
 
-export type Stack = { id: string; n: number };
-export type Bonus = { id: string; chance: number };
 export type Ingredient = string | Stack;
-export type Cast = { id: string; consume?: boolean };
-export type Ingredient = string | Stack;
+
+export type Bonus = {
+  id: string;
+  chance: number;
+};
+
+export type Cast = {
+  id: string;
+  consume?: boolean;
+};
+
 export type RecipeShaped = Partial<{
   1: string;
   2: string;
@@ -25,17 +35,3 @@ export type RecipeShaped = Partial<{
 export type RecipeShapeless = string[];
 
 export type Recipe = RecipeShaped | RecipeShapeless;
-
-export type Enchantment = {
-  type: keyof typeof ENCHANTMENTS;
-  level?: number | string;
-  short?: boolean;
-};
-
-export type TextRich = {
-  text: string;
-  color?: typeof COLORS[number];
-  format?: typeof FORMATS[number];
-};
-
-export type Text = string | TextRich;

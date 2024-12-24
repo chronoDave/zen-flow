@@ -2,6 +2,7 @@ import test from 'tape';
 
 import {
   formatFloat,
+  formatShort,
   formatLiteral,
   formatId,
   formatArray,
@@ -16,6 +17,7 @@ import {
 test('[format]', t => {
   t.equal(formatFloat(3), '3F', 'formatFloat (int)');
   t.equal(formatFloat(3.5), '3.5F', 'formatFloat (float)');
+  t.equal(formatShort(3), '3 as short');
   t.equal(formatLiteral('Literal'), '"Literal"', 'formatLiteral');
   t.equal(formatId('id'), 'id', 'formatId (string)');
   t.equal(formatId(''), '', 'formatId (empty)');

@@ -9,6 +9,7 @@ import type {
 import { isObject } from './assert';
 
 export const formatFloat = (n: number) => `${n}F`;
+export const formatShort = (n: number) => `${n} as short`;
 export const formatLiteral = (x: string) => `"${x}"`;
 export const formatId = (id?: string | null) => typeof id === 'string' ? id : 'null';
 export const formatWeight = (id: string, weight: number) => `${id}.weight(${weight})`;

@@ -1,4 +1,5 @@
 import type { Bonus, Stack } from '../types';
+
 import {
   formatArgs,
   formatBonus,

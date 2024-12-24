@@ -1,3 +1,10 @@
+import type {
+  Stack,
+  Ingredient,
+  RecipeShaped,
+  Bonus
+} from '../types';
+
 import {
   formatArgs,
   formatBonus,
@@ -5,7 +12,6 @@ import {
   formatRecipeShaped,
   formatStack
 } from '../lib/format';
-import type { Stack, Ingredient, RecipeShaped, Bonus } from '../types';
 
 export type RecipeCarpenter = {
   recipe: RecipeShaped;
