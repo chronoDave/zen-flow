@@ -17,9 +17,14 @@ import type {
 import { isObject } from './assert';
 import { toArray } from './array';
 
-export const formatFloat = (n: number) => n % 1 === 0 ?
-  `${n}.0` :
-  `${n}`;
+export type Cast = { id: string; consume?: boolean };
+
+export const formatCast = (cast?: Cast): Array<string | boolean | null> => cast ? [
+  cast.id,
+  !!cast.consume
+] : [null, false];
+
+export const formatFloat = (n: number) => `${n}F`;
 export const formatLiteral = (x: string) => `"${x}"`;
 export const formatBonus = (x: Bonus) => `${x.id} % ${Math.round(x.chance * 100)}`;
 export const formatId = (id?: string) =>

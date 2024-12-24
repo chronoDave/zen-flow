@@ -320,6 +320,10 @@ export type RecipeFluidTransposerExtract = {
 /**
  * Add [Fluid Transposer](https://oldcofh.github.io/docs/thermal-expansion/machines/fluid-transposer/) extract recipe
  * 
+ * Common values:
+ *  - Bucket: `800RF, 1000mB`
+ *  - Bottle: `1600RF, 1000mB`
+ * 
  * A list of recipes can be generated using `/mt thermalexpansion Transposer`
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
