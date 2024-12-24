@@ -33,7 +33,7 @@ export type Enchantment = {
   level: number;
 };
 
-export const formatEnchantment = (enchantment: Enchantment) => {
+const formatEnchantment = (enchantment: Enchantment) => {
   const id = formatShort(ENCHANTMENTS[enchantment.type]);
   const lvl = formatShort(enchantment.level);
 
@@ -140,7 +140,7 @@ export type TextRich = {
 
 export type Text = string | TextRich;
 
-export const formatName = (...texts: Text[]) => {
+const formatName = (...texts: Text[]) => {
   const formatted = texts
     .map(text => {
       if (typeof text === 'string') return text;
@@ -161,7 +161,7 @@ export const formatName = (...texts: Text[]) => {
 export const withName = (id: string, name: Text) =>
   `${id}.displayName = ${formatName(name)};`;
 
-export const formatTooltip = (...texts: Text[]) => texts
+const formatTooltip = (...texts: Text[]) => texts
   .map(text => {
     if (typeof text === 'string') return TOOLTIP_COLOR.gray(formatLiteral(text));
 

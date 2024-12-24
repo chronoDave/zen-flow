@@ -103,7 +103,7 @@ export const addMirror = (item: Ingredient, recipe: RecipeShaped) => {
   return `recipes.addShapedMirrored(${out});`;
 };
 
-type RecipeFurnace = {
+export type RecipeFurnace = {
   in: string;
   xp?: number;
 };

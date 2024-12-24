@@ -131,21 +131,21 @@ export const FOCI = {
  * Add item to [Laser Drill](https://ftb.fandom.com/wiki/Laser_Drill_(MineFactory_Reloaded)) Foci
  * 
  * Common values:
- *  - Coal => `175`, `black`
- *  - Iron => `150`, `brown`
- *  - Redstone => `100`, `red`
- *  - Copper => `90`, `orange`
- *  - Tin => `85`, `silver`
- *  - Glowstone => `80`, `yellow`
- *  - Lapis => `80`, `blue`
- *  - Gold => `70`, `yellow`
- *  - Lead => `60`, `purple`
- *  - Diamond => `55`, `lightBlue`
- *  - Sulfur => `40`, `yellow`
- *  - Salpeter => `40`, `white`
- *  - Emerald => `35`, `lime`
- *  - Silver => `30`, `gray`
- *  - Platinum => `15`, `lightBlue`
+ *  - Coal => `175 (black)`
+ *  - Iron => `150 (brown)`
+ *  - Redstone => `100 (red)`
+ *  - Copper => `90 (orange)`
+ *  - Tin => `85 (silver)`
+ *  - Glowstone => `80 (yellow)`
+ *  - Lapis => `80 (blue)`
+ *  - Gold => `70 (yellow)`
+ *  - Lead => `60 (purple)`
+ *  - Diamond => `55 (lightBlue)`
+ *  - Sulfur => `40 (yellow)`
+ *  - Salpeter => `40 (white)`
+ *  - Emerald => `35 (lime)`
+ *  - Silver => `30 (gray)`
+ *  - Platinum => `15 (lightBlue)`
  * 
  * A list of laser ores can be generated using `/mt mfr laserores`
  * 
@@ -173,21 +173,21 @@ export type RecipeLaser = {
  * Add item to [Laser Drill](https://ftb.fandom.com/wiki/Laser_Drill_(MineFactory_Reloaded)) and Foci. Combines `addLaserOre` and `addLaserFoci`
  * 
  * Common values:
- *  - Coal => `175`, `black`
- *  - Iron => `150`, `brown`
- *  - Redstone => `100`, `red`
- *  - Copper => `90`, `orange`
- *  - Tin => `85`, `silver`
- *  - Glowstone => `80`, `yellow`
- *  - Lapis => `80`, `blue`
- *  - Gold => `70`, `yellow`
- *  - Lead => `60`, `purple`
- *  - Diamond => `55`, `lightBlue`
- *  - Sulfur => `40`, `yellow`
- *  - Salpeter => `40`, `white`
- *  - Emerald => `35`, `lime`
- *  - Silver => `30`, `gray`
- *  - Platinum => `15`, `lightBlue`
+ *  - Coal => `175 (black)`
+ *  - Iron => `150 (brown)`
+ *  - Redstone => `100 (red)`
+ *  - Copper => `90 (orange)`
+ *  - Tin => `85 (silver)`
+ *  - Glowstone => `80 (yellow)`
+ *  - Lapis => `80 (blue)`
+ *  - Gold => `70 (yellow)`
+ *  - Lead => `60 (purple)`
+ *  - Diamond => `55 (lightBlue)`
+ *  - Sulfur => `40 (yellow)`
+ *  - Salpeter => `40 (white)`
+ *  - Emerald => `35 (lime)`
+ *  - Silver => `30 (gray)`
+ *  - Platinum => `15 (lightBlue)`
  * 
  * A list of laser ores can be generated using `/mt mfr laserores`
  * 
