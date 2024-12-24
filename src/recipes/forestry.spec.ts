@@ -101,7 +101,7 @@ test('[forestry]', t => {
   t.equal(
     addSqueezer({ id: '<liquid:ice>', n: 1000 }, {
       in: [{ id: '<minecraft:packed_ice>', n: 4 }, '<minecraft:snowball>'],
-      bonus: { id: '<Forestry:craftingMaterial:5>', n: 2 },
+      bonus: { id: '<Forestry:craftingMaterial:5>', chance: 2 },
       ticks: 20
     }),
     'mods.forestry.Squeezer.addRecipe(\n\t<liquid:ice> * 1000,\n\t<Forestry:craftingMaterial:5> % 200,\n\t[<minecraft:packed_ice> * 4, <minecraft:snowball>],\n\t20\n);',

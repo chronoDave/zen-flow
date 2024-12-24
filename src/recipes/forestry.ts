@@ -5,7 +5,7 @@ import {
   formatRecipe,
   formatStack
 } from '../lib/format';
-import type { Stack, Ingredient, RecipeShaped } from '../types';
+import type { Stack, Ingredient, RecipeShaped, Bonus } from '../types';
 
 export type RecipeCarpenter = {
   recipe: RecipeShaped;
@@ -53,7 +53,7 @@ export type RecipeCentrifuge = {
  */
 export const addCentrifuge = (id: string, recipe: RecipeCentrifuge) => {
   const out = formatArgs(
-    Object.entries(recipe.out).map(([id, n]) => formatBonus({ id, n })),
+    Object.entries(recipe.out).map(([id, chance]) => formatBonus({ id, chance })),
     id,
     recipe.ticks
   );
@@ -160,7 +160,7 @@ export const removeMoistener = (id: string) =>
 export type RecipeSqueezer = {
   in: Ingredient[];
   ticks: number;
-  bonus: Stack;
+  bonus: Bonus;
 };
 
 /**
