@@ -21,7 +21,7 @@ export const addComposter = (id: string, recipe: RecipeComposter) => {
   const out = formatArgs(
     id,
     clamp(0, 1, recipe.n),
-    recipe.colour && formatLiteral(recipe.colour)
+    typeof recipe.colour === 'string' && formatLiteral(recipe.colour)
   );
 
   return `mods.exnihilo.Composting.addRecipe(${out});`;

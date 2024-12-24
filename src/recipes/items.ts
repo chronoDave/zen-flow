@@ -1,6 +1,6 @@
 import {
   formatEnchantment,
-  formatList,
+  formatArray,
   formatName,
   formatTooltip
 } from '../lib/format';
@@ -36,4 +36,4 @@ export const withTag = (tag: string) => (id: string) =>
   `${id}.withTag(${tag})`;
 
 export const withEnchantment = (enchantments: Enchantment | Enchantment[]) =>
-  withTag(`{ ench: ${formatList(toArray(enchantments).map(formatEnchantment))} }`);
+  withTag(`{ ench: ${formatArray(toArray(enchantments).map(formatEnchantment))} }`);

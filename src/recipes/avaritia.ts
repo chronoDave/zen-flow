@@ -3,7 +3,7 @@ import {
   formatArgs,
   formatId,
   formatIngredient,
-  formatList
+  formatArray
 } from '../lib/format';
 
 export type RecipeCompressor = {
@@ -23,7 +23,7 @@ export const addCompressor = (id: string, recipe: RecipeCompressor) => {
   );
 
   return `mods.avaritia.Compressor.add(${out});`;
-}
+};
 
 /**
  * Remove [Neutronium Compressor](https://ftb.fandom.com/wiki/Neutronium_Compressor) recipe
@@ -49,7 +49,7 @@ export type RecipeExtreme = [
 export const addExtreme = (ingredient: Ingredient, recipe: RecipeExtreme) => {
   const out = formatArgs(
     formatIngredient(ingredient),
-    recipe.map(row => formatList(row.map(formatId)))
+    recipe.map(row => formatArray(row.map(formatId), 9))
   );
 
   return `mods.avaritia.ExtremeCrafting.addShaped(${out});`;

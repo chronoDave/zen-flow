@@ -1,5 +1,4 @@
-import type { Cast } from '../lib/format';
-import type { Stack } from '../types';
+import type { Stack, Cast } from '../types';
 
 import {
   formatArgs,

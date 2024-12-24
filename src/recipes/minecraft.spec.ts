@@ -33,7 +33,7 @@ test('[minecraft]', t => {
 
   t.equal(
     removeShaped('<minecraft:stick>', { 1: '<minecraft:planks:*>', 4: '<minecraft:planks:*>' }),
-    'recipes.removeShaped(<minecraft:stick>, [\n\t[<minecraft:planks:*>, null],\n\t[<minecraft:planks:*>, null]\n]);',
+    'recipes.removeShaped(<minecraft:stick>, [[<minecraft:planks:*>, null], [<minecraft:planks:*>, null]]);',
     'removeShaped'
   );
 
@@ -79,7 +79,7 @@ test('[minecraft]', t => {
 
   t.equal(
     addMirror({ id: '<minecraft:stick>', n: 4 }, { 1: '<minecraft:planks:*>', 5: '<minecraft:planks:*>' }),
-    'recipes.addShapedMirrored(<minecraft:stick> * 4, [\n\t[<minecraft:planks:*>, null],\n\t[null, <minecraft:planks:*>]\n]);',
+    'recipes.addShapedMirrored(<minecraft:stick> * 4, [[<minecraft:planks:*>, null], [null, <minecraft:planks:*>]]);',
     'addMirror'
   );
 

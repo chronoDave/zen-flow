@@ -1,122 +1,70 @@
 import test from 'tape';
 
 import {
-  formatStack,
-  formatList,
   formatFloat,
-  formatName,
-  formatTooltip,
+  formatLiteral,
   formatId,
-  formatRecipe
+  formatArray,
+  formatWeight,
+  formatStack,
+  formatBonus,
+  formatCast,
+  formatIngredient,
+  formatRecipeShaped
 } from './format';
 
-const stick = '<minecraft:stick>';
+test('[format]', t => {
+  t.equal(formatFloat(3), '3F', 'formatFloat (int)');
+  t.equal(formatFloat(3.5), '3.5F', 'formatFloat (float)');
+  t.equal(formatLiteral('Literal'), '"Literal"', 'formatLiteral');
+  t.equal(formatId('id'), 'id', 'formatId (string)');
+  t.equal(formatId(''), '', 'formatId (empty)');
+  t.equal(formatId(), 'null', 'formatId (undefined)');
+  t.equal(formatBonus({ id: 'bonus', chance: 0.25 }), 'bonus % 25', 'formatBonus');
+  t.equal(formatStack({ id: 'stack', n: 3 }), 'stack * 3', 'formatStack');
+  t.equal(formatArray([1, 'b', 3], 3), '[1, b, 3]', 'formatArray');
+  t.equal(formatWeight('id', 3), 'id.weight(3)', 'formatWeight');
+  t.equal(formatIngredient('ingredient'), 'ingredient', 'formatIngredient (string)');
+  t.equal(formatIngredient({ id: 'id', n: 3 }), 'id * 3', 'formatIngredient (stack)');
 
-test('[format.formatStack] returns formatted string', t => {
-  t.equal(
-    formatStack({ id: stick, n: 4 }),
-    '<minecraft:stick> * 4'
+  t.deepEqual(
+    formatCast({ id: 'cast', consume: true }),
+    ['cast', true],
+    'formatCast'
   );
 
-  t.end();
-});
-
-test('[format.formatList] returns formatted string', t => {
-  t.equal(
-    formatList([1, 2, 4]),
-    '[1, 2, 4]'
-  );
-
-  t.end();
-});
-
-test('[format.formatId] return formatted string', t => {
-  t.equal(
-    formatId(stick),
-    '<minecraft:stick>'
-  );
-
-  t.equal(
-    formatId(),
-    'null'
-  );
-
-  t.end();
-});
-
-test('[format.formatRecipe] return formatted string', t => {
-  t.equal(
-    formatRecipe({ 1: stick, 5: stick, 9: stick }),
-    '[\n\t[<minecraft:stick>, null, null],\n\t[null, <minecraft:stick>, null],\n\t[null, null, <minecraft:stick>]\n]'
+  t.deepEqual(
+    formatCast(),
+    [null, false],
+    'formatCast (default)'
   );
 
   t.equal(
-    formatRecipe({ corner: stick, center: stick }),
-    '[\n\t[<minecraft:stick>, null, <minecraft:stick>],\n\t[null, <minecraft:stick>, null],\n\t[<minecraft:stick>, null, <minecraft:stick>]\n]'
+    formatRecipeShaped({ 1: '1', 2: '2', 4: '4', 5: '5' }),
+    '[[1, 2], [4, 5]]',
+    'formatRecipeShaped (2x2)'
   );
 
   t.equal(
-    formatRecipe({ ring: stick }),
-    '[\n\t[<minecraft:stick>, <minecraft:stick>, <minecraft:stick>],\n\t[<minecraft:stick>, null, <minecraft:stick>],\n\t[<minecraft:stick>, <minecraft:stick>, <minecraft:stick>]\n]'
+    formatRecipeShaped({ square: 'square' }),
+    '[[square, square], [square, square]]',
+    'formatRecipeShaped (2x2 - square)'
   );
 
   t.equal(
-    formatRecipe({ square: stick }),
-    '[\n\t[<minecraft:stick>, <minecraft:stick>],\n\t[<minecraft:stick>, <minecraft:stick>]\n]'
+    formatRecipeShaped({
+      1: '1', 2: '2', 3: '3',
+      4: '4', 5: '5', 6: '6',
+      7: '7', 8: '8', 9: '9'
+    }),
+    '[\n\t[1, 2, 3],\n\t[4, 5, 6],\n\t[7, 8, 9]\n]',
+    'formatRecipeShaped (3x3)'
   );
 
   t.equal(
-    formatRecipe({ square: stick, 9: stick }),
-    '[\n\t[<minecraft:stick>, <minecraft:stick>, null],\n\t[<minecraft:stick>, <minecraft:stick>, null],\n\t[null, null, <minecraft:stick>]\n]'
-  );
-
-  t.end();
-});
-
-test('[format.formatFloat] returns formatted string', t => {
-  t.equal(formatFloat(1), '1.0', 'int');
-  t.equal(formatFloat(1.5), '1.5', 'float');
-
-  t.end();
-});
-
-test('[format.formatName] returns formatted string', t => {
-  t.equal(formatName('Bread'), '"Bread"');
-  t.equal(
-    formatName({ text: 'Bread', color: 'red' }),
-    '"\\u00A7cBread\\u00A7r"'
-  );
-  t.equal(
-    formatName({ text: 'Bread', color: 'yellow', format: 'bold' }),
-    '"\\u00A7e\\u00A7lBread\\u00A7r"'
-  );
-  t.equal(
-    formatName([
-      'Bread',
-      { text: 'with butter', color: 'yellow', format: 'bold' }
-    ]),
-    '"Bread\\u00A7e\\u00A7lwith butter\\u00A7r"'
-  );
-
-  t.end();
-});
-
-test('[format.formatTooltip] returns formatted string', t => {
-  t.equal(formatTooltip('Bread'), 'format.gray("Bread")');
-  t.equal(
-    formatTooltip({ text: 'Bread', color: 'red' }),
-    'format.red("Bread")'
-  );
-  t.equal(
-    formatTooltip({ text: 'Bread', color: 'yellow', format: 'bold' }),
-    'format.yellow(format.bold("Bread"))'
-  );
-  t.equal(
-    formatTooltip([
-      'Bread',
-      { text: 'with butter', color: 'yellow', format: 'bold' }
-    ]),
-    'format.gray("Bread") + format.yellow(format.bold("with butter"))'
+    formatRecipeShaped({ ring: 'ring' }),
+    '[\n\t[ring, ring, ring],\n\t[ring, null, ring],\n\t[ring, ring, ring]\n]',
+    'formatRecipeShaped (3x3 - ring)'
   );
 
   t.end();

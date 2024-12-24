@@ -1,8 +1,8 @@
 import {
   formatArgs,
   formatIngredient,
-  formatList,
-  formatRecipe
+  formatArray,
+  formatRecipeShaped
 } from '../lib/format';
 import type {
   Ingredient,
@@ -19,7 +19,7 @@ import type {
 export const addShaped = (item: Ingredient, recipe: RecipeShaped) => {
   const out = formatArgs(
     formatIngredient(item),
-    formatRecipe(recipe)
+    formatRecipeShaped(recipe)
   );
 
   return `recipes.addShaped(${out});`;
@@ -33,7 +33,7 @@ export const addShaped = (item: Ingredient, recipe: RecipeShaped) => {
 export const removeShaped = (id: string, recipe?: RecipeShaped) => {
   const out = formatArgs(
     id,
-    recipe && formatRecipe(recipe)
+    recipe && formatRecipeShaped(recipe)
   );
 
   return `recipes.removeShaped(${out});`;
@@ -47,7 +47,7 @@ export const removeShaped = (id: string, recipe?: RecipeShaped) => {
 export const addShapeless = (item: Ingredient, recipe: RecipeShapeless) => {
   const out = formatArgs(
     formatIngredient(item),
-    formatList(recipe)
+    formatArray(recipe, 3)
   );
 
   return `recipes.addShapeless(${out});`;
@@ -61,7 +61,7 @@ export const addShapeless = (item: Ingredient, recipe: RecipeShapeless) => {
 export const removeShapeless = (id: string, recipe?: RecipeShapeless) => {
   const out = formatArgs(
     id,
-    recipe && formatList(recipe)
+    recipe && formatArray(recipe, 3)
   );
 
   return `recipes.removeShapeless(${out});`;
@@ -96,7 +96,7 @@ export const remove = (id: string) =>
 export const addMirror = (item: Ingredient, recipe: RecipeShaped) => {
   const out = formatArgs(
     formatIngredient(item),
-    formatRecipe(recipe)
+    formatRecipeShaped(recipe)
   );
 
   return `recipes.addShapedMirrored(${out});`;

@@ -3,7 +3,8 @@ import type { ENCHANTMENTS, COLORS, FORMATS } from './const';
 export type Stack = { id: string; n: number };
 export type Bonus = { id: string; chance: number };
 export type Ingredient = string | Stack;
-
+export type Cast = { id: string; consume?: boolean };
+export type Ingredient = string | Stack;
 export type RecipeShaped = Partial<{
   1: string;
   2: string;

@@ -2,7 +2,7 @@ import {
   formatArgs,
   formatBonus,
   formatIngredient,
-  formatRecipe,
+  formatRecipeShaped,
   formatStack
 } from '../lib/format';
 import type { Stack, Ingredient, RecipeShaped, Bonus } from '../types';
@@ -22,7 +22,7 @@ export type RecipeCarpenter = {
 export const addCarpenter = (id: Ingredient, recipe: RecipeCarpenter) => {
   const out = formatArgs(
     formatIngredient(id),
-    formatRecipe(recipe.recipe),
+    formatRecipeShaped(recipe.recipe),
     recipe.liquid && formatStack(recipe.liquid),
     Math.max(1, Math.round(recipe.ticks)),
     recipe.top
@@ -237,7 +237,7 @@ export type RecipeFabricator = {
 export const addFabricator = (id: string, recipe: RecipeFabricator) => {
   const out = formatArgs(
     id,
-    formatRecipe(recipe.recipe),
+    formatRecipeShaped(recipe.recipe),
     recipe.n,
     recipe.cast
   );

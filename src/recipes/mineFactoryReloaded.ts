@@ -2,7 +2,7 @@ import type { Bonus, Stack } from '../types';
 import {
   formatArgs,
   formatBonus,
-  formatList,
+  formatArray,
   formatLiteral,
   formatStack,
   formatWeight
@@ -56,11 +56,11 @@ export type RecipeHarvester = {
 export const addHarvester = (id: string, recipe: RecipeHarvester) => {
   const out = formatArgs(
     id,
-    recipe.bonus && formatList(recipe.bonus.map(x => {
+    recipe.bonus && formatArray(recipe.bonus.map(x => {
       if (typeof x === 'string') return x;
       if ('n' in x) return formatStack(x);
       return formatBonus(x);
-    })),
+    }), 3),
     formatLiteral(HARVESTER_TYPE[recipe.type])
   );
 
@@ -92,7 +92,7 @@ export const addHarvester = (id: string, recipe: RecipeHarvester) => {
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const addLaserOre = (id: string, weight: number) => {
-  const out = formatArgs(formatWeight(weight)(id));
+  const out = formatArgs(formatWeight(id, weight));
 
   return `mods.mfr.MiningLaser.addOre(${out});`;
 };
@@ -246,7 +246,7 @@ export const removeBiomeRubberTree = (id: string) =>
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const addSludgeBoiler = (id: string, weight: number) => {
-  const out = formatArgs(formatWeight(weight)(id));
+  const out = formatArgs(formatWeight(id, weight));
 
   return `mods.mfr.SludgeBoiler.addDrop(${out});`;
 };

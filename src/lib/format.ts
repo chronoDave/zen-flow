@@ -1,126 +1,86 @@
-import {
-  ENCHANTMENTS,
-  NAME_COLOR,
-  NAME_FORMAT,
-  TOOLTIP_COLOR,
-  TOOLTIP_FORMAT
-} from '../const';
 import type {
-  Enchantment,
+  Bonus,
+  Cast,
   Ingredient,
-  Stack,
   RecipeShaped,
-  Text,
-  Bonus
+  Stack
 } from '../types';
 
 import { isObject } from './assert';
-import { toArray } from './array';
 
-export type Cast = { id: string; consume?: boolean };
+export const formatFloat = (n: number) => `${n}F`;
+export const formatLiteral = (x: string) => `"${x}"`;
+export const formatId = (id?: string | null) => typeof id === 'string' ? id : 'null';
+export const formatWeight = (id: string, weight: number) => `${id}.weight(${weight})`;
+export const formatStack = (stack: Stack) => `${stack.id} * ${stack.n}`;
+export const formatBonus = (x: Bonus) => `${x.id} % ${Math.round(x.chance * 100)}`;
+
+export const formatList = (arr: unknown[], n: number) => {
+  if (arr.length > n) return `\n\t${arr.join(',\n\t')}\n`;
+  return arr.join(', ');
+};
+
+export const formatArray = (arr: Array<string | number>, n: number) => `[${formatList(arr, n)}]`;
 
 export const formatCast = (cast?: Cast): Array<string | boolean | null> => cast ? [
   cast.id,
   !!cast.consume
 ] : [null, false];
 
-export const formatFloat = (n: number) => `${n}F`;
-export const formatLiteral = (x: string) => `"${x}"`;
-export const formatBonus = (x: Bonus) => `${x.id} % ${Math.round(x.chance * 100)}`;
-export const formatId = (id?: string) =>
-  id ?? 'null';
-export const formatStack = (stack: Stack) =>
-  `${stack.id} * ${stack.n}`;
 export const formatIngredient = (ingredient: Ingredient) => isObject(ingredient) ?
   formatStack(ingredient) :
   ingredient;
-export const formatWeight = (weight: number) => (id: string) =>
-  `${id}.weight(${weight})`;
 
-export const formatList = (list: Array<string | number>) =>
-  `[${list.join(', ')}]`;
+export const formatArgs = <T extends Array<string | number | boolean | null | string[] | number[]>>(...args: Partial<T>) => {
+  const list = args
+    .filter(x => x !== undefined)
+    .map(x => {
+      if (Array.isArray(x)) return formatArray(x, 3);
+      if (x === null) return 'null';
+      return x;
+    }) as T;
 
-export const formatEnchantment = (enchantment: Enchantment) => {
-  const id = `${ENCHANTMENTS[enchantment.type]}${enchantment.short ? ' as short' : ''}`;
-  const lvl = `${enchantment.level ?? 1}${enchantment.level ? ' as short' : ''}`;
-
-  return `{ id: ${id}, lvl: ${lvl} }`;
+  return formatList(list, 3);
 };
 
-export const formatName = (texts: Text | Text[]) => {
-  const formatted = toArray(texts)
-    .map(text => {
-      if (typeof text === 'string') return text;
-      return [
-        text.color && NAME_COLOR[text.color],
-        text.format && NAME_FORMAT[text.format],
-        text.text,
-        (text.color ?? text.format) && NAME_FORMAT.reset
-      ]
-        .filter(x => x !== undefined)
-        .join('');
-    })
-    .join('');
+/**
+ * `[corner, ring, square, 1] [edge,   ring, square, 2] [corner, ring, 3]`
+ * `[edge,   ring, square, 4] [center, square,       5] [edge,   ring, 6]`
+ * `[corner, ring,         7] [edge,   ring,         8] [corner, ring, 9]`
+ */
+export const formatRecipeShaped = (recipe: RecipeShaped) => {
+  const r = (...arr: Array<string | undefined>): string | null => {
+    for (const x of arr) {
+      if (typeof x === 'string') return x;
+    }
 
-  return `"${formatted}"`;
-};
+    return null;
+  };
 
-export const formatTooltip = (texts: Text | Text[]) => toArray(texts)
-  .map(text => {
-    if (typeof text === 'string') return TOOLTIP_COLOR.gray(formatLiteral(text));
-
-    const format = text.format ?
-      TOOLTIP_FORMAT[text.format](formatLiteral(text.text)) :
-      formatLiteral(text.text);
-
-    return TOOLTIP_COLOR[text.color ?? 'gray'](format);
-  })
-  .join(' + ');
-
-export const formatRecipe = (recipe: RecipeShaped) => {
-  /**
-   * [corner, ring, square] [edge, ring, square] [corner, ring]
-   * [edge,   ring, square] [center, square    ] [edge,   ring]
-   * [corner, ring        ] [edge, ring        ] [corner, ring]
-   */
   const matrix = [[
-    recipe.square || recipe.ring || recipe.corner || recipe[1],
-    recipe.square || recipe.ring || recipe.edge || recipe[2],
-    recipe.ring || recipe.corner || recipe[3]
+    r(recipe.square, recipe.ring, recipe.corner, recipe[1]),
+    r(recipe.square, recipe.ring, recipe.edge, recipe[2]),
+    r(recipe.ring, recipe.corner, recipe[3])
   ], [
-    recipe.square || recipe.ring || recipe.edge || recipe[4],
-    recipe.square || recipe.center || recipe[5],
-    recipe.ring || recipe.edge || recipe[6]
+    r(recipe.square, recipe.ring, recipe.edge, recipe[4]),
+    r(recipe.square, recipe.center, recipe[5]),
+    r(recipe.ring, recipe.edge, recipe[6])
   ], [
-    recipe.ring || recipe.corner || recipe[7],
-    recipe.ring || recipe.edge || recipe[8],
-    recipe.ring || recipe.corner || recipe[9]
+    r(recipe.ring, recipe.corner, recipe[7]),
+    r(recipe.ring, recipe.edge, recipe[8]),
+    r(recipe.ring, recipe.corner, recipe[9])
   ]];
 
   // 2x2 recipes
   if (
-    !matrix[0][2] &&
-    !matrix[1][2] &&
-    matrix[2].every(x => !x)
+    matrix[0][2] === null &&
+    matrix[1][2] === null &&
+    matrix[2].every(x => x === null)
   ) {
     matrix[0].splice(-1);
     matrix[1].splice(-1);
     matrix.splice(-1);
   }
 
-  return `[\n\t${matrix.map(row => formatList(row.map(formatId))).join(',\n\t')}\n]`;
-};
-
-export const formatArgs = <T extends Array<string | number | boolean | null | string[] | number[]>>(...args: Partial<T>) => {
-  const list = args
-    .filter(x => x !== undefined)
-    .map(x => {
-      if (Array.isArray(x)) return formatList(x);
-      if (x === null) return 'null';
-      return x;
-    }) as T;
-
-  return list.length > 3 ?
-    `\n\t${list.join(',\n\t')}\n` :
-    list.join(', ');
+  return formatArray(matrix.map(row => formatArray(row.map(formatId), 3)), 2);
 };

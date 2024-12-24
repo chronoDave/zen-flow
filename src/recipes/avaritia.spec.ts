@@ -1,11 +1,12 @@
+import type { RecipeExtreme } from './avaritia';
+
 import test from 'tape';
 
 import {
   addCompressor,
   removeCompressor,
   addExtreme,
-  removeExtreme,
-  RecipeExtreme
+  removeExtreme
 } from './avaritia';
 
 test('[avaritia]', t => {
@@ -23,7 +24,7 @@ test('[avaritia]', t => {
 
   t.equal(
     addExtreme('<minecraft:glass>', Array.from({ length: 9 }).map(() => ['<minecraft:stone>', '<minecraft:stone>', '<minecraft:stone>', '<minecraft:sand>', '<minecraft:stone>', '<minecraft:stone>', '<minecraft:sand>', '<minecraft:stone>', '<minecraft:stone>']) as unknown as RecipeExtreme),
-    'mods.avaritia.ExtremeCrafting.addShaped(<minecraft:glass>, [[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>], [<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>], [<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>], [<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>], [<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>], [<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>], [<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>], [<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>], [<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>]]);',
+    'mods.avaritia.ExtremeCrafting.addShaped(<minecraft:glass>, [\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>]\n]);',
     'addExtreme'
   );
 
@@ -34,4 +35,4 @@ test('[avaritia]', t => {
   );
 
   t.end();
-})
+});
