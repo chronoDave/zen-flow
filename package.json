@@ -37,7 +37,9 @@
     "build": "rollup -c",
     "build:docs": "typedoc src/index.ts",
     "test": "node scripts/tape.js && tape build/**/*.spec.js",
-    "prepublishOnly": "npm run lint && npm run test && npm run build && npm run build:docs"
+    "preversion": "npm run lint && npm run test",
+    "postversion": "npm run build:docs",
+    "prepublishOnly": " && npm run build"
   },
   "devDependencies": {
     "@chronocide/eslint-config": "github:chronoDave/eslint-config",
