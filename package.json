@@ -39,7 +39,7 @@
     "test": "node scripts/tape.js && tape build/**/*.spec.js",
     "preversion": "npm run lint && npm run test",
     "postversion": "npm run build:docs",
-    "prepublishOnly": " && npm run build"
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@chronocide/eslint-config": "github:chronoDave/eslint-config",
