@@ -10,6 +10,7 @@ export type {
 
 export * as appliedEnergistics from './recipes/appliedEnergistics';
 export * as avaritia from './recipes/avaritia';
+export * as content from './recipes/content';
 export * as exNihilo from './recipes/exNihilo';
 export * as extraUtilities from './recipes/extraUtilities';
 export * as forestry from './recipes/forestry';
