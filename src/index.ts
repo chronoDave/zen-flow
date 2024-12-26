@@ -15,6 +15,7 @@ export * as exNihilo from './recipes/exNihilo';
 export * as extraUtilities from './recipes/extraUtilities';
 export * as forestry from './recipes/forestry';
 export * as item from './recipes/item';
+export * as loot from './recipes/loot';
 export * as minecraft from './recipes/minecraft';
 export * as mineFactoryReloaded from './recipes/mineFactoryReloaded';
 export * as nei from './recipes/nei';
