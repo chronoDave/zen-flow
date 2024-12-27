@@ -1,6 +1,11 @@
 import type { Stack } from '../types';
 
-import { formatArgs, formatLiteral, formatStack } from '../lib/format';
+import {
+  formatArgs,
+  formatLiteral,
+  formatStack,
+  formatArray
+} from '../lib/format';
 import { isObject } from '../lib/assert';
 import { clamp } from '../lib/math';
 
@@ -128,7 +133,7 @@ export const addSieve = (id: string, recipe: RecipeSieve) => {
   const out = formatArgs(
     id,
     items.map(item => item.id),
-    items.map(item => item.chance)
+    formatArray(items.map(item => item.chance), 9)
   );
 
   return `mods.exnihilo.Sieve.addRecipe(${out});`;
