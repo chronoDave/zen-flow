@@ -11,7 +11,7 @@ import {
 
 test('[avaritia]', t => {
   t.equal(
-    addCompressor('<minecraft:redstone_block>', { in: { id: '<minecraft:redstone>', n: 64 } }),
+    addCompressor('<minecraft:redstone_block>', { input: { id: '<minecraft:redstone>', n: 64 } }),
     'mods.avaritia.Compressor.add(<minecraft:redstone_block>, 64, <minecraft:redstone>);',
     'addCompressor'
   );

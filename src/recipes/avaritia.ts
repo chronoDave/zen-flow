@@ -8,7 +8,7 @@ import {
 } from '../lib/format';
 
 export type RecipeCompressor = {
-  in: Stack;
+  input: Stack;
   exact?: boolean;
 };
 
@@ -18,8 +18,8 @@ export type RecipeCompressor = {
 export const addCompressor = (id: string, recipe: RecipeCompressor) => {
   const out = formatArgs(
     id,
-    Math.max(1, recipe.in.n),
-    recipe.in.id,
+    Math.max(1, recipe.input.n),
+    recipe.input.id,
     recipe.exact
   );
 

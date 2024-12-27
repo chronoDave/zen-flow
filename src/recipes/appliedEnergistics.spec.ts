@@ -10,7 +10,7 @@ import {
 test('[appliedEnergistics]', t => {
   t.equal(
     addGrinder({ id: '<minecraft:sand>', n: 2 }, {
-      in: '<minecraft:sandstone>',
+      input: '<minecraft:sandstone>',
       turns: 4,
       bonus: {
         primary: { id: '<minecraft:sand>', n: 0.8 },

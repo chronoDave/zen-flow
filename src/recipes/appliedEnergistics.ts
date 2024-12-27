@@ -5,7 +5,7 @@ import { capitalize } from '../lib/string';
 import { clamp } from '../lib/math';
 
 export type RecipeGrinder = {
-  in: string;
+  input: string;
   turns: number;
   bonus?: {
     primary: Stack;
@@ -30,7 +30,7 @@ export const addGrinder = (id: Ingredient, recipe: RecipeGrinder) => {
   const formatBonus = (stack: Stack) => `${stack.id}, ${clamp(0, 1, stack.n)}`;
 
   const out = formatArgs(
-    formatIngredient(recipe.in),
+    formatIngredient(recipe.input),
     formatIngredient(id),
     Math.max(1, recipe.turns),
     recipe.bonus && formatBonus(recipe.bonus.primary),

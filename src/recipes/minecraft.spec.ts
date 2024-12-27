@@ -84,7 +84,7 @@ test('[minecraft]', t => {
   );
 
   t.equal(
-    addFurnace('<minecraft:coal:0>', { in: '<minecraft:coal:1>', xp: 0.5 }),
+    addFurnace('<minecraft:coal:0>', { input: '<minecraft:coal:1>', xp: 0.5 }),
     'furnace.addRecipe(<minecraft:coal:0>, <minecraft:coal:1>, 0.5);',
     'addFurnace'
   );

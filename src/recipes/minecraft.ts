@@ -104,7 +104,7 @@ export const addMirror = (item: Ingredient, recipe: RecipeShaped) => {
 };
 
 export type RecipeFurnace = {
-  in: string;
+  input: string;
   xp?: number;
 };
 
@@ -122,7 +122,7 @@ export type RecipeFurnace = {
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
 export const addFurnace = (id: string, recipe: RecipeFurnace) =>
-  `furnace.addRecipe(${formatArgs(id, recipe.in, recipe.xp)});`;
+  `furnace.addRecipe(${formatArgs(id, recipe.input, recipe.xp)});`;
 
 /**
  * Remove furnace recipe

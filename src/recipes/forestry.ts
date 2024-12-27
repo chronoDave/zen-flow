@@ -136,7 +136,7 @@ export const removeFermenterFuel = (id: string) =>
   `mods.forestry.Fermenter.removeFuel(${id});`;
 
 export type RecipeMoistener = {
-  in: string;
+  input: string;
   ticks: number;
 };
 
@@ -148,7 +148,7 @@ export type RecipeMoistener = {
 export const addMoistener = (id: string, recipe: RecipeMoistener) => {
   const out = formatArgs(
     id,
-    recipe.in,
+    recipe.input,
     recipe.ticks
   );
 
@@ -164,7 +164,7 @@ export const removeMoistener = (id: string) =>
   `mods.forestry.Moistener.removeRecipe(${id});`;
 
 export type RecipeSqueezer = {
-  in: Ingredient[];
+  input: Ingredient[];
   ticks: number;
   bonus: Bonus;
 };
@@ -178,7 +178,7 @@ export const addSqueezer = (liquid: Stack, recipe: RecipeSqueezer) => {
   const out = formatArgs(
     formatStack(liquid),
     formatBonus(recipe.bonus),
-    recipe.in.map(formatIngredient),
+    recipe.input.map(formatIngredient),
     recipe.ticks
   );
 

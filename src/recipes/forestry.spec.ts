@@ -87,7 +87,7 @@ test('[forestry]', t => {
   );
 
   t.equal(
-    addMoistener('<minecraft:dirt:2>', { in: '<minecraft:grass>', ticks: 5000 }),
+    addMoistener('<minecraft:dirt:2>', { input: '<minecraft:grass>', ticks: 5000 }),
     'mods.forestry.Moistener.addRecipe(<minecraft:dirt:2>, <minecraft:grass>, 5000);',
     'addMoistener'
   );
@@ -100,7 +100,7 @@ test('[forestry]', t => {
 
   t.equal(
     addSqueezer({ id: '<liquid:ice>', n: 1000 }, {
-      in: [{ id: '<minecraft:packed_ice>', n: 4 }, '<minecraft:snowball>'],
+      input: [{ id: '<minecraft:packed_ice>', n: 4 }, '<minecraft:snowball>'],
       bonus: { id: '<Forestry:craftingMaterial:5>', chance: 2 },
       ticks: 20
     }),
