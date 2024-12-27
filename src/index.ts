@@ -9,6 +9,11 @@ export type {
 } from './types';
 
 export type {
+  TextRich,
+  Text
+} from './lib/format';
+
+export type {
   RecipeGrinder,
   RecipeInscriber
 } from './recipes/appliedEnergistics';
@@ -103,20 +108,6 @@ export {
   removeFabricatorGlass
 } from './recipes/forestry';
 
-export type {
-  Enchantment,
-  Text,
-  TextRich
-} from './recipes/item';
-
-export {
-  withTag,
-  withEnchantment,
-  withName,
-  withTooltip,
-  withTooltipShift
-} from './recipes/item';
-
 export type { RecipeChestLoot } from './recipes/loot';
 
 export {
@@ -175,6 +166,17 @@ export {
   joinOreDict,
   mirrorOreDict
 } from './recipes/oreDictionary';
+
+export type { Enchantment } from './recipes/tag';
+
+export {
+  ENCHANTMENTS,
+  withName,
+  withTag,
+  withEnchantment,
+  withTooltip,
+  withTooltipShift
+} from './recipes/tag';
 
 export type {
   RecipeMagmaCrucible,

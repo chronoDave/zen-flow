@@ -11,7 +11,9 @@ import {
   formatBonus,
   formatCast,
   formatIngredient,
-  formatRecipeShaped
+  formatRecipeShaped,
+  formatName,
+  formatTooltip
 } from './format';
 
 test('[format]', t => {
@@ -67,6 +69,18 @@ test('[format]', t => {
     formatRecipeShaped({ ring: 'ring' }),
     '[\n\t[ring, ring, ring],\n\t[ring, null, ring],\n\t[ring, ring, ring]\n]',
     'formatRecipeShaped (3x3 - ring)'
+  );
+
+  t.equal(
+    formatName({ text: 'Longbow of the Heavens', color: 'red' }),
+    '"\\u00A7cLongbow of the Heavens\\u00A7r"',
+    'formatName'
+  );
+
+  t.equal(
+    formatTooltip({ text: 'This is a stick', style: 'italic', color: 'green' }, ' with ', { text: 'text', style: 'strikethrough' }, ' in multiple styles'),
+    'format.green(format.italic("This is a stick")) + " with " + format.strikethrough("text") + " in multiple styles"',
+    'formatTooltip'
   );
 
   t.end();

@@ -302,7 +302,7 @@ export const removeRepairMaterial = (id: string, material?: string) => {
 export type RecipeToolStats = {
   name: string;
   style: string;
-  colour: string;
+  color: string;
   durability: number;
   speed: number;
   damage: number;
@@ -333,7 +333,7 @@ export const setMaterialStats = (material: string, recipe: RecipeToolStats) => {
     recipe.level.reinforced,
     recipe.level.stonebound,
     formatLiteral(recipe.style),
-    recipe.colour
+    recipe.color
   );
 
   return `mods.tconstruct.ToolStats.setStats(${out});`;

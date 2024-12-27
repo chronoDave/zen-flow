@@ -85,3 +85,127 @@ export const formatRecipeShaped = (recipe: RecipeShaped) => {
 
   return formatArray(matrix.map(row => formatArray(row.map(formatId), 3)), 2);
 };
+
+export type TextRich = {
+  text: string;
+  color?: typeof COLORS[number];
+  style?: typeof STYLES[number];
+};
+
+export type Text = string | TextRich;
+
+const COLORS = [
+  'black',
+  'darkBlue',
+  'darkGreen',
+  'darkAqua',
+  'darkRed',
+  'darkRed',
+  'darkPurple',
+  'gold',
+  'gray',
+  'darkGray',
+  'blue',
+  'green',
+  'aqua',
+  'red',
+  'lightPurple',
+  'yellow',
+  'white'
+] as const;
+
+const STYLES = [
+  'obfuscated',
+  'bold',
+  'strikethrough',
+  'underline',
+  'italic'
+] as const;
+
+const createCode = (code: string) =>
+  `\\u00A7${code}`;
+
+const NAME_COLOR: Record<typeof COLORS[number], string> = {
+  black: createCode('0'),
+  darkBlue: createCode('1'),
+  darkGreen: createCode('2'),
+  darkAqua: createCode('3'),
+  darkRed: createCode('4'),
+  darkPurple: createCode('5'),
+  gold: createCode('6'),
+  gray: createCode('7'),
+  darkGray: createCode('8'),
+  blue: createCode('9'),
+  green: createCode('a'),
+  aqua: createCode('b'),
+  red: createCode('c'),
+  lightPurple: createCode('d'),
+  yellow: createCode('e'),
+  white: createCode('f')
+} as const;
+
+const NAME_STYLE: Record<typeof STYLES[number] | 'reset', string> = {
+  obfuscated: createCode('k'),
+  bold: createCode('l'),
+  strikethrough: createCode('m'),
+  underline: createCode('n'),
+  italic: createCode('o'),
+  reset: createCode('r')
+} as const;
+
+const createFormat = (type: string) => (tooltip: string) =>
+  `format.${type}(${tooltip})`;
+
+const TOOLTIP_COLOR: Record<typeof COLORS[number], (tooltip: string) => string> = {
+  black: createFormat('black'),
+  darkBlue: createFormat('darkBlue'),
+  darkGreen: createFormat('darkGreen'),
+  darkAqua: createFormat('darkAqua'),
+  darkRed: createFormat('darkRed'),
+  darkPurple: createFormat('darkPurple'),
+  gold: createFormat('gold'),
+  gray: createFormat('gray'),
+  darkGray: createFormat('darkGray'),
+  blue: createFormat('blue'),
+  green: createFormat('green'),
+  aqua: createFormat('aqua'),
+  red: createFormat('red'),
+  lightPurple: createFormat('lightPurple'),
+  yellow: createFormat('yellow'),
+  white: createFormat('white')
+} as const;
+
+const TOOLTIP_STYLE: Record<typeof STYLES[number], (tooltip: string) => string> = {
+  obfuscated: createFormat('obfuscated'),
+  bold: createFormat('bold'),
+  strikethrough: createFormat('strikethrough'),
+  underline: createFormat('underline'),
+  italic: createFormat('italic')
+} as const;
+
+export const formatName = (...texts: Text[]) => formatLiteral(texts
+  .map(text => {
+    if (typeof text === 'string') return text;
+    return [
+      text.color && NAME_COLOR[text.color],
+      text.style && NAME_STYLE[text.style],
+      text.text,
+      (text.color ?? text.style) && NAME_STYLE.reset
+    ]
+      .filter(x => x !== undefined)
+      .join('');
+  })
+  .join(''));
+
+export const formatTooltip = (...tooltip: Text[]) => tooltip
+  .map(text => {
+    if (typeof text === 'string') return formatLiteral(text);
+
+    let out = formatLiteral(text.text);
+
+    if (text.style) out = TOOLTIP_STYLE[text.style](out);
+    if (text.color) out = TOOLTIP_COLOR[text.color](out);
+
+    return out;
+  })
+  .join(' + ');

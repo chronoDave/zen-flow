@@ -148,7 +148,7 @@ test('[tinkersConstruct]', t => {
       durability: 108,
       speed: 112,
       damage: 83,
-      colour: '484848',
+      color: '484848',
       style: 'gold',
       modifier: {
         handle: 0.5

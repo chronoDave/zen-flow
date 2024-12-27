@@ -89,7 +89,7 @@ export type RecipeLiquid = {
   luminosity: number;
   temperature: number;
   viscosity: number;
-  colour: string;
+  color: string;
   setFire?: boolean;
   castingMaterial?: number;
   texture?: {
@@ -113,7 +113,7 @@ export const createLiquid = (id: string, recipe: RecipeLiquid) => {
     recipe.luminosity,
     recipe.temperature,
     recipe.viscosity,
-    recipe.colour,
+    recipe.color,
     !!recipe.setFire,
     recipe.castingMaterial,
     typeof recipe.texture?.still === 'string' && formatLiteral(recipe.texture.still),
@@ -135,7 +135,7 @@ export type RecipeMaterial = {
   };
   damage: number;
   reinforced: number;
-  colour: string;
+  color: string;
   value: number;
   handleModifier: number;
   stonebound: number;
@@ -173,7 +173,7 @@ export const createMaterial = (id: string, recipe: RecipeMaterial) => {
     recipe.mining.speed,
     recipe.damage,
     recipe.reinforced,
-    recipe.colour,
+    recipe.color,
     recipe.value,
     recipe.handleModifier,
     recipe.stonebound,

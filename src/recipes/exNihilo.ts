@@ -6,7 +6,7 @@ import { clamp } from '../lib/math';
 
 export type RecipeComposter = {
   n: number;
-  colour?: string;
+  color?: string;
 };
 
 /**
@@ -20,7 +20,7 @@ export const addComposter = (id: string, recipe: RecipeComposter) => {
   const out = formatArgs(
     id,
     clamp(0, 1, recipe.n),
-    typeof recipe.colour === 'string' && formatLiteral(recipe.colour)
+    typeof recipe.color === 'string' && formatLiteral(recipe.color)
   );
 
   return `mods.exnihilo.Composting.addRecipe(${out});`;

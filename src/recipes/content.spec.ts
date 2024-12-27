@@ -47,7 +47,7 @@ test('[content]', t => {
       luminosity: 1,
       temperature: 300,
       viscosity: 20,
-      colour: '3914239',
+      color: '3914239',
       setFire: true,
       castingMaterial: 50,
       texture: {
@@ -67,7 +67,7 @@ test('[content]', t => {
       material: 50,
       durability: 80,
       reinforced: 0,
-      colour: '3914239',
+      color: '3914239',
       handleModifier: 2,
       buildParts: true,
       modifiers: 0,
