@@ -1,4 +1,4 @@
-import type { Ingredient, Stack } from '../types';
+import type { Ingredient, Bonus } from '../types';
 
 import { formatArgs, formatIngredient, formatLiteral } from '../lib/format';
 import { capitalize } from '../lib/string';
@@ -8,8 +8,8 @@ export type RecipeGrinder = {
   input: string;
   turns: number;
   bonus?: {
-    primary: Stack;
-    secondary?: Stack;
+    primary: Bonus;
+    secondary?: Bonus;
   };
 };
 
@@ -27,7 +27,7 @@ export type RecipeGrinder = {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Applied_Energistics_2_Support
  */
 export const addGrinder = (id: Ingredient, recipe: RecipeGrinder) => {
-  const formatBonus = (stack: Stack) => `${stack.id}, ${clamp(0, 1, stack.n)}`;
+  const formatBonus = (bonus: Bonus) => `${bonus.id}, ${clamp(0, 1, bonus.chance)}`;
 
   const out = formatArgs(
     formatIngredient(recipe.input),
