@@ -1,35 +1,35 @@
 import test from 'tape';
 
 import {
-  addOreDictionary,
-  removeOreDictionary,
-  joinOreDictionary,
-  mirrorOreDictionary
+  addOreDict,
+  removeOreDict,
+  joinOreDict,
+  mirrorOreDict
 } from './oreDictionary';
 
 test('[oreDictionary]', t => {
   t.equal(
-    addOreDictionary('<minecraft:iron_ingot>', '<ore:myOwnEntry>'),
+    addOreDict('<minecraft:iron_ingot>', '<ore:myOwnEntry>'),
     '<ore:myOwnEntry>.add(<minecraft:iron_ingot>);',
-    'addOreDictionary'
+    'addOreDict'
   );
 
   t.equal(
-    removeOreDictionary('<minecraft:iron_ingot>', '<ore:ingotIron>'),
+    removeOreDict('<minecraft:iron_ingot>', '<ore:ingotIron>'),
     '<ore:ingotIron>.remove(<minecraft:iron_ingot>);',
-    'removeOreDictionary'
+    'removeOreDict'
   );
 
   t.equal(
-    joinOreDictionary('<ore:dustSalt>', '<ore:foodSalt>'),
+    joinOreDict('<ore:dustSalt>', '<ore:foodSalt>'),
     '<ore:dustSalt>.addAll(<ore:foodSalt>);',
-    'mergeOreDictionary'
+    'joinOreDict'
   );
 
   t.equal(
-    mirrorOreDictionary('<ore:foodSalt>', '<ore:dustSalt>'),
+    mirrorOreDict('<ore:foodSalt>', '<ore:dustSalt>'),
     '<ore:foodSalt>.mirror(<ore:dustSalt>);',
-    'mirrorOreDictionary'
+    'mirrorOreDict'
   );
 
   t.end();

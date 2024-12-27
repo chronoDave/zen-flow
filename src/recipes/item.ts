@@ -3,7 +3,7 @@ import { formatArray, formatLiteral, formatShort } from '../lib/format';
 export const withTag = (tag: string) => (id: string) =>
   `${id}.withTag(${tag})`;
 
-export const ENCHANTMENTS = {
+const ENCHANTMENTS = {
   protection: 0,
   fireResistance: 1,
   featherFalling: 2,
@@ -43,7 +43,7 @@ const formatEnchantment = (enchantment: Enchantment) => {
 export const withEnchantment = (enchantments: Enchantment[]) =>
   withTag(`{ ench: ${formatArray(enchantments.map(formatEnchantment), 3)} }`);
 
-export const COLORS = [
+const COLORS = [
   'black',
   'darkBlue',
   'darkGreen',
@@ -63,7 +63,7 @@ export const COLORS = [
   'white'
 ] as const;
 
-export const FORMATS = [
+const FORMATS = [
   'obfuscated',
   'bold',
   'strikethrough',
@@ -74,7 +74,7 @@ export const FORMATS = [
 const createCode = (code: string) =>
   `\\u00A7${code}`;
 
-export const NAME_COLOR: Record<typeof COLORS[number], string> = {
+const NAME_COLOR: Record<typeof COLORS[number], string> = {
   black: createCode('0'),
   darkBlue: createCode('1'),
   darkGreen: createCode('2'),
@@ -93,7 +93,7 @@ export const NAME_COLOR: Record<typeof COLORS[number], string> = {
   white: createCode('f')
 } as const;
 
-export const NAME_FORMAT: Record<typeof FORMATS[number] | 'reset', string> = {
+const NAME_FORMAT: Record<typeof FORMATS[number] | 'reset', string> = {
   obfuscated: createCode('k'),
   bold: createCode('l'),
   strikethrough: createCode('m'),
@@ -105,7 +105,7 @@ export const NAME_FORMAT: Record<typeof FORMATS[number] | 'reset', string> = {
 const createFormat = (type: string) => (tooltip: string) =>
   `format.${type}(${tooltip})`;
 
-export const TOOLTIP_COLOR: Record<typeof COLORS[number], (tooltip: string) => string> = {
+const TOOLTIP_COLOR: Record<typeof COLORS[number], (tooltip: string) => string> = {
   black: createFormat('black'),
   darkBlue: createFormat('darkBlue'),
   darkGreen: createFormat('darkGreen'),
@@ -124,7 +124,7 @@ export const TOOLTIP_COLOR: Record<typeof COLORS[number], (tooltip: string) => s
   white: createFormat('white')
 } as const;
 
-export const TOOLTIP_FORMAT: Record<typeof FORMATS[number], (tooltip: string) => string> = {
+const TOOLTIP_FORMAT: Record<typeof FORMATS[number], (tooltip: string) => string> = {
   obfuscated: createFormat('obfuscated'),
   bold: createFormat('bold'),
   strikethrough: createFormat('strikethrough'),

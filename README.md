@@ -40,7 +40,7 @@ $ npm i zen-flow -D
 ## Example
 
 ```TypeScript
-import { minecraft, nei } from 'zen-flow';
+import { add, remove, hide } from 'zen-flow';
 
 /**
  * recipes.addShaped(<minecraft:saddle>, [
@@ -49,7 +49,7 @@ import { minecraft, nei } from 'zen-flow';
  * 	[null, null, null]
  * ]);
  **/
-minecraft.add('<minecraft:saddle>', {
+add('<minecraft:saddle>', {
   1: '<minecraft:leather>', 2: '<minecraft:leather>', 3: '<minecraft:leather>',
   4: '<ore:ingotIron', 5: '<minecraft:string>', 6: '<ore:ingotIron>'
 });
@@ -61,7 +61,7 @@ minecraft.add('<minecraft:saddle>', {
  * 	[null, <minecraft:leather>, null]
  * ]);
  **/
-minecraft.add('<minecraft:saddle>', { edge: '<minecraft:leather>' });
+add('<minecraft:saddle>', { edge: '<minecraft:leather>' });
 
 // Remove & hide Extra Utility generators
 
@@ -80,8 +80,8 @@ Array.from({ length: 11 })
   ])
   .flat()
   .map(generator => [
-    minecraft.remove(generator),
-    nei.hide(generator)
+    remove(generator),
+    hide(generator)
   ].join('\n'));
 ```
 

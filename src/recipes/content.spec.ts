@@ -4,7 +4,7 @@ import {
   createBlock,
   createItem,
   createLiquid,
-  createTinkersMaterial
+  createMaterial
 } from './content';
 
 test('[content]', t => {
@@ -60,7 +60,7 @@ test('[content]', t => {
   );
 
   t.equal(
-    createTinkersMaterial('Content', {
+    createMaterial('Content', {
       name: 'content',
       style: '§1',
       resource: '<minecraft:diamond>',
@@ -91,7 +91,7 @@ test('[content]', t => {
       nativeEnchantments: ['16', '3']
     }),
     'mods.content.Material.registerMaterial(\n\t"Content",\n\t"content",\n\t"§1",\n\t<minecraft:diamond>,\n\t50,\n\t8,\n\t80,\n\t8,\n\t4,\n\t0,\n\t3914239,\n\t1,\n\t2,\n\t0,\n\ttrue,\n\t0,\n\t"hello",\n\t1,\n\t2,\n\t3,\n\t2,\n\t[[<minecraft:redstone> * 5]],\n\t"16 3"\n);',
-    'createTinkersMaterial'
+    'createMaterial'
   );
 
   t.end();

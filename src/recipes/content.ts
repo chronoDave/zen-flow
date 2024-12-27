@@ -83,7 +83,7 @@ export const createItem = (name: string, recipe: RecipeItem) => {
   return `mods.content.Item.registerItem(${out});`;
 };
 
-export type RecipeFluid = {
+export type RecipeLiquid = {
   density: number;
   gaseous?: boolean;
   luminosity: number;
@@ -105,7 +105,7 @@ export type RecipeFluid = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
-export const createLiquid = (id: string, recipe: RecipeFluid) => {
+export const createLiquid = (id: string, recipe: RecipeLiquid) => {
   const out = formatArgs(
     formatLiteral(id),
     recipe.density,
@@ -123,7 +123,7 @@ export const createLiquid = (id: string, recipe: RecipeFluid) => {
   return `mods.content.Fluid.registerFluid(${out});`;
 };
 
-export type RecipeTinkersMaterial = {
+export type RecipeMaterial = {
   name: string;
   style: string;
   resource: string;
@@ -161,7 +161,7 @@ export type RecipeTinkersMaterial = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
-export const createTinkersMaterial = (id: string, recipe: RecipeTinkersMaterial) => {
+export const createMaterial = (id: string, recipe: RecipeMaterial) => {
   const out = formatArgs(
     formatLiteral(id),
     formatLiteral(recipe.name),

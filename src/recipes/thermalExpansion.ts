@@ -100,7 +100,7 @@ export const addRedstoneFurnace = (item: Ingredient, recipe: RecipeRedstoneFurna
 export const removeRedstoneFurnace = (id: string) =>
   `mods.thermalexpansion.Furnace.removeRecipe(${id});`;
 
-export type RecipePhytogenicInsolator = {
+export type RecipeInsolator = {
   rf: number;
   input: {
     left: Ingredient;
@@ -116,7 +116,7 @@ export type RecipePhytogenicInsolator = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const addPhytogenicInsolator = (item: Ingredient, recipe: RecipePhytogenicInsolator) => {
+export const addInsolator = (item: Ingredient, recipe: RecipeInsolator) => {
   const out = formatArgs(
     recipe.rf,
     formatIngredient(recipe.input.left),
@@ -135,7 +135,7 @@ export const addPhytogenicInsolator = (item: Ingredient, recipe: RecipePhytogeni
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const removePhytogenicInsolator = (input: { left: string; right: string }) =>
+export const removeInsolator = (input: { left: string; right: string }) =>
   `mods.thermalexpansion.Insolator.removeRecipe(${formatArgs(input.left, input.right)});`;
 
 export type RecipePulverizer = {
@@ -270,7 +270,7 @@ export const addInductionSmelter = (item: Ingredient, recipe: RecipeInductionSme
 export const removeInductionSmelter = (input: { left: string; right: string }) =>
   `mods.thermalexpansion.Smelter.removeRecipe(${formatArgs(input.left, input.right)});`;
 
-export type RecipeFluidTransposerFill = {
+export type RecipeTransposerFill = {
   rf: number;
   input: string;
   liquid: Stack;
@@ -290,7 +290,7 @@ export type RecipeFluidTransposerFill = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const addFluidTransposerFill = (item: Ingredient, recipe: RecipeFluidTransposerFill) => {
+export const addTransposerFill = (item: Ingredient, recipe: RecipeTransposerFill) => {
   const out = formatArgs(
     recipe.rf,
     recipe.input,
@@ -308,10 +308,10 @@ export const addFluidTransposerFill = (item: Ingredient, recipe: RecipeFluidTran
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const removeFluidTransposerFill = (input: { id: string; liquid: string }) =>
+export const removeTransposerFill = (input: { id: string; liquid: string }) =>
   `mods.thermalexpansion.Transposer.removeFillRecipe(${formatArgs(input.id, input.liquid)});`;
 
-export type RecipeFluidTransposerExtract = {
+export type RecipeTransposerExtract = {
   rf: number;
   input: string;
   bonus?: Bonus;
@@ -328,7 +328,7 @@ export type RecipeFluidTransposerExtract = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const addFluidTransposerExtract = (liquid: Stack, recipe: RecipeFluidTransposerExtract) => {
+export const addTransposerExtract = (liquid: Stack, recipe: RecipeTransposerExtract) => {
   const out = formatArgs(
     recipe.rf,
     recipe.input,
@@ -346,5 +346,5 @@ export const addFluidTransposerExtract = (liquid: Stack, recipe: RecipeFluidTran
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const removeFluidTransposerExtract = (id: string) =>
+export const removeTransposerExtract = (id: string) =>
   `mods.thermalexpansion.Transposer.removeExtractRecipe(${id});`;

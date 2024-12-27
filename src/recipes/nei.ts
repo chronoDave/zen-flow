@@ -18,7 +18,7 @@ export const hide = (id: string) =>
  * @example add('<minecraft:bread>.withTag({ display: { Name: "Tasty bread", Lore: ["Thanks to MineTweaker,", "We can now have tastier bread"] } });')
  * @see https://minetweaker3.aizistral.com/wiki/Mods:NEI_Support
  */
-export const add = (id: string) =>
+export const show = (id: string) =>
   `mods.nei.NEI.addEntry(${id});`;
 
 /**

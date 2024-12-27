@@ -108,7 +108,7 @@ export const addLaserOre = (id: string, weight: number) => {
 export const removeLaserOre = (id: string) => 
   `mods.mfr.MiningLaser.removeOre(${formatArgs(id)});`;
 
-export const FOCI = {
+const FOCI = {
   white: 0,
   orange: 1,
   magenta: 2,

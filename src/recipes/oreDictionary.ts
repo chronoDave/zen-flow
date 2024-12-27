@@ -3,7 +3,7 @@
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Ore_Dictionary
  */
-export const addOreDictionary = (id: string, dict: string) =>
+export const addOreDict = (id: string, dict: string) =>
   `${dict}.add(${id});`;
 
 /**
@@ -11,7 +11,7 @@ export const addOreDictionary = (id: string, dict: string) =>
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Ore_Dictionary
  */
-export const removeOreDictionary = (id: string, dict: string) =>
+export const removeOreDict = (id: string, dict: string) =>
   `${dict}.remove(${id});`;
 
 /**
@@ -19,7 +19,7 @@ export const removeOreDictionary = (id: string, dict: string) =>
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Ore_Dictionary
  */
-export const joinOreDictionary = (a: string, b: string) =>
+export const joinOreDict = (a: string, b: string) =>
   `${a}.addAll(${b});`;
 
 /**
@@ -27,6 +27,6 @@ export const joinOreDictionary = (a: string, b: string) =>
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Ore_Dictionary
  */
-export const mirrorOreDictionary = (a: string, b: string) =>
+export const mirrorOreDict = (a: string, b: string) =>
   `${a}.mirror(${b});`;
 

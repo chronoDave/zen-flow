@@ -5,18 +5,18 @@ import {
   removeMagmaCrucible,
   addRedstoneFurnace,
   removeRedstoneFurnace,
-  addPhytogenicInsolator,
-  removePhytogenicInsolator,
+  addInsolator,
+  removeInsolator,
   addPulverizer,
   removePulverizer,
   addSawmill,
   removeSawmill,
   addInductionSmelter,
   removeInductionSmelter,
-  addFluidTransposerFill,
-  removeFluidTransposerFill,
-  addFluidTransposerExtract,
-  removeFluidTransposerExtract
+  addTransposerFill,
+  removeTransposerFill,
+  addTransposerExtract,
+  removeTransposerExtract
 } from './thermalExpansion';
 
 test('[thermalExpanion]', t => {
@@ -45,7 +45,7 @@ test('[thermalExpanion]', t => {
   );
 
   t.equal(
-    addPhytogenicInsolator({ id: '<minecraft:mycelium>', n: 3 }, {
+    addInsolator({ id: '<minecraft:mycelium>', n: 3 }, {
       rf: 9600,
       input: {
         left: '<ThermalExpansion:material:517>',
@@ -54,13 +54,13 @@ test('[thermalExpanion]', t => {
       bonus: { id: '<minecraft:brown_mushroom>', chance: 0.5 }
     }),
     'mods.thermalexpansion.Insolator.addRecipe(\n\t9600,\n\t<ThermalExpansion:material:517>,\n\t<minecraft:mycelium>,\n\t<minecraft:mycelium> * 3,\n\t<minecraft:brown_mushroom>,\n\t50\n);',
-    'addPhytogenicInsolator'
+    'addInsolator'
   );
 
   t.equal(
-    removePhytogenicInsolator({ left: '<ThermalExpansion:material:517>', right: '<minecraft:cactus>' }),
+    removeInsolator({ left: '<ThermalExpansion:material:517>', right: '<minecraft:cactus>' }),
     'mods.thermalexpansion.Insolator.removeRecipe(<ThermalExpansion:material:517>, <minecraft:cactus>);',
-    'removePhytogenicInsolator'
+    'removeInsolator'
   );
 
   t.equal(
@@ -112,35 +112,35 @@ test('[thermalExpanion]', t => {
   );
 
   t.equal(
-    addFluidTransposerFill({ id: '<minecraft:tnt>', n: 2 }, {
+    addTransposerFill({ id: '<minecraft:tnt>', n: 2 }, {
       rf: 2000,
       input: '<minecraft:gunpowder>',
       liquid: { id: '<liquid:redstone>', n: 100 }
     }),
     'mods.thermalexpansion.Transposer.addFillRecipe(\n\t2000,\n\t<minecraft:gunpowder>,\n\t<minecraft:tnt> * 2,\n\t<liquid:redstone> * 100\n);',
-    'addFluidTransposerFill'
+    'addTransposerFill'
   );
 
   t.equal(
-    removeFluidTransposerFill({ id: '<minecraft:glass_bottle>', liquid: '<liquid:water>' }),
+    removeTransposerFill({ id: '<minecraft:glass_bottle>', liquid: '<liquid:water>' }),
     'mods.thermalexpansion.Transposer.removeFillRecipe(<minecraft:glass_bottle>, <liquid:water>);',
-    'removeFluidTransposerFill'
+    'removeTransposerFill'
   );
 
   t.equal(
-    addFluidTransposerExtract({ id: '<liquid:water>', n: 50 }, {
+    addTransposerExtract({ id: '<liquid:water>', n: 50 }, {
       rf: 2000,
       input: '<minecraft:leaves>',
       bonus: { id: '<minecraft:stick>', chance: 1 }
     }),
     'mods.thermalexpansion.Transposer.addExtractRecipe(\n\t2000,\n\t<minecraft:leaves>,\n\t<liquid:water> * 50,\n\t<minecraft:stick>,\n\t100\n);',
-    'addFluidTransposerExtract'
+    'addTransposerExtract'
   );
 
   t.equal(
-    removeFluidTransposerExtract('<minecraft:water_bucket>'),
+    removeTransposerExtract('<minecraft:water_bucket>'),
     'mods.thermalexpansion.Transposer.removeExtractRecipe(<minecraft:water_bucket>);',
-    'removeFluidTransposerExtract'
+    'removeTransposerExtract'
   );
 
   t.end();

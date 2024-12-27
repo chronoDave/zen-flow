@@ -2,7 +2,7 @@ import test from 'tape';
 
 import {
   hide,
-  add,
+  show,
   rename
 } from './nei';
 
@@ -14,9 +14,9 @@ test('[nei]', t => {
   );
 
   t.equal(
-    add('<minecraft:bread>.withTag({display: {Name: "Tasty bread", Lore: ["Thanks to MineTweaker,", "We can now have tastier bread"]}})'),
+    show('<minecraft:bread>.withTag({display: {Name: "Tasty bread", Lore: ["Thanks to MineTweaker,", "We can now have tastier bread"]}})'),
     'mods.nei.NEI.addEntry(<minecraft:bread>.withTag({display: {Name: "Tasty bread", Lore: ["Thanks to MineTweaker,", "We can now have tastier bread"]}}));',
-    'add'
+    'show'
   );
 
   t.equal(

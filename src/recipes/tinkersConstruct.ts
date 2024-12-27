@@ -516,7 +516,7 @@ export const setMaterialAbility = (material: string, ability: string) => {
   return `mods.tconstruct.ToolStats.setAbility(${out});`;
 };
 
-export type RecipeBowMaterialStats = {
+export type RecipeBowStats = {
   durability: number;
   drawSpeed: number;
   flightSpeed: number;
@@ -527,7 +527,7 @@ export type RecipeBowMaterialStats = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setBowMaterialStats = (material: string, recipe: RecipeBowMaterialStats) => {
+export const setBowMaterialStats = (material: string, recipe: RecipeBowStats) => {
   const out = formatArgs(
     formatLiteral(material),
     recipe.durability,
