@@ -9,13 +9,13 @@ import {
 
 test('[oreDictionary]', t => {
   t.equal(
-    addOreDict('<minecraft:iron_ingot>', '<ore:myOwnEntry>'),
+    addOreDict('<ore:myOwnEntry>')('<minecraft:iron_ingot>'),
     '<ore:myOwnEntry>.add(<minecraft:iron_ingot>);',
     'addOreDict'
   );
 
   t.equal(
-    removeOreDict('<minecraft:iron_ingot>', '<ore:ingotIron>'),
+    removeOreDict('<ore:ingotIron>')('<minecraft:iron_ingot>'),
     '<ore:ingotIron>.remove(<minecraft:iron_ingot>);',
     'removeOreDict'
   );

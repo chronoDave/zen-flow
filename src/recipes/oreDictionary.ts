@@ -3,7 +3,7 @@
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Ore_Dictionary
  */
-export const addOreDict = (id: string, dict: string) =>
+export const addOreDict = (dict: string) => (id: string) =>
   `${dict}.add(${id});`;
 
 /**
@@ -11,7 +11,7 @@ export const addOreDict = (id: string, dict: string) =>
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Ore_Dictionary
  */
-export const removeOreDict = (id: string, dict: string) =>
+export const removeOreDict = (dict: string) => (id: string) =>
   `${dict}.remove(${id});`;
 
 /**
