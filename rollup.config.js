@@ -11,10 +11,13 @@ export default [{
       target: 'esnext'
     })
   ],
+  external: [
+    'node:util'
+  ],
   output: [{
     file: output('cjs'),
     exports: 'auto',
-    format: 'cjs',
+    format: 'cjs'
   }, {
     file: output('mjs'),
     exports: 'auto',
