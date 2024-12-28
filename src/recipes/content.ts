@@ -11,7 +11,7 @@ import {
 export type RecipeBlock = {
   id: string;
   material: string;
-  texture: string;
+  texture?: string;
   creativeTab?: string;
   renderType?: number;
   drops?: string[];
@@ -30,11 +30,15 @@ export type RecipeBlock = {
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
 export const createBlock = (name: string, recipe: RecipeBlock) => {
+  const texture = typeof recipe.texture === 'string' ?
+    recipe.texture :
+    recipe.id;
+
   const out = formatArgs(
     formatLiteral(name),
     formatLiteral(recipe.id),
     formatLiteral(recipe.material),
-    formatLiteral(recipe.texture),
+    formatLiteral(texture),
     typeof recipe.creativeTab === 'string' && formatLiteral(recipe.creativeTab),
     recipe.renderType,
     recipe.drops,
@@ -49,7 +53,7 @@ export const createBlock = (name: string, recipe: RecipeBlock) => {
 
 export type RecipeItem = {
   id: string;
-  texture: string;
+  texture?: string;
   creativeTab?: string;
   damage?: number;
   stackSize?: number;
@@ -67,10 +71,14 @@ export type RecipeItem = {
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
 export const createItem = (name: string, recipe: RecipeItem) => {
+  const texture = typeof recipe.texture === 'string' ?
+    recipe.texture :
+    recipe.id;
+
   const out = formatArgs(
     formatLiteral(name),
     formatLiteral(recipe.id),
-    formatLiteral(recipe.texture),
+    formatLiteral(texture),
     typeof recipe.creativeTab === 'string' && formatLiteral(recipe.creativeTab),
     recipe.damage,
     recipe.stackSize,
