@@ -27,6 +27,8 @@ export type RecipeBlock = {
  * 
  * Textures can be placed in `/config/contenttweaker/icons/blocks/<texture>`
  * 
+ * Scripts containing `createBlock` must be placed in `/contentScripts`
+ * 
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
 export const createBlock = (name: string, recipe: RecipeBlock) => {
@@ -65,6 +67,8 @@ export type RecipeItem = {
 
 /**
  * Create custom item
+ * 
+ * Scripts containing `createItem` must be placed in `/contentScripts`
  * 
  * Textures can be placed in `/config/contenttweaker/icons/items/<texture>`
  * 
@@ -118,6 +122,8 @@ export type RecipeLiquid = {
 
 /**
  * Create custom liquid
+ * 
+ * Scripts containing `createLiquid` must be placed in `/contentScripts`
  * 
  * Textures can be placed in `/config/contenttweaker/icons/blocks/<texture>`
  * 
@@ -174,6 +180,8 @@ export type RecipeMaterial = {
 
 /**
  * Create custom [Tinkers' Construct material](https://tinkers-construct.fandom.com/wiki/Material_Stats)
+ * 
+ * Scripts containing `createMaterial` must be placed in `/contentScripts`
  * 
  * Textures can be placed in `/config/contenttweaker/icons/items/<texture>`
  * 
