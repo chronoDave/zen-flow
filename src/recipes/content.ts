@@ -30,17 +30,17 @@ export type RecipeBlock = {
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
 export const createBlock = (name: string, recipe: RecipeBlock) => {
-  const texture = typeof recipe.texture === 'string' ?
-    recipe.texture :
-    recipe.id;
-
   const out = formatArgs(
     formatLiteral(name),
     formatLiteral(recipe.id),
     formatLiteral(recipe.material),
-    formatLiteral(texture),
+    typeof recipe.texture === 'string' ?
+      formatLiteral(recipe.texture) :
+      formatLiteral(recipe.id),
     typeof recipe.creativeTab === 'string' && formatLiteral(recipe.creativeTab),
-    recipe.renderType,
+    typeof recipe.renderType === 'number' ?
+      recipe.renderType :
+      1,
     recipe.drops,
     recipe.unbreakable,
     typeof recipe.hardness === 'number' && formatFloat(recipe.hardness),
@@ -71,21 +71,31 @@ export type RecipeItem = {
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
 export const createItem = (name: string, recipe: RecipeItem) => {
-  const texture = typeof recipe.texture === 'string' ?
-    recipe.texture :
-    recipe.id;
-
   const out = formatArgs(
     formatLiteral(name),
     formatLiteral(recipe.id),
-    formatLiteral(texture),
-    typeof recipe.creativeTab === 'string' && formatLiteral(recipe.creativeTab),
-    recipe.damage,
-    recipe.stackSize,
-    typeof recipe.toolType === 'string' && formatLiteral(recipe.toolType),
-    recipe.level,
-    recipe.is3d,
-    Array.isArray(recipe.tooltip) && recipe.tooltip.map(formatLiteral)
+    typeof recipe.texture === 'string' ?
+      formatLiteral(recipe.texture) :
+      formatLiteral(recipe.id),
+    typeof recipe.creativeTab === 'string' ?
+      formatLiteral(recipe.creativeTab) :
+      formatLiteral('misc'),
+    typeof recipe.damage === 'number' ?
+      recipe.damage :
+      0,
+    typeof recipe.stackSize === 'number' ?
+      recipe.stackSize :
+      64,
+    typeof recipe.toolType === 'string' ?
+      formatLiteral(recipe.toolType) :
+      formatLiteral('pickaxe'),
+    typeof recipe.level === 'number' ?
+      recipe.level :
+      0,
+    !!recipe.is3d,
+    Array.isArray(recipe.tooltip) ?
+      recipe.tooltip.map(formatLiteral) :
+      []
   );
 
   return `mods.content.Item.registerItem(${out});`;
