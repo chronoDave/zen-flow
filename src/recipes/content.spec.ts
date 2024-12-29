@@ -68,7 +68,7 @@ test('[content]', t => {
       color: 3914239,
       setFire: true
     }),
-    'mods.content.Fluid.registerFluid(\n\t"content",\n\t5,\n\tfalse,\n\t1,\n\t300,\n\t20,\n\t3914239,\n\ttrue\n);',
+    'mods.content.Fluid.registerFluid(\n\t"content",\n\t5,\n\tfalse,\n\t1,\n\t300,\n\t20,\n\t3914239,\n\ttrue,\n\t0,\n\tnull,\n\tnull\n);',
     'createLiquid (optional)'
   );
 

@@ -139,13 +139,15 @@ export const createLiquid = (id: string, recipe: RecipeLiquid) => {
     recipe.viscosity,
     recipe.color,
     !!recipe.setFire,
-    recipe.castingMaterial,
+    typeof recipe.castingMaterial === 'number' ?
+      recipe.castingMaterial :
+      0,
     typeof recipe.texture?.still === 'string' ?
       formatLiteral(recipe.texture.still) :
-      undefined,
+      null,
     typeof recipe.texture?.flowing === 'string' ?
       formatLiteral(recipe.texture.flowing) :
-      undefined
+      null
   );
 
   return `mods.content.Fluid.registerFluid(${out});`;
