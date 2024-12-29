@@ -111,7 +111,7 @@ export type RecipeLiquid = {
   luminosity: number;
   temperature: number;
   viscosity: number;
-  color: string;
+  color: number;
   setFire?: boolean;
   castingMaterial?: number;
   texture?: {
@@ -140,8 +140,12 @@ export const createLiquid = (id: string, recipe: RecipeLiquid) => {
     recipe.color,
     !!recipe.setFire,
     recipe.castingMaterial,
-    typeof recipe.texture?.still === 'string' && formatLiteral(recipe.texture.still),
-    typeof recipe.texture?.flowing === 'string' && formatLiteral(recipe.texture.flowing)
+    typeof recipe.texture?.still === 'string' ?
+      formatLiteral(recipe.texture.still) :
+      undefined,
+    typeof recipe.texture?.flowing === 'string' ?
+      formatLiteral(recipe.texture.flowing) :
+      undefined
   );
 
   return `mods.content.Fluid.registerFluid(${out});`;

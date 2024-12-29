@@ -47,7 +47,7 @@ test('[content]', t => {
       luminosity: 1,
       temperature: 300,
       viscosity: 20,
-      color: '3914239',
+      color: 3914239,
       setFire: true,
       castingMaterial: 50,
       texture: {
@@ -57,6 +57,19 @@ test('[content]', t => {
     }),
     'mods.content.Fluid.registerFluid(\n\t"content",\n\t5,\n\tfalse,\n\t1,\n\t300,\n\t20,\n\t3914239,\n\ttrue,\n\t50,\n\t"content_still",\n\t"content_flowing"\n);',
     'createLiquid'
+  );
+
+  t.equal(
+    createLiquid('content', {
+      density: 5,
+      luminosity: 1,
+      temperature: 300,
+      viscosity: 20,
+      color: 3914239,
+      setFire: true
+    }),
+    'mods.content.Fluid.registerFluid(\n\t"content",\n\t5,\n\tfalse,\n\t1,\n\t300,\n\t20,\n\t3914239,\n\ttrue\n);',
+    'createLiquid (optional)'
   );
 
   t.equal(
