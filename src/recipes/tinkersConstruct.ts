@@ -159,6 +159,10 @@ export type RecipeSmelteryFluid = {
 /**
  * Add [Smeltery](https://tinkers-construct.fandom.com/wiki/Smeltery) fluid recipe
  * 
+ * Common values:
+ *  - Lava => `1000`
+ *  - Pyrotheum => `5000`
+ * 
  * A list of recipes can be generated from `/mt tconstruct Smeltery`
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
@@ -318,6 +322,39 @@ export type RecipeToolStats = {
 
 /**
  * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) stats
+ * 
+ * Common values:
+ * 
+ * Mining level:
+ *  - `1` => Iron
+ *  - `2` => Redstone
+ *  - `3` => Obsidian
+ *  - `4` => Cobalt
+ *  - `5` => Manyullyn
+ * 
+ * Mining speed:
+ *  - `1` => Nothing
+ *  - `2` => Wood
+ *  - `4` => Stone
+ *  - `6` => Iron
+ *  - `8` => Diamond
+ *  - `9` => Netherite
+ *  - `12` => Gold
+ * 
+ * Durability:
+ *  - `33` => Gold
+ *  - `60` => Wood
+ *  - `132` => Stone
+ *  - `251` => Iron
+ *  - `1562` => Diamond
+ *  - `2032` => Netherite
+ * 
+ * Damage:
+ *  - `1` => Wood, Gold
+ *  - `1.5` => Stone
+ *  - `2` => Iron
+ *  - `2.5` => Diamond
+ *  - `3` => Netherite
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
