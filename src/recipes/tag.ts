@@ -9,7 +9,7 @@ export const withName = (name: Text) => (id: string) =>
 
 export const withTag = (tag: Record<string, unknown>) =>
   (id: string) => {
-    return `${id}.withTag(${util.inspect(tag)})`;
+    return `${id}.withTag(${util.inspect(tag).replace(/(:\s?)'([^']+)'/gm, '$1"$2"')})`;
   };
 
 export const ENCHANTMENTS = {

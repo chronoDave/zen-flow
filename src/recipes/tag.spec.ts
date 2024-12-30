@@ -18,7 +18,13 @@ test('[tag]', t => {
   t.equal(
     withTag({ InfiTool: { Loaded: 0 } })('<TConstruct:potionLauncher>'),
     '<TConstruct:potionLauncher>.withTag({ InfiTool: { Loaded: 0 } })',
-    'withTag'
+    'withTag (number)'
+  );
+
+  t.equal(
+    withTag({ Fluid: 'liquid', Name: 'Tinkers\' Fluid', Id: 'Tinkers\' Fluid' })('<ThermalExpansion:florb:1>'),
+    '<ThermalExpansion:florb:1>.withTag({ Fluid: "liquid", Name: "Tinkers\' Fluid", Id: "Tinkers\' Fluid" })',
+    'withTag (string)'
   );
 
   t.equal(
