@@ -248,7 +248,6 @@ export {
   setMaterialReinforcedLevel,
   setMaterialLevelStonebound,
   setMaterialStyle,
-  setMaterialAbility,
   setBowMaterialStats,
   setBowMaterialDurability,
   setBowMaterialDrawspeed,
