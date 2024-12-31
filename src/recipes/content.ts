@@ -189,8 +189,8 @@ export type RecipeMaterial = {
     drawSpeed: number;
     speed: number;
   };
-  nativeModifiers: Ingredient[];
-  nativeEnchantments: string[];
+  nativeModifiers?: Ingredient[];
+  nativeEnchantments?: string[];
 };
 
 /**
