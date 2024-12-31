@@ -26,7 +26,6 @@ import {
   setMaterialReinforcedLevel,
   setMaterialLevelStonebound,
   setMaterialStyle,
-  setMaterialAbility,
   setBowMaterialStats,
   setBowMaterialDurability,
   setBowMaterialDrawspeed,
@@ -145,21 +144,19 @@ test('[tinkersConstruct]', t => {
   t.equal(
     setMaterialStats('Stone', {
       name: 'Modtweaker Stone',
-      durability: 108,
-      speed: 112,
-      damage: 83,
-      color: '484848',
-      style: 'gold',
-      modifier: {
-        handle: 0.5
+      color: {
+        name: 'gold',
+        tool: 484848
       },
-      level: {
-        stonebound: 0.5,
-        reinforced: 102,
-        mining: 47
-      }
+      durability: 108,
+      speed: 8,
+      damage: 83,
+      modifier: 0.5,
+      stonebound: 0.5,
+      reinforced: 102,
+      level: 47
     }),
-    'mods.tconstruct.ToolStats.setStats(\n\t"Stone",\n\t"Modtweaker Stone",\n\t47,\n\t108,\n\t112,\n\t83,\n\t0.5,\n\t102,\n\t0.5,\n\t"gold",\n\t484848\n);',
+    'mods.tconstruct.ToolStats.setStats(\n\t"Stone",\n\t"Modtweaker Stone",\n\t47,\n\t108,\n\t800,\n\t83,\n\t0.5,\n\t102,\n\t0.5,\n\t"gold",\n\t484848\n);',
     'setMaterialStats'
   );
 
@@ -182,8 +179,8 @@ test('[tinkersConstruct]', t => {
   );
 
   t.equal(
-    setMaterialSpeed('Wood', 30),
-    'mods.tconstruct.ToolStats.setSpeed("Wood", 30);',
+    setMaterialSpeed('Wood', 3),
+    'mods.tconstruct.ToolStats.setSpeed("Wood", 300);',
     'setMaterialSpeed'
   );
 
@@ -212,15 +209,9 @@ test('[tinkersConstruct]', t => {
   );
 
   t.equal(
-    setMaterialStyle('Wood', '§4'),
-    'mods.tconstruct.ToolStats.setStyle("Wood", "§4");',
+    setMaterialStyle('Wood', 'aqua'),
+    'mods.tconstruct.ToolStats.setStyle("Wood", "aqua");',
     'setMaterialStyle'
-  );
-
-  t.equal(
-    setMaterialAbility('Wood', 'Stonebound'),
-    'mods.tconstruct.ToolStats.setAbility("Wood", "Stonebound");',
-    'setMaterialAbility'
   );
 
   t.equal(

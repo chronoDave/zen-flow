@@ -94,7 +94,7 @@ export type TextRich = {
 
 export type Text = string | TextRich;
 
-const COLORS = [
+export const COLORS = [
   'black',
   'darkBlue',
   'darkGreen',

@@ -1,4 +1,5 @@
 import type { Stack, Cast } from '../types';
+import type { COLORS } from '../lib/format';
 
 import {
   formatArgs,
@@ -304,20 +305,25 @@ export const removeRepairMaterial = (id: string, material?: string) => {
 };
 
 export type RecipeToolStats = {
+  /** Display name */
   name: string;
-  style: string;
-  color: string;
+  color: {
+    /** Display name colour */
+    name: typeof COLORS[number];
+    /** Tool part colour */
+    tool: number;
+  };
   durability: number;
+  /** Mining speed */
   speed: number;
+  /** Attack damage in heart */
   damage: number;
-  level: {
-    mining: number;
-    reinforced: number;
-    stonebound: number;
-  };
-  modifier: {
-    handle: number;
-  };
+  /** Mining level */
+  level: number;
+  reinforced?: number;
+  stonebound?: number;
+  /** Handle modifier */
+  modifier: number;
 };
 
 /**
@@ -325,14 +331,14 @@ export type RecipeToolStats = {
  * 
  * Common values:
  * 
- * Mining level:
+ * Level:
  *  - `1` => Iron
  *  - `2` => Redstone
  *  - `3` => Obsidian
  *  - `4` => Cobalt
  *  - `5` => Manyullyn
  * 
- * Mining speed:
+ * Speed:
  *  - `1` => Nothing
  *  - `2` => Wood
  *  - `4` => Stone
@@ -362,22 +368,26 @@ export const setMaterialStats = (material: string, recipe: RecipeToolStats) => {
   const out = formatArgs(
     formatLiteral(material),
     formatLiteral(recipe.name),
-    recipe.level.mining,
+    recipe.level,
     recipe.durability,
-    recipe.speed,
+    recipe.speed * 100,
     recipe.damage,
-    recipe.modifier.handle,
-    recipe.level.reinforced,
-    recipe.level.stonebound,
-    formatLiteral(recipe.style),
-    recipe.color
+    recipe.modifier,
+    typeof recipe.reinforced === 'number' ?
+      recipe.reinforced :
+      0,
+    typeof recipe.stonebound === 'number' ?
+      recipe.stonebound :
+      0,
+    formatLiteral(recipe.color.name),
+    recipe.color.tool
   );
 
   return `mods.tconstruct.ToolStats.setStats(${out});`;
 };
 
 /**
- * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) name
+ * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) display name
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
@@ -440,7 +450,7 @@ export const setMaterialDurability = (material: string, n: number) => {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
 export const setMaterialSpeed = (material: string, n: number) => {
-  const out = formatArgs(formatLiteral(material), n);
+  const out = formatArgs(formatLiteral(material), n * 100);
 
   return `mods.tconstruct.ToolStats.setSpeed(${out});`;
 };
@@ -519,38 +529,17 @@ export const setMaterialLevelStonebound = (material: string, n: number) => {
 };
 
 /**
- * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) name style
+ * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) display name colour
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setMaterialStyle = (material: string, style: string) => {
+export const setMaterialStyle = (material: string, style: typeof COLORS[number]) => {
   const out = formatArgs(
     formatLiteral(material),
     formatLiteral(style)
   );
 
   return `mods.tconstruct.ToolStats.setStyle(${out});`;
-};
-
-/**
- * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) ability
- *
- * Common values:
- *  - Stonebound
- *  - Reinforced
- *  - Jagged
- *  - Slimy
- *  - Writeable
- * 
- * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
- */
-export const setMaterialAbility = (material: string, ability: string) => {
-  const out = formatArgs(
-    formatLiteral(material),
-    formatLiteral(ability)
-  );
-
-  return `mods.tconstruct.ToolStats.setAbility(${out});`;
 };
 
 export type RecipeBowStats = {

@@ -75,13 +75,15 @@ test('[content]', t => {
   t.equal(
     createMaterial('Content', {
       name: 'content',
-      style: '§1',
+      color: {
+        name: 'gold',
+        tool: 3914239
+      },
       resource: '<minecraft:diamond>',
-      material: 50,
+      id: 50,
       durability: 80,
       reinforced: 0,
-      color: '3914239',
-      handleModifier: 2,
+      modifier: 2,
       buildParts: true,
       modifiers: 0,
       tooltip: 'hello',
@@ -96,14 +98,12 @@ test('[content]', t => {
       stonebound: 0,
       value: 1,
       damage: 4,
-      mining: {
-        level: 8,
-        speed: 8
-      },
+      level: 8,
+      speed: 8,
       nativeModifiers: [{ id: '<minecraft:redstone>', n: 5 }],
       nativeEnchantments: ['16', '3']
     }),
-    'mods.content.Material.registerMaterial(\n\t"Content",\n\t"content",\n\t"§1",\n\t<minecraft:diamond>,\n\t50,\n\t8,\n\t80,\n\t8,\n\t4,\n\t0,\n\t3914239,\n\t1,\n\t2,\n\t0,\n\ttrue,\n\t0,\n\t"hello",\n\t1,\n\t2,\n\t3,\n\t2,\n\t[[<minecraft:redstone> * 5]],\n\t"16 3"\n);',
+    'mods.content.Material.registerMaterial(\n\t"Content",\n\t"content",\n\t"gold",\n\t<minecraft:diamond>,\n\t50,\n\t8,\n\t80,\n\t8,\n\t4,\n\t0,\n\t3914239,\n\t1,\n\t2,\n\t0,\n\ttrue,\n\t0,\n\t"hello",\n\t1,\n\t2,\n\t3,\n\t2,\n\t[[<minecraft:redstone> * 5]],\n\t"16 3"\n);',
     'createMaterial'
   );
 

@@ -1,4 +1,5 @@
 import type { Ingredient } from '../types';
+import type { COLORS } from '../lib/format';
 
 import {
   formatArgs,
@@ -154,22 +155,30 @@ export const createLiquid = (id: string, recipe: RecipeLiquid) => {
 };
 
 export type RecipeMaterial = {
+  /** Display name */
   name: string;
-  style: string;
-  resource: string;
-  material: number;
-  durability: number;
-  mining: {
-    speed: number;
-    level: number;
+  color: {
+    /** Display name colour */
+    name: typeof COLORS[number];
+    /** Tool part colour */
+    tool: number;
   };
+  durability: number;
+  /** Mining speed */
+  speed: number;
+  /** Attack damage in heart */
   damage: number;
-  reinforced: number;
-  color: string;
+  /** Mining level */
+  level: number;
+  resource: string;
+  reinforced?: number;
+  stonebound?: number;
+  modifier: number;
+  /** TiC material ID */
+  id: number;
   value: number;
-  handleModifier: number;
-  stonebound: number;
   buildParts?: boolean;
+  /** Amount of modifiers accepted */
   modifiers: number;
   tooltip: string;
   arrow: {
@@ -224,23 +233,23 @@ export type RecipeMaterial = {
  * 
  * Textures can be placed in `/config/contenttweaker/icons/items/<texture>`
  * 
- * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
+ * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:TConstruct_Support
  */
-export const createMaterial = (id: string, recipe: RecipeMaterial) => {
+export const createMaterial = (material: string, recipe: RecipeMaterial) => {
   const out = formatArgs(
-    formatLiteral(id),
+    formatLiteral(material),
     formatLiteral(recipe.name),
-    formatLiteral(recipe.style),
+    formatLiteral(recipe.color.name),
     recipe.resource,
-    recipe.material,
-    recipe.mining.level,
+    recipe.id,
+    recipe.level,
     recipe.durability,
-    recipe.mining.speed,
+    recipe.speed,
     recipe.damage,
     recipe.reinforced,
-    recipe.color,
+    recipe.color.tool,
     recipe.value,
-    recipe.handleModifier,
+    recipe.modifier,
     recipe.stonebound,
     !!recipe.buildParts,
     recipe.modifiers,
