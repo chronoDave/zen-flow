@@ -13,6 +13,7 @@
     "allowSyntheticDefaultImports": true,
 
     "declaration": true,
+    "skipLibCheck": true,
     "outDir": "./test/build"
   },
   "include": [
