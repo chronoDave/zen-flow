@@ -226,10 +226,7 @@ export const removeSawmill = (id: string) =>
 
 export type RecipeInductionSmelter = {
   rf: number;
-  input: {
-    left: Ingredient;
-    right: Ingredient;
-  };
+  input: [Ingredient, Ingredient];
   bonus?: Bonus;
 };
 
@@ -251,8 +248,8 @@ export type RecipeInductionSmelter = {
 export const addInductionSmelter = (item: Ingredient, recipe: RecipeInductionSmelter) => {
   const out = formatArgs(
     recipe.rf,
-    formatIngredient(recipe.input.left),
-    formatIngredient(recipe.input.right),
+    formatIngredient(recipe.input[1]),
+    formatIngredient(recipe.input[0]),
     formatIngredient(item),
     ...formatBonus(recipe.bonus)
   );
@@ -314,7 +311,7 @@ export const removeTransposerFill = (input: { id: string; liquid: string }) =>
 export type RecipeTransposerExtract = {
   rf: number;
   input: string;
-  bonus?: Bonus;
+  bonus: Bonus;
 };
 
 /**

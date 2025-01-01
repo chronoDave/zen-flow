@@ -98,10 +98,10 @@ test('[thermalExpanion]', t => {
   t.equal(
     addInductionSmelter('<minecraft:stained_glass:14>', {
       rf: 800,
-      input: { left: '<minecraft:dye:1>', right: '<minecraft:sand>' },
+      input: ['<minecraft:dye:1>', '<minecraft:sand>'],
       bonus: { id: '<ThermalExpansion:material:514>', chance: 0.25 }
     }),
-    'mods.thermalexpansion.Smelter.addRecipe(\n\t800,\n\t<minecraft:dye:1>,\n\t<minecraft:sand>,\n\t<minecraft:stained_glass:14>,\n\t<ThermalExpansion:material:514>,\n\t25\n);',
+    'mods.thermalexpansion.Smelter.addRecipe(\n\t800,\n\t<minecraft:sand>,\n\t<minecraft:dye:1>,\n\t<minecraft:stained_glass:14>,\n\t<ThermalExpansion:material:514>,\n\t25\n);',
     'addInductionSmelter'
   );
 
