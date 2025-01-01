@@ -39,7 +39,7 @@
     "build:docs": "typedoc src/index.ts",
     "test": "node scripts/tape.js && tape build/**/*.spec.js",
     "preversion": "npm run lint:types && npm run lint && npm run test",
-    "postversion": "npm run build:docs",
+    "postversion": "npm run build:docs && git add -A && git commit -m \"Docs\"",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
