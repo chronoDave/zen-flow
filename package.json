@@ -45,7 +45,7 @@
   "devDependencies": {
     "@chronocide/eslint-config": "github:chronoDave/eslint-config",
     "@types/tape": "^5.8.0",
-    "esbuild": "^0.23.1",
+    "esbuild": "^0.25.0",
     "eslint": "^9.9.0",
     "rollup": "^4.21.0",
     "rollup-plugin-dts": "^6.1.1",
