@@ -112,7 +112,8 @@ export const STYLE = {
   bold: '\\u00A7l',
   strikethrough: '\\u00A7m',
   underline: '\\u00A7n',
-  italic: '\\u00A7o'
+  italic: '\\u00A7o',
+  reset: '\\u00A7r'
 } as const;
 
 export type TextRich = {
