@@ -1,14 +1,14 @@
-import test from 'tape';
+import test from 'node:test';
 
 import {
   createBlock,
   createItem,
   createLiquid,
   createMaterial
-} from './content';
+} from './content.ts';
 
 test('[content]', t => {
-  t.equal(
+  t.assert.equal(
     createBlock('Content', {
       id: 'content_block',
       material: 'rock',
@@ -25,7 +25,7 @@ test('[content]', t => {
     'createBlock'
   );
 
-  t.equal(
+  t.assert.equal(
     createItem('Content', {
       id: 'content',
       texture: 'content_item',
@@ -41,7 +41,7 @@ test('[content]', t => {
     'createItem'
   );
 
-  t.equal(
+  t.assert.equal(
     createLiquid('content', {
       density: 5,
       luminosity: 1,
@@ -59,7 +59,7 @@ test('[content]', t => {
     'createLiquid'
   );
 
-  t.equal(
+  t.assert.equal(
     createLiquid('content', {
       density: 5,
       luminosity: 1,
@@ -72,7 +72,7 @@ test('[content]', t => {
     'createLiquid (optional)'
   );
 
-  t.equal(
+  t.assert.equal(
     createMaterial('Content', {
       name: 'content',
       color: {
@@ -106,6 +106,4 @@ test('[content]', t => {
     'mods.content.Material.registerMaterial(\n\t"Content",\n\t"content",\n\t"gold",\n\t<minecraft:diamond>,\n\t50,\n\t8,\n\t80,\n\t8,\n\t4,\n\t0,\n\t3914239,\n\t1,\n\t2,\n\t0,\n\ttrue,\n\t0,\n\t"hello",\n\t1,\n\t2,\n\t3,\n\t2,\n\t[[<minecraft:redstone> * 5]],\n\t"16 3"\n);',
     'createMaterial'
   );
-
-  t.end();
 });

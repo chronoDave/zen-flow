@@ -1,8 +1,8 @@
-import type { Ingredient, Bonus } from '../types';
+import type { Ingredient, Bonus } from '../lib/format.ts';
 
-import { formatArgs, formatIngredient, formatLiteral } from '../lib/format';
-import { capitalize } from '../lib/string';
-import { clamp } from '../lib/math';
+import * as format from '../lib/format.ts';
+import { capitalise } from '../lib/string.ts';
+import { clamp } from '../lib/math.ts';
 
 export type RecipeGrinder = {
   input: string;
@@ -27,14 +27,14 @@ export type RecipeGrinder = {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Applied_Energistics_2_Support
  */
 export const addGrinder = (id: Ingredient, recipe: RecipeGrinder) => {
-  const formatBonus = (bonus: Bonus) => `${bonus.id}, ${clamp(0, 1, bonus.chance)}`;
+  const bonus = (bonus: Bonus) => `${bonus.id}, ${clamp(0, 1, bonus.chance)}`;
 
-  const out = formatArgs(
-    formatIngredient(recipe.input),
-    formatIngredient(id),
+  const out = format.recipe(
+    format.ingredient(recipe.input),
+    format.ingredient(id),
     Math.max(1, recipe.turns),
-    recipe.bonus && formatBonus(recipe.bonus.primary),
-    recipe.bonus?.secondary && formatBonus(recipe.bonus.secondary)
+    recipe.bonus && bonus(recipe.bonus.primary),
+    recipe.bonus?.secondary && bonus(recipe.bonus.secondary)
   );
 
   return `mods.appeng.Grinder.addRecipe(${out});`;
@@ -61,12 +61,12 @@ export type RecipeInscriber = {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Applied_Energistics_2_Support
  */
 export const addInscriber = (id: Ingredient, recipe: RecipeInscriber) => {
-  const out = formatArgs(
+  const out = format.recipe(
     [recipe.center],
     recipe.top,
     recipe.bottom ?? null,
-    formatIngredient(id),
-    formatLiteral(capitalize(recipe.type))
+    format.ingredient(id),
+    format.literal(capitalise(recipe.type))
   );
 
   return `mods.appeng.Inscriber.addRecipe(${out});`;

@@ -1,9 +1,9 @@
-import test from 'tape';
+import test from 'node:test';
 
-import { addQED, removeQED } from './extraUtilities';
+import { addQED, removeQED } from './extraUtilities.ts';
 
 test('[extraUtilities]', t => {
-  t.equal(
+  t.assert.equal(
     addQED(
       { id: '<ExtraUtilities:decorativeBlock1:1>', n: 8 },
       { edge: '<minecraft:obsidian>', center: '<minecraft:ender_pearl>' }
@@ -12,12 +12,10 @@ test('[extraUtilities]', t => {
     'addQED'
   );
 
-  t.equal(
+  t.assert.equal(
     removeQED('<ExtraUtilities:extractor_base_remote>'),
     'mods.extraUtils.QED.removeRecipe(<ExtraUtilities:extractor_base_remote>);',
     'removeQED'
   );
-
-  t.end();
 });
 

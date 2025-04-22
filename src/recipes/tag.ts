@@ -1,11 +1,11 @@
-import type { Text } from '../lib/format';
+import type { Text } from '../lib/format.ts';
 
 import util from 'node:util';
 
-import { formatName, formatTooltip } from '../lib/format';
+import * as format from '../lib/format.ts';
 
 export const withName = (name: Text) => (id: string) =>
-  `${id}.displayName = ${formatName(name)};`;
+  `${id}.displayName = ${format.name(name)};`;
 
 export const withTag = (tag: Record<string, unknown>) =>
   (id: string) => {
@@ -46,7 +46,7 @@ export const withEnchantment = (...enchantments: Enchantment[]) =>
   withTag({ ench: enchantments });
 
 export const withTooltip = (...tooltip: Text[]) => (id: string) =>
-  `${id}.addTooltip(${formatTooltip(...tooltip)});`;
+  `${id}.addTooltip(${format.tooltip(...tooltip)});`;
 
 export const withTooltipShift = (...tooltip: Text[]) => (id: string) =>
-  `${id}.addShiftTooltip(${formatTooltip(...tooltip)});`;
+  `${id}.addShiftTooltip(${format.tooltip(...tooltip)});`;

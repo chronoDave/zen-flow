@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'node:test';
 
 import {
   addCastingBasin,
@@ -34,10 +34,10 @@ import {
   setArrowMass,
   setArrowBreakChance,
   setArrowAccuracy
-} from './tinkersConstruct';
+} from './tinkersConstruct.ts';
 
 test('[tinkersConstruct]', t => {
-  t.equal(
+  t.assert.equal(
     addCastingBasin('<TConstruct:MeatBlock>', {
       liquid: { id: '<liquid:pigiron.molten>', n: 1152 },
       ticks: 20,
@@ -47,13 +47,13 @@ test('[tinkersConstruct]', t => {
     'addCastingBasin'
   );
 
-  t.equal(
+  t.assert.equal(
     removeCastingBasin('<minecraft:iron_block>'),
     'mods.tconstruct.Casting.removeBasinRecipe(<minecraft:iron_block>);',
     'removeCastingBasin'
   );
 
-  t.equal(
+  t.assert.equal(
     addCastingTable('<TConstruct:strangeFood:2>', {
       liquid: { id: '<liquid:pigiron.molten>', n: 57 },
       ticks: 20
@@ -62,31 +62,31 @@ test('[tinkersConstruct]', t => {
     'addCastingTable'
   );
 
-  t.equal(
+  t.assert.equal(
     removeCastingTable('<minecraft:iron_ingot>'),
     'mods.tconstruct.Casting.removeTableRecipe(<minecraft:iron_ingot>);',
     'removeCastingTable'
   );
 
-  t.equal(
+  t.assert.equal(
     addDryingRack('<minecraft:deadbush>', { input: '<minecraft:tallgrass:1>', ticks: 50 }),
     'mods.tconstruct.Drying.addRecipe(<minecraft:tallgrass:1>, <minecraft:deadbush>, 50);',
     'addDryingRack'
   );
 
-  t.equal(
+  t.assert.equal(
     removeDryingRack('<TConstruct:jerky>'),
     'mods.tconstruct.Drying.removeRecipe(<TConstruct:jerky>);',
     'removeDryingRack'
   );
 
-  t.equal(
+  t.assert.equal(
     removeModifier('Blaze'),
     'mods.tconstruct.Modifiers.remove("Blaze");',
     'removeModifier'
   );
 
-  t.equal(
+  t.assert.equal(
     addSmelteryFluid({ id: '<liquid:blood>', n: 200 }, {
       input: '<minecraft:porkchop>',
       temperature: 200,
@@ -96,13 +96,13 @@ test('[tinkersConstruct]', t => {
     'addSmelteryFluid'
   );
 
-  t.equal(
+  t.assert.equal(
     removeSmelteryFluid('<TConstruct:strangeFood:1>'),
     'mods.tconstruct.Smeltery.removeMelting(<TConstruct:strangeFood:1>);',
     'removeSmelteryFluid'
   );
 
-  t.equal(
+  t.assert.equal(
     addSmelteryAlloy({ id: '<liquid:aluminumbrass.molten>', n: 64 }, [
       { id: '<liquid:aluminum.molten>', n: 48 },
       { id: '<liquid:gold.molten>', n: 16 }
@@ -111,37 +111,37 @@ test('[tinkersConstruct]', t => {
     'addSmelteryAlloy'
   );
 
-  t.equal(
+  t.assert.equal(
     removeSmelteryAlloy('<liquid:manyullyn.molten>'),
     'mods.tconstruct.Smeltery.removeAlloy(<liquid:manyullyn.molten>);',
     'removeSmelteryAlloy'
   );
 
-  t.equal(
+  t.assert.equal(
     addSmelteryFuel('<liquid:iron.molten>', { temperature: 64, ticks: 64 }),
     'mods.tconstruct.Smeltery.addFuel(<liquid:iron.molten>, 64, 64);',
     'addSmelteryFuel'
   );
 
-  t.equal(
+  t.assert.equal(
     removeSmelteryFuel('<liquid:lava>'),
     'mods.tconstruct.Smeltery.removeFuel(<liquid:lava>);',
     'removeSmelteryFuel'
   );
 
-  t.equal(
+  t.assert.equal(
     addRepairMaterial('<minecraft:stonebrick>', { material: 'Stone', n: 2 }),
     'mods.tconstruct.Tweaks.addRepairMaterial(<minecraft:stonebrick>, "Stone", 2);',
     'addRepairMaterial'
   );
 
-  t.equal(
+  t.assert.equal(
     removeRepairMaterial('<minecraft:stone>', 'Stone'),
     'mods.tconstruct.Tweaks.removeRepairMaterial(<minecraft:stone>, "Stone");',
     'removeRepairMaterial'
   );
 
-  t.equal(
+  t.assert.equal(
     setMaterialStats('Stone', {
       name: 'Modtweaker Stone',
       color: {
@@ -160,61 +160,61 @@ test('[tinkersConstruct]', t => {
     'setMaterialStats'
   );
 
-  t.equal(
+  t.assert.equal(
     setMaterialName('Wood', 'Modtweaker Wood'),
     'mods.tconstruct.ToolStats.setDisplayName("Wood", "Modtweaker Wood");',
     'setMaterialName'
   );
 
-  t.equal(
+  t.assert.equal(
     setMaterialMiningLevel('Wood', 1),
     'mods.tconstruct.ToolStats.setHarvestLevel("Wood", 1);',
     'setMaterialMiningLevel'
   );
 
-  t.equal(
+  t.assert.equal(
     setMaterialDurability('Wood', 3000),
     'mods.tconstruct.ToolStats.setDurability("Wood", 3000);',
     'setMaterialDurability'
   );
 
-  t.equal(
+  t.assert.equal(
     setMaterialSpeed('Wood', 3),
     'mods.tconstruct.ToolStats.setSpeed("Wood", 300);',
     'setMaterialSpeed'
   );
 
-  t.equal(
+  t.assert.equal(
     setMaterialDamage('Wood', 9001),
     'mods.tconstruct.ToolStats.setDamage("Wood", 9001);',
     'setMaterialDamage'
   );
 
-  t.equal(
+  t.assert.equal(
     setMaterialHandleModifier('Wood', 50.5),
     'mods.tconstruct.ToolStats.setHandleModifier("Wood", 50.5);',
     'setMaterialHandleModifier'
   );
 
-  t.equal(
+  t.assert.equal(
     setMaterialReinforcedLevel('Wood', 4),
     'mods.tconstruct.ToolStats.setReinforcedLevel("Wood", 4);',
     'setMaterialReinforcedLevel'
   );
 
-  t.equal(
+  t.assert.equal(
     setMaterialLevelStonebound('Wood', 6),
     'mods.tconstruct.ToolStats.setStoneboundLevel("Wood", 6);',
     'setMaterialLevelStonebound'
   );
 
-  t.equal(
+  t.assert.equal(
     setMaterialStyle('Wood', 'aqua'),
     'mods.tconstruct.ToolStats.setStyle("Wood", "aqua");',
     'setMaterialStyle'
   );
 
-  t.equal(
+  t.assert.equal(
     setBowMaterialStats('Stone', {
       durability: 100,
       drawSpeed: 21,
@@ -224,25 +224,25 @@ test('[tinkersConstruct]', t => {
     'setBowMaterialStats'
   );
 
-  t.equal(
+  t.assert.equal(
     setBowMaterialDurability('Wood', 2000),
     'mods.tconstruct.ToolStats.setBowDurability("Wood", 2000);',
     'setBowMaterialDurability'
   );
 
-  t.equal(
+  t.assert.equal(
     setBowMaterialDrawspeed('Wood', 250),
     'mods.tconstruct.ToolStats.setBowDrawspeed("Wood", 250);',
     'setBowMaterialDrawspeed'
   );
 
-  t.equal(
+  t.assert.equal(
     setBowMaterialFlightSpeed('Wood', 6.5),
     'mods.tconstruct.ToolStats.setBowFlightSpeed("Wood", 6.5F);',
     'setBowMaterialFlightSpeed'
   );
 
-  t.equal(
+  t.assert.equal(
     setArrowStats('Stone', {
       mass: 2.5,
       breakChance: 5,
@@ -252,24 +252,21 @@ test('[tinkersConstruct]', t => {
     'setArrowStats'
   );
 
-  t.equal(
+  t.assert.equal(
     setArrowMass('Wood', 3.5),
     'mods.tconstruct.ToolStats.setArrowMass("Wood", 3.5F);',
     'setArrowMass'
   );
 
-  t.equal(
+  t.assert.equal(
     setArrowBreakChance('Wood', 25),
     'mods.tconstruct.ToolStats.setArrowBreakChance("Wood", 25F);',
     'setArrowBreakChance'
   );
 
-  t.equal(
+  t.assert.equal(
     setArrowAccuracy('Wood', 20),
     'mods.tconstruct.TooLStats.setArrowAccuracy("Wood", 20F);',
     'setArrowAccuracy'
   );
-
-
-  t.end();
 });

@@ -1,4 +1,4 @@
-import { formatArgs, formatLiteral } from '../lib/format';
+import * as format from '../lib/format.ts';
 
 export type RecipeChestLoot = {
   chest: string;
@@ -18,8 +18,8 @@ export type RecipeChestLoot = {
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Loot
  */
 export const addChestLoot = (id: string, recipe: RecipeChestLoot) => {
-  const out = formatArgs(
-    formatLiteral(recipe.chest),
+  const out = format.recipe(
+    format.literal(recipe.chest),
     id,
     recipe.chance,
     recipe.n
@@ -34,7 +34,7 @@ export const addChestLoot = (id: string, recipe: RecipeChestLoot) => {
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Loot
  */
 export const removeChestLoot = (id: string, chest: string) =>
-  `vanilla.loot.removeChestLoot(${formatArgs(formatLiteral(chest), id)});`;
+  `vanilla.loot.removeChestLoot(${format.recipe(format.literal(chest), id)});`;
 
 /**
  * Add item to tall grass

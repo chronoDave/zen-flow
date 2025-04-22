@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'node:test';
 
 import {
   addMagmaCrucible,
@@ -17,34 +17,34 @@ import {
   removeTransposerFill,
   addTransposerExtract,
   removeTransposerExtract
-} from './thermalExpansion';
+} from './thermalExpansion.ts';
 
 test('[thermalExpanion]', t => {
-  t.equal(
+  t.assert.equal(
     addMagmaCrucible({ id: '<liquid:ender>', n: 8000 }, { rf: 500000, input: '<minecraft:dragon_egg>' }),
     'mods.thermalexpansion.Crucible.addRecipe(500000, <minecraft:dragon_egg>, <liquid:ender> * 8000);',
     'addMagmaCrucible'
   );
 
-  t.equal(
+  t.assert.equal(
     removeMagmaCrucible('<minecraft:netherrack>'),
     'mods.thermalexpansion.Crucible.removeRecipe(<minecraft:netherrack>);',
     'removeMagmaCrucible'
   );
 
-  t.equal(
+  t.assert.equal(
     addRedstoneFurnace('<minecraft:netherrack>', { rf: 16000, input: '<minecraft:obsidian>' }),
     'mods.thermalexpansion.Furnace.addRecipe(16000, <minecraft:obsidian>, <minecraft:netherrack>);',
     'addRedstoneFurnace'
   );
 
-  t.equal(
+  t.assert.equal(
     removeRedstoneFurnace('<minecraft:potato>'),
     'mods.thermalexpansion.Furnace.removeRecipe(<minecraft:potato>);',
     'removeRedstoneFurnace'
   );
 
-  t.equal(
+  t.assert.equal(
     addInsolator({ id: '<minecraft:mycelium>', n: 3 }, {
       rf: 9600,
       input: {
@@ -57,13 +57,13 @@ test('[thermalExpanion]', t => {
     'addInsolator'
   );
 
-  t.equal(
+  t.assert.equal(
     removeInsolator({ left: '<ThermalExpansion:material:517>', right: '<minecraft:cactus>' }),
     'mods.thermalexpansion.Insolator.removeRecipe(<ThermalExpansion:material:517>, <minecraft:cactus>);',
     'removeInsolator'
   );
 
-  t.equal(
+  t.assert.equal(
     addPulverizer('<minecraft:flint>', {
       rf: 3000,
       input: '<minecraft:flint_and_steel>',
@@ -73,13 +73,13 @@ test('[thermalExpanion]', t => {
     'addPulverizer'
   );
 
-  t.equal(
+  t.assert.equal(
     removePulverizer('<minecraft:reeds>'),
     'mods.thermalexpansion.Pulverizer.removeRecipe(<minecraft:reeds>);',
     'removePulverizer'
   );
 
-  t.equal(
+  t.assert.equal(
     addSawmill({ id: '<minecraft:stick>', n: 5 }, {
       rf: 2400,
       input: '<minecraft:ladder>',
@@ -89,13 +89,13 @@ test('[thermalExpanion]', t => {
     'addSawmill'
   );
 
-  t.equal(
+  t.assert.equal(
     removeSawmill('<minecraft:bed>'),
     'mods.thermalexpansion.Sawmill.removeRecipe(<minecraft:bed>);',
     'removeSawmill'
   );
 
-  t.equal(
+  t.assert.equal(
     addInductionSmelter('<minecraft:stained_glass:14>', {
       rf: 800,
       input: ['<minecraft:dye:1>', '<minecraft:sand>'],
@@ -105,13 +105,13 @@ test('[thermalExpanion]', t => {
     'addInductionSmelter'
   );
 
-  t.equal(
+  t.assert.equal(
     removeInductionSmelter({ left: '<minecraft:sand>', right: '<minecraft:redstone_ore>' }),
     'mods.thermalexpansion.Smelter.removeRecipe(<minecraft:sand>, <minecraft:redstone_ore>);',
     'removeInductionSmelter'
   );
 
-  t.equal(
+  t.assert.equal(
     addTransposerFill({ id: '<minecraft:tnt>', n: 2 }, {
       rf: 2000,
       input: '<minecraft:gunpowder>',
@@ -121,13 +121,13 @@ test('[thermalExpanion]', t => {
     'addTransposerFill'
   );
 
-  t.equal(
+  t.assert.equal(
     removeTransposerFill({ id: '<minecraft:glass_bottle>', liquid: '<liquid:water>' }),
     'mods.thermalexpansion.Transposer.removeFillRecipe(<minecraft:glass_bottle>, <liquid:water>);',
     'removeTransposerFill'
   );
 
-  t.equal(
+  t.assert.equal(
     addTransposerExtract({ id: '<liquid:water>', n: 50 }, {
       rf: 2000,
       input: '<minecraft:leaves>',
@@ -137,11 +137,9 @@ test('[thermalExpanion]', t => {
     'addTransposerExtract'
   );
 
-  t.equal(
+  t.assert.equal(
     removeTransposerExtract('<minecraft:water_bucket>'),
     'mods.thermalexpansion.Transposer.removeExtractRecipe(<minecraft:water_bucket>);',
     'removeTransposerExtract'
   );
-
-  t.end();
 });

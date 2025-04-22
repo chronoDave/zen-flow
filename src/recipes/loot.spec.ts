@@ -1,14 +1,14 @@
-import test from 'tape';
+import test from 'node:test';
 
 import {
   addChestLoot,
   removeChestLoot,
   addSeed,
   removeSeed
-} from './loot';
+} from './loot.ts';
 
 test('[loot]', t => {
-  t.equal(
+  t.assert.equal(
     addChestLoot('<minecraft:stick>.weight(100)', {
       chest: 'dungeonChest',
       n: 5,
@@ -18,23 +18,21 @@ test('[loot]', t => {
     'addChestLoot'
   );
 
-  t.equal(
+  t.assert.equal(
     removeChestLoot('<minecraft:enchanted_book>', 'dungeonChest'),
     'vanilla.loot.removeChestLoot("dungeonChest", <minecraft:enchanted_book>);',
     'removeChestLoot'
   );
 
-  t.equal(
+  t.assert.equal(
     addSeed('<minecraft:planks>.weight(100)'),
     'vanilla.seeds.addSeed(<minecraft:planks>.weight(100));',
     'addSeed'
   );
 
-  t.equal(
+  t.assert.equal(
     removeSeed('<Natura:barley.seed:*>'),
     'vanilla.seeds.removeSeed(<Natura:barley.seed:*>);',
     'removeSeed'
   );
-
-  t.end();
 });

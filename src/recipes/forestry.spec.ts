@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'node:test';
 
 import {
   addCarpenter,
@@ -19,10 +19,10 @@ import {
   removeFabricator,
   addFabricatorGlass,
   removeFabricatorGlass
-} from './forestry';
+} from './forestry.ts';
 
 test('[forestry]', t => {
-  t.equal(
+  t.assert.equal(
     addCarpenter({ id: '<Forestry:oakStick>', n: 2 }, {
       recipe: {
         2: '<minecraft:planks>',
@@ -37,13 +37,13 @@ test('[forestry]', t => {
     'addCarpenter'
   );
 
-  t.equal(
+  t.assert.equal(
     removeCarpenter('<Forestry:impregnatedCasing>', '<liquid:seedoil>'),
     'mods.forestry.Carpenter.removeRecipe(<Forestry:impregnatedCasing>, <liquid:seedoil>);',
     'removeCarpenter'
   );
 
-  t.equal(
+  t.assert.equal(
     addCentrifuge('<minecraft:sapling>', {
       ticks: 20,
       out: {
@@ -56,49 +56,49 @@ test('[forestry]', t => {
     'addCentrifuge'
   );
 
-  t.equal(
+  t.assert.equal(
     removeCentrifuge('<Forestry:beeCombs>'),
     'mods.forestry.Centrifuge.removeRecipe(<Forestry:beeCombs>);',
     'removeCentrifuge'
   );
 
-  t.equal(
+  t.assert.equal(
     addFermenter({ id: '<liquid:honey>', n: 200 }, { liquid: { id: '<liquid:water>', n: 100 }, catalyst: '<minecraft:sugar>' }),
     'mods.forestry.Fermenter.addRecipe(\n\t<liquid:honey>,\n\t<minecraft:sugar>,\n\t<liquid:water>,\n\t100,\n\t2\n);',
     'addFermenter'
   );
 
-  t.equal(
+  t.assert.equal(
     removeFermenter('<minecraft:reeds>'),
     'mods.forestry.Fermenter.removeRecipe(<minecraft:reeds>);',
     'removeFermenter'
   );
 
-  t.equal(
+  t.assert.equal(
     addFermenterFuel('<minecraft:dirt:2>', { cycles: 1000, burn: 1000 }),
     'mods.forestry.Fermenter.addFuel(<minecraft:dirt:2>, 1000, 1000);',
     'addFermenterFuel'
   );
 
-  t.equal(
+  t.assert.equal(
     removeFermenterFuel('<Forestry:mulch>'),
     'mods.forestry.Fermenter.removeFuel(<Forestry:mulch>);',
     'removeFermenterFuel'
   );
 
-  t.equal(
+  t.assert.equal(
     addMoistener('<minecraft:dirt:2>', { input: '<minecraft:grass>', ticks: 5000 }),
     'mods.forestry.Moistener.addRecipe(<minecraft:dirt:2>, <minecraft:grass>, 5000);',
     'addMoistener'
   );
 
-  t.equal(
+  t.assert.equal(
     removeMoistener('<minecraft:mycelium>'),
     'mods.forestry.Moistener.removeRecipe(<minecraft:mycelium>);',
     'removeMoistener'
   );
 
-  t.equal(
+  t.assert.equal(
     addSqueezer({ id: '<liquid:ice>', n: 1000 }, {
       input: [{ id: '<minecraft:packed_ice>', n: 4 }, '<minecraft:snowball>'],
       bonus: { id: '<Forestry:craftingMaterial:5>', chance: 2 },
@@ -108,25 +108,25 @@ test('[forestry]', t => {
     'addSqueezer'
   );
 
-  t.equal(
+  t.assert.equal(
     removeSqueezer('<liquid:water>', ['<Forestry:canWater>']),
     'mods.forestry.Squeezer.removeRecipe(<liquid:water>, [<Forestry:canWater>]);',
     'removeSqueezer'
   );
 
-  t.equal(
+  t.assert.equal(
     addStill({ id: '<liquid:bioethanol>', n: 20 }, { liquid: { id: '<liquid:juice>', n: 20 }, ticks: 100 }),
     'mods.forestry.Still.addRecipe(<liquid:bioethanol> * 20, <liquid:juice> * 20, 100);',
     'addStill'
   );
 
-  t.equal(
+  t.assert.equal(
     removeStill('<liquid:bioethanol>', '<liquid:biomass>'),
     'mods.forestry.Still.removeRecipe(<liquid:bioethanol>, <liquid:biomass>);',
     'removeStill'
   );
 
-  t.equal(
+  t.assert.equal(
     addFabricator('<minecraft:beacon>', {
       n: 1000,
       cast: '<Forestry:waxCast:*>',
@@ -139,24 +139,22 @@ test('[forestry]', t => {
     'addFbricator'
   );
 
-  t.equal(
+  t.assert.equal(
     removeFabricator('<minecraft:stained_glass>'),
     'mods.forestry.ThermionicFabricator.removeCast(<minecraft:stained_glass>);',
     'removeFabricator'
   );
 
-  t.equal(
+  t.assert.equal(
     addFabricatorGlass('<minecraft:stained_glass_pane>', { n: 375, temp: 1000 }),
     'mods.forestry.ThermionicFabricator.addSmelting(375, <minecraft:stained_glass_pane>, 1000);',
     'addFabricatorGlass'
   );
 
-  t.equal(
+  t.assert.equal(
     removeFabricatorGlass('<minecraft:sand>'),
     'mods.forestry.ThermionicFabricator.removeSmelting(<minecraft:sand>);',
     'removeFabricatorGlass'
   );
-
-  t.end();
 });
 

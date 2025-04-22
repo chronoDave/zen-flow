@@ -1,11 +1,6 @@
-import type { Ingredient, Stack } from '../types';
+import type { Ingredient, Stack } from '../lib/format.ts';
 
-import {
-  formatArgs,
-  formatId,
-  formatIngredient,
-  formatArray
-} from '../lib/format';
+import * as format from '../lib/format.ts';
 
 export type RecipeCompressor = {
   input: Stack;
@@ -16,7 +11,7 @@ export type RecipeCompressor = {
  * Add [Neutronium Compressor](https://ftb.fandom.com/wiki/Neutronium_Compressor) recipe
  */
 export const addCompressor = (id: string, recipe: RecipeCompressor) => {
-  const out = formatArgs(
+  const out = format.recipe(
     id,
     Math.max(1, recipe.input.n),
     recipe.input.id,
@@ -48,9 +43,9 @@ export type RecipeExtreme = [
  * Add shaped [Extreme Crafting Table](https://ftb.fandom.com/wiki/Extreme_Crafting_Table) recipe
  */
 export const addExtreme = (ingredient: Ingredient, recipe: RecipeExtreme) => {
-  const out = formatArgs(
-    formatIngredient(ingredient),
-    recipe.map(row => formatArray(row.map(formatId), 9))
+  const out = format.recipe(
+    format.ingredient(ingredient),
+    recipe.map(row => format.array(9)(row.map(format.id)))
   );
 
   return `mods.avaritia.ExtremeCrafting.addShaped(${out});`;

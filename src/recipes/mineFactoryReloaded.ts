@@ -1,13 +1,6 @@
-import type { Bonus, Stack } from '../types';
+import type { Bonus, Stack } from '../lib/format.ts';
 
-import {
-  formatArgs,
-  formatBonus,
-  formatArray,
-  formatLiteral,
-  formatStack,
-  formatWeight
-} from '../lib/format';
+import * as format from '../lib/format.ts';
 
 /**
  * Add an entity to the [Auto-Spawner](https://feed-the-beast.fandom.com/wiki/Auto-Spawner) blacklist, disabling spawning
@@ -17,7 +10,7 @@ import {
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const addBlacklistAutospawner = (id: string) =>
-  `mods.mfr.AutoSpawner.addBlacklist(${formatLiteral(id)});`;
+  `mods.mfr.AutoSpawner.addBlacklist(${format.literal(id)});`;
 
 /**
  * Remove an entity to the [Auto-Spawner](https://feed-the-beast.fandom.com/wiki/Auto-Spawner) blacklist, enabling spawning
@@ -27,7 +20,7 @@ export const addBlacklistAutospawner = (id: string) =>
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const removeBlacklistAutospawner = (id: string) =>
-  `mods.mfr.AutoSpawner.removeBlacklist(${formatLiteral(id)});`;
+  `mods.mfr.AutoSpawner.removeBlacklist(${format.literal(id)});`;
 
 export const HARVESTER_TYPE = {
   tree: 'tree',
@@ -55,14 +48,14 @@ export type RecipeHarvester = {
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const addHarvester = (id: string, recipe: RecipeHarvester) => {
-  const out = formatArgs(
+  const out = format.recipe(
     id,
-    recipe.bonus && formatArray(recipe.bonus.map(x => {
+    recipe.bonus && format.array(3)(recipe.bonus.map(x => {
       if (typeof x === 'string') return x;
-      if ('n' in x) return formatStack(x);
-      return formatBonus(x);
-    }), 3),
-    formatLiteral(HARVESTER_TYPE[recipe.type])
+      if ('n' in x) return format.stack(x);
+      return format.bonus(x);
+    })),
+    format.literal(HARVESTER_TYPE[recipe.type])
   );
 
   return `mods.mfr.Harvester.addHarvestable(${out});`;
@@ -93,7 +86,7 @@ export const addHarvester = (id: string, recipe: RecipeHarvester) => {
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const addLaserOre = (id: string, weight: number) => {
-  const out = formatArgs(formatWeight(id, weight));
+  const out = format.recipe(format.weight(weight)(id));
 
   return `mods.mfr.MiningLaser.addOre(${out});`;
 };
@@ -106,9 +99,9 @@ export const addLaserOre = (id: string, weight: number) => {
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const removeLaserOre = (id: string) => 
-  `mods.mfr.MiningLaser.removeOre(${formatArgs(id)});`;
+  `mods.mfr.MiningLaser.removeOre(${format.recipe(id)});`;
 
-const FOCI = {
+export const FOCI = {
   white: 0,
   orange: 1,
   magenta: 2,
@@ -152,7 +145,7 @@ const FOCI = {
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const addLaserFoci = (id: string, foci: keyof typeof FOCI) =>
-  `mods.mfr.MiningLaser.addPreferredOre(${formatArgs(FOCI[foci], id)});`;
+  `mods.mfr.MiningLaser.addPreferredOre(${format.recipe(FOCI[foci], id)});`;
 
 /**
  * Remove item from [Laser Drill](https://ftb.fandom.com/wiki/Laser_Drill_(MineFactory_Reloaded)) Foci
@@ -162,7 +155,7 @@ export const addLaserFoci = (id: string, foci: keyof typeof FOCI) =>
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const removeLaserFoci = (id: string, foci: keyof typeof FOCI) =>
-  `mods.mfr.MiningLaser.removePreferredOre(${formatArgs(FOCI[foci], id)});`;
+  `mods.mfr.MiningLaser.removePreferredOre(${format.recipe(FOCI[foci], id)});`;
 
 export type RecipeLaser = {
   foci: keyof typeof FOCI;
@@ -214,7 +207,7 @@ export const addPlanter = (id: string) =>
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const addBiomeRubberTree = (id: string) =>
-  `mods.mfr.RubberTree.addBiome(${formatArgs(formatLiteral(id))});`;
+  `mods.mfr.RubberTree.addBiome(${format.recipe(format.literal(id))});`;
 
 /**
  * Remove [Rubber Tree](https://ftb.fandom.com/wiki/Rubber_Tree_(MineFactory_Reloaded)) from biome, disabling rubber trees from being generated in that biome
@@ -224,7 +217,7 @@ export const addBiomeRubberTree = (id: string) =>
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const removeBiomeRubberTree = (id: string) =>
-  `mods.mfr.RubberTree.removeBiome(${formatArgs(formatLiteral(id))});`;
+  `mods.mfr.RubberTree.removeBiome(${format.recipe(format.literal(id))});`;
 
 /**
  * Add item to [Sludge Boiler](https://ftb.fandom.com/wiki/Sludge_Boiler)
@@ -247,7 +240,7 @@ export const removeBiomeRubberTree = (id: string) =>
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const addSludgeBoiler = (id: string, weight: number) => {
-  const out = formatArgs(formatWeight(id, weight));
+  const out = format.recipe(format.weight(weight)(id));
 
   return `mods.mfr.SludgeBoiler.addDrop(${out});`;
 };
@@ -260,4 +253,4 @@ export const addSludgeBoiler = (id: string, weight: number) => {
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const removeSludgeBoiler = (id: string) =>
-  `mods.mfr.SludgeBoiler.removeDrop(${formatArgs(id)});`;
+  `mods.mfr.SludgeBoiler.removeDrop(${format.recipe(id)});`;

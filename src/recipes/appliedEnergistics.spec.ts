@@ -1,14 +1,14 @@
-import test from 'tape';
+import test from 'node:test';
 
 import {
   addGrinder,
   removeGrinder,
   addInscriber,
   removeInscriber
-} from './appliedEnergistics';
+} from './appliedEnergistics.ts';
 
 test('[appliedEnergistics]', t => {
-  t.equal(
+  t.assert.equal(
     addGrinder({ id: '<minecraft:sand>', n: 2 }, {
       input: '<minecraft:sandstone>',
       turns: 4,
@@ -21,13 +21,13 @@ test('[appliedEnergistics]', t => {
     'addGrinder'
   );
 
-  t.equal(
+  t.assert.equal(
     removeGrinder('<minecraft:flint>'),
     'mods.appeng.Grinder.removeRecipe(<minecraft:flint>);',
     'removeGrinder'
   );
 
-  t.equal(
+  t.assert.equal(
     addInscriber({ id: '<appliedenergistics2:item.ItemMultiMaterial:18>', n: 9 }, {
       top: '<appliedenergistics2:item.ItemMultiMaterial:15>',
       center: '<minecraft:gold_block>',
@@ -37,11 +37,9 @@ test('[appliedEnergistics]', t => {
     'addInscriber'
   );
 
-  t.equal(
+  t.assert.equal(
     removeInscriber('<appliedenergistics2:item.ItemMultiMaterial:15>'),
     'mods.appeng.Inscriber.removeRecipe(<appliedenergistics2:item.ItemMultiMaterial:15>);',
     'removeInscriber'
   );
-
-  t.end();
 });

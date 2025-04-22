@@ -1,87 +1,89 @@
-import test from 'tape';
+import test from 'node:test';
 
-import {
-  formatFloat,
-  formatShort,
-  formatLiteral,
-  formatId,
-  formatArray,
-  formatWeight,
-  formatStack,
-  formatBonus,
-  formatCast,
-  formatIngredient,
-  formatRecipeShaped,
-  formatName,
-  formatTooltip
-} from './format';
+import * as format from './format.ts';
 
-test('[format]', t => {
-  t.equal(formatFloat(3), '3F', 'formatFloat (int)');
-  t.equal(formatFloat(3.5), '3.5F', 'formatFloat (float)');
-  t.equal(formatShort(3), '3 as short');
-  t.equal(formatLiteral('Literal'), '"Literal"', 'formatLiteral');
-  t.equal(formatId('id'), 'id', 'formatId (string)');
-  t.equal(formatId(''), '', 'formatId (empty)');
-  t.equal(formatId(), 'null', 'formatId (undefined)');
-  t.equal(formatBonus({ id: 'bonus', chance: 0.25 }), 'bonus % 25', 'formatBonus');
-  t.equal(formatStack({ id: 'stack', n: 3 }), 'stack * 3', 'formatStack');
-  t.equal(formatArray([1, 'b', 3], 3), '[1, b, 3]', 'formatArray');
-  t.equal(formatWeight('id', 3), 'id.weight(3)', 'formatWeight');
-  t.equal(formatIngredient('ingredient'), 'ingredient', 'formatIngredient (string)');
-  t.equal(formatIngredient({ id: 'id', n: 3 }), 'id * 3', 'formatIngredient (stack)');
+test('[format.float] formats float', t => {
+  t.assert.equal(format.float(3), '3F', 'int');
+  t.assert.equal(format.float(3.5), '3.5F', 'float');
+});
 
-  t.deepEqual(
-    formatCast({ id: 'cast', consume: true }),
-    ['cast', true],
-    'formatCast'
-  );
+test('[format.short] formats short', t => {
+  t.assert.equal(format.short(3), '3 as short');
+});
 
-  t.deepEqual(
-    formatCast(),
-    [null, false],
-    'formatCast (default)'
-  );
+test('[format.literal] formats literal', t => {
+  t.assert.equal(format.literal('Literal'), '"Literal"');
+});
 
-  t.equal(
-    formatRecipeShaped({ 1: '1', 2: '2', 4: '4', 5: '5' }),
+test('[format.id] formats id', t => {
+  t.assert.equal(format.id('id'), 'id', 'string');
+  t.assert.equal(format.id(''), '', 'empty');
+  t.assert.equal(format.id(), 'null', 'undefined');
+});
+
+test('[format.bonus] formats bonus', t => {
+  t.assert.equal(format.bonus({ id: 'bonus', chance: 0.25 }), 'bonus % 25');
+});
+
+test('[format.stack] formats stack', t => {
+  t.assert.equal(format.stack({ id: 'stack', n: 3 }), 'stack * 3');
+});
+
+test('[format.array] formats array', t => {
+  t.assert.equal(format.array(3)([1, 'b', 3]), '[1, b, 3]');
+});
+
+test('[format.weight] formats weight', t => {
+  t.assert.equal(format.weight(3)('id'), 'id.weight(3)');
+});
+
+test('[format.ingredient] formats ingredient', t => {
+  t.assert.equal(format.ingredient('id'), 'id', 'string');
+  t.assert.equal(format.ingredient({ id: 'id', n: 3 }), 'id * 3', 'stack');
+});
+
+test('[format.cast] formats cast', t => {
+  t.assert.deepEqual(format.cast(), [null, false], 'default');
+  t.assert.deepEqual(format.cast({ id: 'cast', consume: true }), ['cast', true], 'string');
+});
+
+test('[format.shaped] formats shaped recipe', t => {
+  t.assert.deepEqual(
+    format.shaped({ 1: '1', 2: '2', 4: '4', 5: '5' }),
     '[[1, 2], [4, 5]]',
-    'formatRecipeShaped (2x2)'
+    '2x2'
   );
-
-  t.equal(
-    formatRecipeShaped({ square: 'square' }),
+  t.assert.deepEqual(
+    format.shaped({ square: 'square' }),
     '[[square, square], [square, square]]',
-    'formatRecipeShaped (2x2 - square)'
+    '2x2 (square)'
   );
-
-  t.equal(
-    formatRecipeShaped({
+  t.assert.deepEqual(
+    format.shaped({
       1: '1', 2: '2', 3: '3',
       4: '4', 5: '5', 6: '6',
       7: '7', 8: '8', 9: '9'
     }),
     '[\n\t[1, 2, 3],\n\t[4, 5, 6],\n\t[7, 8, 9]\n]',
-    'formatRecipeShaped (3x3)'
+    '3x3'
   );
-
-  t.equal(
-    formatRecipeShaped({ ring: 'ring' }),
+  t.assert.deepEqual(
+    format.shaped({ ring: 'ring' }),
     '[\n\t[ring, ring, ring],\n\t[ring, null, ring],\n\t[ring, ring, ring]\n]',
-    'formatRecipeShaped (3x3 - ring)'
+    '3x3 (ring)'
   );
+});
 
-  t.equal(
-    formatName({ text: 'Longbow of the Heavens', color: 'red' }),
-    '"\\u00A7cLongbow of the Heavens\\u00A7r"',
-    'formatName'
+test('[format.name] formats name', t => {
+  t.assert.equal(
+    format.name({ text: 'Longbow of the Heavens', color: 'red' }),
+    '"\\u00A7cLongbow of the Heavens\\u00A7r"'
   );
+});
 
-  t.equal(
-    formatTooltip({ text: 'This is a stick', style: 'italic', color: 'green' }, ' with ', { text: 'text', style: 'strikethrough' }, ' in multiple styles'),
-    'format.green(format.italic("This is a stick")) + " with " + format.strikethrough("text") + " in multiple styles"',
-    'formatTooltip'
+test('[format.tooltip] formats tooltip', t => {
+  t.assert.equal(
+    format.tooltip({ text: 'This is a stick', style: 'italic', color: 'green' }, ' with ', { text: 'text', style: 'strikethrough' }, ' in multiple styles'),
+    'format.green(format.italic("This is a stick")) + " with " + format.strikethrough("text") + " in multiple styles"'
   );
-
-  t.end();
 });

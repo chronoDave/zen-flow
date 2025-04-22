@@ -1,4 +1,4 @@
-import { formatArgs, formatLiteral } from '../lib/format';
+import * as format from '../lib/format.ts';
 
 /**
  * Hide item from NEI
@@ -27,4 +27,4 @@ export const show = (id: string) =>
  * @see https://minetweaker3.aizistral.com/wiki/Mods:NEI_Support
  */
 export const rename = (id: string, name: string) =>
-  `mods.nei.NEI.overrideName(${formatArgs(id, formatLiteral(name))});`;
+  `mods.nei.NEI.overrideName(${format.recipe(id, format.literal(name))});`;

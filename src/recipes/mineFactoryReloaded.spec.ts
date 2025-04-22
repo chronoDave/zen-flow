@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'node:test';
 
 import {
   addBlacklistAutospawner,
@@ -14,28 +14,28 @@ import {
   removeBiomeRubberTree,
   addSludgeBoiler,
   removeSludgeBoiler
-} from './mineFactoryReloaded';
+} from './mineFactoryReloaded.ts';
 
 test('[mineFactoryReloaded]', t => {
-  t.equal(
+  t.assert.equal(
     addBlacklistAutospawner('mods.natura.entity.NitroCreeper'),
     'mods.mfr.AutoSpawner.addBlacklist("mods.natura.entity.NitroCreeper");',
     'addBlacklistAutospawner'
   );
 
-  t.equal(
+  t.assert.equal(
     removeBlacklistAutospawner('mods.natura.entity.NitroCreeper'),
     'mods.mfr.AutoSpawner.removeBlacklist("mods.natura.entity.NitroCreeper");',
     'removeBlacklistAutospawner'
   );
 
-  t.equal(
+  t.assert.equal(
     addHarvester('<BiomesOPlenty:leaves3:9>', { type: 'leaf' }),
     'mods.mfr.Harvester.addHarvestable(<BiomesOPlenty:leaves3:9>, "treeLeaf");',
     'addHarvester'
   );
 
-  t.equal(
+  t.assert.equal(
     addHarvester('<BiomesOPlenty:logs1:*>', {
       type: 'tree',
       bonus: [
@@ -47,65 +47,63 @@ test('[mineFactoryReloaded]', t => {
     'addHarvester (bonus)'
   );
 
-  t.equal(
+  t.assert.equal(
     addLaserOre('<tile.stone>', 1000),
     'mods.mfr.MiningLaser.addOre(<tile.stone>.weight(1000));',
     'addLaserOre'
   );
 
-  t.equal(
+  t.assert.equal(
     removeLaserOre('<tile.oreIron>'),
     'mods.mfr.MiningLaser.removeOre(<tile.oreIron>);',
     'removeLaserOre'
   );
 
-  t.equal(
+  t.assert.equal(
     addLaserFoci('<tile.oreIron>', 'orange'),
     'mods.mfr.MiningLaser.addPreferredOre(1, <tile.oreIron>);',
     'addLaserFoci'
   );
 
-  t.equal(
+  t.assert.equal(
     removeLaserFoci('<tile.oreIron>', 'orange'),
     'mods.mfr.MiningLaser.removePreferredOre(1, <tile.oreIron>);',
     'removeLaserFoci'
   );
 
-  t.equal(
+  t.assert.equal(
     addLaser('<tile.stone>', { weight: 1000, foci: 'orange' }),
     'mods.mfr.MiningLaser.addOre(<tile.stone>.weight(1000));\nmods.mfr.MiningLaser.addPreferredOre(1, <tile.stone>);',
     'addLaser'
   );
 
-  t.equal(
+  t.assert.equal(
     addPlanter('<BiomesOPlenty:saplings:10>'),
     'mods.mfr.Planter.addPlantable(<BiomesOPlenty:saplings:10>);',
     'addPlanter'
   );
 
-  t.equal(
+  t.assert.equal(
     addBiomeRubberTree('SuperXLBiome'),
     'mods.mfr.RubberTree.addBiome("SuperXLBiome");',
     'addBiomeRubberTree'
   );
 
-  t.equal(
+  t.assert.equal(
     removeBiomeRubberTree('SuperXLBiome'),
     'mods.mfr.RubberTree.removeBiome("SuperXLBiome");',
     'removeBiomeRubberTree'
   );
 
-  t.equal(
+  t.assert.equal(
     addSludgeBoiler('<TConstruct:CraftedSoil:4>', 10),
     'mods.mfr.SludgeBoiler.addDrop(<TConstruct:CraftedSoil:4>.weight(10));',
     'addSludgeBoiler'
   );
 
-  t.equal(
+  t.assert.equal(
     removeSludgeBoiler('<minecraft:dirt:1>'),
     'mods.mfr.SludgeBoiler.removeDrop(<minecraft:dirt:1>);',
     'removeSludgeBoiler'
   );
-
-  t.end();
 });

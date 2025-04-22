@@ -1,13 +1,6 @@
-import type { Ingredient } from '../types';
-import type { COLORS } from '../lib/format';
+import type { Ingredient, COLOR } from '../lib/format.ts';
 
-import {
-  formatArgs,
-  formatArray,
-  formatFloat,
-  formatIngredient,
-  formatLiteral
-} from '../lib/format';
+import * as format from '../lib/format.ts';
 
 export type RecipeBlock = {
   id: string;
@@ -33,21 +26,21 @@ export type RecipeBlock = {
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
 export const createBlock = (name: string, recipe: RecipeBlock) => {
-  const out = formatArgs(
-    formatLiteral(name),
-    formatLiteral(recipe.id),
-    formatLiteral(recipe.material),
+  const out = format.recipe(
+    format.literal(name),
+    format.literal(recipe.id),
+    format.literal(recipe.material),
     typeof recipe.texture === 'string' ?
-      formatLiteral(recipe.texture) :
-      formatLiteral(recipe.id),
-    typeof recipe.creativeTab === 'string' && formatLiteral(recipe.creativeTab),
+      format.literal(recipe.texture) :
+      format.literal(recipe.id),
+    typeof recipe.creativeTab === 'string' && format.literal(recipe.creativeTab),
     typeof recipe.renderType === 'number' ?
       recipe.renderType :
       1,
     recipe.drops,
     recipe.unbreakable,
-    typeof recipe.hardness === 'number' && formatFloat(recipe.hardness),
-    typeof recipe.lightLevel === 'number' && formatFloat(recipe.lightLevel),
+    typeof recipe.hardness === 'number' && format.float(recipe.hardness),
+    typeof recipe.lightLevel === 'number' && format.float(recipe.lightLevel),
     recipe.opacity
   );
 
@@ -76,15 +69,15 @@ export type RecipeItem = {
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
 export const createItem = (name: string, recipe: RecipeItem) => {
-  const out = formatArgs(
-    formatLiteral(name),
-    formatLiteral(recipe.id),
+  const out = format.recipe(
+    format.literal(name),
+    format.literal(recipe.id),
     typeof recipe.texture === 'string' ?
-      formatLiteral(recipe.texture) :
-      formatLiteral(recipe.id),
+      format.literal(recipe.texture) :
+      format.literal(recipe.id),
     typeof recipe.creativeTab === 'string' ?
-      formatLiteral(recipe.creativeTab) :
-      formatLiteral('misc'),
+      format.literal(recipe.creativeTab) :
+      format.literal('misc'),
     typeof recipe.damage === 'number' ?
       recipe.damage :
       0,
@@ -92,15 +85,13 @@ export const createItem = (name: string, recipe: RecipeItem) => {
       recipe.stackSize :
       64,
     typeof recipe.toolType === 'string' ?
-      formatLiteral(recipe.toolType) :
-      formatLiteral('pickaxe'),
+      format.literal(recipe.toolType) :
+      format.literal('pickaxe'),
     typeof recipe.level === 'number' ?
       recipe.level :
       0,
     !!recipe.is3d,
-    Array.isArray(recipe.tooltip) ?
-      recipe.tooltip.map(formatLiteral) :
-      []
+    (recipe.tooltip ?? []).map(format.literal)
   );
 
   return `mods.content.Item.registerItem(${out});`;
@@ -131,8 +122,8 @@ export type RecipeLiquid = {
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
 export const createLiquid = (id: string, recipe: RecipeLiquid) => {
-  const out = formatArgs(
-    formatLiteral(id),
+  const out = format.recipe(
+    format.literal(id),
     recipe.density,
     !!recipe.gaseous,
     recipe.luminosity,
@@ -144,10 +135,10 @@ export const createLiquid = (id: string, recipe: RecipeLiquid) => {
       recipe.castingMaterial :
       0,
     typeof recipe.texture?.still === 'string' ?
-      formatLiteral(recipe.texture.still) :
+      format.literal(recipe.texture.still) :
       null,
     typeof recipe.texture?.flowing === 'string' ?
-      formatLiteral(recipe.texture.flowing) :
+      format.literal(recipe.texture.flowing) :
       null
   );
 
@@ -159,7 +150,7 @@ export type RecipeMaterial = {
   name: string;
   color: {
     /** Display name colour */
-    name: typeof COLORS[number];
+    name: keyof typeof COLOR;
     /** Tool part colour */
     tool: number;
   };
@@ -236,10 +227,10 @@ export type RecipeMaterial = {
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:TConstruct_Support
  */
 export const createMaterial = (material: string, recipe: RecipeMaterial) => {
-  const out = formatArgs(
-    formatLiteral(material),
-    formatLiteral(recipe.name),
-    formatLiteral(recipe.color.name),
+  const out = format.recipe(
+    format.literal(material),
+    format.literal(recipe.name),
+    format.literal(recipe.color.name),
     recipe.resource,
     recipe.id,
     recipe.level,
@@ -253,13 +244,13 @@ export const createMaterial = (material: string, recipe: RecipeMaterial) => {
     recipe.stonebound,
     !!recipe.buildParts,
     recipe.modifiers,
-    formatLiteral(recipe.tooltip),
+    format.literal(recipe.tooltip),
     recipe.arrow.mass,
     recipe.arrow.breakChance,
     recipe.bow.drawSpeed,
     recipe.bow.speed,
-    Array.isArray(recipe.nativeModifiers) && formatArray([formatArray(recipe.nativeModifiers.map(formatIngredient), 2)], 1),
-    Array.isArray(recipe.nativeEnchantments) && formatLiteral(recipe.nativeEnchantments.join(' '))
+    Array.isArray(recipe.nativeModifiers) && format.array(1)([format.array(2)(recipe.nativeModifiers.map(format.ingredient))]),
+    Array.isArray(recipe.nativeEnchantments) && format.literal(recipe.nativeEnchantments.join(' '))
   );
 
   return `mods.content.Material.registerMaterial(${out});`;

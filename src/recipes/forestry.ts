@@ -1,20 +1,14 @@
 import type {
   Stack,
   Ingredient,
-  RecipeShaped,
+  Shaped,
   Bonus
-} from '../types';
+} from '../lib/format.ts';
 
-import {
-  formatArgs,
-  formatBonus,
-  formatIngredient,
-  formatRecipeShaped,
-  formatStack
-} from '../lib/format';
+import * as format from '../lib/format.ts';
 
 export type RecipeCarpenter = {
-  recipe: RecipeShaped;
+  recipe: Shaped;
   ticks: number;
   top?: string;
   liquid?: Stack;
@@ -26,10 +20,10 @@ export type RecipeCarpenter = {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addCarpenter = (id: Ingredient, recipe: RecipeCarpenter) => {
-  const out = formatArgs(
-    formatIngredient(id),
-    formatRecipeShaped(recipe.recipe),
-    recipe.liquid && formatStack(recipe.liquid),
+  const out = format.recipe(
+    format.ingredient(id),
+    format.shaped(recipe.recipe),
+    recipe.liquid && format.stack(recipe.liquid),
     Math.max(1, Math.round(recipe.ticks)),
     recipe.top
   );
@@ -43,7 +37,7 @@ export const addCarpenter = (id: Ingredient, recipe: RecipeCarpenter) => {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const removeCarpenter = (id: string, liquid?: string) =>
-  `mods.forestry.Carpenter.removeRecipe(${formatArgs(id, liquid)});`;
+  `mods.forestry.Carpenter.removeRecipe(${format.recipe(id, liquid)});`;
 
 export type RecipeCentrifuge = {
   out: Record<string, number>;
@@ -53,13 +47,12 @@ export type RecipeCentrifuge = {
 /**
  * Add [Centrifuge](https://feed-the-beast.fandom.com/wiki/Centrifuge) recipe
  * 
- * `out` in `float`, .e.g `0.8` is 80% chance
- * 
+ * @param recipe.out `float`, e.g. `0.8` is 80% chance
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addCentrifuge = (id: string, recipe: RecipeCentrifuge) => {
-  const out = formatArgs(
-    Object.entries(recipe.out).map(([id, chance]) => formatBonus({ id, chance })),
+  const out = format.recipe(
+    Object.entries(recipe.out).map(([id, chance]) => format.bonus({ id, chance })),
     id,
     recipe.ticks
   );
@@ -88,7 +81,7 @@ export type RecipeFermenter = {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addFermenter = (liquid: Stack, recipe: RecipeFermenter) => {
-  const out = formatArgs(
+  const out = format.recipe(
     liquid.id,
     recipe.catalyst,
     recipe.liquid.id,
@@ -118,7 +111,7 @@ export type RecipeFermenterFuel = {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addFermenterFuel = (id: string, recipe: RecipeFermenterFuel) => {
-  const out = formatArgs(
+  const out = format.recipe(
     id,
     recipe.cycles,
     recipe.burn
@@ -146,7 +139,7 @@ export type RecipeMoistener = {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addMoistener = (id: string, recipe: RecipeMoistener) => {
-  const out = formatArgs(
+  const out = format.recipe(
     id,
     recipe.input,
     recipe.ticks
@@ -175,10 +168,10 @@ export type RecipeSqueezer = {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addSqueezer = (liquid: Stack, recipe: RecipeSqueezer) => {
-  const out = formatArgs(
-    formatStack(liquid),
-    formatBonus(recipe.bonus),
-    recipe.input.map(formatIngredient),
+  const out = format.recipe(
+    format.stack(liquid),
+    format.bonus(recipe.bonus),
+    recipe.input.map(format.ingredient),
     recipe.ticks
   );
 
@@ -194,7 +187,7 @@ export const addSqueezer = (liquid: Stack, recipe: RecipeSqueezer) => {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const removeSqueezer = (id: string, recipe?: string[]) =>
-  `mods.forestry.Squeezer.removeRecipe(${formatArgs(id, recipe)});`;
+  `mods.forestry.Squeezer.removeRecipe(${format.recipe(id, recipe)});`;
 
 export type RecipeStill = {
   liquid: Stack;
@@ -207,9 +200,9 @@ export type RecipeStill = {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addStill = (liquid: Stack, recipe: RecipeStill) => {
-  const out = formatArgs(
-    formatStack(liquid),
-    formatStack(recipe.liquid),
+  const out = format.recipe(
+    format.stack(liquid),
+    format.stack(recipe.liquid),
     recipe.ticks
   );
 
@@ -225,10 +218,10 @@ export const addStill = (liquid: Stack, recipe: RecipeStill) => {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const removeStill = (liquid: string, recipe?: string) =>
-  `mods.forestry.Still.removeRecipe(${formatArgs(liquid, recipe)});`;
+  `mods.forestry.Still.removeRecipe(${format.recipe(liquid, recipe)});`;
 
 export type RecipeFabricator = {
-  recipe: RecipeShaped;
+  recipe: Shaped;
   n: number;
   cast?: string;
 };
@@ -241,9 +234,9 @@ export type RecipeFabricator = {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addFabricator = (id: string, recipe: RecipeFabricator) => {
-  const out = formatArgs(
+  const out = format.recipe(
     id,
-    formatRecipeShaped(recipe.recipe),
+    format.shaped(recipe.recipe),
     recipe.n,
     recipe.cast
   );
@@ -275,7 +268,7 @@ export type RecipeFabricatorGlass = {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addFabricatorGlass = (id: string, recipe: RecipeFabricatorGlass) => {
-  const out = formatArgs(
+  const out = format.recipe(
     recipe.n,
     id,
     recipe.temp

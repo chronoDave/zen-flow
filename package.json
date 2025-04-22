@@ -29,7 +29,7 @@
   "author": "Chronocide",
   "license": "MIT",
   "engines": {
-    "node": ">21.1.0"
+    "node": ">22.13.1"
   },
   "scripts": {
     "lint": "eslint src",
@@ -37,20 +37,19 @@
     "lint:fix": "eslint src --fix",
     "build": "rollup -c",
     "build:docs": "typedoc src/index.ts",
-    "test": "node scripts/tape.js && tape build/**/*.spec.js",
+    "test": "node --experimental-strip-types --test src/**/*.spec.ts --test-reporter=tap",
     "preversion": "npm run lint:types && npm run lint && npm run test",
     "postversion": "npm run build:docs && git add -A && git commit -m \"Docs\"",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@chronocide/eslint-config": "github:chronoDave/eslint-config",
-    "@types/tape": "^5.8.0",
+    "@types/node": "^22.14.1",
     "esbuild": "^0.25.0",
     "eslint": "^9.9.0",
     "rollup": "^4.21.0",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-esbuild": "^6.1.1",
-    "tape": "^5.8.1",
     "typedoc": "^0.27.5",
     "typescript": "^5.5.4"
   }

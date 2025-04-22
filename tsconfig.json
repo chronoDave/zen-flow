@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["esnext"],
-    "module": "es2015",
-    "moduleResolution": "bundler",
+    "module": "Node16",
+    "moduleResolution": "node16",
     
     "strict": true,
     "noImplicitAny": true,
@@ -11,9 +11,11 @@
     "noUnusedParameters": true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
-
+    "allowImportingTsExtensions": true,
+    
     "declaration": true,
     "skipLibCheck": true,
+    "noEmit": true,
     "outDir": "./test/build"
   },
   "include": [

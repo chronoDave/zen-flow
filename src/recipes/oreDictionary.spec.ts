@@ -1,36 +1,34 @@
-import test from 'tape';
+import test from 'node:test';
 
 import {
   addOreDict,
   removeOreDict,
   joinOreDict,
   mirrorOreDict
-} from './oreDictionary';
+} from './oreDictionary.ts';
 
 test('[oreDictionary]', t => {
-  t.equal(
+  t.assert.equal(
     addOreDict('<ore:myOwnEntry>')('<minecraft:iron_ingot>'),
     '<ore:myOwnEntry>.add(<minecraft:iron_ingot>);',
     'addOreDict'
   );
 
-  t.equal(
+  t.assert.equal(
     removeOreDict('<ore:ingotIron>')('<minecraft:iron_ingot>'),
     '<ore:ingotIron>.remove(<minecraft:iron_ingot>);',
     'removeOreDict'
   );
 
-  t.equal(
+  t.assert.equal(
     joinOreDict('<ore:dustSalt>', '<ore:foodSalt>'),
     '<ore:dustSalt>.addAll(<ore:foodSalt>);',
     'joinOreDict'
   );
 
-  t.equal(
+  t.assert.equal(
     mirrorOreDict('<ore:foodSalt>', '<ore:dustSalt>'),
     '<ore:foodSalt>.mirror(<ore:dustSalt>);',
     'mirrorOreDict'
   );
-
-  t.end();
 });

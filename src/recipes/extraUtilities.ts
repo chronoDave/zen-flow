@@ -1,16 +1,16 @@
-import type { Ingredient, RecipeShaped } from '../types';
+import type { Ingredient, Shaped } from '../lib/format.ts';
 
-import { formatArgs, formatIngredient, formatRecipeShaped } from '../lib/format';
+import * as format from '../lib/format.ts';
 
 /**
  * Adds [QED](https://ftb.fandom.com/wiki/QED) recipe
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Extra_Utilities_Support
  */
-export const addQED = (ingredient: Ingredient, recipe: RecipeShaped) => {
-  const out = formatArgs(
-    formatIngredient(ingredient),
-    formatRecipeShaped(recipe)
+export const addQED = (ingredient: Ingredient, recipe: Shaped) => {
+  const out = format.recipe(
+    format.ingredient(ingredient),
+    format.shaped(recipe)
   );
 
   return `mods.extraUtils.QED.addShapedRecipe(${out});`;

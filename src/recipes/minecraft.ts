@@ -1,26 +1,21 @@
 import type {
   Ingredient,
   Recipe,
-  RecipeShaped,
-  RecipeShapeless
-} from '../types';
+  Shaped,
+  Shapeless
+} from '../lib/format.ts';
 
-import {
-  formatArgs,
-  formatIngredient,
-  formatArray,
-  formatRecipeShaped
-} from '../lib/format';
+import * as format from '../lib/format.ts';
 
 /**
  * Add shaped crafting recipe
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
-export const addShaped = (item: Ingredient, recipe: RecipeShaped) => {
-  const out = formatArgs(
-    formatIngredient(item),
-    formatRecipeShaped(recipe)
+export const addShaped = (item: Ingredient, recipe: Shaped) => {
+  const out = format.recipe(
+    format.ingredient(item),
+    format.shaped(recipe)
   );
 
   return `recipes.addShaped(${out});`;
@@ -31,10 +26,10 @@ export const addShaped = (item: Ingredient, recipe: RecipeShaped) => {
 * 
 * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
 */
-export const removeShaped = (id: string, recipe?: RecipeShaped) => {
-  const out = formatArgs(
+export const removeShaped = (id: string, recipe?: Shaped) => {
+  const out = format.recipe(
     id,
-    recipe && formatRecipeShaped(recipe)
+    recipe && format.shaped(recipe)
   );
 
   return `recipes.removeShaped(${out});`;
@@ -45,10 +40,10 @@ export const removeShaped = (id: string, recipe?: RecipeShaped) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
-export const addShapeless = (item: Ingredient, recipe: RecipeShapeless) => {
-  const out = formatArgs(
-    formatIngredient(item),
-    formatArray(recipe, 3)
+export const addShapeless = (item: Ingredient, recipe: Shapeless) => {
+  const out = format.recipe(
+    format.ingredient(item),
+    format.array(3)(recipe)
   );
 
   return `recipes.addShapeless(${out});`;
@@ -59,10 +54,10 @@ export const addShapeless = (item: Ingredient, recipe: RecipeShapeless) => {
 * 
 * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
 */
-export const removeShapeless = (id: string, recipe?: RecipeShapeless) => {
-  const out = formatArgs(
+export const removeShapeless = (id: string, recipe?: Shapeless) => {
+  const out = format.recipe(
     id,
-    recipe && formatArray(recipe, 3)
+    recipe && format.array(3)(recipe)
   );
 
   return `recipes.removeShapeless(${out});`;
@@ -94,10 +89,10 @@ export const remove = (id: string) =>
  * 
  * @see @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
-export const addMirror = (item: Ingredient, recipe: RecipeShaped) => {
-  const out = formatArgs(
-    formatIngredient(item),
-    formatRecipeShaped(recipe)
+export const addMirror = (item: Ingredient, recipe: Shaped) => {
+  const out = format.recipe(
+    format.ingredient(item),
+    format.shaped(recipe)
   );
 
   return `recipes.addShapedMirrored(${out});`;
@@ -122,7 +117,7 @@ export type RecipeFurnace = {
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
 export const addFurnace = (id: string, recipe: RecipeFurnace) =>
-  `furnace.addRecipe(${formatArgs(id, recipe.input, recipe.xp)});`;
+  `furnace.addRecipe(${format.recipe(id, recipe.input, recipe.xp)});`;
 
 /**
  * Remove furnace recipe
@@ -133,8 +128,8 @@ export const addFurnace = (id: string, recipe: RecipeFurnace) =>
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
 export const removeFurnace = (id: string, recipe?: string) => {
-  if (typeof recipe === 'string') return `furnace.remove(${formatArgs(id, recipe)});`;
-  return `furnace.remove(${formatArgs(id)});`;
+  if (typeof recipe === 'string') return `furnace.remove(${format.recipe(id, recipe)});`;
+  return `furnace.remove(${format.recipe(id)});`;
 };
 
 /**
@@ -148,7 +143,7 @@ export const removeFurnace = (id: string, recipe?: string) => {
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
 export const addFurnaceFuel = (id: string, n: number) =>
-  `furnace.setFuel(${formatArgs(id, n)});`;
+  `furnace.setFuel(${format.recipe(id, n)});`;
 
 /**
  * Remove furnace fuel, with the exception of vanilla fuels

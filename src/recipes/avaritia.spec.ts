@@ -1,38 +1,36 @@
-import type { RecipeExtreme } from './avaritia';
+import type { RecipeExtreme } from './avaritia.ts';
 
-import test from 'tape';
+import test from 'node:test';
 
 import {
   addCompressor,
   removeCompressor,
   addExtreme,
   removeExtreme
-} from './avaritia';
+} from './avaritia.ts';
 
 test('[avaritia]', t => {
-  t.equal(
+  t.assert.equal(
     addCompressor('<minecraft:redstone_block>', { input: { id: '<minecraft:redstone>', n: 64 } }),
     'mods.avaritia.Compressor.add(<minecraft:redstone_block>, 64, <minecraft:redstone>);',
     'addCompressor'
   );
 
-  t.equal(
+  t.assert.equal(
     removeCompressor('<minecraft:redstone_block>'),
     'mods.avaritia.Compressor.remove(<minecraft:redstone_block>);',
     'removeCompressor'
   );
 
-  t.equal(
+  t.assert.equal(
     addExtreme('<minecraft:glass>', Array.from({ length: 9 }).map(() => ['<minecraft:stone>', '<minecraft:stone>', '<minecraft:stone>', '<minecraft:sand>', '<minecraft:stone>', '<minecraft:stone>', '<minecraft:sand>', '<minecraft:stone>', '<minecraft:stone>']) as unknown as RecipeExtreme),
     'mods.avaritia.ExtremeCrafting.addShaped(<minecraft:glass>, [\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>]\n]);',
     'addExtreme'
   );
 
-  t.equal(
+  t.assert.equal(
     removeExtreme('<minecraft:glass>'),
     'mods.avaritia.ExtremeCrafting.remove(<minecraft:glass>);',
     'removeExtreme'
   );
-
-  t.end();
 });

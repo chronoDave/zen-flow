@@ -3,59 +3,58 @@ export type {
   Ingredient,
   Bonus,
   Cast,
-  RecipeShaped,
-  RecipeShapeless,
-  Recipe
-} from './types';
-
-export type {
   TextRich,
-  Text
-} from './lib/format';
+  Text,
+  Shaped,
+  Shapeless,
+  Recipe
+} from './lib/format.ts';
+
+export { COLOR, STYLE } from './lib/format.ts';
 
 export type {
   RecipeGrinder,
   RecipeInscriber
-} from './recipes/appliedEnergistics';
+} from './recipes/appliedEnergistics.ts';
 
 export {
   addGrinder,
   removeGrinder,
   addInscriber,
   removeInscriber
-} from './recipes/appliedEnergistics';
+} from './recipes/appliedEnergistics.ts';
 
 export type {
   RecipeCompressor,
   RecipeExtreme
-} from './recipes/avaritia';
+} from './recipes/avaritia.ts';
 
 export {
   addCompressor,
   removeCompressor,
   addExtreme,
   removeExtreme
-} from './recipes/avaritia';
+} from './recipes/avaritia.ts';
 
 export type {
   RecipeBlock,
   RecipeItem,
   RecipeLiquid,
   RecipeMaterial
-} from './recipes/content';
+} from './recipes/content.ts';
 
 export {
   createBlock,
   createItem,
   createLiquid,
   createMaterial
-} from './recipes/content';
+} from './recipes/content.ts';
 
 export type {
   RecipeComposter,
   RecipeHammer,
   RecipeSieve
-} from './recipes/exNihilo';
+} from './recipes/exNihilo.ts';
 
 export {
   addComposter,
@@ -68,12 +67,12 @@ export {
   removeHammer,
   addSieve,
   removeSieve
-} from './recipes/exNihilo';
+} from './recipes/exNihilo.ts';
 
 export {
   addQED,
   removeQED
-} from './recipes/extraUtilities';
+} from './recipes/extraUtilities.ts';
 
 export type {
   RecipeCarpenter,
@@ -85,7 +84,7 @@ export type {
   RecipeStill,
   RecipeFabricator,
   RecipeFabricatorGlass
-} from './recipes/forestry';
+} from './recipes/forestry.ts';
 
 export {
   addCarpenter,
@@ -106,18 +105,18 @@ export {
   removeFabricator,
   addFabricatorGlass,
   removeFabricatorGlass
-} from './recipes/forestry';
+} from './recipes/forestry.ts';
 
-export type { RecipeChestLoot } from './recipes/loot';
+export type { RecipeChestLoot } from './recipes/loot.ts';
 
 export {
   addChestLoot,
   removeChestLoot,
   addSeed,
   removeSeed
-} from './recipes/loot';
+} from './recipes/loot.ts';
 
-export type { RecipeFurnace } from './recipes/minecraft';
+export type { RecipeFurnace } from './recipes/minecraft.ts';
 
 export {
   addShaped,
@@ -131,14 +130,16 @@ export {
   removeFurnace,
   addFurnaceFuel,
   removeFurnaceFuel
-} from './recipes/minecraft';
+} from './recipes/minecraft.ts';
 
 export type {
   RecipeHarvester,
   RecipeLaser
-} from './recipes/mineFactoryReloaded';
+} from './recipes/mineFactoryReloaded.ts';
 
 export {
+  HARVESTER_TYPE,
+  FOCI,
   addBlacklistAutospawner,
   removeBlacklistAutospawner,
   addHarvester,
@@ -152,22 +153,22 @@ export {
   removeBiomeRubberTree,
   addSludgeBoiler,
   removeSludgeBoiler
-} from './recipes/mineFactoryReloaded';
+} from './recipes/mineFactoryReloaded.ts';
 
 export {
   hide,
   show,
   rename
-} from './recipes/nei';
+} from './recipes/nei.ts';
 
 export {
   addOreDict,
   removeOreDict,
   joinOreDict,
   mirrorOreDict
-} from './recipes/oreDictionary';
+} from './recipes/oreDictionary.ts';
 
-export type { Enchantment } from './recipes/tag';
+export type { Enchantment } from './recipes/tag.ts';
 
 export {
   ENCHANTMENTS,
@@ -176,7 +177,7 @@ export {
   withEnchantment,
   withTooltip,
   withTooltipShift
-} from './recipes/tag';
+} from './recipes/tag.ts';
 
 export type {
   RecipeMagmaCrucible,
@@ -187,7 +188,7 @@ export type {
   RecipeInductionSmelter,
   RecipeTransposerFill,
   RecipeTransposerExtract
-} from './recipes/thermalExpansion';
+} from './recipes/thermalExpansion.ts';
 
 export {
   addMagmaCrucible,
@@ -206,7 +207,7 @@ export {
   removeTransposerFill,
   addTransposerExtract,
   removeTransposerExtract
-} from './recipes/thermalExpansion';
+} from './recipes/thermalExpansion.ts';
 
 export type {
   RecipeCastingBasin,
@@ -218,7 +219,7 @@ export type {
   RecipeToolStats,
   RecipeBowStats,
   RecipeArrowStats
-} from './recipes/tinkersConstruct';
+} from './recipes/tinkersConstruct.ts';
 
 export {
   MODIFIERS,
@@ -256,4 +257,4 @@ export {
   setArrowMass,
   setArrowBreakChance,
   setArrowAccuracy
-} from './recipes/tinkersConstruct';
+} from './recipes/tinkersConstruct.ts';

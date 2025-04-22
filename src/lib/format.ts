@@ -1,56 +1,58 @@
-import type {
-  Bonus,
-  Cast,
-  Ingredient,
-  RecipeShaped,
-  Stack
-} from '../types';
+import * as is from './is.ts';
 
-import { isObject } from './assert';
+export const float = (n: number) => `${n}F`;
+export const short = (n: number) => `${n} as short`;
+export const literal = (x: string) => `"${x}"`;
+export const list = (n: number) =>
+  (arr: unknown[]) => {
+    if (arr.length > n) return `\n\t${arr.join(',\n\t')}\n`;
+    return arr.join(', ');
+  };
+export const array = (n: number) =>
+  (arr: Array<string | number>) => `[${list(n)(arr)}]`;
 
-export const formatFloat = (n: number) => `${n}F`;
-export const formatShort = (n: number) => `${n} as short`;
-export const formatLiteral = (x: string) => `"${x}"`;
-export const formatId = (id?: string | null) => typeof id === 'string' ? id : 'null';
-export const formatWeight = (id: string, weight: number) => `${id}.weight(${weight})`;
-export const formatStack = (stack: Stack) => `${stack.id} * ${stack.n}`;
-export const formatBonus = (x: Bonus) => `${x.id} % ${Math.round(x.chance * 100)}`;
+export const id = (id?: string | null) => typeof id === 'string' ? id : 'null';
+export const weight = (weight: number) =>
+  (id: string) => `${id}.weight(${weight})`;
 
-export const formatList = (arr: unknown[], n: number) => {
-  if (arr.length > n) return `\n\t${arr.join(',\n\t')}\n`;
-  return arr.join(', ');
-};
+export type Stack = { id: string; n: number };
+export const stack = (stack: Stack) => `${stack.id} * ${stack.n}`;
 
-export const formatArray = (arr: Array<string | number>, n: number) => `[${formatList(arr, n)}]`;
+export type Ingredient = string | Stack;
+export const ingredient = (ingredient: Ingredient) => is.object(ingredient) ?
+  stack(ingredient) :
+  ingredient;
 
-export const formatCast = (cast?: Cast): Array<string | boolean | null> => cast ? [
+export type Bonus = { id: string; chance: number };
+export const bonus = (bonus: Bonus) => `${bonus.id} % ${Math.round(bonus.chance * 100)}`;
+
+export type Cast = { id: string; consume?: boolean };
+export const cast = (cast?: Cast): Array<string | boolean | null> => cast ? [
   cast.id,
   !!cast.consume
 ] : [null, false];
 
-export const formatIngredient = (ingredient: Ingredient) => isObject(ingredient) ?
-  formatStack(ingredient) :
-  ingredient;
+export type Shaped = Partial<{
+  1: string;
+  2: string;
+  3: string;
+  4: string;
+  5: string;
+  6: string;
+  7: string;
+  8: string;
+  9: string;
+  corner: string;
+  edge: string;
+  ring: string;
+  square: string;
+  center: string;
+}>;
+export type Shapeless = string[];
+export type Recipe = Shaped | Shapeless;
 
-export const formatArgs = <T extends Array<string | number | boolean | null | string[] | number[]>>(...args: Partial<T>) => {
-  const list = args
-    .filter(x => x !== undefined)
-    .map(x => {
-      if (Array.isArray(x)) return formatArray(x, 3);
-      if (x === null) return 'null';
-      return x;
-    }) as T;
-
-  return formatList(list, 3);
-};
-
-/**
- * `[corner, ring, square, 1] [edge,   ring, square, 2] [corner, ring, 3]`
- * `[edge,   ring, square, 4] [center, square,       5] [edge,   ring, 6]`
- * `[corner, ring,         7] [edge,   ring,         8] [corner, ring, 9]`
- */
-export const formatRecipeShaped = (recipe: RecipeShaped) => {
-  const r = (...arr: Array<string | undefined>): string | null => {
+export const shaped = (recipe: Shaped) => {
+  const f = (...arr: Array<string | undefined>): string | null => {
     for (const x of arr) {
       if (typeof x === 'string') return x;
     }
@@ -59,17 +61,17 @@ export const formatRecipeShaped = (recipe: RecipeShaped) => {
   };
 
   const matrix = [[
-    r(recipe.square, recipe.ring, recipe.corner, recipe[1]),
-    r(recipe.square, recipe.ring, recipe.edge, recipe[2]),
-    r(recipe.ring, recipe.corner, recipe[3])
+    f(recipe.square, recipe.ring, recipe.corner, recipe[1]),
+    f(recipe.square, recipe.ring, recipe.edge, recipe[2]),
+    f(recipe.ring, recipe.corner, recipe[3])
   ], [
-    r(recipe.square, recipe.ring, recipe.edge, recipe[4]),
-    r(recipe.square, recipe.center, recipe[5]),
-    r(recipe.ring, recipe.edge, recipe[6])
+    f(recipe.square, recipe.ring, recipe.edge, recipe[4]),
+    f(recipe.square, recipe.center, recipe[5]),
+    f(recipe.ring, recipe.edge, recipe[6])
   ], [
-    r(recipe.ring, recipe.corner, recipe[7]),
-    r(recipe.ring, recipe.edge, recipe[8]),
-    r(recipe.ring, recipe.corner, recipe[9])
+    f(recipe.ring, recipe.corner, recipe[7]),
+    f(recipe.ring, recipe.edge, recipe[8]),
+    f(recipe.ring, recipe.corner, recipe[9])
   ]];
 
   // 2x2 recipes
@@ -83,129 +85,74 @@ export const formatRecipeShaped = (recipe: RecipeShaped) => {
     matrix.splice(-1);
   }
 
-  return formatArray(matrix.map(row => formatArray(row.map(formatId), 3)), 2);
+  return array(2)(matrix.map(row => array(3)(row.map(id))));
 };
+
+export const COLOR = {
+  black: '\\u00A70',
+  darkBlue: '\\u00A71',
+  darkGreen: '\\u00A72',
+  darkAqua: '\\u00A73',
+  darkRed: '\\u00A74',
+  darkPurple: '\\u00A75',
+  gold: '\\u00A76',
+  gray: '\\u00A77',
+  darkGray: '\\u00A78',
+  blue: '\\u00A79',
+  green: '\\u00A7a',
+  aqua: '\\u00A7b',
+  red: '\\u00A7c',
+  lightPurple: '\\u00A7d',
+  yellow: '\\u00A7e',
+  white: '\\u00A7f'
+} as const;
+
+export const STYLE = {
+  obfuscated: '\\u00A7k',
+  bold: '\\u00A7l',
+  strikethrough: '\\u00A7m',
+  underline: '\\u00A7n',
+  italic: '\\u00A7o'
+} as const;
 
 export type TextRich = {
   text: string;
-  color?: typeof COLORS[number];
-  style?: typeof STYLES[number];
+  color?: keyof typeof COLOR;
+  style?: keyof typeof STYLE;
 };
-
 export type Text = string | TextRich;
 
-export const COLORS = [
-  'black',
-  'darkBlue',
-  'darkGreen',
-  'darkAqua',
-  'darkRed',
-  'darkRed',
-  'darkPurple',
-  'gold',
-  'gray',
-  'darkGray',
-  'blue',
-  'green',
-  'aqua',
-  'red',
-  'lightPurple',
-  'yellow',
-  'white'
-] as const;
-
-const STYLES = [
-  'obfuscated',
-  'bold',
-  'strikethrough',
-  'underline',
-  'italic'
-] as const;
-
-const createCode = (code: string) =>
-  `\\u00A7${code}`;
-
-const NAME_COLOR: Record<typeof COLORS[number], string> = {
-  black: createCode('0'),
-  darkBlue: createCode('1'),
-  darkGreen: createCode('2'),
-  darkAqua: createCode('3'),
-  darkRed: createCode('4'),
-  darkPurple: createCode('5'),
-  gold: createCode('6'),
-  gray: createCode('7'),
-  darkGray: createCode('8'),
-  blue: createCode('9'),
-  green: createCode('a'),
-  aqua: createCode('b'),
-  red: createCode('c'),
-  lightPurple: createCode('d'),
-  yellow: createCode('e'),
-  white: createCode('f')
-} as const;
-
-const NAME_STYLE: Record<typeof STYLES[number] | 'reset', string> = {
-  obfuscated: createCode('k'),
-  bold: createCode('l'),
-  strikethrough: createCode('m'),
-  underline: createCode('n'),
-  italic: createCode('o'),
-  reset: createCode('r')
-} as const;
-
-const createFormat = (type: string) => (tooltip: string) =>
-  `format.${type}(${tooltip})`;
-
-const TOOLTIP_COLOR: Record<typeof COLORS[number], (tooltip: string) => string> = {
-  black: createFormat('black'),
-  darkBlue: createFormat('darkBlue'),
-  darkGreen: createFormat('darkGreen'),
-  darkAqua: createFormat('darkAqua'),
-  darkRed: createFormat('darkRed'),
-  darkPurple: createFormat('darkPurple'),
-  gold: createFormat('gold'),
-  gray: createFormat('gray'),
-  darkGray: createFormat('darkGray'),
-  blue: createFormat('blue'),
-  green: createFormat('green'),
-  aqua: createFormat('aqua'),
-  red: createFormat('red'),
-  lightPurple: createFormat('lightPurple'),
-  yellow: createFormat('yellow'),
-  white: createFormat('white')
-} as const;
-
-const TOOLTIP_STYLE: Record<typeof STYLES[number], (tooltip: string) => string> = {
-  obfuscated: createFormat('obfuscated'),
-  bold: createFormat('bold'),
-  strikethrough: createFormat('strikethrough'),
-  underline: createFormat('underline'),
-  italic: createFormat('italic')
-} as const;
-
-export const formatName = (...texts: Text[]) => formatLiteral(texts
+export const name = (...texts: Text[]) => literal(texts
   .map(text => {
     if (typeof text === 'string') return text;
     return [
-      text.color && NAME_COLOR[text.color],
-      text.style && NAME_STYLE[text.style],
+      text.color && COLOR[text.color],
+      text.style && STYLE[text.style],
       text.text,
-      (text.color ?? text.style) && NAME_STYLE.reset
+      (text.color ?? text.style) && '\\u00A7r'
     ]
       .filter(x => x !== undefined)
       .join('');
   })
   .join(''));
 
-export const formatTooltip = (...tooltip: Text[]) => tooltip
-  .map(text => {
-    if (typeof text === 'string') return formatLiteral(text);
+export const tooltip = (...tooltips: Text[]) => tooltips
+  .map(tooltip => {
+    if (typeof tooltip === 'string') return literal(tooltip);
 
-    let out = formatLiteral(text.text);
+    let out = literal(tooltip.text);
 
-    if (text.style) out = TOOLTIP_STYLE[text.style](out);
-    if (text.color) out = TOOLTIP_COLOR[text.color](out);
+    if (tooltip.style) out = `format.${tooltip.style}(${out})`;
+    if (tooltip.color) out = `format.${tooltip.color}(${out})`;
 
     return out;
   })
   .join(' + ');
+
+export const recipe = <T extends Array<string | number | boolean | null | string[] | number[]>>(...args: Partial<T>) => list(3)(args
+  .filter(x => x !== undefined)
+  .map(x => {
+    if (Array.isArray(x)) return array(3)(x);
+    if (x === null) return 'null';
+    return x;
+  }));

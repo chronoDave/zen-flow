@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'node:test';
 
 import {
   addComposter,
@@ -11,46 +11,46 @@ import {
   removeHammer,
   addSieve,
   removeSieve
-} from './exNihilo';
+} from './exNihilo.ts';
 
 test('[exNihilo]', t => {
-  t.equal(
+  t.assert.equal(
     addComposter('<minecraft:hay_block>', { n: 0.72, color: 'E3E162' }),
     'mods.exnihilo.Composting.addRecipe(<minecraft:hay_block>, 0.72, "E3E162");',
     'addComposter'
   );
 
-  t.equal(
+  t.assert.equal(
     removeComposter('<minecraft:sapling>'),
     'mods.exnihilo.Composting.removeRecipe(<minecraft:sapling>);',
     'removeComposter'
   );
 
-  t.equal(
+  t.assert.equal(
     addCrucible({ id: '<liquid:water>', n: 1000 }, '<minecraft:packed_ice>'),
     'mods.exnihilo.Crucible.addRecipe(<minecraft:packed_ice>, <liquid:water> * 1000);',
     'addCrucible'
   );
 
-  t.equal(
+  t.assert.equal(
     removeCrucible('<liquid:lava>'),
     'mods.exnihilo.Crucible.removeRecipe(<liquid:lava>);',
     'removeCrucible'
   );
 
-  t.equal(
+  t.assert.equal(
     addCrucibleFuel('<minecraft:coal_block>', 0.1),
     'mods.exnihilo.Crucible.addHeatSource(<minecraft:coal_block>, 0.1);',
     'addCrucibleFuel'
   );
 
-  t.equal(
+  t.assert.equal(
     removeCrucibleFuel('<minecraft:lava>'),
     'mods.exnihilo.Crucible.removeHeatSource(<minecraft:lava>);',
     'removeCrucibleFuel'
   );
 
-  t.equal(
+  t.assert.equal(
     addHammer('<minecraft:tnt>', {
       '<minecraft:gunpowder>': 0.25,
       '<minecraft:sand>': { n: 0.5, modifier: 1.5 }
@@ -59,13 +59,13 @@ test('[exNihilo]', t => {
     'addHammer'
   );
 
-  t.equal(
+  t.assert.equal(
     removeHammer('<minecraft:sand>'),
     'mods.exnihilo.Hammer.removeRecipe(<minecraft:sand>);',
     'removeHammer'
   );
 
-  t.equal(
+  t.assert.equal(
     addSieve('<minecraft:mycelium>', {
       '<minecraft:red_mushroom>': 0.5,
       '<minecraft:brown_mushroom>': 0.5
@@ -74,11 +74,9 @@ test('[exNihilo]', t => {
     'addSieve'
   );
 
-  t.equal(
+  t.assert.equal(
     removeSieve('<minecraft:dirt>'),
     'mods.exnihilo.Sieve.removeRecipe(<minecraft:dirt>);',
     'removeSieve'
   );
-
-  t.end();
 });
