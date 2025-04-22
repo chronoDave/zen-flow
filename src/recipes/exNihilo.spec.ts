@@ -55,7 +55,7 @@ test('[exNihilo]', t => {
       '<minecraft:gunpowder>': 0.25,
       '<minecraft:sand>': { n: 0.5, modifier: 1.5 }
     }),
-    'mods.exnihilo.Hammer.addRecipe(\n\t<minecraft:tnt>,\n\t[<minecraft:gunpowder>, <minecraft:sand>],\n\t[0.25, 0.5],\n\t[1, 1.5]\n);',
+    'mods.exnihilo.Hammer.addRecipe(\n\t<minecraft:tnt>,\n\t[<minecraft:gunpowder>, <minecraft:sand>],\n\t[0.25, 0.5],\n\t[0, 1.5]\n);',
     'addHammer'
   );
 
