@@ -27,7 +27,14 @@ export default [{
   input,
   plugins: [dts()],
   output: {
-    file: output('d.ts'),
+    file: output('d.cts'),
+    format: 'cjs'
+  }
+}, {
+  input,
+  plugins: [dts()],
+  output: {
+    file: output('d.mts'),
     format: 'es'
   }
 }];
