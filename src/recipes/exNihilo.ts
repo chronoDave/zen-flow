@@ -99,7 +99,7 @@ export const addHammer = (id: string, recipe: RecipeHammer) => {
     .map(entry => ({
       id: entry[0],
       chance: is.object(entry[1]) ? entry[1].n : entry[1],
-      modifier: is.object(entry[1]) ? entry[1].modifier : 1
+      modifier: is.object(entry[1]) ? entry[1].modifier : 0
     }))
     .flat();
 
