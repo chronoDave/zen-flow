@@ -70,7 +70,7 @@ test('[exNihilo]', t => {
       '<minecraft:red_mushroom>': 0.5,
       '<minecraft:brown_mushroom>': 0.5
     }),
-    'mods.exnihilo.Sieve.addRecipe(<minecraft:mycelium>, [<minecraft:red_mushroom>, <minecraft:brown_mushroom>], [0.5, 0.5]);',
+    'mods.exnihilo.Sieve.addRecipe(<minecraft:mycelium>, [<minecraft:red_mushroom>, <minecraft:brown_mushroom>], [2, 2]);',
     'addSieve'
   );
 
