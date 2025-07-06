@@ -126,24 +126,15 @@ export type RecipeSieve = Record<string, number>;
 /**
  * Add [Sieve](https://ftb.fandom.com/wiki/Sieve_(Ex_Nihilo)) recipe
  * 
- * Chance is calculated as `1 / chance`
+ * Chance is calculated as a fraction, e.g. `2` is `50%`
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Ex_Nihilo_Support
  */
 export const addSieve = (id: string, recipe: RecipeSieve) => {
-  const items = Object.entries(recipe)
-    .map(entry => Array.from({ length: Math.ceil(entry[1]) }).map((_, i) => ({
-      id: entry[0],
-      chance: entry[1] - i < 1 ?
-        Math.round(1 / (entry[1] - i)) :
-        1
-    })))
-    .flat();
-
   const out = format.recipe(
     id,
-    items.map(item => item.id),
-    format.array(9)(items.map(item => item.chance))
+    Object.keys(recipe),
+    Object.values(recipe)
   );
 
   return `mods.exnihilo.Sieve.addRecipe(${out});`;
