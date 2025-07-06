@@ -17,6 +17,15 @@ export type RecipeCarpenter = {
 /**
  * Add [Carpenter](https://feed-the-beast.fandom.com/wiki/Carpenter) recipe
  * 
+ * Common values:
+ *  - Beealyzer / Treealyzer => `100`
+ *  - Hardened Casing => `75`
+ *  - Scented Panelling / Impregnated Casing => `50`
+ *  - Candle => `10`
+ *  - Circuit boards => `20`, `40`, `80`
+ * 
+ * RF cost is equal to `204 * ticks`, assuming `1` energy modifier (Forestry config)
+ * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addCarpenter = (id: Ingredient, recipe: RecipeCarpenter) => {
@@ -47,6 +56,12 @@ export type RecipeCentrifuge = {
 /**
  * Add [Centrifuge](https://feed-the-beast.fandom.com/wiki/Centrifuge) recipe
  * 
+ * Common values:
+ *  - Combs => `20`
+ *  - Propolis => `5`
+ * 
+ * RF cost is equal to `320 * ticks`, assuming `1` energy modifier (Forestry config)
+ * 
  * @param recipe.out `float`, e.g. `0.8` is 80% chance
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
@@ -76,7 +91,9 @@ export type RecipeFermenter = {
 /**
  * Add [Fermenter](https://feed-the-beast.fandom.com/wiki/Fermenter) recipe
  * 
- * Recipe.liquid + recipe.catalyst => Liquid
+ * `Recipe.liquid + Recipe.catalyst => Liquid`
+ * 
+ * RF cost is equal to `420 * ticks`, assuming `1` energy modifier (Forestry config)
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
@@ -135,6 +152,11 @@ export type RecipeMoistener = {
 
 /**
  * Add [Moistener](https://feed-the-beast.fandom.com/wiki/Moistener) recipe
+ * 
+ * Common values:
+ *  - Mycelium => `5000`
+ *  - Mossy Cobblestone => `20.000`
+ *  - Mossy Stone Bricks => `20.000`
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
@@ -164,6 +186,15 @@ export type RecipeSqueezer = {
 
 /**
  * Add [Squeezer](https://ftb.fandom.com/wiki/Squeezer_(Forestry)) recipe
+ * 
+ * Common values:
+ *  - Honeydrop => `10`
+ *  - Phosphor => `10`
+ *  - Fruits => `10`, `20`, `60`, `70`
+ *  - Plants => `10`
+ *  - Capsules => `10`
+ * 
+ * RF cost is equal to `200 * ticks`, assuming `1` energy modifier (Forestry config)
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
@@ -197,6 +228,11 @@ export type RecipeStill = {
 /**
  * Add [Still](https://ftb.fandom.com/wiki/Still) recipe
  * 
+ * Common values:
+ *  - All => `100`
+ * 
+ * RF cost is equal to `200 * ticks`, assuming `1` energy modifier (Forestry config)
+ * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addStill = (liquid: Stack, recipe: RecipeStill) => {
@@ -229,8 +265,9 @@ export type RecipeFabricator = {
 /**
  * Add [Thermionic Fabricator](https://feed-the-beast.fandom.com/wiki/Thermionic_Fabricator) recipe
  * 
- * `n` is the amount of liquid glass in mb
- * 
+ * RF cost is equal to `200 * ticks`, assuming `1` energy modifier (Forestry config)
+ *
+ * @param recipe.n liquid glass in `mb`
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addFabricator = (id: string, recipe: RecipeFabricator) => {
