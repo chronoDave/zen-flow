@@ -22,7 +22,10 @@ export type Bonus = { id: string; p: number };
 export const bonus = (bonus: Bonus) => `${bonus.id} % ${Math.round(bonus.p * 100)}`;
 
 export type Liquid = { id: string; mb: number };
-export const liquid = (liquid: Liquid) => `${liquid.id} * ${liquid.mb}`;
+export const liquid = (liquid: Liquid) => {
+  if (!liquid.id.startsWith('<liquid:')) throw new Error('ID is not a liquid');
+  return `${liquid.id} * ${liquid.mb}`;
+};
 
 export type Ingredient = string | Stack;
 export const ingredient = (ingredient: Ingredient) => is.object(ingredient) ?

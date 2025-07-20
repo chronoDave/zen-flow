@@ -15,7 +15,7 @@ import {
 
 test('[exNihilo]', t => {
   t.assert.equal(
-    addComposter('<minecraft:hay_block>', { n: 0.72, color: 'E3E162' }),
+    addComposter({ input: { id: '<minecraft:hay_block>', n: 0.72 }, color: 'E3E162' }),
     'mods.exnihilo.Composting.addRecipe(<minecraft:hay_block>, 0.72, "E3E162");',
     'addComposter'
   );
@@ -27,7 +27,7 @@ test('[exNihilo]', t => {
   );
 
   t.assert.equal(
-    addCrucible({ id: '<liquid:water>', n: 1000 }, '<minecraft:packed_ice>'),
+    addCrucible({ input: '<minecraft:packed_ice>', output: { id: '<liquid:water>', mb: 1000 } }),
     'mods.exnihilo.Crucible.addRecipe(<minecraft:packed_ice>, <liquid:water> * 1000);',
     'addCrucible'
   );
@@ -39,7 +39,7 @@ test('[exNihilo]', t => {
   );
 
   t.assert.equal(
-    addCrucibleFuel('<minecraft:coal_block>', 0.1),
+    addCrucibleFuel({ id: '<minecraft:coal_block>', n: 0.1 }),
     'mods.exnihilo.Crucible.addHeatSource(<minecraft:coal_block>, 0.1);',
     'addCrucibleFuel'
   );
@@ -51,9 +51,12 @@ test('[exNihilo]', t => {
   );
 
   t.assert.equal(
-    addHammer('<minecraft:tnt>', {
-      '<minecraft:gunpowder>': 0.25,
-      '<minecraft:sand>': { n: 0.5, modifier: 1.5 }
+    addHammer({
+      input: '<minecraft:tnt>',
+      output: [
+        { id: '<minecraft:gunpowder>', p: 0.25 },
+        { id: '<minecraft:sand>', p: 0.5, luck: 1.5 }
+      ]
     }),
     'mods.exnihilo.Hammer.addRecipe(\n\t<minecraft:tnt>,\n\t[<minecraft:gunpowder>, <minecraft:sand>],\n\t[0.25, 0.5],\n\t[0, 1.5]\n);',
     'addHammer'
@@ -66,9 +69,12 @@ test('[exNihilo]', t => {
   );
 
   t.assert.equal(
-    addSieve('<minecraft:mycelium>', {
-      '<minecraft:red_mushroom>': 0.5,
-      '<minecraft:brown_mushroom>': 0.5
+    addSieve({
+      input: '<minecraft:mycelium>',
+      output: [
+        { id: '<minecraft:red_mushroom>', p: 0.5 },
+        { id: '<minecraft:brown_mushroom>', p: 0.5 }
+      ]
     }),
     'mods.exnihilo.Sieve.addRecipe(<minecraft:mycelium>, [<minecraft:red_mushroom>, <minecraft:brown_mushroom>], [2, 2]);',
     'addSieve'
