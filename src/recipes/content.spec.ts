@@ -9,8 +9,9 @@ import {
 
 test('[content]', t => {
   t.assert.equal(
-    createBlock('Content', {
+    createBlock({
       id: 'content_block',
+      name: 'Content',
       material: 'rock',
       texture: 'content_block',
       creativeTab: 'misc',
@@ -26,8 +27,9 @@ test('[content]', t => {
   );
 
   t.assert.equal(
-    createItem('Content', {
+    createItem({
       id: 'content',
+      name: 'Content',
       texture: 'content_item',
       creativeTab: 'misc',
       damage: 50,
@@ -42,7 +44,8 @@ test('[content]', t => {
   );
 
   t.assert.equal(
-    createLiquid('content', {
+    createLiquid({
+      id: 'content',
       density: 5,
       luminosity: 1,
       temperature: 300,
@@ -60,7 +63,8 @@ test('[content]', t => {
   );
 
   t.assert.equal(
-    createLiquid('content', {
+    createLiquid({
+      id: 'content',
       density: 5,
       luminosity: 1,
       temperature: 300,
@@ -73,8 +77,9 @@ test('[content]', t => {
   );
 
   t.assert.equal(
-    createMaterial('Content', {
+    createMaterial({
       name: 'content',
+      material: 'Content',
       color: {
         name: 'gold',
         tool: 3914239

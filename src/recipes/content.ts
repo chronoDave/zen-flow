@@ -4,6 +4,7 @@ import * as format from '../lib/format.ts';
 
 export type RecipeBlock = {
   id: string;
+  name: string;
   material: string;
   texture?: string;
   creativeTab?: string;
@@ -25,9 +26,9 @@ export type RecipeBlock = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
-export const createBlock = (name: string, recipe: RecipeBlock) => {
+export const createBlock = (recipe: RecipeBlock) => {
   const out = format.recipe(
-    format.literal(name),
+    format.literal(recipe.name),
     format.literal(recipe.id),
     format.literal(recipe.material),
     typeof recipe.texture === 'string' ?
@@ -49,6 +50,7 @@ export const createBlock = (name: string, recipe: RecipeBlock) => {
 
 export type RecipeItem = {
   id: string;
+  name: string;
   texture?: string;
   creativeTab?: string;
   damage?: number;
@@ -68,9 +70,9 @@ export type RecipeItem = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
-export const createItem = (name: string, recipe: RecipeItem) => {
+export const createItem = (recipe: RecipeItem) => {
   const out = format.recipe(
-    format.literal(name),
+    format.literal(recipe.name),
     format.literal(recipe.id),
     typeof recipe.texture === 'string' ?
       format.literal(recipe.texture) :
@@ -98,6 +100,7 @@ export const createItem = (name: string, recipe: RecipeItem) => {
 };
 
 export type RecipeLiquid = {
+  id: string;
   density: number;
   gaseous?: boolean;
   luminosity: number;
@@ -121,9 +124,9 @@ export type RecipeLiquid = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:BlockItem_Support
  */
-export const createLiquid = (id: string, recipe: RecipeLiquid) => {
+export const createLiquid = (recipe: RecipeLiquid) => {
   const out = format.recipe(
-    format.literal(id),
+    format.literal(recipe.id),
     recipe.density,
     !!recipe.gaseous,
     recipe.luminosity,
@@ -146,6 +149,7 @@ export const createLiquid = (id: string, recipe: RecipeLiquid) => {
 };
 
 export type RecipeMaterial = {
+  material: string;
   /** Display name */
   name: string;
   color: {
@@ -226,9 +230,9 @@ export type RecipeMaterial = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ContentTweaker:TConstruct_Support
  */
-export const createMaterial = (material: string, recipe: RecipeMaterial) => {
+export const createMaterial = (recipe: RecipeMaterial) => {
   const out = format.recipe(
-    format.literal(material),
+    format.literal(recipe.material),
     format.literal(recipe.name),
     format.literal(recipe.color.name),
     recipe.resource,
