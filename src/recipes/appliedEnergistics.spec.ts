@@ -9,13 +9,14 @@ import {
 
 test('[appliedEnergistics]', t => {
   t.assert.equal(
-    addGrinder({ id: '<minecraft:sand>', n: 2 }, {
+    addGrinder({
       input: '<minecraft:sandstone>',
+      output: { id: '<minecraft:sand>', n: 2 },
       turns: 4,
-      bonus: {
-        primary: { id: '<minecraft:sand>', chance: 0.8 },
-        secondary: { id: '<minecraft:sand>', chance: 0.6 }
-      }
+      bonus: [
+        { id: '<minecraft:sand>', p: 0.8 },
+        { id: '<minecraft:sand>', p: 0.6 }
+      ]
     }),
     'mods.appeng.Grinder.addRecipe(\n\t<minecraft:sandstone>,\n\t<minecraft:sand> * 2,\n\t4,\n\t<minecraft:sand>, 0.8,\n\t<minecraft:sand>, 0.6\n);',
     'addGrinder'
@@ -28,9 +29,12 @@ test('[appliedEnergistics]', t => {
   );
 
   t.assert.equal(
-    addInscriber({ id: '<appliedenergistics2:item.ItemMultiMaterial:18>', n: 9 }, {
-      top: '<appliedenergistics2:item.ItemMultiMaterial:15>',
-      center: '<minecraft:gold_block>',
+    addInscriber({
+      input: {
+        top: '<appliedenergistics2:item.ItemMultiMaterial:15>',
+        center: '<minecraft:gold_block>'
+      },
+      output: { id: '<appliedenergistics2:item.ItemMultiMaterial:18>', n: 9 },
       type: 'press'
     }),
     'mods.appeng.Inscriber.addRecipe(\n\t[<minecraft:gold_block>],\n\t<appliedenergistics2:item.ItemMultiMaterial:15>,\n\tnull,\n\t<appliedenergistics2:item.ItemMultiMaterial:18> * 9,\n\t"Press"\n);',

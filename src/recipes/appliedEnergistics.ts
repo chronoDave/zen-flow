@@ -6,11 +6,10 @@ import { clamp } from '../lib/math.ts';
 
 export type RecipeGrinder = {
   input: string;
+  output: Ingredient;
+  bonus?: [Bonus, Bonus];
+  /** Integer larger than or equal to 1 */
   turns: number;
-  bonus?: {
-    primary: Bonus;
-    secondary?: Bonus;
-  };
 };
 
 /**
@@ -19,22 +18,15 @@ export type RecipeGrinder = {
  * Common values:
  *  - Ingot: `2 turns`
  *  - Ore: `4 turns`
- *
- * Bonus `n` must be between 0 and 1
- * 
- * Turns must be larger than 0
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Applied_Energistics_2_Support
  */
-export const addGrinder = (id: Ingredient, recipe: RecipeGrinder) => {
-  const bonus = (bonus: Bonus) => `${bonus.id}, ${clamp(0, 1, bonus.chance)}`;
-
+export const addGrinder = (recipe: RecipeGrinder) => {
   const out = format.recipe(
     format.ingredient(recipe.input),
-    format.ingredient(id),
-    Math.max(1, recipe.turns),
-    recipe.bonus && bonus(recipe.bonus.primary),
-    recipe.bonus?.secondary && bonus(recipe.bonus.secondary)
+    format.ingredient(recipe.output),
+    Math.max(1, Math.round(recipe.turns)),
+    ...recipe.bonus?.map(bonus => `${bonus.id}, ${clamp(0, 1, bonus.p)}`) ?? []
   );
 
   return `mods.appeng.Grinder.addRecipe(${out});`;
@@ -45,13 +37,16 @@ export const addGrinder = (id: Ingredient, recipe: RecipeGrinder) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Applied_Energistics_2_Support
  */
-export const removeGrinder = (id: string) =>
-  `mods.appeng.Grinder.removeRecipe(${id});`;
+export const removeGrinder = (input: string) =>
+  `mods.appeng.Grinder.removeRecipe(${input});`;
 
 export type RecipeInscriber = {
-  top: string;
-  center: string;
-  bottom?: string;
+  input: {
+    top: string;
+    center: string;
+    bottom?: string;
+  };
+  output: Ingredient;
   type: 'inscribe' | 'press';
 };
 
@@ -60,12 +55,12 @@ export type RecipeInscriber = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Applied_Energistics_2_Support
  */
-export const addInscriber = (id: Ingredient, recipe: RecipeInscriber) => {
+export const addInscriber = (recipe: RecipeInscriber) => {
   const out = format.recipe(
-    [recipe.center],
-    recipe.top,
-    recipe.bottom ?? null,
-    format.ingredient(id),
+    [recipe.input.center],
+    recipe.input.top,
+    recipe.input.bottom ?? null,
+    format.ingredient(recipe.output),
     format.literal(capitalise(recipe.type))
   );
 
