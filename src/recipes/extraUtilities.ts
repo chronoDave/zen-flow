@@ -2,15 +2,20 @@ import type { Ingredient, Shaped } from '../lib/format.ts';
 
 import * as format from '../lib/format.ts';
 
+export type RecipeQED = {
+  input: Shaped;
+  output: Ingredient;
+};
+
 /**
  * Adds [QED](https://ftb.fandom.com/wiki/QED) recipe
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Extra_Utilities_Support
  */
-export const addQED = (ingredient: Ingredient, recipe: Shaped) => {
+export const addQED = (recipe: RecipeQED) => {
   const out = format.recipe(
-    format.ingredient(ingredient),
-    format.shaped(recipe)
+    format.ingredient(recipe.output),
+    format.shaped(recipe.input)
   );
 
   return `mods.extraUtils.QED.addShapedRecipe(${out});`;
@@ -21,5 +26,5 @@ export const addQED = (ingredient: Ingredient, recipe: Shaped) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Extra_Utilities_Support
  */
-export const removeQED = (id: string) =>
-  `mods.extraUtils.QED.removeRecipe(${id});`;
+export const removeQED = (output: string) =>
+  `mods.extraUtils.QED.removeRecipe(${output});`;
