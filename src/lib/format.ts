@@ -18,13 +18,16 @@ export const weight = (weight: number) =>
 export type Stack = { id: string; n: number };
 export const stack = (stack: Stack) => `${stack.id} * ${stack.n}`;
 
+export type Bonus = { id: string; p: number };
+export const bonus = (bonus: Bonus) => `${bonus.id} % ${Math.round(bonus.p * 100)}`;
+
+export type Liquid = { id: string; mb: number };
+export const liquid = (liquid: Liquid) => `${liquid.id} * ${liquid.mb}`;
+
 export type Ingredient = string | Stack;
 export const ingredient = (ingredient: Ingredient) => is.object(ingredient) ?
   stack(ingredient) :
   ingredient;
-
-export type Bonus = { id: string; chance: number };
-export const bonus = (bonus: Bonus) => `${bonus.id} % ${Math.round(bonus.chance * 100)}`;
 
 export type Cast = { id: string; consume?: boolean };
 export const cast = (cast?: Cast): Array<string | boolean | null> => cast ? [
@@ -149,7 +152,7 @@ export const tooltip = (...tooltips: Text[]) => tooltips
   })
   .join(' + ');
 
-export const recipe = <T extends Array<string | number | boolean | null | string[] | number[]>>(...args: Partial<T>) => list(3)(args
+export const recipe = (...args: Array<undefined | string | number | boolean | null | string[] | number[]>) => list(3)(args
   .filter(x => x !== undefined)
   .map(x => {
     if (Array.isArray(x)) return array(3)(x);
