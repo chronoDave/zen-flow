@@ -2,13 +2,15 @@ import type {
   Stack,
   Ingredient,
   Shaped,
-  Bonus
+  Bonus,
+  Liquid
 } from '../lib/format.ts';
 
 import * as format from '../lib/format.ts';
 
 export type RecipeCarpenter = {
-  recipe: Shaped;
+  input: Shaped;
+  output: Ingredient;
   ticks: number;
   top?: string;
   liquid?: Stack;
@@ -28,10 +30,10 @@ export type RecipeCarpenter = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const addCarpenter = (id: Ingredient, recipe: RecipeCarpenter) => {
+export const addCarpenter = (recipe: RecipeCarpenter) => {
   const out = format.recipe(
-    format.ingredient(id),
-    format.shaped(recipe.recipe),
+    format.ingredient(recipe.output),
+    format.shaped(recipe.input),
     recipe.liquid && format.stack(recipe.liquid),
     Math.max(1, Math.round(recipe.ticks)),
     recipe.top
@@ -45,11 +47,12 @@ export const addCarpenter = (id: Ingredient, recipe: RecipeCarpenter) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const removeCarpenter = (id: string, liquid?: string) =>
-  `mods.forestry.Carpenter.removeRecipe(${format.recipe(id, liquid)});`;
+export const removeCarpenter = (recipe: { output: string; liquid?: string }) =>
+  `mods.forestry.Carpenter.removeRecipe(${format.recipe(recipe.output, recipe.liquid)});`;
 
 export type RecipeCentrifuge = {
-  out: Record<string, number>;
+  input: string;
+  output: Bonus[];
   ticks: number;
 };
 
@@ -65,10 +68,10 @@ export type RecipeCentrifuge = {
  * @param recipe.out `float`, e.g. `0.8` is 80% chance
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const addCentrifuge = (id: string, recipe: RecipeCentrifuge) => {
+export const addCentrifuge = (recipe: RecipeCentrifuge) => {
   const out = format.recipe(
-    Object.entries(recipe.out).map(([id, chance]) => format.bonus({ id, chance })),
-    id,
+    recipe.output.map(format.bonus),
+    recipe.input,
     recipe.ticks
   );
 
@@ -80,11 +83,12 @@ export const addCentrifuge = (id: string, recipe: RecipeCentrifuge) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const removeCentrifuge = (id: string) =>
-  `mods.forestry.Centrifuge.removeRecipe(${id});`;
+export const removeCentrifuge = (input: string) =>
+  `mods.forestry.Centrifuge.removeRecipe(${input});`;
 
 export type RecipeFermenter = {
-  liquid: Stack;
+  input: Liquid;
+  output: Liquid;
   catalyst: string;
 };
 
@@ -97,13 +101,13 @@ export type RecipeFermenter = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const addFermenter = (liquid: Stack, recipe: RecipeFermenter) => {
+export const addFermenter = (recipe: RecipeFermenter) => {
   const out = format.recipe(
-    liquid.id,
+    recipe.output.id,
     recipe.catalyst,
-    recipe.liquid.id,
-    recipe.liquid.n,
-    liquid.n / recipe.liquid.n
+    recipe.input.id,
+    recipe.output.mb,
+    recipe.output.mb / recipe.input.mb
   );
 
   return `mods.forestry.Fermenter.addRecipe(${out});`;
@@ -114,10 +118,11 @@ export const addFermenter = (liquid: Stack, recipe: RecipeFermenter) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const removeFermenter = (id: string) =>
-  `mods.forestry.Fermenter.removeRecipe(${id});`;
+export const removeFermenter = (input: string) =>
+  `mods.forestry.Fermenter.removeRecipe(${input});`;
 
 export type RecipeFermenterFuel = {
+  input: string;
   cycles: number;
   burn: number;
 };
@@ -127,9 +132,9 @@ export type RecipeFermenterFuel = {
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const addFermenterFuel = (id: string, recipe: RecipeFermenterFuel) => {
+export const addFermenterFuel = (recipe: RecipeFermenterFuel) => {
   const out = format.recipe(
-    id,
+    recipe.input,
     recipe.cycles,
     recipe.burn
   );
@@ -142,11 +147,12 @@ export const addFermenterFuel = (id: string, recipe: RecipeFermenterFuel) => {
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const removeFermenterFuel = (id: string) =>
-  `mods.forestry.Fermenter.removeFuel(${id});`;
+export const removeFermenterFuel = (input: string) =>
+  `mods.forestry.Fermenter.removeFuel(${input});`;
 
 export type RecipeMoistener = {
   input: string;
+  output: string;
   ticks: number;
 };
 
@@ -160,9 +166,9 @@ export type RecipeMoistener = {
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const addMoistener = (id: string, recipe: RecipeMoistener) => {
+export const addMoistener = (recipe: RecipeMoistener) => {
   const out = format.recipe(
-    id,
+    recipe.output,
     recipe.input,
     recipe.ticks
   );
@@ -175,11 +181,12 @@ export const addMoistener = (id: string, recipe: RecipeMoistener) => {
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const removeMoistener = (id: string) =>
-  `mods.forestry.Moistener.removeRecipe(${id});`;
+export const removeMoistener = (output: string) =>
+  `mods.forestry.Moistener.removeRecipe(${output});`;
 
 export type RecipeSqueezer = {
   input: Ingredient[];
+  output: Liquid;
   ticks: number;
   bonus: Bonus;
 };
@@ -198,9 +205,9 @@ export type RecipeSqueezer = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const addSqueezer = (liquid: Stack, recipe: RecipeSqueezer) => {
+export const addSqueezer = (recipe: RecipeSqueezer) => {
   const out = format.recipe(
-    format.stack(liquid),
+    format.liquid(recipe.output),
     format.bonus(recipe.bonus),
     recipe.input.map(format.ingredient),
     recipe.ticks
@@ -217,11 +224,12 @@ export const addSqueezer = (liquid: Stack, recipe: RecipeSqueezer) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const removeSqueezer = (id: string, recipe?: string[]) =>
-  `mods.forestry.Squeezer.removeRecipe(${format.recipe(id, recipe)});`;
+export const removeSqueezer = (recipe: { output: string; input?: string[] }) =>
+  `mods.forestry.Squeezer.removeRecipe(${format.recipe(recipe.output, recipe.input)});`;
 
 export type RecipeStill = {
-  liquid: Stack;
+  input: Liquid;
+  output: Liquid;
   ticks: number;
 };
 
@@ -235,10 +243,10 @@ export type RecipeStill = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const addStill = (liquid: Stack, recipe: RecipeStill) => {
+export const addStill = (recipe: RecipeStill) => {
   const out = format.recipe(
-    format.stack(liquid),
-    format.stack(recipe.liquid),
+    format.liquid(recipe.output),
+    format.liquid(recipe.input),
     recipe.ticks
   );
 
@@ -253,12 +261,13 @@ export const addStill = (liquid: Stack, recipe: RecipeStill) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const removeStill = (liquid: string, recipe?: string) =>
-  `mods.forestry.Still.removeRecipe(${format.recipe(liquid, recipe)});`;
+export const removeStill = (recipe: { output: string; input?: string }) =>
+  `mods.forestry.Still.removeRecipe(${format.recipe(recipe.output, recipe.input)});`;
 
 export type RecipeFabricator = {
-  recipe: Shaped;
-  n: number;
+  input: Shaped;
+  output: Ingredient;
+  glass: number;
   cast?: string;
 };
 
@@ -266,15 +275,17 @@ export type RecipeFabricator = {
  * Add [Thermionic Fabricator](https://feed-the-beast.fandom.com/wiki/Thermionic_Fabricator) recipe
  * 
  * RF cost is equal to `200 * ticks`, assuming `1` energy modifier (Forestry config)
+ * 
+ * Common glass values:
+ *  - Electron Tube => `500` 
  *
- * @param recipe.n liquid glass in `mb`
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const addFabricator = (id: string, recipe: RecipeFabricator) => {
+export const addFabricator = (recipe: RecipeFabricator) => {
   const out = format.recipe(
-    id,
-    format.shaped(recipe.recipe),
-    recipe.n,
+    format.ingredient(recipe.output),
+    format.shaped(recipe.input),
+    recipe.glass,
     recipe.cast
   );
 
@@ -286,29 +297,30 @@ export const addFabricator = (id: string, recipe: RecipeFabricator) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const removeFabricator = (id: string) =>
-  `mods.forestry.ThermionicFabricator.removeCast(${id});`;
+export const removeFabricator = (output: string) =>
+  `mods.forestry.ThermionicFabricator.removeCast(${output});`;
 
 export type RecipeFabricatorGlass = {
-  n: number;
-  temp: number;
+  output: number;
+  input: string;
+  temperature: number;
 };
 
 /**
  * Add [Thermionic Fabricator](https://feed-the-beast.fandom.com/wiki/Thermionic_Fabricator) glass recipe
  * 
  * Common values:
- * - Glass = 1000mB, 1000C
- * - Sand = 1000mB, 3000C
- * - Glass Pane = 375mB, 1000C
+ * - Glass => `1000mB`, `1000C`
+ * - Sand => `1000mB`, `3000C`
+ * - Glass Pane => `375mB`, `1000C`
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const addFabricatorGlass = (id: string, recipe: RecipeFabricatorGlass) => {
+export const addFabricatorGlass = (recipe: RecipeFabricatorGlass) => {
   const out = format.recipe(
-    recipe.n,
-    id,
-    recipe.temp
+    recipe.output,
+    recipe.input,
+    recipe.temperature
   );
 
   return `mods.forestry.ThermionicFabricator.addSmelting(${out});`;
@@ -319,5 +331,5 @@ export const addFabricatorGlass = (id: string, recipe: RecipeFabricatorGlass) =>
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const removeFabricatorGlass = (id: string) =>
-  `mods.forestry.ThermionicFabricator.removeSmelting(${id});`;
+export const removeFabricatorGlass = (input: string) =>
+  `mods.forestry.ThermionicFabricator.removeSmelting(${input});`;
