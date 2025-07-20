@@ -9,23 +9,27 @@ import {
 
 test('[loot]', t => {
   t.assert.equal(
-    addChestLoot('<minecraft:stick>.weight(100)', {
+    addChestLoot({
       chest: 'dungeonChest',
-      n: 5,
-      chance: 1
+      loot: {
+        id: '<minecraft:stick>',
+        p: 100,
+        min: 1,
+        max: 5
+      }
     }),
     'vanilla.loot.addChestLoot(\n\t"dungeonChest",\n\t<minecraft:stick>.weight(100),\n\t1,\n\t5\n);',
     'addChestLoot'
   );
 
   t.assert.equal(
-    removeChestLoot('<minecraft:enchanted_book>', 'dungeonChest'),
+    removeChestLoot({ chest: 'dungeonChest', id: '<minecraft:enchanted_book>' }),
     'vanilla.loot.removeChestLoot("dungeonChest", <minecraft:enchanted_book>);',
     'removeChestLoot'
   );
 
   t.assert.equal(
-    addSeed('<minecraft:planks>.weight(100)'),
+    addSeed({ id: '<minecraft:planks>', p: 100 }),
     'vanilla.seeds.addSeed(<minecraft:planks>.weight(100));',
     'addSeed'
   );
