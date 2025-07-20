@@ -4,15 +4,16 @@ import * as format from '../lib/format.ts';
 
 export type RecipeCompressor = {
   input: Stack;
+  output: string;
   exact?: boolean;
 };
 
 /**
  * Add [Neutronium Compressor](https://ftb.fandom.com/wiki/Neutronium_Compressor) recipe
  */
-export const addCompressor = (id: string, recipe: RecipeCompressor) => {
+export const addCompressor = (recipe: RecipeCompressor) => {
   const out = format.recipe(
-    id,
+    recipe.output,
     Math.max(1, recipe.input.n),
     recipe.input.id,
     recipe.exact
@@ -27,25 +28,28 @@ export const addCompressor = (id: string, recipe: RecipeCompressor) => {
 export const removeCompressor = (id: string) =>
   `mods.avaritia.Compressor.remove(${id});`;
 
-export type RecipeExtreme = [
-  Partial<[string, string, string, string, string, string, string, string, string]>,
-  Partial<[string, string, string, string, string, string, string, string, string]>,
-  Partial<[string, string, string, string, string, string, string, string, string]>,
-  Partial<[string, string, string, string, string, string, string, string, string]>,
-  Partial<[string, string, string, string, string, string, string, string, string]>,
-  Partial<[string, string, string, string, string, string, string, string, string]>,
-  Partial<[string, string, string, string, string, string, string, string, string]>,
-  Partial<[string, string, string, string, string, string, string, string, string]>,
-  Partial<[string, string, string, string, string, string, string, string, string]>
-];
+export type RecipeExtreme = {
+  input: [
+    Partial<[string, string, string, string, string, string, string, string, string]>,
+    Partial<[string, string, string, string, string, string, string, string, string]>,
+    Partial<[string, string, string, string, string, string, string, string, string]>,
+    Partial<[string, string, string, string, string, string, string, string, string]>,
+    Partial<[string, string, string, string, string, string, string, string, string]>,
+    Partial<[string, string, string, string, string, string, string, string, string]>,
+    Partial<[string, string, string, string, string, string, string, string, string]>,
+    Partial<[string, string, string, string, string, string, string, string, string]>,
+    Partial<[string, string, string, string, string, string, string, string, string]>
+  ];
+  output: Ingredient;
+};
 
 /**
  * Add shaped [Extreme Crafting Table](https://ftb.fandom.com/wiki/Extreme_Crafting_Table) recipe
  */
-export const addExtreme = (ingredient: Ingredient, recipe: RecipeExtreme) => {
+export const addExtreme = (recipe: RecipeExtreme) => {
   const out = format.recipe(
-    format.ingredient(ingredient),
-    recipe.map(row => format.array(9)(row.map(format.id)))
+    format.ingredient(recipe.output),
+    recipe.input.map(row => format.array(9)(row.map(format.id)))
   );
 
   return `mods.avaritia.ExtremeCrafting.addShaped(${out});`;

@@ -11,7 +11,10 @@ import {
 
 test('[avaritia]', t => {
   t.assert.equal(
-    addCompressor('<minecraft:redstone_block>', { input: { id: '<minecraft:redstone>', n: 64 } }),
+    addCompressor({
+      input: { id: '<minecraft:redstone>', n: 64 },
+      output: '<minecraft:redstone_block>'
+    }),
     'mods.avaritia.Compressor.add(<minecraft:redstone_block>, 64, <minecraft:redstone>);',
     'addCompressor'
   );
@@ -23,7 +26,10 @@ test('[avaritia]', t => {
   );
 
   t.assert.equal(
-    addExtreme('<minecraft:glass>', Array.from({ length: 9 }).map(() => ['<minecraft:stone>', '<minecraft:stone>', '<minecraft:stone>', '<minecraft:sand>', '<minecraft:stone>', '<minecraft:stone>', '<minecraft:sand>', '<minecraft:stone>', '<minecraft:stone>']) as unknown as RecipeExtreme),
+    addExtreme({
+      input: Array.from({ length: 9 }).map(() => ['<minecraft:stone>', '<minecraft:stone>', '<minecraft:stone>', '<minecraft:sand>', '<minecraft:stone>', '<minecraft:stone>', '<minecraft:sand>', '<minecraft:stone>', '<minecraft:stone>']) as unknown as RecipeExtreme['input'],
+      output: '<minecraft:glass>'
+    }),
     'mods.avaritia.ExtremeCrafting.addShaped(<minecraft:glass>, [\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>],\n\t[<minecraft:stone>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>, <minecraft:sand>, <minecraft:stone>, <minecraft:stone>]\n]);',
     'addExtreme'
   );
