@@ -56,8 +56,8 @@ export const addMagmaCrucible = (recipe: RecipeMagmaCrucible) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const removeMagmaCrucible = (recipe: { input: string }) =>
-  `mods.thermalexpansion.Crucible.removeRecipe(${recipe.input});`;
+export const removeMagmaCrucible = (input: string) =>
+  `mods.thermalexpansion.Crucible.removeRecipe(${input});`;
 
 export type RecipeRedstoneFurnace = {
   input: string;
@@ -98,11 +98,14 @@ export const addRedstoneFurnace = (recipe: RecipeRedstoneFurnace) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const removeRedstoneFurnace = (recipe: { input: string }) =>
-  `mods.thermalexpansion.Furnace.removeRecipe(${recipe.input});`;
+export const removeRedstoneFurnace = (input: string) =>
+  `mods.thermalexpansion.Furnace.removeRecipe(${input});`;
 
 export type RecipeInsolator = {
-  input: [left: Ingredient, right: Ingredient];
+  input: {
+    left: Ingredient;
+    right: Ingredient;
+  };
   output: Ingredient;
   bonus?: Bonus;
   rf: number;
@@ -118,8 +121,8 @@ export type RecipeInsolator = {
 export const addInsolator = (recipe: RecipeInsolator) => {
   const out = format.recipe(
     recipe.rf,
-    format.ingredient(recipe.input[0]),
-    format.ingredient(recipe.input[1]),
+    format.ingredient(recipe.input.left),
+    format.ingredient(recipe.input.right),
     format.ingredient(recipe.output),
     ...bonus(recipe.bonus)
   );
@@ -134,8 +137,8 @@ export const addInsolator = (recipe: RecipeInsolator) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const removeInsolator = (recipe: { input: [left: string, right: string] }) =>
-  `mods.thermalexpansion.Insolator.removeRecipe(${format.recipe(...recipe.input)});`;
+export const removeInsolator = (input: { left: string; right: string }) =>
+  `mods.thermalexpansion.Insolator.removeRecipe(${format.recipe(input.left, input.right)});`;
 
 export type RecipePulverizer = {
   input: string;
@@ -179,8 +182,8 @@ export const addPulverizer = (recipe: RecipePulverizer) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const removePulverizer = (recipe: { input: string }) =>
-  `mods.thermalexpansion.Pulverizer.removeRecipe(${recipe.input});`;
+export const removePulverizer = (input: string) =>
+  `mods.thermalexpansion.Pulverizer.removeRecipe(${input});`;
 
 export type RecipeSawmill = {
   input: string;
@@ -222,11 +225,14 @@ export const addSawmill = (recipe: RecipeSawmill) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const removeSawmill = (recipe: { input: string }) =>
-  `mods.thermalexpansion.Sawmill.removeRecipe(${recipe.input});`;
+export const removeSawmill = (input: string) =>
+  `mods.thermalexpansion.Sawmill.removeRecipe(${input});`;
 
 export type RecipeInductionSmelter = {
-  input: [Ingredient, Ingredient];
+  input: {
+    left: Ingredient;
+    right: Ingredient;
+  };
   output: Ingredient;
   bonus?: Bonus;
   rf: number;
@@ -250,8 +256,8 @@ export type RecipeInductionSmelter = {
 export const addInductionSmelter = (recipe: RecipeInductionSmelter) => {
   const out = format.recipe(
     recipe.rf,
-    format.ingredient(recipe.input[0]),
-    format.ingredient(recipe.input[1]),
+    format.ingredient(recipe.input.left),
+    format.ingredient(recipe.input.right),
     format.ingredient(recipe.output),
     ...bonus(recipe.bonus)
   );
@@ -266,8 +272,8 @@ export const addInductionSmelter = (recipe: RecipeInductionSmelter) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const removeInductionSmelter = (recipe: { input: [left: string, right: string] }) =>
-  `mods.thermalexpansion.Smelter.removeRecipe(${format.recipe(...recipe.input)});`;
+export const removeInductionSmelter = (input: { left: string; right: string }) =>
+  `mods.thermalexpansion.Smelter.removeRecipe(${format.recipe(input.left, input.right)});`;
 
 export type RecipeTransposerFill = {
   input: string;
@@ -347,5 +353,5 @@ export const addTransposerExtract = (recipe: RecipeTransposerExtract) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thermal_Expansion_Support
  */
-export const removeTransposerExtract = (recipe: { input: string }) =>
-  `mods.thermalexpansion.Transposer.removeExtractRecipe(${recipe.input});`;
+export const removeTransposerExtract = (input: string) =>
+  `mods.thermalexpansion.Transposer.removeExtractRecipe(${input});`;

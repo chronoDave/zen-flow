@@ -72,5 +72,5 @@ export const addInscriber = (recipe: RecipeInscriber) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Applied_Energistics_2_Support
  */
-export const removeInscriber = (id: string) =>
-  `mods.appeng.Inscriber.removeRecipe(${id});`;
+export const removeInscriber = (output: string) =>
+  `mods.appeng.Inscriber.removeRecipe(${output});`;

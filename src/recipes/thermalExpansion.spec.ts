@@ -27,7 +27,7 @@ test('[thermalExpanion]', t => {
   );
 
   t.assert.equal(
-    removeMagmaCrucible({ input: '<minecraft:netherrack>' }),
+    removeMagmaCrucible('<minecraft:netherrack>'),
     'mods.thermalexpansion.Crucible.removeRecipe(<minecraft:netherrack>);',
     'removeMagmaCrucible'
   );
@@ -39,14 +39,17 @@ test('[thermalExpanion]', t => {
   );
 
   t.assert.equal(
-    removeRedstoneFurnace({ input: '<minecraft:potato>' }),
+    removeRedstoneFurnace('<minecraft:potato>'),
     'mods.thermalexpansion.Furnace.removeRecipe(<minecraft:potato>);',
     'removeRedstoneFurnace'
   );
 
   t.assert.equal(
     addInsolator({
-      input: ['<ThermalExpansion:material:517>', '<minecraft:mycelium>'],
+      input: {
+        left: '<ThermalExpansion:material:517>',
+        right: '<minecraft:mycelium>'
+      },
       output: { id: '<minecraft:mycelium>', n: 3 },
       bonus: { id: '<minecraft:brown_mushroom>', p: 0.5 },
       rf: 9600
@@ -56,7 +59,10 @@ test('[thermalExpanion]', t => {
   );
 
   t.assert.equal(
-    removeInsolator({ input: ['<ThermalExpansion:material:517>', '<minecraft:cactus>'] }),
+    removeInsolator({
+      left: '<ThermalExpansion:material:517>',
+      right: '<minecraft:cactus>'
+    }),
     'mods.thermalexpansion.Insolator.removeRecipe(<ThermalExpansion:material:517>, <minecraft:cactus>);',
     'removeInsolator'
   );
@@ -73,7 +79,7 @@ test('[thermalExpanion]', t => {
   );
 
   t.assert.equal(
-    removePulverizer({ input: '<minecraft:reeds>' }),
+    removePulverizer('<minecraft:reeds>'),
     'mods.thermalexpansion.Pulverizer.removeRecipe(<minecraft:reeds>);',
     'removePulverizer'
   );
@@ -90,14 +96,17 @@ test('[thermalExpanion]', t => {
   );
 
   t.assert.equal(
-    removeSawmill({ input: '<minecraft:bed>' }),
+    removeSawmill('<minecraft:bed>'),
     'mods.thermalexpansion.Sawmill.removeRecipe(<minecraft:bed>);',
     'removeSawmill'
   );
 
   t.assert.equal(
     addInductionSmelter({
-      input: ['<minecraft:dye:1>', '<minecraft:sand>'],
+      input: {
+        left: '<minecraft:dye:1>',
+        right: '<minecraft:sand>'
+      },
       output: '<minecraft:stained_glass:14>',
       bonus: { id: '<ThermalExpansion:material:514>', p: 0.25 },
       rf: 800
@@ -107,7 +116,10 @@ test('[thermalExpanion]', t => {
   );
 
   t.assert.equal(
-    removeInductionSmelter({ input: ['<minecraft:sand>', '<minecraft:redstone_ore>'] }),
+    removeInductionSmelter({
+      left: '<minecraft:sand>',
+      right: '<minecraft:redstone_ore>'
+    }),
     'mods.thermalexpansion.Smelter.removeRecipe(<minecraft:sand>, <minecraft:redstone_ore>);',
     'removeInductionSmelter'
   );
@@ -141,7 +153,7 @@ test('[thermalExpanion]', t => {
   );
 
   t.assert.equal(
-    removeTransposerExtract({ input: '<minecraft:water_bucket>' }),
+    removeTransposerExtract('<minecraft:water_bucket>'),
     'mods.thermalexpansion.Transposer.removeExtractRecipe(<minecraft:water_bucket>);',
     'removeTransposerExtract'
   );
