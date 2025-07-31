@@ -26,7 +26,7 @@ export const addChestLoot = (id: string) =>
     .map(loot => {
       const out = format.recipe(
         format.literal(id),
-        withWeight(loot.p ?? 100)(loot.id),
+        withWeight(typeof loot.p === 'number' ? loot.p * 100 : 100)(loot.id),
         loot.min,
         loot.max
       );
@@ -54,7 +54,7 @@ export const removeChestLoot = (chest: string) =>
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Loot
  */
 export const addSeed = (seed: Bonus) =>
-  `vanilla.seeds.addSeed(${withWeight(seed.p)(seed.id)});`;
+  `vanilla.seeds.addSeed(${withWeight(typeof seed.p === 'number' ? seed.p * 100 : 100)(seed.id)});`;
 
 /**
  * Remove item from tall grass

@@ -267,8 +267,8 @@ test('[tinkersConstruct]', t => {
   t.assert.equal(
     setArrowStats('Stone')({
       mass: 2.5,
-      breakChance: 5,
-      accuracy: 100
+      breakChance: 0.05,
+      accuracy: 1
     }),
     'mods.tconstruct.ToolStats.setArrowStats(\n\t"Stone",\n\t2.5F,\n\t5F,\n\t100F\n);',
     'setArrowStats'
@@ -281,13 +281,13 @@ test('[tinkersConstruct]', t => {
   );
 
   t.assert.equal(
-    setArrowBreakChance('Wood')(25),
+    setArrowBreakChance('Wood')(0.25),
     'mods.tconstruct.ToolStats.setArrowBreakChance("Wood", 25F);',
     'setArrowBreakChance'
   );
 
   t.assert.equal(
-    setArrowAccuracy('Wood')(20),
+    setArrowAccuracy('Wood')(0.2),
     'mods.tconstruct.TooLStats.setArrowAccuracy("Wood", 20F);',
     'setArrowAccuracy'
   );

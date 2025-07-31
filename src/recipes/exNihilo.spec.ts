@@ -16,7 +16,8 @@ import {
 test('[exNihilo]', t => {
   t.assert.equal(
     addComposter({
-      input: { id: '<minecraft:hay_block>', n: 0.72 },
+      id: '<minecraft:hay_block>',
+      fill: 0.72,
       color: 'E3E162'
     }),
     'mods.exnihilo.Composting.addRecipe(<minecraft:hay_block>, 0.72, "E3E162");',

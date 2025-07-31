@@ -639,8 +639,8 @@ export const setArrowStats = (id: string) =>
     const out = format.recipe(
       format.literal(id),
       format.float(stats.mass),
-      format.float(stats.breakChance),
-      format.float(stats.accuracy)
+      format.float(stats.breakChance * 100),
+      format.float(stats.accuracy * 100)
     );
 
     return `mods.tconstruct.ToolStats.setArrowStats(${out});`;
@@ -670,7 +670,7 @@ export const setArrowBreakChance = (id: string) =>
   (n: number) => {
     const out = format.recipe(
       format.literal(id),
-      format.float(n)
+      format.float(n * 100)
     );
 
     return `mods.tconstruct.ToolStats.setArrowBreakChance(${out});`;
@@ -685,7 +685,7 @@ export const setArrowAccuracy = (id: string) =>
   (n: number) => {
     const out = format.recipe(
       format.literal(id),
-      format.float(n)
+      format.float(n * 100)
     );
 
     return `mods.tconstruct.TooLStats.setArrowAccuracy(${out});`;

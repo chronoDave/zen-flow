@@ -159,8 +159,9 @@ export const removeFurnace = (output: string, input?: string) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
-export const addFurnaceFuel = (fuel: string, n: number) =>
-  `furnace.setFuel(${format.recipe(fuel, n)});`;
+export const addFurnaceFuel = (fuel: string) =>
+  (n: number) =>
+    `furnace.setFuel(${format.recipe(fuel, n)});`;
 
 /**
  * Remove furnace fuel, with the exception of vanilla fuels
@@ -168,4 +169,4 @@ export const addFurnaceFuel = (fuel: string, n: number) =>
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
 export const removeFurnaceFuel = (fuel: string) =>
-  addFurnaceFuel(fuel, 0);
+  addFurnaceFuel(fuel)(0);

@@ -1,10 +1,10 @@
 import type { Bonus, Liquid, Stack } from '../lib/format.ts';
 
 import * as format from '../lib/format.ts';
-import { clamp } from '../lib/math.ts';
 
 export type RecipeComposter = {
-  input: Stack;
+  id: string;
+  fill: number;
   color?: string;
 };
 
@@ -15,8 +15,8 @@ export type RecipeComposter = {
  */
 export const addComposter = (recipe: RecipeComposter) => {
   const out = format.recipe(
-    recipe.input.id,
-    clamp(0, 1, recipe.input.n),
+    recipe.id,
+    recipe.fill,
     typeof recipe.color === 'string' && format.literal(recipe.color)
   );
 

@@ -134,7 +134,7 @@ test('[minecraft.removeFurnace]', t => {
 
 test('[minecraft.addFurnaceFuel]', t => {
   t.assert.equal(
-    addFurnaceFuel('<minecraft:rotten_flesh>', 100),
+    addFurnaceFuel('<minecraft:rotten_flesh>')(100),
     'furnace.setFuel(<minecraft:rotten_flesh>, 100);'
   );
 });

@@ -11,7 +11,7 @@ test('[loot]', t => {
   t.assert.equal(
     addChestLoot('dungeonChest')({
       id: '<minecraft:stick>',
-      p: 100,
+      p: 1,
       min: 1,
       max: 5
     }),
@@ -26,7 +26,7 @@ test('[loot]', t => {
   );
 
   t.assert.equal(
-    addSeed({ id: '<minecraft:planks>', p: 100 }),
+    addSeed({ id: '<minecraft:planks>', p: 1 }),
     'vanilla.seeds.addSeed(<minecraft:planks>.weight(100));',
     'addSeed'
   );

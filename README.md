@@ -21,21 +21,20 @@ $ npm i zen-flow -D
 
 ## Features
 
- - Easy to use API, written in <b>TypeScript</b>.
- - Supports [MineTweaker](https://minetweaker3.aizistral.com/wiki/Main_Page), [ModTweaker](https://minetweaker3.aizistral.com/wiki/ModTweaker) and [ContentTweaker](https://minetweaker3.aizistral.com/wiki/ContentTweaker).
- - Formatted output
-
-### Supports
-
- - Applied Energistics 2
- - Avaritia
- - Ex Nihilo
- - Extra Utilities
- - Forestry
- - MineFactory Reloaded
- - NEI
- - Thermal Expansion
- - Tinkers' Construct
+ - Easy to use API, written in <b>TypeScript</b>
+ - Extensive documentation
+ - Supports [MineTweaker](https://minetweaker3.aizistral.com/wiki/Main_Page), [ModTweaker](https://minetweaker3.aizistral.com/wiki/ModTweaker) and [ContentTweaker](https://minetweaker3.aizistral.com/wiki/ContentTweaker)
+ - Formatted output (for easy debugging)
+ - Includes mod support for:
+    - Applied Energistics 2
+    - Avaritia
+    - Ex Nihilo
+    - Extra Utilities
+    - Forestry
+    - MineFactory Reloaded
+    - NEI
+    - Thermal Expansion
+    - Tinkers' Construct
 
 ## Example
 
@@ -49,9 +48,12 @@ import { add, remove, hide } from 'zen-flow';
  * 	[null, null, null]
  * ]);
  **/
-add('<minecraft:saddle>', {
-  1: '<minecraft:leather>', 2: '<minecraft:leather>', 3: '<minecraft:leather>',
-  4: '<ore:ingotIron', 5: '<minecraft:string>', 6: '<ore:ingotIron>'
+add({
+  input: {
+    1: '<minecraft:leather>', 2: '<minecraft:leather>', 3: '<minecraft:leather>',
+    4: '<ore:ingotIron', 5: '<minecraft:string>', 6: '<ore:ingotIron>'
+  },
+  output: '<minecraft:saddle>'
 });
 
 /**
@@ -61,7 +63,10 @@ add('<minecraft:saddle>', {
  * 	[null, <minecraft:leather>, null]
  * ]);
  **/
-add('<minecraft:saddle>', { edge: '<minecraft:leather>' });
+add({
+  input: { edge: '<minecraft:leather>' },
+  output: '<minecraft:saddle>'
+});
 
 // Remove & hide Extra Utility generators
 
