@@ -65,7 +65,6 @@ export type RecipeCentrifuge = {
  * 
  * RF cost is equal to `320 * ticks`, assuming `1` energy modifier (Forestry config)
  * 
- * @param recipe.out `float`, e.g. `0.8` is 80% chance
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
 export const addCentrifuge = (recipe: RecipeCentrifuge) => {

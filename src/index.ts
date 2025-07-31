@@ -1,12 +1,13 @@
 export type {
   Stack,
-  Ingredient,
   Bonus,
+  Liquid,
+  Ingredient,
   Cast,
-  TextRich,
-  Text,
   Shaped,
-  Shapeless
+  Shapeless,
+  TextRich,
+  Text
 } from './lib/format.ts';
 
 export { COLOR, STYLE } from './lib/format.ts';
@@ -52,6 +53,7 @@ export {
 
 export type {
   RecipeComposter,
+  RecipeCrucible,
   RecipeHammer,
   RecipeSieve
 } from './recipes/exNihilo.ts';
@@ -68,6 +70,8 @@ export {
   addSieve,
   removeSieve
 } from './recipes/exNihilo.ts';
+
+export type { RecipeQED } from './recipes/extraUtilities.ts';
 
 export {
   addQED,
@@ -116,7 +120,13 @@ export {
   removeSeed
 } from './recipes/loot.ts';
 
-export type { RecipeFurnace } from './recipes/minecraft.ts';
+export type {
+  RecipeShaped,
+  RecipeShapeless,
+  RecipeAdd,
+  RecipeMirror,
+  RecipeFurnace
+} from './recipes/minecraft.ts';
 
 export {
   addShaped,
@@ -174,6 +184,7 @@ export {
   ENCHANTMENT,
   withName,
   withTag,
+  withWeight,
   withEnchantment,
   withTooltip,
   withTooltipShift
@@ -214,6 +225,7 @@ export type {
   RecipeCastingTable,
   RecipeDryingRack,
   RecipeSmelteryFluid,
+  RecipeSmelteryAlloy,
   RecipeSmelteryFuel,
   RecipeRepairMaterial,
   MaterialStats,

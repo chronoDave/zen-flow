@@ -49,7 +49,7 @@ test('[mineFactoryReloaded]', t => {
   );
 
   t.assert.equal(
-    addLaserOre({ id: '<tile.stone>', weight: 1000 }),
+    addLaserOre('<tile.stone>')(1000),
     'mods.mfr.MiningLaser.addOre(<tile.stone>.weight(1000));',
     'addLaserOre'
   );
@@ -61,13 +61,13 @@ test('[mineFactoryReloaded]', t => {
   );
 
   t.assert.equal(
-    addLaserFoci({ id: '<tile.oreIron>', foci: 'orange' }),
+    addLaserFoci('<tile.oreIron>')('orange'),
     'mods.mfr.MiningLaser.addPreferredOre(1, <tile.oreIron>);',
     'addLaserFoci'
   );
 
   t.assert.equal(
-    removeLaserFoci({ id: '<tile.oreIron>', foci: 'orange' }),
+    removeLaserFoci('<tile.oreIron>')('orange'),
     'mods.mfr.MiningLaser.removePreferredOre(1, <tile.oreIron>);',
     'removeLaserFoci'
   );
@@ -97,7 +97,7 @@ test('[mineFactoryReloaded]', t => {
   );
 
   t.assert.equal(
-    addSludgeBoiler({ id: '<TConstruct:CraftedSoil:4>', weight: 10 }),
+    addSludgeBoiler('<TConstruct:CraftedSoil:4>')(10),
     'mods.mfr.SludgeBoiler.addDrop(<TConstruct:CraftedSoil:4>.weight(10));',
     'addSludgeBoiler'
   );

@@ -30,11 +30,12 @@ export const ingredient = (ingredient: Ingredient) => typeof ingredient === 'str
   ingredient :
   stack(ingredient);
 
-export type Cast = { id: string; consume?: boolean };
-export const cast = (cast?: Cast): Array<string | boolean | null> => cast ? [
-  cast.id,
-  !!cast.consume
-] : [null, false];
+export type Cast = string | { id: string; consume: boolean };
+export const cast = (cast?: Cast): [string | null, boolean] => {
+  if (typeof cast === 'string') return [cast, false];
+  if (!cast) return [null, false];
+  return [cast.id, cast.consume];
+};
 
 export type Shaped = Partial<{
   1: string;
