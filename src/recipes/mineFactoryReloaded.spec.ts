@@ -30,17 +30,18 @@ test('[mineFactoryReloaded]', t => {
   );
 
   t.assert.equal(
-    addHarvester('<BiomesOPlenty:leaves3:9>', { type: 'leaf' }),
+    addHarvester({ id: '<BiomesOPlenty:leaves3:9>', type: 'leaf' }),
     'mods.mfr.Harvester.addHarvestable(<BiomesOPlenty:leaves3:9>, "treeLeaf");',
     'addHarvester'
   );
 
   t.assert.equal(
-    addHarvester('<BiomesOPlenty:logs1:*>', {
+    addHarvester({
+      id: '<BiomesOPlenty:logs1:*>',
       type: 'tree',
       bonus: [
         { id: '<minecraft:stick>', n: 4 },
-        { id: '<BiomesOPlenty:woodenDoubleSlab1:1>', chance: 0.25 }
+        { id: '<BiomesOPlenty:woodenDoubleSlab1:1>', p: 0.25 }
       ]
     }),
     'mods.mfr.Harvester.addHarvestable(<BiomesOPlenty:logs1:*>, [<minecraft:stick> * 4, <BiomesOPlenty:woodenDoubleSlab1:1> % 25], "tree");',
@@ -48,7 +49,7 @@ test('[mineFactoryReloaded]', t => {
   );
 
   t.assert.equal(
-    addLaserOre('<tile.stone>', 1000),
+    addLaserOre({ id: '<tile.stone>', weight: 1000 }),
     'mods.mfr.MiningLaser.addOre(<tile.stone>.weight(1000));',
     'addLaserOre'
   );
@@ -60,19 +61,19 @@ test('[mineFactoryReloaded]', t => {
   );
 
   t.assert.equal(
-    addLaserFoci('<tile.oreIron>', 'orange'),
+    addLaserFoci({ id: '<tile.oreIron>', foci: 'orange' }),
     'mods.mfr.MiningLaser.addPreferredOre(1, <tile.oreIron>);',
     'addLaserFoci'
   );
 
   t.assert.equal(
-    removeLaserFoci('<tile.oreIron>', 'orange'),
+    removeLaserFoci({ id: '<tile.oreIron>', foci: 'orange' }),
     'mods.mfr.MiningLaser.removePreferredOre(1, <tile.oreIron>);',
     'removeLaserFoci'
   );
 
   t.assert.equal(
-    addLaser('<tile.stone>', { weight: 1000, foci: 'orange' }),
+    addLaser({ id: '<tile.stone>', weight: 1000, foci: 'orange' }),
     'mods.mfr.MiningLaser.addOre(<tile.stone>.weight(1000));\nmods.mfr.MiningLaser.addPreferredOre(1, <tile.stone>);',
     'addLaser'
   );
@@ -96,7 +97,7 @@ test('[mineFactoryReloaded]', t => {
   );
 
   t.assert.equal(
-    addSludgeBoiler('<TConstruct:CraftedSoil:4>', 10),
+    addSludgeBoiler({ id: '<TConstruct:CraftedSoil:4>', weight: 10 }),
     'mods.mfr.SludgeBoiler.addDrop(<TConstruct:CraftedSoil:4>.weight(10));',
     'addSludgeBoiler'
   );

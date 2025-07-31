@@ -32,6 +32,7 @@ export const HARVESTER_TYPE = {
 
 export type RecipeHarvester = {
   type: keyof typeof HARVESTER_TYPE;
+  id: string;
   bonus?: Array<string | Stack | Bonus>;
 };
 
@@ -47,9 +48,9 @@ export type RecipeHarvester = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
-export const addHarvester = (id: string, recipe: RecipeHarvester) => {
+export const addHarvester = (recipe: RecipeHarvester) => {
   const out = format.recipe(
-    id,
+    recipe.id,
     recipe.bonus && format.array(3)(recipe.bonus.map(x => {
       if (typeof x === 'string') return x;
       if ('n' in x) return format.stack(x);
@@ -59,6 +60,11 @@ export const addHarvester = (id: string, recipe: RecipeHarvester) => {
   );
 
   return `mods.mfr.Harvester.addHarvestable(${out});`;
+};
+
+export type RecipeLaserOre = {
+  id: string;
+  weight: number;
 };
 
 /**
@@ -85,8 +91,8 @@ export const addHarvester = (id: string, recipe: RecipeHarvester) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
-export const addLaserOre = (id: string, weight: number) => {
-  const out = format.recipe(format.weight(weight)(id));
+export const addLaserOre = (recipe: RecipeLaserOre) => {
+  const out = format.recipe(format.weight(recipe.weight)(recipe.id));
 
   return `mods.mfr.MiningLaser.addOre(${out});`;
 };
@@ -120,6 +126,11 @@ export const FOCI = {
   black: 15
 } as const;
 
+export type RecipeLaserFoci = {
+  id: string;
+  foci: keyof typeof FOCI;
+};
+
 /**
  * Add item to [Laser Drill](https://ftb.fandom.com/wiki/Laser_Drill_(MineFactory_Reloaded)) Foci
  * 
@@ -144,8 +155,8 @@ export const FOCI = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
-export const addLaserFoci = (id: string, foci: keyof typeof FOCI) =>
-  `mods.mfr.MiningLaser.addPreferredOre(${format.recipe(FOCI[foci], id)});`;
+export const addLaserFoci = (recipe: RecipeLaserFoci) =>
+  `mods.mfr.MiningLaser.addPreferredOre(${format.recipe(FOCI[recipe.foci], recipe.id)});`;
 
 /**
  * Remove item from [Laser Drill](https://ftb.fandom.com/wiki/Laser_Drill_(MineFactory_Reloaded)) Foci
@@ -154,10 +165,11 @@ export const addLaserFoci = (id: string, foci: keyof typeof FOCI) =>
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
-export const removeLaserFoci = (id: string, foci: keyof typeof FOCI) =>
-  `mods.mfr.MiningLaser.removePreferredOre(${format.recipe(FOCI[foci], id)});`;
+export const removeLaserFoci = (recipe: RecipeLaserFoci) =>
+  `mods.mfr.MiningLaser.removePreferredOre(${format.recipe(FOCI[recipe.foci], recipe.id)});`;
 
 export type RecipeLaser = {
+  id: string;
   foci: keyof typeof FOCI;
   weight: number;
 };
@@ -186,9 +198,9 @@ export type RecipeLaser = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
-export const addLaser = (id: string, recipe: RecipeLaser) => [
-  addLaserOre(id, recipe.weight),
-  addLaserFoci(id, recipe.foci)
+export const addLaser = (recipe: RecipeLaser) => [
+  addLaserOre(recipe),
+  addLaserFoci(recipe)
 ].join('\n');
 
 /**
@@ -219,6 +231,11 @@ export const addBiomeRubberTree = (id: string) =>
 export const removeBiomeRubberTree = (id: string) =>
   `mods.mfr.RubberTree.removeBiome(${format.recipe(format.literal(id))});`;
 
+export type RecipeSludgeBoiler = {
+  id: string;
+  weight: number;
+};
+
 /**
  * Add item to [Sludge Boiler](https://ftb.fandom.com/wiki/Sludge_Boiler)
  * 
@@ -239,8 +256,8 @@ export const removeBiomeRubberTree = (id: string) =>
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
-export const addSludgeBoiler = (id: string, weight: number) => {
-  const out = format.recipe(format.weight(weight)(id));
+export const addSludgeBoiler = (recipe: RecipeSludgeBoiler) => {
+  const out = format.recipe(format.weight(recipe.weight)(recipe.id));
 
   return `mods.mfr.SludgeBoiler.addDrop(${out});`;
 };
