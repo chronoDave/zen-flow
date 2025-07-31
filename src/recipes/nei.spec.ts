@@ -20,7 +20,7 @@ test('[nei]', t => {
   );
 
   t.assert.equal(
-    rename('<minecraft:stick>', 'Sticky'),
+    rename({ id: '<minecraft:stick>', name: 'Sticky' }),
     'mods.nei.NEI.overrideName(<minecraft:stick>, "Sticky");',
     'rename'
   );
