@@ -37,9 +37,8 @@
     "build": "rollup -c",
     "docs": "typedoc src/index.ts",
     "test": "node --experimental-strip-types --test src/**/*.spec.ts --test-reporter=tap",
-    "preversion": "npm run lint:types && npm run lint && npm run test",
-    "postversion": "npm run docs && git add -A && git commit -m \"Updated docs\"",
-    "prepublishOnly": "npm run build"
+    "preversion": "npm run lint:types && npm run lint && npm run test && npm run build",
+    "postversion": "npm run docs && git add -A && git commit -m \"Updated docs\" && npm publish"
   },
   "devDependencies": {
     "@chronocide/eslint-config": "github:chronoDave/eslint-config",
