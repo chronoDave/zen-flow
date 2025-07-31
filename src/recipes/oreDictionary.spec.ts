@@ -21,13 +21,13 @@ test('[oreDictionary]', t => {
   );
 
   t.assert.equal(
-    joinOreDict('<ore:dustSalt>', '<ore:foodSalt>'),
+    joinOreDict('<ore:dustSalt>')('<ore:foodSalt>'),
     '<ore:dustSalt>.addAll(<ore:foodSalt>);',
     'joinOreDict'
   );
 
   t.assert.equal(
-    mirrorOreDict('<ore:foodSalt>', '<ore:dustSalt>'),
+    mirrorOreDict('<ore:foodSalt>')('<ore:dustSalt>'),
     '<ore:foodSalt>.mirror(<ore:dustSalt>);',
     'mirrorOreDict'
   );
