@@ -12,7 +12,7 @@ export const withTag = (tag: Record<string, unknown>) =>
     return `${id}.withTag(${util.inspect(tag).replace(/(:\s?)'([^']+)'/gm, '$1"$2"')})`;
   };
 
-export const ENCHANTMENTS = {
+export const ENCHANTMENT = {
   protection: 0,
   fireProtection: 1,
   featherFalling: 2,
@@ -38,15 +38,24 @@ export const ENCHANTMENTS = {
 } as const;
 
 export type Enchantment = {
-  id: number;
+  id: keyof typeof ENCHANTMENT | number;
   lvl: number;
 };
 
 export const withEnchantment = (...enchantments: Enchantment[]) =>
-  withTag({ ench: enchantments });
+  withTag({
+    ench: enchantments.map(enchantment => ({
+      id: typeof enchantment.id === 'number' ?
+        enchantment.id :
+        ENCHANTMENT[enchantment.id],
+      lvl: enchantment.lvl
+    }))
+  });
 
-export const withTooltip = (...tooltip: Text[]) => (id: string) =>
-  `${id}.addTooltip(${format.tooltip(...tooltip)});`;
+export const withTooltip = (...tooltip: Text[]) =>
+  (id: string) =>
+    `${id}.addTooltip(${format.tooltip(...tooltip)});`;
 
-export const withTooltipShift = (...tooltip: Text[]) => (id: string) =>
-  `${id}.addShiftTooltip(${format.tooltip(...tooltip)});`;
+export const withTooltipShift = (...tooltip: Text[]) =>
+  (id: string) =>
+    `${id}.addShiftTooltip(${format.tooltip(...tooltip)});`;

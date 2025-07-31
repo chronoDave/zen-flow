@@ -34,6 +34,12 @@ test('[tag]', t => {
   );
 
   t.assert.equal(
+    withEnchantment({ id: 'featherFalling', lvl: 4 }, { id: 'silkTouch', lvl: 2 })('<minecraft:stick>'),
+    '<minecraft:stick>.withTag({ ench: [ { id: 2, lvl: 4 }, { id: 33, lvl: 2 } ] })',
+    'withEnchantment'
+  );
+
+  t.assert.equal(
     withTooltip({ text: 'Shift + Right click', style: 'italic', color: 'aqua' }, ' on an upgraded barrel to remove upgrades')('<JABBA:hammer>'),
     '<JABBA:hammer>.addTooltip(format.aqua(format.italic("Shift + Right click")) + " on an upgraded barrel to remove upgrades");',
     'withTooltip'
