@@ -55,7 +55,6 @@ export type Shaped = Partial<{
   center: string;
 }>;
 export type Shapeless = string[];
-export type Recipe = Shaped | Shapeless;
 
 export const shaped = (recipe: Shaped) => {
   const f = (...arr: Array<string | undefined>): string | null => {

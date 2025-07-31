@@ -1,21 +1,22 @@
-import type {
-  Ingredient,
-  Recipe,
-  Shaped,
-  Shapeless
-} from '../lib/format.ts';
+import type { Ingredient, Shaped, Shapeless } from '../lib/format.ts';
 
+import { maybe } from '../lib/fn.ts';
 import * as format from '../lib/format.ts';
+
+export type RecipeShaped = {
+  input: Shaped;
+  output: Ingredient;
+};
 
 /**
  * Add shaped crafting recipe
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
-export const addShaped = (item: Ingredient, recipe: Shaped) => {
+export const addShaped = (recipe: RecipeShaped) => {
   const out = format.recipe(
-    format.ingredient(item),
-    format.shaped(recipe)
+    format.ingredient(recipe.output),
+    format.shaped(recipe.input)
   );
 
   return `recipes.addShaped(${out});`;
@@ -26,13 +27,18 @@ export const addShaped = (item: Ingredient, recipe: Shaped) => {
 * 
 * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
 */
-export const removeShaped = (id: string, recipe?: Shaped) => {
+export const removeShaped = (output: string, input?: Shaped) => {
   const out = format.recipe(
-    id,
-    recipe && format.shaped(recipe)
+    output,
+    maybe(format.shaped)(input)
   );
 
   return `recipes.removeShaped(${out});`;
+};
+
+export type RecipeShapeless = {
+  input: Shapeless;
+  output: Ingredient;
 };
 
 /**
@@ -40,10 +46,10 @@ export const removeShaped = (id: string, recipe?: Shaped) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
-export const addShapeless = (item: Ingredient, recipe: Shapeless) => {
+export const addShapeless = (recipe: RecipeShapeless) => {
   const out = format.recipe(
-    format.ingredient(item),
-    format.array(3)(recipe)
+    format.ingredient(recipe.output),
+    format.array(3)(recipe.input)
   );
 
   return `recipes.addShapeless(${out});`;
@@ -54,13 +60,18 @@ export const addShapeless = (item: Ingredient, recipe: Shapeless) => {
 * 
 * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
 */
-export const removeShapeless = (id: string, recipe?: Shapeless) => {
+export const removeShapeless = (output: string, input?: Shapeless) => {
   const out = format.recipe(
-    id,
-    recipe && format.array(3)(recipe)
+    output,
+    maybe(format.array(3))(input)
   );
 
   return `recipes.removeShapeless(${out});`;
+};
+
+export type RecipeAdd = {
+  input: Shaped | Shapeless;
+  output: Ingredient;
 };
 
 /**
@@ -71,9 +82,9 @@ export const removeShapeless = (id: string, recipe?: Shapeless) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
-export const add = (item: Ingredient, recipe: Recipe) => {
-  if (Array.isArray(recipe)) return addShapeless(item, recipe);
-  return addShaped(item, recipe);
+export const add = (recipe: RecipeAdd) => {
+  if (Array.isArray(recipe.input)) return addShapeless(recipe as RecipeShapeless);
+  return addShaped(recipe as RecipeShaped);
 };
 
 /**
@@ -81,18 +92,23 @@ export const add = (item: Ingredient, recipe: Recipe) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
-export const remove = (id: string) =>
-  `recipes.remove(${id});`;
+export const remove = (output: string) =>
+  `recipes.remove(${output});`;
+
+export type RecipeMirror = {
+  input: Shaped;
+  output: Ingredient;
+};
 
 /**
  * Add shaped crafing recipe with mirror
  * 
  * @see @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
-export const addMirror = (item: Ingredient, recipe: Shaped) => {
+export const addMirror = (recipe: RecipeMirror) => {
   const out = format.recipe(
-    format.ingredient(item),
-    format.shaped(recipe)
+    format.ingredient(recipe.output),
+    format.shaped(recipe.input)
   );
 
   return `recipes.addShapedMirrored(${out});`;
@@ -100,6 +116,7 @@ export const addMirror = (item: Ingredient, recipe: Shaped) => {
 
 export type RecipeFurnace = {
   input: string;
+  output: string;
   xp?: number;
 };
 
@@ -116,8 +133,8 @@ export type RecipeFurnace = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
-export const addFurnace = (id: string, recipe: RecipeFurnace) =>
-  `furnace.addRecipe(${format.recipe(id, recipe.input, recipe.xp)});`;
+export const addFurnace = (recipe: RecipeFurnace) =>
+  `furnace.addRecipe(${format.recipe(recipe.output, recipe.input, recipe.xp)});`;
 
 /**
  * Remove furnace recipe
@@ -127,9 +144,9 @@ export const addFurnace = (id: string, recipe: RecipeFurnace) =>
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
-export const removeFurnace = (id: string, recipe?: string) => {
-  if (typeof recipe === 'string') return `furnace.remove(${format.recipe(id, recipe)});`;
-  return `furnace.remove(${format.recipe(id)});`;
+export const removeFurnace = (output: string, input?: string) => {
+  if (typeof input === 'string') return `furnace.remove(${format.recipe(output, input)});`;
+  return `furnace.remove(${format.recipe(output)});`;
 };
 
 /**
@@ -142,13 +159,13 @@ export const removeFurnace = (id: string, recipe?: string) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
-export const addFurnaceFuel = (id: string, n: number) =>
-  `furnace.setFuel(${format.recipe(id, n)});`;
+export const addFurnaceFuel = (fuel: string, n: number) =>
+  `furnace.setFuel(${format.recipe(fuel, n)});`;
 
 /**
  * Remove furnace fuel, with the exception of vanilla fuels
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
-export const removeFurnaceFuel = (id: string) =>
-  addFurnaceFuel(id, 0);
+export const removeFurnaceFuel = (fuel: string) =>
+  addFurnaceFuel(fuel, 0);
