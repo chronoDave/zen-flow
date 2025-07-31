@@ -1,5 +1,3 @@
-import * as is from './is.ts';
-
 export const float = (n: number) => `${n}F`;
 export const short = (n: number) => `${n} as short`;
 export const literal = (x: string) => `"${x}"`;
@@ -28,9 +26,9 @@ export const liquid = (liquid: Liquid) => {
 };
 
 export type Ingredient = string | Stack;
-export const ingredient = (ingredient: Ingredient) => is.object(ingredient) ?
-  stack(ingredient) :
-  ingredient;
+export const ingredient = (ingredient: Ingredient) => typeof ingredient === 'string' ?
+  ingredient :
+  stack(ingredient);
 
 export type Cast = { id: string; consume?: boolean };
 export const cast = (cast?: Cast): Array<string | boolean | null> => cast ? [
