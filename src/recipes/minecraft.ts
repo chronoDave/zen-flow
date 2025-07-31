@@ -3,24 +3,20 @@ import type { Ingredient, Shaped, Shapeless } from '../lib/format.ts';
 import { maybe } from '../lib/fn.ts';
 import * as format from '../lib/format.ts';
 
-export type RecipeShaped = {
-  input: Shaped;
-  output: Ingredient;
-};
-
 /**
  * Add shaped crafting recipe
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
-export const addShaped = (recipe: RecipeShaped) => {
-  const out = format.recipe(
-    format.ingredient(recipe.output),
-    format.shaped(recipe.input)
-  );
+export const addShaped = (output: Ingredient) =>
+  (input: Shaped) => {
+    const out = format.recipe(
+      format.ingredient(output),
+      format.shaped(input)
+    );
 
-  return `recipes.addShaped(${out});`;
-};
+    return `recipes.addShaped(${out});`;
+  };
 
 /**
 * Remove shaped crafting recipe
@@ -36,24 +32,20 @@ export const removeShaped = (output: string, input?: Shaped) => {
   return `recipes.removeShaped(${out});`;
 };
 
-export type RecipeShapeless = {
-  input: Shapeless;
-  output: Ingredient;
-};
-
 /**
  * Add shapeless crafting recipe
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
-export const addShapeless = (recipe: RecipeShapeless) => {
-  const out = format.recipe(
-    format.ingredient(recipe.output),
-    format.array(3)(recipe.input)
-  );
+export const addShapeless = (output: Ingredient) =>
+  (input: Shapeless) => {
+    const out = format.recipe(
+      format.ingredient(output),
+      format.array(3)(input)
+    );
 
-  return `recipes.addShapeless(${out});`;
-};
+    return `recipes.addShapeless(${out});`;
+  };
 
 /**
 * Remove shapeless crafting recipe
@@ -69,23 +61,19 @@ export const removeShapeless = (output: string, input?: Shapeless) => {
   return `recipes.removeShapeless(${out});`;
 };
 
-export type RecipeAdd = {
-  input: Shaped | Shapeless;
-  output: Ingredient;
-};
-
 /**
  * Add crafting recipe
  *
- * - Recipe: `{}` => Shaped recipe
- * - Recipe: `[]` => Shapeless recipe
+ * - Input: `{}` => Shaped recipe
+ * - Input: `[]` => Shapeless recipe
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
-export const add = (recipe: RecipeAdd) => {
-  if (Array.isArray(recipe.input)) return addShapeless(recipe as RecipeShapeless);
-  return addShaped(recipe as RecipeShaped);
-};
+export const add = (output: Ingredient) =>
+  (input: Shaped | Shapeless) => {
+    if (Array.isArray(input)) return addShapeless(output)(input);
+    return addShaped(output)(input);
+  };
 
 /**
  * Remove all crafting recipes (shaped & shapeless)
@@ -95,24 +83,20 @@ export const add = (recipe: RecipeAdd) => {
 export const remove = (output: string) =>
   `recipes.remove(${output});`;
 
-export type RecipeMirror = {
-  input: Shaped;
-  output: Ingredient;
-};
-
 /**
  * Add shaped crafing recipe with mirror
  * 
  * @see @see https://minetweaker3.aizistral.com/wiki/Tutorial:Basic_Recipes
  */
-export const addMirror = (recipe: RecipeMirror) => {
-  const out = format.recipe(
-    format.ingredient(recipe.output),
-    format.shaped(recipe.input)
-  );
+export const addMirror = (output: Ingredient) =>
+  (input: Shaped) => {
+    const out = format.recipe(
+      format.ingredient(output),
+      format.shaped(input)
+    );
 
-  return `recipes.addShapedMirrored(${out});`;
-};
+    return `recipes.addShapedMirrored(${out});`;
+  };
 
 export type RecipeFurnace = {
   input: string;

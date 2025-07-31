@@ -16,13 +16,10 @@ import {
 
 test('[minecraft.addShaped]', t => {
   t.assert.equal(
-    addShaped({
-      input: {
-        1: '<minecraft:iron_ingot>', 2: '<minecraft:iron_ingot>', 3: '<minecraft:iron_ingot>',
-        4: '<minecraft:iron_ingot>', 6: '<minecraft:iron_ingot>',
-        7: '<minecraft:iron_ingot>', 9: '<minecraft:iron_ingot>'
-      },
-      output: '<minecraft:iron_leggings>'
+    addShaped('<minecraft:iron_leggings>')({
+      1: '<minecraft:iron_ingot>', 2: '<minecraft:iron_ingot>', 3: '<minecraft:iron_ingot>',
+      4: '<minecraft:iron_ingot>', 6: '<minecraft:iron_ingot>',
+      7: '<minecraft:iron_ingot>', 9: '<minecraft:iron_ingot>'
     }),
     'recipes.addShaped(<minecraft:iron_leggings>, [\n\t[<minecraft:iron_ingot>, <minecraft:iron_ingot>, <minecraft:iron_ingot>],\n\t[<minecraft:iron_ingot>, null, <minecraft:iron_ingot>],\n\t[<minecraft:iron_ingot>, null, <minecraft:iron_ingot>]\n]);'
   );
@@ -44,10 +41,7 @@ test('[minecraft.removeShaped]', t => {
 
 test('[minecraft.addShapeless]', t => {
   t.assert.equal(
-    addShapeless({
-      input: ['<ore:plankWood>', '<ore:plankWood>'],
-      output: { id: '<minecraft:stick>', n: 4 }
-    }),
+    addShapeless({ id: '<minecraft:stick>', n: 4 })(['<ore:plankWood>', '<ore:plankWood>']),
     'recipes.addShapeless(<minecraft:stick> * 4, [<ore:plankWood>, <ore:plankWood>]);',
     'addShapeless'
   );
@@ -68,23 +62,17 @@ test('[minecraft.removeShapeless]', t => {
 
 test('[minecraft.add]', t => {
   t.assert.equal(
-    add({
-      input: {
-        1: '<minecraft:iron_ingot>', 2: '<minecraft:iron_ingot>', 3: '<minecraft:iron_ingot>',
-        4: '<minecraft:iron_ingot>', 6: '<minecraft:iron_ingot>',
-        7: '<minecraft:iron_ingot>', 9: '<minecraft:iron_ingot>'
-      },
-      output: '<minecraft:iron_leggings>'
+    add('<minecraft:iron_leggings>')({
+      1: '<minecraft:iron_ingot>', 2: '<minecraft:iron_ingot>', 3: '<minecraft:iron_ingot>',
+      4: '<minecraft:iron_ingot>', 6: '<minecraft:iron_ingot>',
+      7: '<minecraft:iron_ingot>', 9: '<minecraft:iron_ingot>'
     }),
     'recipes.addShaped(<minecraft:iron_leggings>, [\n\t[<minecraft:iron_ingot>, <minecraft:iron_ingot>, <minecraft:iron_ingot>],\n\t[<minecraft:iron_ingot>, null, <minecraft:iron_ingot>],\n\t[<minecraft:iron_ingot>, null, <minecraft:iron_ingot>]\n]);',
     'shaped'
   );
 
   t.assert.equal(
-    add({
-      input: ['<ore:plankWood>', '<ore:plankWood>'],
-      output: { id: '<minecraft:stick>', n: 4 }
-    }),
+    add({ id: '<minecraft:stick>', n: 4 })(['<ore:plankWood>', '<ore:plankWood>']),
     'recipes.addShapeless(<minecraft:stick> * 4, [<ore:plankWood>, <ore:plankWood>]);',
     'shapeless'
   );
@@ -99,9 +87,9 @@ test('[minecraft.remove]', t => {
 
 test('[minecraft.addMirror]', t => {
   t.assert.equal(
-    addMirror({
-      input: { 1: '<minecraft:planks:*>', 5: '<minecraft:planks:*>' },
-      output: { id: '<minecraft:stick>', n: 4 }
+    addMirror({ id: '<minecraft:stick>', n: 4 })({
+      1: '<minecraft:planks:*>',
+      5: '<minecraft:planks:*>'
     }),
     'recipes.addShapedMirrored(<minecraft:stick> * 4, [[<minecraft:planks:*>, null], [null, <minecraft:planks:*>]]);'
   );

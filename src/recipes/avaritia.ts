@@ -28,32 +28,30 @@ export const addCompressor = (recipe: RecipeCompressor) => {
 export const removeCompressor = (id: string) =>
   `mods.avaritia.Compressor.remove(${id});`;
 
-export type RecipeExtreme = {
-  input: [
-    Partial<[string, string, string, string, string, string, string, string, string]>,
-    Partial<[string, string, string, string, string, string, string, string, string]>,
-    Partial<[string, string, string, string, string, string, string, string, string]>,
-    Partial<[string, string, string, string, string, string, string, string, string]>,
-    Partial<[string, string, string, string, string, string, string, string, string]>,
-    Partial<[string, string, string, string, string, string, string, string, string]>,
-    Partial<[string, string, string, string, string, string, string, string, string]>,
-    Partial<[string, string, string, string, string, string, string, string, string]>,
-    Partial<[string, string, string, string, string, string, string, string, string]>
-  ];
-  output: Ingredient;
-};
+export type ShapedExtreme = [
+  Partial<[string, string, string, string, string, string, string, string, string]>,
+  Partial<[string, string, string, string, string, string, string, string, string]>,
+  Partial<[string, string, string, string, string, string, string, string, string]>,
+  Partial<[string, string, string, string, string, string, string, string, string]>,
+  Partial<[string, string, string, string, string, string, string, string, string]>,
+  Partial<[string, string, string, string, string, string, string, string, string]>,
+  Partial<[string, string, string, string, string, string, string, string, string]>,
+  Partial<[string, string, string, string, string, string, string, string, string]>,
+  Partial<[string, string, string, string, string, string, string, string, string]>
+];
 
 /**
  * Add shaped [Extreme Crafting Table](https://ftb.fandom.com/wiki/Extreme_Crafting_Table) recipe
  */
-export const addExtreme = (recipe: RecipeExtreme) => {
-  const out = format.recipe(
-    format.ingredient(recipe.output),
-    recipe.input.map(row => format.array(9)(row.map(format.id)))
-  );
+export const addExtreme = (output: Ingredient) =>
+  (input: ShapedExtreme) => {
+    const out = format.recipe(
+      format.ingredient(output),
+      input.map(row => format.array(9)(row.map(format.id)))
+    );
 
-  return `mods.avaritia.ExtremeCrafting.addShaped(${out});`;
-};
+    return `mods.avaritia.ExtremeCrafting.addShaped(${out});`;
+  };
 
 /**
  * Remove [Extreme Crafting Table](https://ftb.fandom.com/wiki/Extreme_Crafting_Table) recipe

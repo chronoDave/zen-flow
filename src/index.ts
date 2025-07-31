@@ -27,7 +27,7 @@ export {
 
 export type {
   RecipeCompressor,
-  RecipeExtreme
+  ShapedExtreme
 } from './recipes/avaritia.ts';
 
 export {
@@ -121,10 +121,6 @@ export {
 } from './recipes/loot.ts';
 
 export type {
-  RecipeShaped,
-  RecipeShapeless,
-  RecipeAdd,
-  RecipeMirror,
   RecipeFurnace
 } from './recipes/minecraft.ts';
 
