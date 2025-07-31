@@ -15,7 +15,10 @@ import {
 
 test('[exNihilo]', t => {
   t.assert.equal(
-    addComposter({ input: { id: '<minecraft:hay_block>', n: 0.72 }, color: 'E3E162' }),
+    addComposter({
+      input: { id: '<minecraft:hay_block>', n: 0.72 },
+      color: 'E3E162'
+    }),
     'mods.exnihilo.Composting.addRecipe(<minecraft:hay_block>, 0.72, "E3E162");',
     'addComposter'
   );
@@ -27,7 +30,10 @@ test('[exNihilo]', t => {
   );
 
   t.assert.equal(
-    addCrucible({ input: '<minecraft:packed_ice>', output: { id: '<liquid:water>', mb: 1000 } }),
+    addCrucible({
+      input: '<minecraft:packed_ice>',
+      output: { id: '<liquid:water>', mb: 1000 }
+    }),
     'mods.exnihilo.Crucible.addRecipe(<minecraft:packed_ice>, <liquid:water> * 1000);',
     'addCrucible'
   );

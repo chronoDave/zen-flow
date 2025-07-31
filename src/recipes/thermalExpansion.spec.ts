@@ -21,7 +21,11 @@ import {
 
 test('[thermalExpanion]', t => {
   t.assert.equal(
-    addMagmaCrucible({ input: '<minecraft:dragon_egg>', output: { id: '<liquid:ender>', n: 8000 }, rf: 500000 }),
+    addMagmaCrucible({
+      input: '<minecraft:dragon_egg>',
+      output: { id: '<liquid:ender>', n: 8000 },
+      rf: 500000
+    }),
     'mods.thermalexpansion.Crucible.addRecipe(500000, <minecraft:dragon_egg>, <liquid:ender> * 8000);',
     'addMagmaCrucible'
   );
@@ -33,7 +37,11 @@ test('[thermalExpanion]', t => {
   );
 
   t.assert.equal(
-    addRedstoneFurnace({ input: '<minecraft:obsidian>', output: '<minecraft:netherrack>', rf: 16000 }),
+    addRedstoneFurnace({
+      input: '<minecraft:obsidian>',
+      output: '<minecraft:netherrack>',
+      rf: 16000
+    }),
     'mods.thermalexpansion.Furnace.addRecipe(16000, <minecraft:obsidian>, <minecraft:netherrack>);',
     'addRedstoneFurnace'
   );
@@ -111,7 +119,7 @@ test('[thermalExpanion]', t => {
       bonus: { id: '<ThermalExpansion:material:514>', p: 0.25 },
       rf: 800
     }),
-    'mods.thermalexpansion.Smelter.addRecipe(\n\t800,\n\t<minecraft:sand>,\n\t<minecraft:dye:1>,\n\t<minecraft:stained_glass:14>,\n\t<ThermalExpansion:material:514>,\n\t25\n);',
+    'mods.thermalexpansion.Smelter.addRecipe(\n\t800,\n\t<minecraft:dye:1>,\n\t<minecraft:sand>,\n\t<minecraft:stained_glass:14>,\n\t<ThermalExpansion:material:514>,\n\t25\n);',
     'addInductionSmelter'
   );
 
@@ -136,7 +144,10 @@ test('[thermalExpanion]', t => {
   );
 
   t.assert.equal(
-    removeTransposerFill({ input: '<minecraft:glass_bottle>', liquid: '<liquid:water>' }),
+    removeTransposerFill({
+      input: '<minecraft:glass_bottle>',
+      liquid: '<liquid:water>'
+    }),
     'mods.thermalexpansion.Transposer.removeFillRecipe(<minecraft:glass_bottle>, <liquid:water>);',
     'removeTransposerFill'
   );
@@ -145,8 +156,8 @@ test('[thermalExpanion]', t => {
     addTransposerExtract({
       rf: 2000,
       input: '<minecraft:leaves>',
-      output: { id: '<minecraft:stick>', p: 1 },
-      liquid: { id: '<liquid:water>', mb: 50 }
+      output: { id: '<liquid:water>', mb: 50 },
+      bonus: { id: '<minecraft:stick>', p: 1 }
     }),
     'mods.thermalexpansion.Transposer.addExtractRecipe(\n\t2000,\n\t<minecraft:leaves>,\n\t<liquid:water> * 50,\n\t<minecraft:stick>,\n\t100\n);',
     'addTransposerExtract'

@@ -21,15 +21,11 @@ export const hide = (id: string) =>
 export const show = (id: string) =>
   `mods.nei.NEI.addEntry(${id});`;
 
-export type RecipeRename = {
-  id: string;
-  name: string;
-};
-
 /**
  * Rename item in NEI
  *
  * @see https://minetweaker3.aizistral.com/wiki/Mods:NEI_Support
  */
-export const rename = (recipe: RecipeRename) =>
-  `mods.nei.NEI.overrideName(${format.recipe(recipe.id, format.literal(recipe.name))});`;
+export const rename = (id: string) =>
+  (name: string) =>
+    `mods.nei.NEI.overrideName(${format.recipe(id, format.literal(name))});`;

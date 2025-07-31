@@ -47,8 +47,8 @@ export const addCarpenter = (recipe: RecipeCarpenter) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const removeCarpenter = (recipe: { output: string; liquid?: string }) =>
-  `mods.forestry.Carpenter.removeRecipe(${format.recipe(recipe.output, recipe.liquid)});`;
+export const removeCarpenter = (output: string, liquid?: string) =>
+  `mods.forestry.Carpenter.removeRecipe(${format.recipe(output, liquid)});`;
 
 export type RecipeCentrifuge = {
   input: string;
@@ -106,7 +106,7 @@ export const addFermenter = (recipe: RecipeFermenter) => {
     recipe.output.id,
     recipe.catalyst,
     recipe.input.id,
-    recipe.output.mb,
+    recipe.input.mb,
     recipe.output.mb / recipe.input.mb
   );
 
@@ -122,7 +122,7 @@ export const removeFermenter = (input: string) =>
   `mods.forestry.Fermenter.removeRecipe(${input});`;
 
 export type RecipeFermenterFuel = {
-  input: string;
+  id: string;
   cycles: number;
   burn: number;
 };
@@ -134,7 +134,7 @@ export type RecipeFermenterFuel = {
  */
 export const addFermenterFuel = (recipe: RecipeFermenterFuel) => {
   const out = format.recipe(
-    recipe.input,
+    recipe.id,
     recipe.cycles,
     recipe.burn
   );
@@ -224,8 +224,8 @@ export const addSqueezer = (recipe: RecipeSqueezer) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const removeSqueezer = (recipe: { output: string; input?: string[] }) =>
-  `mods.forestry.Squeezer.removeRecipe(${format.recipe(recipe.output, recipe.input)});`;
+export const removeSqueezer = (output: string, input?: string[]) =>
+  `mods.forestry.Squeezer.removeRecipe(${format.recipe(output, input)});`;
 
 export type RecipeStill = {
   input: Liquid;
@@ -261,8 +261,8 @@ export const addStill = (recipe: RecipeStill) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Forestry_Support
  */
-export const removeStill = (recipe: { output: string; input?: string }) =>
-  `mods.forestry.Still.removeRecipe(${format.recipe(recipe.output, recipe.input)});`;
+export const removeStill = (output: string, input?: string) =>
+  `mods.forestry.Still.removeRecipe(${format.recipe(output, input)});`;
 
 export type RecipeFabricator = {
   input: Shaped;
@@ -301,8 +301,8 @@ export const removeFabricator = (output: string) =>
   `mods.forestry.ThermionicFabricator.removeCast(${output});`;
 
 export type RecipeFabricatorGlass = {
-  output: number;
-  input: string;
+  mb: number;
+  id: string;
   temperature: number;
 };
 
@@ -318,8 +318,8 @@ export type RecipeFabricatorGlass = {
  */
 export const addFabricatorGlass = (recipe: RecipeFabricatorGlass) => {
   const out = format.recipe(
-    recipe.output,
-    recipe.input,
+    recipe.mb,
+    recipe.id,
     recipe.temperature
   );
 

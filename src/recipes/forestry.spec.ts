@@ -39,7 +39,7 @@ test('[forestry]', t => {
   );
 
   t.assert.equal(
-    removeCarpenter({ output: '<Forestry:impregnatedCasing>', liquid: '<liquid:seedoil>' }),
+    removeCarpenter('<Forestry:impregnatedCasing>', '<liquid:seedoil>'),
     'mods.forestry.Carpenter.removeRecipe(<Forestry:impregnatedCasing>, <liquid:seedoil>);',
     'removeCarpenter'
   );
@@ -81,7 +81,7 @@ test('[forestry]', t => {
   );
 
   t.assert.equal(
-    addFermenterFuel({ input: '<minecraft:dirt:2>', cycles: 1000, burn: 1000 }),
+    addFermenterFuel({ id: '<minecraft:dirt:2>', cycles: 1000, burn: 1000 }),
     'mods.forestry.Fermenter.addFuel(<minecraft:dirt:2>, 1000, 1000);',
     'addFermenterFuel'
   );
@@ -120,7 +120,7 @@ test('[forestry]', t => {
   );
 
   t.assert.equal(
-    removeSqueezer({ output: '<liquid:water>', input: ['<Forestry:canWater>'] }),
+    removeSqueezer('<liquid:water>', ['<Forestry:canWater>']),
     'mods.forestry.Squeezer.removeRecipe(<liquid:water>, [<Forestry:canWater>]);',
     'removeSqueezer'
   );
@@ -136,7 +136,7 @@ test('[forestry]', t => {
   );
 
   t.assert.equal(
-    removeStill({ output: '<liquid:bioethanol>', input: '<liquid:biomass>' }),
+    removeStill('<liquid:bioethanol>', '<liquid:biomass>'),
     'mods.forestry.Still.removeRecipe(<liquid:bioethanol>, <liquid:biomass>);',
     'removeStill'
   );
@@ -162,7 +162,7 @@ test('[forestry]', t => {
   );
 
   t.assert.equal(
-    addFabricatorGlass({ input: '<minecraft:stained_glass_pane>', output: 375, temperature: 1000 }),
+    addFabricatorGlass({ id: '<minecraft:stained_glass_pane>', mb: 375, temperature: 1000 }),
     'mods.forestry.ThermionicFabricator.addSmelting(375, <minecraft:stained_glass_pane>, 1000);',
     'addFabricatorGlass'
   );

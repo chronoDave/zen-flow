@@ -186,7 +186,7 @@ export const removeSmelteryFluid = (input: string) =>
 
 export type RecipeSmelteryAlloy = {
   input: Liquid[];
-  output: Liquid;
+  output: string | Liquid;
 };
 
 /**
@@ -197,8 +197,12 @@ export type RecipeSmelteryAlloy = {
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
 export const addSmelteryAlloy = (recipe: RecipeSmelteryAlloy) => {
+  const output = typeof recipe.output === 'string' ?
+    { id: recipe.output, mb: recipe.input.reduce((acc, cur) => acc + cur.mb, 0) } :
+    recipe.output;
+
   const out = format.recipe(
-    format.liquid(recipe.output),
+    format.liquid(output),
     recipe.input.map(format.liquid)
   );
 
@@ -214,7 +218,6 @@ export const removeSmelteryAlloy = (output: string) =>
   `mods.tconstruct.Smeltery.removeAlloy(${output});`;
 
 export type RecipeSmelteryFuel = {
-  id: string;
   temperature: number;
   ticks: number;
 };
@@ -224,15 +227,16 @@ export type RecipeSmelteryFuel = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const addSmelteryFuel = (recipe: RecipeSmelteryFuel) => {
-  const out = format.recipe(
-    recipe.id,
-    recipe.temperature,
-    recipe.ticks
-  );
+export const addSmelteryFuel = (id: string) =>
+  (recipe: RecipeSmelteryFuel) => {
+    const out = format.recipe(
+      id,
+      recipe.temperature,
+      recipe.ticks
+    );
 
-  return `mods.tconstruct.Smeltery.addFuel(${out});`;
-};
+    return `mods.tconstruct.Smeltery.addFuel(${out});`;
+  };
 
 /**
  * Remove [Smeltery](https://tinkers-construct.fandom.com/wiki/Smeltery) fuel
@@ -274,7 +278,6 @@ export const MATERIAL = {
 } as const;
 
 export type RecipeRepairMaterial = {
-  id: string;
   material: string;
   n: number;
 };
@@ -284,15 +287,16 @@ export type RecipeRepairMaterial = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const addRepairMaterial = (recipe: RecipeRepairMaterial) => {
-  const out = format.recipe(
-    recipe.id,
-    format.literal(recipe.material),
-    recipe.n
-  );
+export const addRepairMaterial = (id: string) =>
+  (recipe: RecipeRepairMaterial) => {
+    const out = format.recipe(
+      id,
+      format.literal(recipe.material),
+      recipe.n
+    );
 
-  return `mods.tconstruct.Tweaks.addRepairMaterial(${out});`;
-};
+    return `mods.tconstruct.Tweaks.addRepairMaterial(${out});`;
+  };
 
 /**
  * Remove repair [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats)

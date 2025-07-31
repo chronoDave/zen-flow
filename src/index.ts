@@ -6,22 +6,22 @@ export type {
   TextRich,
   Text,
   Shaped,
-  Shapeless,
-  Recipe
+  Shapeless
 } from './lib/format.ts';
 
 export { COLOR, STYLE } from './lib/format.ts';
 
 export type {
   RecipeGrinder,
-  RecipeInscriber
+  RecipePressInscriber
 } from './recipes/appliedEnergistics.ts';
 
 export {
   addGrinder,
   removeGrinder,
   addInscriber,
-  removeInscriber
+  addPress,
+  removePressInscriber
 } from './recipes/appliedEnergistics.ts';
 
 export type {
@@ -41,14 +41,14 @@ export type {
   RecipeItem,
   RecipeLiquid,
   RecipeMaterial
-} from './recipes/content.ts';
+} from './recipes/custom.ts';
 
 export {
   createBlock,
   createItem,
   createLiquid,
   createMaterial
-} from './recipes/content.ts';
+} from './recipes/custom.ts';
 
 export type {
   RecipeComposter,
@@ -107,7 +107,7 @@ export {
   removeFabricatorGlass
 } from './recipes/forestry.ts';
 
-export type { RecipeChestLoot } from './recipes/loot.ts';
+export type { ChestLoot } from './recipes/loot.ts';
 
 export {
   addChestLoot,
@@ -171,7 +171,7 @@ export {
 export type { Enchantment } from './recipes/tag.ts';
 
 export {
-  ENCHANTMENTS,
+  ENCHANTMENT,
   withName,
   withTag,
   withEnchantment,
@@ -216,14 +216,14 @@ export type {
   RecipeSmelteryFluid,
   RecipeSmelteryFuel,
   RecipeRepairMaterial,
-  RecipeToolStats,
-  RecipeBowStats,
-  RecipeArrowStats
+  MaterialStats,
+  BowStats,
+  ArrowStats
 } from './recipes/tinkersConstruct.ts';
 
 export {
-  MODIFIERS,
-  MATERIALS,
+  MODIFIER,
+  MATERIAL,
   addCastingBasin,
   removeCastingBasin,
   addCastingTable,

@@ -22,7 +22,11 @@ test('[format.id] formats id', t => {
 });
 
 test('[format.bonus] formats bonus', t => {
-  t.assert.equal(format.bonus({ id: 'bonus', chance: 0.25 }), 'bonus % 25');
+  t.assert.equal(format.bonus({ id: 'bonus', p: 0.25 }), 'bonus % 25');
+});
+
+test('[format.liquid] formats liquid', t => {
+  t.assert.equal(format.liquid({ id: '<liquid:liquid>', mb: 25 }), '<liquid:liquid> * 25');
 });
 
 test('[format.stack] formats stack', t => {

@@ -7,6 +7,6 @@ test('[fn.maybe]', () => {
   const x = (i: number) => i;
 
   assert.equal(fn.maybe(x)(0), 0, 'value');
-  assert.equal(fn.maybe(x)(null), null, 'null');
-  assert.equal(fn.maybe(x)(undefined), null, 'undefined');
+  assert.equal(fn.maybe(x)(null), undefined, 'null');
+  assert.equal(fn.maybe(x)(undefined), undefined, 'undefined');
 });

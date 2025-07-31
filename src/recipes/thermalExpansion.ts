@@ -319,8 +319,8 @@ export const removeTransposerFill = (recipe: { input: string; liquid: string }) 
 
 export type RecipeTransposerExtract = {
   input: string;
-  output?: Bonus;
-  liquid: Liquid;
+  output: Liquid;
+  bonus?: Bonus;
   rf: number;
 };
 
@@ -339,8 +339,8 @@ export const addTransposerExtract = (recipe: RecipeTransposerExtract) => {
   const out = format.recipe(
     recipe.rf,
     recipe.input,
-    format.liquid(recipe.liquid),
-    ...bonus(recipe.output)
+    format.liquid(recipe.output),
+    ...bonus(recipe.bonus)
   );
 
   return `mods.thermalexpansion.Transposer.addExtractRecipe(${out});`;

@@ -3,14 +3,11 @@ import type { Bonus } from '../lib/format.ts';
 import * as format from '../lib/format.ts';
 import { withWeight } from './tag.ts';
 
-export type RecipeChestLoot = {
-  chest: string;
-  loot: {
-    id: string;
-    p?: number;
-    min?: number;
-    max?: number;
-  };
+export type ChestLoot = {
+  id: string;
+  p?: number;
+  min?: number;
+  max?: number;
 };
 
 /**
@@ -24,24 +21,30 @@ export type RecipeChestLoot = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Loot
  */
-export const addChestLoot = (recipe: RecipeChestLoot) => {
-  const out = format.recipe(
-    format.literal(recipe.chest),
-    withWeight(recipe.loot.p ?? 100)(recipe.loot.id),
-    recipe.loot.min,
-    recipe.loot.max
-  );
-
-  return `vanilla.loot.addChestLoot(${out});`;
-};
+export const addChestLoot = (id: string) =>
+  (...loots: ChestLoot[]): string => loots
+    .map(loot => {
+      const out = format.recipe(
+        format.literal(id),
+        withWeight(loot.p ?? 100)(loot.id),
+        loot.min,
+        loot.max
+      );
+  
+      return `vanilla.loot.addChestLoot(${out});`;
+    })
+    .join('\n');
 
 /**
  * Remove item to dungeon loot
  *
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Loot
  */
-export const removeChestLoot = (recipe: { chest: string; id: string }) =>
-  `vanilla.loot.removeChestLoot(${format.recipe(format.literal(recipe.chest), recipe.id)});`;
+export const removeChestLoot = (chest: string) =>
+  (...ids: string[]): string => ids
+    .map(id => `vanilla.loot.removeChestLoot(${format.recipe(format.literal(chest), id)});`)
+    .join('\n');
+
 
 /**
  * Add item to tall grass

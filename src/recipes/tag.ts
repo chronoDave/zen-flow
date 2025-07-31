@@ -4,13 +4,17 @@ import util from 'node:util';
 
 import * as format from '../lib/format.ts';
 
-export const withName = (name: Text) => (id: string) =>
-  `${id}.displayName = ${format.name(name)};`;
+export const withName = (name: Text) =>
+  (id: string) =>
+    `${id}.displayName = ${format.name(name)};`;
 
 export const withTag = (tag: Record<string, unknown>) =>
-  (id: string) => {
-    return `${id}.withTag(${util.inspect(tag).replace(/(:\s?)'([^']+)'/gm, '$1"$2"')})`;
-  };
+  (id: string) =>
+    `${id}.withTag(${util.inspect(tag).replace(/(:\s?)'([^']+)'/gm, '$1"$2"')})`;
+
+export const withWeight = (weight: number) =>
+  (id: string) =>
+    `${id}.weight(${weight})`;
 
 export const ENCHANTMENT = {
   protection: 0,

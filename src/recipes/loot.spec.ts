@@ -9,21 +9,18 @@ import {
 
 test('[loot]', t => {
   t.assert.equal(
-    addChestLoot({
-      chest: 'dungeonChest',
-      loot: {
-        id: '<minecraft:stick>',
-        p: 100,
-        min: 1,
-        max: 5
-      }
+    addChestLoot('dungeonChest')({
+      id: '<minecraft:stick>',
+      p: 100,
+      min: 1,
+      max: 5
     }),
     'vanilla.loot.addChestLoot(\n\t"dungeonChest",\n\t<minecraft:stick>.weight(100),\n\t1,\n\t5\n);',
     'addChestLoot'
   );
 
   t.assert.equal(
-    removeChestLoot({ chest: 'dungeonChest', id: '<minecraft:enchanted_book>' }),
+    removeChestLoot('dungeonChest')('<minecraft:enchanted_book>'),
     'vanilla.loot.removeChestLoot("dungeonChest", <minecraft:enchanted_book>);',
     'removeChestLoot'
   );

@@ -4,7 +4,8 @@ import {
   addGrinder,
   removeGrinder,
   addInscriber,
-  removeInscriber
+  removePressInscriber,
+  addPress
 } from './appliedEnergistics.ts';
 
 test('[appliedEnergistics]', t => {
@@ -29,21 +30,33 @@ test('[appliedEnergistics]', t => {
   );
 
   t.assert.equal(
-    addInscriber({
+    addPress({
       input: {
         top: '<appliedenergistics2:item.ItemMultiMaterial:15>',
         center: '<minecraft:gold_block>'
       },
-      output: { id: '<appliedenergistics2:item.ItemMultiMaterial:18>', n: 9 },
-      type: 'press'
+      output: { id: '<appliedenergistics2:item.ItemMultiMaterial:18>', n: 9 }
     }),
     'mods.appeng.Inscriber.addRecipe(\n\t[<minecraft:gold_block>],\n\t<appliedenergistics2:item.ItemMultiMaterial:15>,\n\tnull,\n\t<appliedenergistics2:item.ItemMultiMaterial:18> * 9,\n\t"Press"\n);',
+    'addPress'
+  );
+
+  t.assert.equal(
+    addInscriber({
+      input: {
+        top: '<minecraft:redstone>',
+        center: '<minecraft:iron_ingot>',
+        bottom: '<minecraft:cobblestone>'
+      },
+      output: '<minecraft:piston>'
+    }),
+    'mods.appeng.Inscriber.addRecipe(\n\t[<minecraft:iron_ingot>],\n\t<minecraft:redstone>,\n\t<minecraft:cobblestone>,\n\t<minecraft:piston>,\n\t"Inscribe"\n);',
     'addInscriber'
   );
 
   t.assert.equal(
-    removeInscriber('<appliedenergistics2:item.ItemMultiMaterial:15>'),
+    removePressInscriber('<appliedenergistics2:item.ItemMultiMaterial:15>'),
     'mods.appeng.Inscriber.removeRecipe(<appliedenergistics2:item.ItemMultiMaterial:15>);',
-    'removeInscriber'
+    'removePressInscriber'
   );
 });

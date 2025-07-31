@@ -5,12 +5,11 @@ import {
   createItem,
   createLiquid,
   createMaterial
-} from './content.ts';
+} from './custom.ts';
 
-test('[content]', t => {
+test('[custom]', t => {
   t.assert.equal(
-    createBlock({
-      id: 'content_block',
+    createBlock('content_block')({
       name: 'Content',
       material: 'rock',
       texture: 'content_block',
@@ -27,8 +26,7 @@ test('[content]', t => {
   );
 
   t.assert.equal(
-    createItem({
-      id: 'content',
+    createItem('content')({
       name: 'Content',
       texture: 'content_item',
       creativeTab: 'misc',
@@ -44,8 +42,7 @@ test('[content]', t => {
   );
 
   t.assert.equal(
-    createLiquid({
-      id: 'content',
+    createLiquid('content')({
       density: 5,
       luminosity: 1,
       temperature: 300,
@@ -63,8 +60,7 @@ test('[content]', t => {
   );
 
   t.assert.equal(
-    createLiquid({
-      id: 'content',
+    createLiquid('content')({
       density: 5,
       luminosity: 1,
       temperature: 300,
@@ -77,9 +73,8 @@ test('[content]', t => {
   );
 
   t.assert.equal(
-    createMaterial({
+    createMaterial('Content')({
       name: 'content',
-      material: 'Content',
       color: {
         name: 'gold',
         tool: 3914239
