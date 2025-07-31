@@ -1,11 +1,12 @@
-import type { Stack, Cast, COLOR } from '../lib/format.ts';
+import type { Cast, Liquid, COLOR } from '../lib/format.ts';
 
 import * as format from '../lib/format.ts';
 
 export type RecipeCastingBasin = {
-  liquid: Stack;
-  ticks: number;
+  input: Liquid;
+  output: string;
   cast?: Cast;
+  ticks: number;
 };
 
 /**
@@ -20,10 +21,10 @@ export type RecipeCastingBasin = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const addCastingBasin = (id: string, recipe: RecipeCastingBasin) => {
+export const addCastingBasin = (recipe: RecipeCastingBasin) => {
   const out = format.recipe(
-    id,
-    format.stack(recipe.liquid),
+    recipe.output,
+    format.liquid(recipe.input),
     ...format.cast(recipe.cast),
     recipe.ticks
   );
@@ -38,11 +39,12 @@ export const addCastingBasin = (id: string, recipe: RecipeCastingBasin) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const removeCastingBasin = (id: string) =>
-  `mods.tconstruct.Casting.removeBasinRecipe(${id});`;
+export const removeCastingBasin = (output: string) =>
+  `mods.tconstruct.Casting.removeBasinRecipe(${output});`;
 
 export type RecipeCastingTable = {
-  liquid: Stack;
+  input: Liquid;
+  output: string;
   ticks: number;
   cast?: Cast;
 };
@@ -58,10 +60,10 @@ export type RecipeCastingTable = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const addCastingTable = (id: string, recipe: RecipeCastingTable) => {
+export const addCastingTable = (recipe: RecipeCastingTable) => {
   const out = format.recipe(
-    id,
-    format.stack(recipe.liquid),
+    recipe.output,
+    format.liquid(recipe.input),
     ...format.cast(recipe.cast),
     recipe.ticks
   );
@@ -76,11 +78,12 @@ export const addCastingTable = (id: string, recipe: RecipeCastingTable) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const removeCastingTable = (id: string) =>
-  `mods.tconstruct.Casting.removeTableRecipe(${id});`;
+export const removeCastingTable = (output: string) =>
+  `mods.tconstruct.Casting.removeTableRecipe(${output});`;
 
 export type RecipeDryingRack = {
   input: string;
+  output: string;
   ticks: number;
 };
 
@@ -94,10 +97,10 @@ export type RecipeDryingRack = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const addDryingRack = (id: string, recipe: RecipeDryingRack) => {
+export const addDryingRack = (recipe: RecipeDryingRack) => {
   const out = format.recipe(
     recipe.input,
-    id,
+    recipe.output,
     recipe.ticks
   );
 
@@ -111,10 +114,10 @@ export const addDryingRack = (id: string, recipe: RecipeDryingRack) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const removeDryingRack = (id: string) =>
-  `mods.tconstruct.Drying.removeRecipe(${id});`;
+export const removeDryingRack = (output: string) =>
+  `mods.tconstruct.Drying.removeRecipe(${output});`;
 
-export const MODIFIERS = {
+export const MODIFIER = {
   lvl1: 'Tier1Free',
   lvl2: 'Tier1.5Free',
   lvl3: 'Tier2Free',
@@ -146,6 +149,7 @@ export const removeModifier = (id: string) =>
 
 export type RecipeSmelteryFluid = {
   input: string;
+  output: Liquid;
   temperature: number;
   render?: string;
 };
@@ -161,10 +165,10 @@ export type RecipeSmelteryFluid = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const addSmelteryFluid = (liquid: Stack, recipe: RecipeSmelteryFluid) => {
+export const addSmelteryFluid = (recipe: RecipeSmelteryFluid) => {
   const out = format.recipe(
     recipe.input,
-    format.stack(liquid),
+    format.liquid(recipe.output),
     recipe.temperature,
     recipe.render
   );
@@ -177,8 +181,13 @@ export const addSmelteryFluid = (liquid: Stack, recipe: RecipeSmelteryFluid) => 
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const removeSmelteryFluid = (id: string) =>
-  `mods.tconstruct.Smeltery.removeMelting(${id});`;
+export const removeSmelteryFluid = (input: string) =>
+  `mods.tconstruct.Smeltery.removeMelting(${input});`;
+
+export type RecipeSmelteryAlloy = {
+  input: Liquid[];
+  output: Liquid;
+};
 
 /**
  * Add [Smeltery](https://tinkers-construct.fandom.com/wiki/Smeltery) alloy recipe
@@ -187,10 +196,10 @@ export const removeSmelteryFluid = (id: string) =>
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const addSmelteryAlloy = (alloy: Stack, recipe: Stack[]) => {
+export const addSmelteryAlloy = (recipe: RecipeSmelteryAlloy) => {
   const out = format.recipe(
-    format.stack(alloy),
-    recipe.map(format.stack)
+    format.liquid(recipe.output),
+    recipe.input.map(format.liquid)
   );
 
   return `mods.tconstruct.Smeltery.addAlloy(${out});`;
@@ -201,10 +210,11 @@ export const addSmelteryAlloy = (alloy: Stack, recipe: Stack[]) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const removeSmelteryAlloy = (id: string) =>
-  `mods.tconstruct.Smeltery.removeAlloy(${id});`;
+export const removeSmelteryAlloy = (output: string) =>
+  `mods.tconstruct.Smeltery.removeAlloy(${output});`;
 
 export type RecipeSmelteryFuel = {
+  id: string;
   temperature: number;
   ticks: number;
 };
@@ -214,9 +224,9 @@ export type RecipeSmelteryFuel = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const addSmelteryFuel = (id: string, recipe: RecipeSmelteryFuel) => {
+export const addSmelteryFuel = (recipe: RecipeSmelteryFuel) => {
   const out = format.recipe(
-    id,
+    recipe.id,
     recipe.temperature,
     recipe.ticks
   );
@@ -232,7 +242,7 @@ export const addSmelteryFuel = (id: string, recipe: RecipeSmelteryFuel) => {
 export const removeSmelteryFuel = (id: string) =>
   `mods.tconstruct.Smeltery.removeFuel(${id});`;
 
-export const MATERIALS = {
+export const MATERIAL = {
   wood: 'Wood',
   stone: 'Stone',
   iron: 'Iron',
@@ -264,6 +274,7 @@ export const MATERIALS = {
 } as const;
 
 export type RecipeRepairMaterial = {
+  id: string;
   material: string;
   n: number;
 };
@@ -273,9 +284,9 @@ export type RecipeRepairMaterial = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const addRepairMaterial = (id: string, recipe: RecipeRepairMaterial) => {
+export const addRepairMaterial = (recipe: RecipeRepairMaterial) => {
   const out = format.recipe(
-    id,
+    recipe.id,
     format.literal(recipe.material),
     recipe.n
   );
@@ -297,7 +308,7 @@ export const removeRepairMaterial = (id: string, material?: string) => {
   return `mods.tconstruct.Tweaks.removeRepairMaterial(${out});`;
 };
 
-export type RecipeToolStats = {
+export type MaterialStats = {
   /** Display name */
   name: string;
   color: {
@@ -357,41 +368,43 @@ export type RecipeToolStats = {
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setMaterialStats = (material: string, recipe: RecipeToolStats) => {
-  const out = format.recipe(
-    format.literal(material),
-    format.literal(recipe.name),
-    recipe.level,
-    recipe.durability,
-    recipe.speed * 100,
-    recipe.damage,
-    recipe.modifier,
-    typeof recipe.reinforced === 'number' ?
-      recipe.reinforced :
-      0,
-    typeof recipe.stonebound === 'number' ?
-      recipe.stonebound :
-      0,
-    format.literal(recipe.color.name),
-    recipe.color.tool
-  );
+export const setMaterialStats = (id: string) =>
+  (stats: MaterialStats) => {
+    const out = format.recipe(
+      format.literal(id),
+      format.literal(stats.name),
+      stats.level,
+      stats.durability,
+      stats.speed * 100,
+      stats.damage,
+      stats.modifier,
+      typeof stats.reinforced === 'number' ?
+        stats.reinforced :
+        0,
+      typeof stats.stonebound === 'number' ?
+        stats.stonebound :
+        0,
+      format.literal(stats.color.name),
+      stats.color.tool
+    );
 
-  return `mods.tconstruct.ToolStats.setStats(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setStats(${out});`;
+  };
 
 /**
  * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) display name
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setMaterialName = (material: string, name: string) => {
-  const out = format.recipe(
-    format.literal(material),
-    format.literal(name)
-  );
+export const setMaterialName = (id: string) =>
+  (name: string) => {
+    const out = format.recipe(
+      format.literal(id),
+      format.literal(name)
+    );
 
-  return `mods.tconstruct.ToolStats.setDisplayName(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setDisplayName(${out});`;
+  };
 
 /**
  * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) mining level
@@ -407,23 +420,24 @@ export const setMaterialName = (material: string, name: string) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setMaterialMiningLevel = (material: string, n: number) => {
-  const out = format.recipe(format.literal(material), n);
+export const setMaterialMiningLevel = (id: string) =>
+  (n: number) => {
+    const out = format.recipe(format.literal(id), n);
 
-  return `mods.tconstruct.ToolStats.setHarvestLevel(${out});`;
-};
-
+    return `mods.tconstruct.ToolStats.setHarvestLevel(${out});`;
+  };
 
 /**
  * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) durability
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setMaterialDurability = (material: string, n: number) => {
-  const out = format.recipe(format.literal(material), n);
+export const setMaterialDurability = (id: string) =>
+  (n: number) => {
+    const out = format.recipe(format.literal(id), n);
 
-  return `mods.tconstruct.ToolStats.setDurability(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setDurability(${out});`;
+  };
 
 /**
  * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) mining speed
@@ -442,11 +456,12 @@ export const setMaterialDurability = (material: string, n: number) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setMaterialSpeed = (material: string, n: number) => {
-  const out = format.recipe(format.literal(material), n * 100);
+export const setMaterialSpeed = (id: string) =>
+  (n: number) => {
+    const out = format.recipe(format.literal(id), n * 100);
 
-  return `mods.tconstruct.ToolStats.setSpeed(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setSpeed(${out});`;
+  };
 
 /**
  * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) damage
@@ -460,82 +475,87 @@ export const setMaterialSpeed = (material: string, n: number) => {
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setMaterialDamage = (material: string, n: number) => {
-  const out = format.recipe(format.literal(material), n);
+export const setMaterialDamage = (id: string) =>
+  (n: number) => {
+    const out = format.recipe(format.literal(id), n);
 
-  return `mods.tconstruct.ToolStats.setDamage(${out});`;
-};
-
-/**
- * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) handle modifier
- *
- * Common values:
- *  - `0.3` => Paper
- *  - `0.5` => Stone
- *  - `0.7` => Flint
- *  - `0.8` => Obsidian
- *  - `1` => Wood, Cactus, Bone
- *  - `1.2` => Netherrack
- *  - `1.3` => Iron, Alumite
- *  - `1.5` => Green Slime
- *  - `1.75` => Cobalt
- *  - `2` => Blue Slime, Ardite
- *  - `2.5` => Manyullyn
- * 
- * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
- */
-export const setMaterialHandleModifier = (material: string, n: number) => {
-  const out = format.recipe(format.literal(material), n);
-
-  return `mods.tconstruct.ToolStats.setHandleModifier(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setDamage(${out});`;
+  };
 
 /**
- * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) reinforced level
- *
- * Common values:
- *  - `1` => Iron
- *  - `2` => Alumite, Cobalt
- *  - `3` => Obsidian
- * 
- * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
- */
-export const setMaterialReinforcedLevel = (material: string, n: number) => {
-  const out = format.recipe(format.literal(material), n);
+* Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) handle modifier
+*
+* Common values:
+*  - `0.3` => Paper
+*  - `0.5` => Stone
+*  - `0.7` => Flint
+*  - `0.8` => Obsidian
+*  - `1` => Wood, Cactus, Bone
+*  - `1.2` => Netherrack
+*  - `1.3` => Iron, Alumite
+*  - `1.5` => Green Slime
+*  - `1.75` => Cobalt
+*  - `2` => Blue Slime, Ardite
+*  - `2.5` => Manyullyn
+* 
+* @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
+*/
+export const setMaterialHandleModifier = (id: string) =>
+  (n: number) => {
+    const out = format.recipe(format.literal(id), n);
 
-  return `mods.tconstruct.ToolStats.setReinforcedLevel(${out});`;
-};
-
-/**
- * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) stonebound level
- *
- * Common values:
- *  - `1` => Stone, Netherrack
- *  - `2` => Ardite
- * 
- * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
- */
-export const setMaterialLevelStonebound = (material: string, n: number) => {
-  const out = format.recipe(format.literal(material), n);
-
-  return `mods.tconstruct.ToolStats.setStoneboundLevel(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setHandleModifier(${out});`;
+  };
 
 /**
- * Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) display name colour
- *
- * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
- */
-export const setMaterialStyle = (material: string, style: keyof typeof COLOR) => {
-  const out = format.recipe(
-    format.literal(material),
-    format.literal(style)
-  );
+* Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) reinforced level
+*
+* Common values:
+*  - `1` => Iron
+*  - `2` => Alumite, Cobalt
+*  - `3` => Obsidian
+* 
+* @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
+*/
+export const setMaterialReinforcedLevel = (id: string) =>
+  (n: number) => {
+    const out = format.recipe(format.literal(id), n);
 
-  return `mods.tconstruct.ToolStats.setStyle(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setReinforcedLevel(${out});`;
+  };
 
-export type RecipeBowStats = {
+/**
+* Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) stonebound level
+*
+* Common values:
+*  - `1` => Stone, Netherrack
+*  - `2` => Ardite
+* 
+* @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
+*/
+export const setMaterialLevelStonebound = (material: string) =>
+  (n: number) => {
+    const out = format.recipe(format.literal(material), n);
+
+    return `mods.tconstruct.ToolStats.setStoneboundLevel(${out});`;
+  };
+
+/**
+* Set [Material](https://tinkers-construct.fandom.com/wiki/Material_Stats) display name colour
+*
+* @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
+*/
+export const setMaterialStyle = (material: string) =>
+  (style: keyof typeof COLOR) => {
+    const out = format.recipe(
+      format.literal(material),
+      format.literal(style)
+    );
+
+    return `mods.tconstruct.ToolStats.setStyle(${out});`;
+  };
+
+export type BowStats = {
   durability: number;
   drawSpeed: number;
   flightSpeed: number;
@@ -546,38 +566,41 @@ export type RecipeBowStats = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setBowMaterialStats = (material: string, recipe: RecipeBowStats) => {
-  const out = format.recipe(
-    format.literal(material),
-    recipe.durability,
-    recipe.drawSpeed,
-    format.float(recipe.flightSpeed)
-  );
+export const setBowMaterialStats = (id: string) =>
+  (stats: BowStats) => {
+    const out = format.recipe(
+      format.literal(id),
+      stats.durability,
+      stats.drawSpeed,
+      format.float(stats.flightSpeed)
+    );
 
-  return `mods.tconstruct.ToolStats.setBowStats(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setBowStats(${out});`;
+  };
 
 /**
  * Set bow [Material](https://tinkers-construct.fandom.com/wiki/Shortbow) durability
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setBowMaterialDurability = (material: string, durability: number) => {
-  const out = format.recipe(format.literal(material), durability);
+export const setBowMaterialDurability = (id: string) =>
+  (n: number) => {
+    const out = format.recipe(format.literal(id), n);
 
-  return `mods.tconstruct.ToolStats.setBowDurability(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setBowDurability(${out});`;
+  };
 
 /**
  * Set bow [Material](https://tinkers-construct.fandom.com/wiki/Shortbow) draw speed
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setBowMaterialDrawspeed = (material: string, drawspeed: number) => {
-  const out = format.recipe(format.literal(material), drawspeed);
+export const setBowMaterialDrawspeed = (id: string) =>
+  (n: number) => {
+    const out = format.recipe(format.literal(id), n);
 
-  return `mods.tconstruct.ToolStats.setBowDrawspeed(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setBowDrawspeed(${out});`;
+  };
 
 /**
  * Set bow [Material](https://tinkers-construct.fandom.com/wiki/Shortbow) flight speed
@@ -586,16 +609,17 @@ export const setBowMaterialDrawspeed = (material: string, drawspeed: number) => 
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setBowMaterialFlightSpeed = (material: string, flightSpeed: number) => {
-  const out = format.recipe(
-    format.literal(material),
-    format.float(flightSpeed)
-  );
+export const setBowMaterialFlightSpeed = (id: string) =>
+  (n: number) => {
+    const out = format.recipe(
+      format.literal(id),
+      format.float(n)
+    );
 
-  return `mods.tconstruct.ToolStats.setBowFlightSpeed(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setBowFlightSpeed(${out});`;
+  };
 
-export type RecipeArrowStats = {
+export type ArrowStats = {
   mass: number;
   breakChance: number;
   accuracy: number;
@@ -606,55 +630,59 @@ export type RecipeArrowStats = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setArrowStats = (material: string, recipe: RecipeArrowStats) => {
-  const out = format.recipe(
-    format.literal(material),
-    format.float(recipe.mass),
-    format.float(recipe.breakChance),
-    format.float(recipe.accuracy)
-  );
+export const setArrowStats = (id: string) =>
+  (stats: ArrowStats) => {
+    const out = format.recipe(
+      format.literal(id),
+      format.float(stats.mass),
+      format.float(stats.breakChance),
+      format.float(stats.accuracy)
+    );
 
-  return `mods.tconstruct.ToolStats.setArrowStats(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setArrowStats(${out});`;
+  };
 
 /**
  * Set arrow [Material](https://github.com/SlimeKnights/TinkersConstruct/blob/9ea7a0e60fe180aff591701b12c89da21da99289/src/main/java/tconstruct/weaponry/TinkerWeaponry.java#L335) mass
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setArrowMass = (material: string, mass: number) => {
-  const out = format.recipe(
-    format.literal(material),
-    format.float(mass)
-  );
+export const setArrowMass = (id: string) =>
+  (n: number) => {
+    const out = format.recipe(
+      format.literal(id),
+      format.float(n)
+    );
 
-  return `mods.tconstruct.ToolStats.setArrowMass(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setArrowMass(${out});`;
+  };
 
 /**
  * Set arrow [Material](https://github.com/SlimeKnights/TinkersConstruct/blob/9ea7a0e60fe180aff591701b12c89da21da99289/src/main/java/tconstruct/weaponry/TinkerWeaponry.java#L335) break chance
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setArrowBreakChance = (material: string, breakChance: number) => {
-  const out = format.recipe(
-    format.literal(material),
-    format.float(breakChance)
-  );
+export const setArrowBreakChance = (id: string) =>
+  (n: number) => {
+    const out = format.recipe(
+      format.literal(id),
+      format.float(n)
+    );
 
-  return `mods.tconstruct.ToolStats.setArrowBreakChance(${out});`;
-};
+    return `mods.tconstruct.ToolStats.setArrowBreakChance(${out});`;
+  };
 
 /**
  * Set arrow [Material](https://github.com/SlimeKnights/TinkersConstruct/blob/9ea7a0e60fe180aff591701b12c89da21da99289/src/main/java/tconstruct/weaponry/TinkerWeaponry.java#L335) accuracy
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
-export const setArrowAccuracy = (material: string, accuracy: number) => {
-  const out = format.recipe(
-    format.literal(material),
-    format.float(accuracy)
-  );
+export const setArrowAccuracy = (id: string) =>
+  (n: number) => {
+    const out = format.recipe(
+      format.literal(id),
+      format.float(n)
+    );
 
-  return `mods.tconstruct.TooLStats.setArrowAccuracy(${out});`;
-};
+    return `mods.tconstruct.TooLStats.setArrowAccuracy(${out});`;
+  };
