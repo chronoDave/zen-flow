@@ -31,10 +31,7 @@ test('[exNihilo]', t => {
   );
 
   t.assert.equal(
-    addCrucible({
-      input: '<minecraft:packed_ice>',
-      output: { id: '<liquid:water>', mb: 1000 }
-    }),
+    addCrucible({ id: '<liquid:water>', mb: 1000 })('<minecraft:packed_ice>'),
     'mods.exnihilo.Crucible.addRecipe(<minecraft:packed_ice>, <liquid:water> * 1000);',
     'addCrucible'
   );
@@ -58,13 +55,10 @@ test('[exNihilo]', t => {
   );
 
   t.assert.equal(
-    addHammer({
-      input: '<minecraft:tnt>',
-      output: [
-        { id: '<minecraft:gunpowder>', p: 0.25 },
-        { id: '<minecraft:sand>', p: 0.5, luck: 1.5 }
-      ]
-    }),
+    addHammer('<minecraft:tnt>')(
+      { id: '<minecraft:gunpowder>', p: 0.25 },
+      { id: '<minecraft:sand>', p: 0.5, luck: 1.5 }
+    ),
     'mods.exnihilo.Hammer.addRecipe(\n\t<minecraft:tnt>,\n\t[<minecraft:gunpowder>, <minecraft:sand>],\n\t[0.25, 0.5],\n\t[0, 1.5]\n);',
     'addHammer'
   );
@@ -76,13 +70,10 @@ test('[exNihilo]', t => {
   );
 
   t.assert.equal(
-    addSieve({
-      input: '<minecraft:mycelium>',
-      output: [
-        { id: '<minecraft:red_mushroom>', p: 0.5 },
-        { id: '<minecraft:brown_mushroom>', p: 0.5 }
-      ]
-    }),
+    addSieve('<minecraft:mycelium>')(
+      { id: '<minecraft:red_mushroom>', p: 0.5 },
+      { id: '<minecraft:brown_mushroom>', p: 0.5 }
+    ),
     'mods.exnihilo.Sieve.addRecipe(<minecraft:mycelium>, [<minecraft:red_mushroom>, <minecraft:brown_mushroom>], [2, 2]);',
     'addSieve'
   );

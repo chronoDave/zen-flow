@@ -52,10 +52,7 @@ export {
 } from './recipes/custom.ts';
 
 export type {
-  RecipeComposter,
-  RecipeCrucible,
-  RecipeHammer,
-  RecipeSieve
+  RecipeComposter
 } from './recipes/exNihilo.ts';
 
 export {
@@ -70,8 +67,6 @@ export {
   addSieve,
   removeSieve
 } from './recipes/exNihilo.ts';
-
-export type { RecipeQED } from './recipes/extraUtilities.ts';
 
 export {
   addQED,
