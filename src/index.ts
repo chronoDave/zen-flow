@@ -52,7 +52,8 @@ export {
 } from './recipes/custom.ts';
 
 export type {
-  RecipeComposter
+  RecipeComposter,
+  BonusHammer
 } from './recipes/exNihilo.ts';
 
 export {

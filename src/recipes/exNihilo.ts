@@ -86,13 +86,15 @@ export const addCrucibleFuel = (input: Stack) => {
 export const removeCrucibleFuel = (input: string) =>
   `mods.exnihilo.Crucible.removeHeatSource(${input});`;
 
+export type BonusHammer = Bonus & { luck?: number };
+
 /**
  * Add [Hammer](https://ftb.fandom.com/wiki/Hammer_(Ex_Nihilo)) recipe
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Ex_Nihilo_Support
  */
 export const addHammer = (input: string) =>
-  (...output: Array<Bonus & { luck?: number }>) => {
+  (...output: BonusHammer[]) => {
     const out = format.recipe(
       input,
       output.map(bonus => bonus.id),
