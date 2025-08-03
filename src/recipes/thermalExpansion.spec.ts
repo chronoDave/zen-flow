@@ -23,7 +23,7 @@ test('[thermalExpanion]', t => {
   t.assert.equal(
     addMagmaCrucible({
       input: '<minecraft:dragon_egg>',
-      output: { id: '<liquid:ender>', n: 8000 },
+      output: { id: '<liquid:ender>', mb: 8000 },
       rf: 500000
     }),
     'mods.thermalexpansion.Crucible.addRecipe(500000, <minecraft:dragon_egg>, <liquid:ender> * 8000);',

@@ -1,4 +1,4 @@
-import type { Ingredient, Stack, Bonus, Liquid } from '../lib/format.ts';
+import type { Ingredient, Bonus, Liquid } from '../lib/format.ts';
 
 import * as format from '../lib/format.ts';
 
@@ -8,7 +8,7 @@ const bonus = (bonus?: Bonus): [string, number] | [] => bonus ?
 
 export type RecipeMagmaCrucible = {
   input: string;
-  output: Stack;
+  output: Liquid;
   rf: number;
 };
 
@@ -43,7 +43,7 @@ export const addMagmaCrucible = (recipe: RecipeMagmaCrucible) => {
   const out = format.recipe(
     recipe.rf,
     recipe.input,
-    format.stack(recipe.output)
+    format.liquid(recipe.output)
   );
 
   return `mods.thermalexpansion.Crucible.addRecipe(${out});`;
