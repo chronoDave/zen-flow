@@ -30,7 +30,7 @@ test('[forestry]', t => {
         8: '<minecraft:planks>'
       },
       output: { id: '<Forestry:oakStick>', n: 2 },
-      liquid: { id: '<liquid:seedoil>', n: 100 },
+      liquid: { id: '<liquid:seedoil>', mb: 100 },
       ticks: 20,
       top: '<minecraft:log>'
     }),

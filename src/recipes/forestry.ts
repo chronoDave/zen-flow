@@ -1,5 +1,4 @@
 import type {
-  Stack,
   Ingredient,
   Shaped,
   Bonus,
@@ -13,7 +12,7 @@ export type RecipeCarpenter = {
   output: Ingredient;
   ticks: number;
   top?: string;
-  liquid?: Stack;
+  liquid?: Liquid;
 };
 
 /**
@@ -34,7 +33,7 @@ export const addCarpenter = (recipe: RecipeCarpenter) => {
   const out = format.recipe(
     format.ingredient(recipe.output),
     format.shaped(recipe.input),
-    recipe.liquid && format.stack(recipe.liquid),
+    recipe.liquid && format.liquid(recipe.liquid),
     Math.max(1, Math.round(recipe.ticks)),
     recipe.top
   );
