@@ -40,11 +40,13 @@
     "preversion": "npm run lint:types && npm run lint && npm run test && npm run build && npm run docs",
     "postversion": "git add -A && git commit -m \"Updated docs\" && npm publish"
   },
-  "devDependencies": {
+  "optionalDependencies": {
     "@chronocide/eslint-config": "github:chronoDave/eslint-config",
+    "eslint": "^9.9.0"
+  },
+  "devDependencies": {
     "@types/node": "^22.14.1",
     "esbuild": "^0.25.0",
-    "eslint": "^9.9.0",
     "rollup": "^4.21.0",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-esbuild": "^6.1.1",
