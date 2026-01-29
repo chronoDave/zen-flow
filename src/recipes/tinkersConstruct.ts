@@ -50,7 +50,7 @@ export type RecipeCastingTable = {
 };
 
 /**
- * Add [Casting Basin](https://tinkers-construct.fandom.com/wiki/Casting_Basin) recipe
+ * Add [Casting Table](https://tinkers-construct.fandom.com/wiki/Casting_Table) recipe
  * 
  * Common values:
  *  - Ticks => `20`
@@ -72,7 +72,7 @@ export const addCastingTable = (recipe: RecipeCastingTable) => {
 };
 
 /**
- * Remove [Casting Basin](https://tinkers-construct.fandom.com/wiki/Casting_Table) recipe
+ * Remove [Casting Table](https://tinkers-construct.fandom.com/wiki/Casting_Table) recipe
  * 
  * Recipes can be generated using `/mt tconstruct Casting`
  * 
@@ -157,10 +157,6 @@ export type RecipeSmelteryFluid = {
 /**
  * Add [Smeltery](https://tinkers-construct.fandom.com/wiki/Smeltery) fluid recipe
  * 
- * Common values:
- *  - Lava => `1000`
- *  - Pyrotheum => `5000`
- * 
  * A list of recipes can be generated from `/mt tconstruct Smeltery`
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
@@ -224,6 +220,10 @@ export type RecipeSmelteryFuel = {
 
 /**
  * Add [Smeltery](https://tinkers-construct.fandom.com/wiki/Smeltery) fuel
+ * 
+ * Common values:
+ *  - Lava => `1000`
+ *  - Pyrotheum => `5000`
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
