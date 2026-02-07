@@ -6,7 +6,7 @@ import { clamp } from '../lib/math.ts';
 export type RecipeGrinder = {
   input: string;
   output: Ingredient;
-  bonus?: [Bonus, Bonus];
+  bonus?: [Bonus] | [Bonus, Bonus];
   /** Integer larger than or equal to 1 */
   turns: number;
 };
@@ -25,7 +25,7 @@ export const addGrinder = (recipe: RecipeGrinder) => {
     format.ingredient(recipe.input),
     format.ingredient(recipe.output),
     Math.max(1, Math.round(recipe.turns)),
-    ...recipe.bonus?.map(bonus => `${bonus.id}, ${clamp(0, 1, bonus.p)}`) ?? []
+    ...(recipe.bonus ?? []).map(bonus => `${bonus.id}, ${clamp(0, 1, bonus.p)}`)
   );
 
   return `mods.appeng.Grinder.addRecipe(${out});`;
