@@ -15,11 +15,7 @@ export default [{
     'node:util'
   ],
   output: [{
-    file: output('cjs'),
-    exports: 'auto',
-    format: 'cjs'
-  }, {
-    file: output('mjs'),
+    file: output('js'),
     exports: 'auto',
     format: 'es'
   }]
@@ -27,14 +23,7 @@ export default [{
   input,
   plugins: [dts()],
   output: {
-    file: output('d.cts'),
-    format: 'cjs'
-  }
-}, {
-  input,
-  plugins: [dts()],
-  output: {
-    file: output('d.mts'),
+    file: output('d.ts'),
     format: 'es'
   }
 }];

@@ -262,3 +262,24 @@ export {
   setArrowBreakChance,
   setArrowAccuracy
 } from './recipes/tinkersConstruct.ts';
+
+export type {
+  RecipeAltar,
+  RecipeAlchemy,
+  RecipeMeteor
+} from './recipes/bloodMagic.ts';
+
+export {
+  addAltar,
+  removeAltar,
+  addBloodOrbShaped,
+  addBloodOrbShapeless,
+  addBloodOrb,
+  addAlchemy,
+  removeAlchemy,
+  addRitualBinding,
+  removeRitualBinding,
+  addRitualMeteor,
+  removeRitualMeteor,
+  addRitualHarvest
+} from './recipes/bloodMagic.ts';
