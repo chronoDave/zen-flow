@@ -117,7 +117,8 @@ export {
 } from './recipes/loot.ts';
 
 export type {
-  RecipeFurnace
+  RecipeFurnace,
+  RecipeLocalisation
 } from './recipes/minecraft.ts';
 
 export {
@@ -131,7 +132,8 @@ export {
   addFurnace,
   removeFurnace,
   addFurnaceFuel,
-  removeFurnaceFuel
+  removeFurnaceFuel,
+  setLocalisation
 } from './recipes/minecraft.ts';
 
 export type {

@@ -154,3 +154,24 @@ export const addFurnaceFuel = (fuel: string) =>
  */
 export const removeFurnaceFuel = (fuel: string) =>
   addFurnaceFuel(fuel)(0);
+
+export type RecipeLocalisation = {
+  id: string;
+  value: string;
+};
+
+/**
+ * Add localisation string
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Localization_164
+ */
+export const setLocalisation = (locale: string) =>
+  (recipe: RecipeLocalisation) => {
+    const out = format.recipe(
+      format.literal(locale),
+      format.literal(recipe.id),
+      format.literal(recipe.value)
+    );
+
+    return `game.setLocalization(${out});`;
+  };

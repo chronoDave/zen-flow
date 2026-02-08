@@ -154,7 +154,7 @@ export const addRitualMeteor = (recipe: RecipeMeteor) => {
   const out = format.recipe(
     recipe.input,
     recipe.radius,
-    `"${recipe.output.map(bonus => `${bonus.id}, ${bonus.p * 100}`).join(', ')}"`
+    format.literal(format.list(Number.MAX_SAFE_INTEGER)(recipe.output.map(bonus => `${bonus.id}, ${bonus.p * 100}`)))
   );
 
   return `mods.bloodmagic.FallingTower.addFocus(${out});`;
