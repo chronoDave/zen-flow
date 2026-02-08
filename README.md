@@ -14,27 +14,28 @@
 ## Install
 
 ```shell
-$ npm i zen-flow -D
+npm i zen-flow -D
 ```
 
 ***Note**: `zen-flow` only works with Minecraft **1.7.10.***
 
 ## Features
 
- - Easy to use API, written in <b>TypeScript</b>
- - Extensive documentation
- - Supports [MineTweaker](https://minetweaker3.aizistral.com/wiki/Main_Page), [ModTweaker](https://minetweaker3.aizistral.com/wiki/ModTweaker) and [ContentTweaker](https://minetweaker3.aizistral.com/wiki/ContentTweaker)
- - Formatted output (for easy debugging)
- - Includes mod support for:
-    - Applied Energistics 2
-    - Avaritia
-    - Ex Nihilo
-    - Extra Utilities
-    - Forestry
-    - MineFactory Reloaded
-    - NEI
-    - Thermal Expansion
-    - Tinkers' Construct
+- Easy to use API, written in **TypeScript**
+- Extensive documentation
+- Supports [MineTweaker](https://minetweaker3.aizistral.com/wiki/Main_Page), [ModTweaker](https://minetweaker3.aizistral.com/wiki/ModTweaker) and [ContentTweaker](https://minetweaker3.aizistral.com/wiki/ContentTweaker)
+- Formatted output (for easy debugging)
+- Includes support for:
+  - Applied Energistics 2
+  - Avaritia
+  - Blood Magic
+  - Ex Nihilo
+  - Extra Utilities
+  - Forestry
+  - MineFactory Reloaded
+  - NEI
+  - Thermal Expansion
+  - Tinkers' Construct
 
 ## Example
 
@@ -43,9 +44,9 @@ import { add, remove, hide } from 'zen-flow';
 
 /**
  * recipes.addShaped(<minecraft:saddle>, [
- * 	[<minecraft:leather>, <minecraft:leather>, <minecraft:leather>],
- * 	[<ore:ingotIron>, <minecraft:string>, <ore:ingotIron>],
- * 	[null, null, null]
+ *  [<minecraft:leather>, <minecraft:leather>, <minecraft:leather>],
+ *  [<ore:ingotIron>, <minecraft:string>, <ore:ingotIron>],
+ *  [null, null, null]
  * ]);
  **/
 add({
@@ -58,9 +59,9 @@ add({
 
 /**
  * recipes.addShaped(<minecraft:saddle>, [
- * 	[null, <minecraft:leather>, null],
- * 	[<minecraft:leather>, null, <minecraft:leather>],
- * 	[null, <minecraft:leather>, null]
+ *  [null, <minecraft:leather>, null],
+ *  [<minecraft:leather>, null, <minecraft:leather>],
+ *  [null, <minecraft:leather>, null]
  * ]);
  **/
 add({
