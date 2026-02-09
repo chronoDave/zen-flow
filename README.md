@@ -34,6 +34,7 @@ npm i zen-flow -D
   - Forestry
   - MineFactory Reloaded
   - NEI
+  - Thaumcraft 4
   - Thermal Expansion
   - Tinkers' Construct
 
