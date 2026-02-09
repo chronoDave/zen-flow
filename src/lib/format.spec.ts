@@ -15,6 +15,12 @@ test('[format.literal] formats literal', t => {
   t.assert.equal(format.literal('Literal'), '"Literal"');
 });
 
+test('[format.list] formats list', t => {
+  t.assert.equal(format.list()(['a', 'b', 'c']), 'a, b, c');
+  t.assert.equal(format.list(3)(['a', 'b', 'c']), 'a, b, c');
+  t.assert.equal(format.list(1)(['a', 'b', 'c']), '\n\ta,\n\tb,\n\tc\n');
+});
+
 test('[format.id] formats id', t => {
   t.assert.equal(format.id('id'), 'id', 'string');
   t.assert.equal(format.id(''), '', 'empty');
@@ -31,6 +37,10 @@ test('[format.liquid] formats liquid', t => {
 
 test('[format.stack] formats stack', t => {
   t.assert.equal(format.stack({ id: 'stack', n: 3 }), 'stack * 3');
+});
+
+test('[format.aspect] formats aspect', t => {
+  t.assert.equal(format.aspect({ id: 'aspect', n: 3 }), 'aspect 3');
 });
 
 test('[format.array] formats array', t => {

@@ -1,9 +1,9 @@
 export const float = (n: number) => `${n}F`;
 export const short = (n: number) => `${n} as short`;
 export const literal = (x: string) => `"${x}"`;
-export const list = (n: number) =>
+export const list = (n?: number) =>
   (arr: unknown[]) => {
-    if (arr.length > n) return `\n\t${arr.join(',\n\t')}\n`;
+    if (typeof n === 'number' && arr.length > n) return `\n\t${arr.join(',\n\t')}\n`;
     return arr.join(', ');
   };
 export const array = (n: number) =>
@@ -15,6 +15,7 @@ export const weight = (weight: number) =>
 
 export type Stack = { id: string; n: number };
 export const stack = (stack: Stack) => `${stack.id} * ${stack.n}`;
+export const aspect = (stack: Stack) => `${stack.id} ${stack.n}`;
 
 export type Bonus = { id: string; p: number };
 export const bonus = (bonus: Bonus) => `${bonus.id} % ${Math.round(bonus.p * 100)}`;
