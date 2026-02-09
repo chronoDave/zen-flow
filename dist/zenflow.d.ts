@@ -1832,5 +1832,830 @@ declare const removeRitualMeteor: (input: string) => string;
  */
 declare const addRitualHarvest: (output: string) => (input: string) => string;
 
-export { COLOR, ENCHANTMENT, FOCI, HARVESTER_TYPE, MATERIAL, MODIFIER, STYLE, add, addAlchemy, addAltar, addBiomeRubberTree, addBlacklistAutospawner, addBloodOrb, addBloodOrbShaped, addBloodOrbShapeless, addCarpenter, addCastingBasin, addCastingTable, addCentrifuge, addChestLoot, addComposter, addCompressor, addCrucible, addCrucibleFuel, addDryingRack, addExtreme, addFabricator, addFabricatorGlass, addFermenter, addFermenterFuel, addFurnace, addFurnaceFuel, addGrinder, addHammer, addHarvester, addInductionSmelter, addInscriber, addInsolator, addLaser, addLaserFoci, addLaserOre, addMagmaCrucible, addMirror, addMoistener, addOreDict, addPlanter, addPress, addPulverizer, addQED, addRedstoneFurnace, addRepairMaterial, addRitualBinding, addRitualHarvest, addRitualMeteor, addSawmill, addSeed, addShaped, addShapeless, addSieve, addSludgeBoiler, addSmelteryAlloy, addSmelteryFluid, addSmelteryFuel, addSqueezer, addStill, addTransposerExtract, addTransposerFill, createBlock, createItem, createLiquid, createMaterial, hide, joinOreDict, mirrorOreDict, remove, removeAlchemy, removeAltar, removeBiomeRubberTree, removeBlacklistAutospawner, removeCarpenter, removeCastingBasin, removeCastingTable, removeCentrifuge, removeChestLoot, removeComposter, removeCompressor, removeCrucible, removeCrucibleFuel, removeDryingRack, removeExtreme, removeFabricator, removeFabricatorGlass, removeFermenter, removeFermenterFuel, removeFurnace, removeFurnaceFuel, removeGrinder, removeHammer, removeInductionSmelter, removeInsolator, removeLaserFoci, removeLaserOre, removeMagmaCrucible, removeModifier, removeMoistener, removeOreDict, removePressInscriber, removePulverizer, removeQED, removeRedstoneFurnace, removeRepairMaterial, removeRitualBinding, removeRitualMeteor, removeSawmill, removeSeed, removeShaped, removeShapeless, removeSieve, removeSludgeBoiler, removeSmelteryAlloy, removeSmelteryFluid, removeSmelteryFuel, removeSqueezer, removeStill, removeTransposerExtract, removeTransposerFill, rename, setArrowAccuracy, setArrowBreakChance, setArrowMass, setArrowStats, setBowMaterialDrawspeed, setBowMaterialDurability, setBowMaterialFlightSpeed, setBowMaterialStats, setLocalisation, setMaterialDamage, setMaterialDurability, setMaterialHandleModifier, setMaterialLevelStonebound, setMaterialMiningLevel, setMaterialName, setMaterialReinforcedLevel, setMaterialSpeed, setMaterialStats, setMaterialStyle, show, withEnchantment, withName, withTag, withTooltip, withTooltipShift, withWeight };
-export type { ArrowStats, Bonus, BonusHammer, BowStats, Cast, ChestLoot, Enchantment, Ingredient, Liquid, MaterialStats, RecipeAlchemy, RecipeAltar, RecipeBlock, RecipeCarpenter, RecipeCastingBasin, RecipeCastingTable, RecipeCentrifuge, RecipeComposter, RecipeCompressor, RecipeDryingRack, RecipeFabricator, RecipeFabricatorGlass, RecipeFermenter, RecipeFermenterFuel, RecipeFurnace, RecipeGrinder, RecipeHarvester, RecipeInductionSmelter, RecipeInsolator, RecipeItem, RecipeLaser, RecipeLiquid, RecipeLocalisation, RecipeMagmaCrucible, RecipeMaterial, RecipeMeteor, RecipeMoistener, RecipePressInscriber, RecipePulverizer, RecipeRedstoneFurnace, RecipeRepairMaterial, RecipeSawmill, RecipeSmelteryAlloy, RecipeSmelteryFluid, RecipeSmelteryFuel, RecipeSqueezer, RecipeStill, RecipeTransposerExtract, RecipeTransposerFill, Shaped, ShapedExtreme, Shapeless, Stack, Text, TextRich };
+type RecipeArcane = {
+    input: Shaped | Shapeless;
+    output: Ingredient;
+    /** Defaults to `"ASPECTS"` as this does not require research */
+    research?: string;
+    aspects: Stack[];
+};
+type RecipeArcaneShaped = RecipeArcane & {
+    input: Shaped;
+};
+declare const RESEARCH_CATEGORY: {
+    readonly basics: "BASICS";
+    readonly thaumaturgy: "THAUMATURGY";
+    readonly alchemy: "ALCHEMY";
+    readonly artifice: "ARTIFICE";
+    readonly golemancy: "GOLEMANCY";
+    readonly eldritch: "ELDRITCH";
+    readonly automagy: "AUTOMAGY";
+    readonly forbidden: "FORBIDDEN";
+};
+declare const RESEARCH: {
+    BASICS: {
+        warp: string;
+        research: string;
+        enchant: string;
+        nodes: string;
+        researchDupe: string;
+        ore: string;
+        aspects: string;
+        knowfrag: string;
+        researcher2: string;
+        crimson: string;
+        chestScan: string;
+        nodeJar: string;
+        researcher: string;
+        nodeTapper2: string;
+        deconstructor: string;
+        nodeTapper1: string;
+        thaumonomicon: string;
+        plants: string;
+        nodePreserve: string;
+        pech: string;
+    };
+    THAUMATURGY: {
+        nodeStabilizer: string;
+        replaceWandCore: string;
+        wandPedFoc: string;
+        vampBat: string;
+        rodBone: string;
+        basicThaumaturgy: string;
+        focusExcavation: string;
+        sceptre: string;
+        replaceWandCaps: string;
+        rodQuartzStaff: string;
+        focusHellBat: string;
+        visChargeRelay: string;
+        rodIce: string;
+        nodeStabilizeRadV: string;
+        rodReed: string;
+        rodGreatwoodStaff: string;
+        focusDisenchanting: string;
+        rodSilverwoodStaff: string;
+        focusFrost: string;
+        visAmulet: string;
+        focusManipulation: string;
+        focusFire: string;
+        capGold: string;
+        rodSilverwood: string;
+        visPower: string;
+        focusPouch: string;
+        capCopper: string;
+        rodReedStaff: string;
+        focusShock: string;
+        capSilver: string;
+        rodQuartz: string;
+        capIron: string;
+        focusWarding: string;
+        rodObsidian: string;
+        focusPortableHole: string;
+        capThaumium: string;
+        rodWood: string;
+        rodGreatwood: string;
+        rodBlaze: string;
+        rodBoneStaff: string;
+        rodObsidianStaff: string;
+        focusTrade: string;
+        rodIceStaff: string;
+        wandPed: string;
+        rodBlazeStaff: string;
+    };
+    ALCHEMY: {
+        alumentum: string;
+        bathSalts: string;
+        crucible: string;
+        entropicProcessing: string;
+        transIron: string;
+        thaumatorium: string;
+        alchemicManufacture: string;
+        liquidDeath: string;
+        tubes: string;
+        transTin: string;
+        saneSoap: string;
+        etherealBloom: string;
+        tallow: string;
+        pureSilver: string;
+        pureTin: string;
+        transCopper: string;
+        essentiaCrystal: string;
+        arcaneSpa: string;
+        centrifuge: string;
+        transSilver: string;
+        pureIron: string;
+        alchemicaDuplication: string;
+        jarVoid: string;
+        nitor: string;
+        bottleTaint: string;
+        pureGold: string;
+        distillEssentia: string;
+        phial: string;
+        tubeFilter: string;
+        pureLead: string;
+        thaumium: string;
+        transLead: string;
+        transGold: string;
+        pureCopper: string;
+        jarLabel: string;
+    };
+    ARTIFICE: {
+        runicEmergency: string;
+        goggles: string;
+        enchFabric: string;
+        elementalPick: string;
+        elementalAxe: string;
+        table: string;
+        infernalFurnace: string;
+        banners: string;
+        elementalShovel: string;
+        levitator: string;
+        hoverGirdle: string;
+        wardenArcana: string;
+        basicArtifice: string;
+        fluxScrub: string;
+        thaumometer: string;
+        bootsTraveller: string;
+        restable: string;
+        mirrorEssentia: string;
+        primalArrow: string;
+        arcaneEar: string;
+        grate: string;
+        runicCharged: string;
+        runicHealing: string;
+        hoverHarness: string;
+        mirror: string;
+        lampGrowth: string;
+        maskGrinningDevil: string;
+        elementalHoe: string;
+        mirrorHand: string;
+        arcTable: string;
+        infusion: string;
+        runicKinetic: string;
+        paveWard: string;
+        maskAngryGhost: string;
+        maskSippingFiend: string;
+        arcaneLamp: string;
+        armorFortress: string;
+        bellow: string;
+        helmGoggles: string;
+        runicArmor: string;
+        runicAugmentation: string;
+        lampFertility: string;
+        boneBow: string;
+        arcaneStone: string;
+        sinStone: string;
+        elementalSword: string;
+        paveTravel: string;
+        jarBrain: string;
+        arcaneBore: string;
+        infusionEnchantment: string;
+    };
+    GOLEMANCY: {
+        golemClay: string;
+        upgradeWater: string;
+        hungryChest: string;
+        golemTallow: string;
+        golemWood: string;
+        golemFlesh: string;
+        upgradeEarth: string;
+        tinyDart: string;
+        upgradeFire: string;
+        upgradeEntropy: string;
+        coreUse: string;
+        tinyHammer: string;
+        travelTrunk: string;
+        tinyBowtie: string;
+        golemBell: string;
+        coreSorting: string;
+        golemThaumium: string;
+        tinyHat: string;
+        tinyFez: string;
+        coreLumber: string;
+        tinyGlasses: string;
+        tinyVisor: string;
+        upgradeAir: string;
+        coreFishing: string;
+        coreGather: string;
+        coreHarvest: string;
+        coreButcher: string;
+        coreGuard: string;
+        advancedGolem: string;
+        tinyArmor: string;
+        coreFill: string;
+        golemFetter: string;
+        golemStraw: string;
+        corealAlchemy: string;
+        golemStone: string;
+        golemIron: string;
+        coreLiquid: string;
+        coreEmpty: string;
+        upgradeOrder: string;
+    };
+    ELDRITCH: {
+        eldritchMajor: string;
+        advAlchemyFurnace: string;
+        armorVoidFortress: string;
+        eldritchMinor: string;
+        enterOuter: string;
+        focusPrimal: string;
+        essentiaReservoir: string;
+        sanityCheck: string;
+        rodPrimalStaff: string;
+        oculus: string;
+        outerRev: string;
+        primalCrusher: string;
+        primPearl: string;
+        primNode: string;
+        capVoid: string;
+        voidMetal: string;
+    };
+    AUTOMAGY: {
+        redCrystal: string;
+        golemLinker: string;
+        netherruneWisp: string;
+        mobLure: string;
+        dimensionLUre: string;
+        advNodeJar: string;
+        tallyBlockLens: string;
+        netherruneGhast: string;
+        netherruneBat: string;
+        sliversTravel: string;
+        remoteComparator: string;
+        essentiaLocusAggregator: string;
+        mirrorInput: string;
+        redCrystalDim: string;
+        redCrystalMirrorbound: string;
+        thirstyTank: string;
+        eagerChest: string;
+        thirstyTankGlyphBovine: string;
+        netherruneLight: string;
+        hungryMaw: string;
+        alchemyBoiler: string;
+        entitySignal: string;
+        netherruneSlime: string;
+        netherruneZombie: string;
+        xpStone: string;
+        greedyChest: string;
+        golemWorkbench: string;
+        netherruneSoul: string;
+        mirrorMultiDest: string;
+        enderDisjunction: string;
+        invetariumDelivery: string;
+        slivers: string;
+        enchantFishing: string;
+        netherruneCelerity: string;
+        thirstyTankGlyp: string;
+        crystalBrain: string;
+        vishroomSoup: string;
+        nitorLight: string;
+        inventarium: string;
+        inventariumPointer: string;
+        redCrystalRez: string;
+        entropicRefining: string;
+        golemWorkbenchUpgrade: string;
+        focusCrafting: string;
+        enchantedPaper: string;
+        autoHandMirror: string;
+        redstoneTheory: string;
+        netherruneSkeleton: string;
+        essentiaLocus: string;
+        magicHourglass: string;
+        amnesiaStone: string;
+        focusCraftingUpgrade: string;
+        redCrystalAmp: string;
+        inventarumExtra: string;
+        netherruneCrystal: string;
+        thaumostaticRefueler: string;
+        tallyBlock: string;
+        netherMind: string;
+        visReader: string;
+        finiCalMaw: string;
+        avaricious: string;
+        tenaciousChest: string;
+        redCrystalDense: string;
+        sliversWarding: string;
+        golemInhibitor: string;
+    };
+    FORBIDDEN: {
+        skullAxe: string;
+        bloodRapier: string;
+        arcaneCake: string;
+        taintPick: string;
+        taintTree: string;
+        wrath: string;
+        schools: string;
+        transEmerald: string;
+        hellFire: string;
+        voidToucher: string;
+        rodTainted: string;
+        eldritchOrb: string;
+        bloodWell: string;
+        consuming: string;
+        cluster: string;
+        subCollar: string;
+        bloodMagic: string;
+        rodInfernal: string;
+        crystalWell: string;
+        fork: string;
+        rodBloodStaff: string;
+        ringFood: string;
+        corrupting: string;
+        taintStone: string;
+        rodBlood: string;
+        capAlchemical: string;
+        ridingCrop: string;
+        netherShards: string;
+        primeWell: string;
+        greedy: string;
+        educational: string;
+        rodProfane: string;
+        impact: string;
+        wrathCage: string;
+        blackFlower: string;
+        morphTools: string;
+        taintShovel: string;
+        focusBlink: string;
+    };
+};
+declare const ASPECT: {
+    readonly aer: "aer";
+    readonly terra: "terra";
+    readonly ignis: "ignis";
+    readonly aqua: "aqua";
+    readonly ordo: "ordo";
+    readonly perditio: "perditio";
+    readonly vacuos: "vacuos";
+    readonly lux: "lux";
+    readonly tempestas: "tempestas";
+    readonly motus: "motus";
+    readonly gelum: "gelum";
+    readonly vitreus: "vitreus";
+    readonly victus: "victus";
+    readonly venenum: "venenum";
+    readonly potentia: "potentia";
+    readonly permutatio: "permutatio";
+    readonly metallum: "metallum";
+    readonly mortuus: "mortuus";
+    readonly volatus: "volatus";
+    readonly tenebrae: "tenebrae";
+    readonly spiritus: "spiritus";
+    readonly sano: "sano";
+    readonly iter: "iter";
+    readonly alienis: "alienis";
+    readonly praecantatio: "praecantatio";
+    readonly auram: "auram";
+    readonly vitium: "vitium";
+    readonly limus: "limus";
+    readonly herba: "herba";
+    readonly arbor: "arbor";
+    readonly bestia: "bestia";
+    readonly corpus: "corpus";
+    readonly exanimis: "exanimis";
+    readonly cognitio: "cognitio";
+    readonly sensus: "sensus";
+    readonly humanus: "humanus";
+    readonly messis: "messis";
+    readonly perfodio: "perfodio";
+    readonly instrumentum: "instrumentum";
+    readonly meto: "meto";
+    readonly telum: "telum";
+    readonly tutamen: "tutamen";
+    readonly fames: "fames";
+    readonly lucrum: "lucrum";
+    readonly fabrico: "fabrico";
+    readonly pannus: "pannus";
+    readonly machina: "machina";
+    readonly vinculum: "vinculum";
+    readonly luxuria: "luxuria";
+    readonly infernus: "infernus";
+    readonly superbia: "superbia";
+    readonly gula: "gula";
+    readonly invidia: "invidia";
+    readonly desidia: "desidia";
+    readonly ira: "ira";
+};
+/**
+ * Add shaped [Arcane Worktable](https://ftbwiki.org/Arcane_Worktable_(Thaumcraft_4)) recipe
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addArcaneShaped: (recipe: RecipeArcaneShaped) => string;
+type RecipeArcaneShapeless = RecipeArcane & {
+    input: Shapeless;
+};
+/**
+ * Add shapeless [Arcane Worktable](https://ftbwiki.org/Arcane_Worktable_(Thaumcraft_4)) recipe
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addArcaneShapeless: (recipe: RecipeArcaneShapeless) => string;
+/**
+ * Add [Arcane Worktable](https://ftbwiki.org/Arcane_Worktable_(Thaumcraft_4)) recipe
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addArcane: (recipe: RecipeArcane) => string;
+/**
+ * Remove [Arcane Worktable](https://ftbwiki.org/Arcane_Worktable_(Thaumcraft_4)) recipe
+ *
+ * **Note**: Some recipes might not be removable
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const removeArcane: (output: string) => string;
+/**
+ * Add item [Aspects](https://ftbwiki.org/List_of_Aspects_(Thaumcraft_4))
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addAspectItem: (id: string) => (aspects: Stack[]) => string;
+/**
+ * Set item [Aspects](https://ftbwiki.org/List_of_Aspects_(Thaumcraft_4))
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const setAspectItem: (id: string) => (aspects: Stack[]) => string;
+/**
+ * Remove item [Aspects](https://ftbwiki.org/List_of_Aspects_(Thaumcraft_4))
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const removeAspectItem: (id: string) => (aspects: Stack[]) => string;
+/**
+ * Add entity [Aspects](https://ftbwiki.org/List_of_Aspects_(Thaumcraft_4))
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addAspectEntity: (id: string) => (aspects: Stack[]) => string;
+/**
+ * Set entity [Aspects](https://ftbwiki.org/List_of_Aspects_(Thaumcraft_4))
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const setAspectEntity: (id: string) => (aspects: Stack[]) => string;
+/**
+ * Remove entity [Aspects](https://ftbwiki.org/List_of_Aspects_(Thaumcraft_4))
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const removeAspectEntity: (id: string) => (aspects: Stack[]) => string;
+type RecipeCrucibleAlchemy = {
+    input: Ingredient;
+    output: Ingredient;
+    research: string;
+    aspects: Stack[];
+};
+/**
+ * Add [Crucible](https://ftbwiki.org/Crucible_(Thaumcraft_4)) recipe
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addCrucibleAlchemy: (recipe: RecipeCrucibleAlchemy) => string;
+/**
+ * Remove [Crucible](https://ftbwiki.org/Crucible_(Thaumcraft_4)) recipe
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const removeCrucibleAlchemy: (output: string) => string;
+type RecipeInfusion = {
+    input: string;
+    catalysts: string[];
+    output: Ingredient;
+    research: string;
+    aspects: Stack[];
+    instability: number;
+};
+/**
+ * Add [Infusion](https://thaumcraft-4.fandom.com/wiki/Infusion) recipe
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addInfusion: (recipe: RecipeInfusion) => string;
+/**
+ * Remove [Infusion](https://thaumcraft-4.fandom.com/wiki/Infusion) recipe
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const removeInfusion: (id: string) => string;
+type RecipeInfusionEnchantment = {
+    catalysts: string[];
+    research: string;
+    aspects: Stack[];
+    enchantment: number;
+    instability: number;
+};
+/**
+ * Add [Infusion Enchanting](https://thaumcraft-4.fandom.com/wiki/Infusion_Enchanting) recipe
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addInfusionEnchantment: (recipe: RecipeInfusionEnchantment) => string;
+/**
+ * Remove [Infusion Enchanting](https://thaumcraft-4.fandom.com/wiki/Infusion_Enchanting) recipe
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const removeInfusionEnchantment: (id: number) => string;
+/**
+ * Add to [Common Treasure](https://ftbwiki.org/Common_Treasure) loot table
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addLootCommon: (bonus: Bonus) => string;
+/**
+ * Add to [Uncommon Treasure](https://ftbwiki.org/Uncommon_Treasure) loot table
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addLootUncommon: (bonus: Bonus) => string;
+/**
+ * Add to [Rare Treasure](https://ftbwiki.org/Rare_Treasure) loot table
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addLootRare: (bonus: Bonus) => string;
+/**
+ * Remove from [Common Treasure](https://ftbwiki.org/Common_Treasure) loot table
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const removeLootCommon: (id: string) => string;
+/**
+ * Remove from [Uncommon Treasure](https://ftbwiki.org/Uncommon_Treasure) loot table
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const removeLootUncommon: (id: string) => string;
+/**
+ * Remove from [Rare Treasure](https://ftbwiki.org/Rare_Treasure) loot table
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const removeLootRare: (id: string) => string;
+/**
+ * Add [Research Warp](https://thaumcraft-4.fandom.com/wiki/Warp#Warp_from_research_and_crafting)
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addWarpResearch: (research: string) => (warp: number) => string;
+/**
+ * Add [Item Warp](https://thaumcraft-4.fandom.com/wiki/Warp#Item_warp)
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const addWarpItem: (id: string) => (warp: number) => string;
+/**
+ * Remove [Research Warp](https://thaumcraft-4.fandom.com/wiki/Warp#Warp_from_research_and_crafting)
+ *
+ * Removes all Remove [Research Warp](https://thaumcraft-4.fandom.com/wiki/Warp#Warp_from_research_and_crafting) if `research` is `undefined`
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const removeWarpResearch: (research?: string) => string;
+/**
+ * Remove [Item Warp](https://thaumcraft-4.fandom.com/wiki/Warp#Item_warp)
+ *
+ * Removes all [Item Warp](https://thaumcraft-4.fandom.com/wiki/Warp#Item_warp) if `id` is `undefined`
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const removeWarpItem: (id?: string) => string;
+/**
+ * Remove all [Item](https://thaumcraft-4.fandom.com/wiki/Warp#Item_warp) and [Research Warp](https://thaumcraft-4.fandom.com/wiki/Warp#Warp_from_research_and_crafting)
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support
+ */
+declare const removeWarp: () => string;
+/**
+ * Remove [Research](https://thaumcraft-4.fandom.com/wiki/Research) from dependencies
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const orphanResearch: (research: string) => string;
+/**
+ * Remove [Research](https://thaumcraft-4.fandom.com/wiki/Research)
+ *
+ * **Note**: Thaumonomicon will crash if research is required. Use `orphanResearch` to clear dependencies
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const removeResearch: (research: string) => string;
+/**
+ * Remove [Research](https://thaumcraft-4.fandom.com/wiki/Research) tab
+ *
+ * **Note**: Thaumonomicon will crash if research within the tab is required. Use `orphanResearch` on all research to clear dependencies
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const removeResearchTab: (tab: string) => string;
+type Texture = {
+    domain: string;
+    path: string;
+};
+type RecipeResearchTab = {
+    id: string;
+    icon: Texture;
+    bg?: Texture;
+};
+/**
+ * Add [Research](https://thaumcraft-4.fandom.com/wiki/Research) tab
+ *
+ * Creates `tc.research_category.<id>` localization key
+ *
+ * Texture paths are formatted as `/textures/` + `<texture.domain>` + `/` + `<texture.path>`
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const addResearchTab: (recipe: RecipeResearchTab) => string;
+type RecipeResearch = {
+    id: string;
+    tab: string;
+    aspects?: Stack[];
+    /** Negative moves left, positive moves right */
+    x: number;
+    /** Negative moves up, positive moves down */
+    y: number;
+    /** Typically between 0 and 15 */
+    complexity: number;
+    /** Item ID */
+    icon: string;
+};
+/**
+ * Add [Research](https://thaumcraft-4.fandom.com/wiki/Research)
+ *
+ * Creates `tc.research_name.<id>` (title) and `tc.research_text.<id>` (tooltip) localization keys
+ *
+ * **Note**: Requires pages, will crash otherwise
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const addResearch: (recipe: RecipeResearch) => string;
+/**
+ * Add [Research](https://thaumcraft-4.fandom.com/wiki/Research) page
+ *
+ * Creates `tc.research_page.<id>` localization key
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const addResearchPage: (id: string) => string;
+type TextResearchImage = {
+    src: Texture;
+    x?: number;
+    y?: number;
+    w?: number;
+    h?: number;
+    scale?: number;
+};
+type TextResearch = string | TextResearchImage;
+declare const formatResearchPage: (...lines: Array<string | TextResearch[]>) => string;
+/**
+ * Add crafting [Research](https://thaumcraft-4.fandom.com/wiki/Research) page
+ *
+ * **Note**: Displays the first crafting recipe found
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const addResearchPageCrafting: (research: string) => (id: string) => string;
+/**
+ * Add arcane crafting [Research](https://thaumcraft-4.fandom.com/wiki/Research) page
+ *
+ * **Note**: Displays the first arcane crafting recipe found
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const addResearchPageArcane: (research: string) => (id: string) => string;
+/**
+ * Add crucible [Research](https://thaumcraft-4.fandom.com/wiki/Research) page
+ *
+ * **Note**: Displays the first crucible recipe found
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const addResearchPageCrucible: (research: string) => (id: string) => string;
+/**
+ * Add infusion [Research](https://thaumcraft-4.fandom.com/wiki/Research) page
+ *
+ * **Note**: Displays the first infusion recipe found
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const addResearchPageInfusion: (research: string) => (id: string) => string;
+/**
+ * Add infusion enchanting [Research](https://thaumcraft-4.fandom.com/wiki/Research) page
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const addResearchPageEnchantment: (research: string) => (enchantment: number) => string;
+/**
+ * Add [Research](https://thaumcraft-4.fandom.com/wiki/Research) requirement
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const addResearchRequirement: (research: string) => (requirement: string | {
+    id: string;
+    hidden: boolean;
+}) => string;
+/**
+ * Add [Research](https://thaumcraft-4.fandom.com/wiki/Research) sibling
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const addResearchSibling: (research: string) => (sibling: string) => string;
+/**
+ * Remove [Research](https://thaumcraft-4.fandom.com/wiki/Research) requirement
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const removeResearchRequirement: (research: string) => string;
+/**
+ * Remove [Research](https://thaumcraft-4.fandom.com/wiki/Research) sibling
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const removeResearchSibling: (research: string) => string;
+/**
+ * Set [Research](https://thaumcraft-4.fandom.com/wiki/Research) type to `round`.
+ * Research has a round icon in the Thaumonomicon. Usually for non-recipe researches or auto-unlocked researches.
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const setResearchTypeRound: (research: string) => (enabled: boolean) => string;
+/**
+ * Set [Research](https://thaumcraft-4.fandom.com/wiki/Research) type to `spikey`.
+ * Research has spikes around its icon. Generally for indicating that a research is important.
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const setResearchTypeSpikey: (research: string) => (enabled: boolean) => string;
+/**
+ * Set [Research](https://thaumcraft-4.fandom.com/wiki/Research) type to `stub`.
+ * Research cannot be researched by the player. Generally for researches that are unlocked other ways such as Siblings or auto-unlock.
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const setResearchTypeStub: (research: string) => (enabled: boolean) => string;
+/**
+ * Set [Research](https://thaumcraft-4.fandom.com/wiki/Research) type to `secondary`.
+ * Research has an octagonal icon in the Thaumonomicon and is purchased with points instead of researched.
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const setResearchTypeSecondary: (research: string) => (enabled: boolean) => string;
+/**
+ * Set [Research](https://thaumcraft-4.fandom.com/wiki/Research) type to `virtual`.
+ * Research does not really exist and cannot be researched. Used as "parent" research that cannot normally be unlocked.
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const setResearchTypeVirtual: (research: string) => (enabled: boolean) => string;
+/**
+ * Set [Research](https://thaumcraft-4.fandom.com/wiki/Research) type to `auto-unlock`.
+ * Research starts out already unlocked.
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const setResearchTypeAuto: (research: string) => (enabled: boolean) => string;
+/**
+ * Set [Research](https://thaumcraft-4.fandom.com/wiki/Research) type to `concealed`.
+ * Research does not appear in the Thaumonomicon until its parent researches are completed. Used for most researches by default.
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const setResearchTypeHidden: (research: string) => (enabled: boolean) => string;
+/**
+ * Set required [Research](https://thaumcraft-4.fandom.com/wiki/Research) aspects
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const setResearchAspects: (research: string) => (aspects: Stack[]) => string;
+/**
+ * Set [Research](https://thaumcraft-4.fandom.com/wiki/Research) complexity
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const setResearchComplexity: (research: string) => (complexity: number) => string;
+/**
+ * Removes all [Research](https://thaumcraft-4.fandom.com/wiki/Research) pages
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const resetResearch: (research: string) => string;
+/**
+ * Clear [Research](https://thaumcraft-4.fandom.com/wiki/Research) cache.
+ *
+ * **Note**: This only works when the page type is unchanged, otherwise use `resetResearch` and manually add back missing pages.
+ *
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
+declare const refreshResearch: (research: string) => string;
+type RecipeResearchMove = {
+    research: string;
+    category: string;
+    x: number;
+    y: number;
+};
+declare const moveResearch: (recipe: RecipeResearchMove) => string;
+
+export { ASPECT, COLOR, ENCHANTMENT, FOCI, HARVESTER_TYPE, MATERIAL, MODIFIER, RESEARCH, RESEARCH_CATEGORY, STYLE, add, addAlchemy, addAltar, addArcane, addArcaneShaped, addArcaneShapeless, addAspectEntity, addAspectItem, addBiomeRubberTree, addBlacklistAutospawner, addBloodOrb, addBloodOrbShaped, addBloodOrbShapeless, addCarpenter, addCastingBasin, addCastingTable, addCentrifuge, addChestLoot, addComposter, addCompressor, addCrucible, addCrucibleAlchemy, addCrucibleFuel, addDryingRack, addExtreme, addFabricator, addFabricatorGlass, addFermenter, addFermenterFuel, addFurnace, addFurnaceFuel, addGrinder, addHammer, addHarvester, addInductionSmelter, addInfusion, addInfusionEnchantment, addInscriber, addInsolator, addLaser, addLaserFoci, addLaserOre, addLootCommon, addLootRare, addLootUncommon, addMagmaCrucible, addMirror, addMoistener, addOreDict, addPlanter, addPress, addPulverizer, addQED, addRedstoneFurnace, addRepairMaterial, addResearch, addResearchPage, addResearchPageArcane, addResearchPageCrafting, addResearchPageCrucible, addResearchPageEnchantment, addResearchPageInfusion, addResearchRequirement, addResearchSibling, addResearchTab, addRitualBinding, addRitualHarvest, addRitualMeteor, addSawmill, addSeed, addShaped, addShapeless, addSieve, addSludgeBoiler, addSmelteryAlloy, addSmelteryFluid, addSmelteryFuel, addSqueezer, addStill, addTransposerExtract, addTransposerFill, addWarpItem, addWarpResearch, createBlock, createItem, createLiquid, createMaterial, formatResearchPage, hide, joinOreDict, mirrorOreDict, moveResearch, orphanResearch, refreshResearch, remove, removeAlchemy, removeAltar, removeArcane, removeAspectEntity, removeAspectItem, removeBiomeRubberTree, removeBlacklistAutospawner, removeCarpenter, removeCastingBasin, removeCastingTable, removeCentrifuge, removeChestLoot, removeComposter, removeCompressor, removeCrucible, removeCrucibleAlchemy, removeCrucibleFuel, removeDryingRack, removeExtreme, removeFabricator, removeFabricatorGlass, removeFermenter, removeFermenterFuel, removeFurnace, removeFurnaceFuel, removeGrinder, removeHammer, removeInductionSmelter, removeInfusion, removeInfusionEnchantment, removeInsolator, removeLaserFoci, removeLaserOre, removeLootCommon, removeLootRare, removeLootUncommon, removeMagmaCrucible, removeModifier, removeMoistener, removeOreDict, removePressInscriber, removePulverizer, removeQED, removeRedstoneFurnace, removeRepairMaterial, removeResearch, removeResearchRequirement, removeResearchSibling, removeResearchTab, removeRitualBinding, removeRitualMeteor, removeSawmill, removeSeed, removeShaped, removeShapeless, removeSieve, removeSludgeBoiler, removeSmelteryAlloy, removeSmelteryFluid, removeSmelteryFuel, removeSqueezer, removeStill, removeTransposerExtract, removeTransposerFill, removeWarp, removeWarpItem, removeWarpResearch, rename, resetResearch, setArrowAccuracy, setArrowBreakChance, setArrowMass, setArrowStats, setAspectEntity, setAspectItem, setBowMaterialDrawspeed, setBowMaterialDurability, setBowMaterialFlightSpeed, setBowMaterialStats, setLocalisation, setMaterialDamage, setMaterialDurability, setMaterialHandleModifier, setMaterialLevelStonebound, setMaterialMiningLevel, setMaterialName, setMaterialReinforcedLevel, setMaterialSpeed, setMaterialStats, setMaterialStyle, setResearchAspects, setResearchComplexity, setResearchTypeAuto, setResearchTypeHidden, setResearchTypeRound, setResearchTypeSecondary, setResearchTypeSpikey, setResearchTypeStub, setResearchTypeVirtual, show, withEnchantment, withName, withTag, withTooltip, withTooltipShift, withWeight };
+export type { ArrowStats, Bonus, BonusHammer, BowStats, Cast, ChestLoot, Enchantment, Ingredient, Liquid, MaterialStats, RecipeAlchemy, RecipeAltar, RecipeArcane, RecipeArcaneShaped, RecipeArcaneShapeless, RecipeBlock, RecipeCarpenter, RecipeCastingBasin, RecipeCastingTable, RecipeCentrifuge, RecipeComposter, RecipeCompressor, RecipeCrucibleAlchemy, RecipeDryingRack, RecipeFabricator, RecipeFabricatorGlass, RecipeFermenter, RecipeFermenterFuel, RecipeFurnace, RecipeGrinder, RecipeHarvester, RecipeInductionSmelter, RecipeInfusion, RecipeInfusionEnchantment, RecipeInsolator, RecipeItem, RecipeLaser, RecipeLiquid, RecipeLocalisation, RecipeMagmaCrucible, RecipeMaterial, RecipeMeteor, RecipeMoistener, RecipePressInscriber, RecipePulverizer, RecipeRedstoneFurnace, RecipeRepairMaterial, RecipeResearch, RecipeResearchMove, RecipeResearchTab, RecipeSawmill, RecipeSmelteryAlloy, RecipeSmelteryFluid, RecipeSmelteryFuel, RecipeSqueezer, RecipeStill, RecipeTransposerExtract, RecipeTransposerFill, Shaped, ShapedExtreme, Shapeless, Stack, Text, TextResearch, TextResearchImage, TextRich, Texture };

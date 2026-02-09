@@ -3,7 +3,7 @@ import util from 'node:util';
 const float = (n) => `${n}F`;
 const literal = (x) => `"${x}"`;
 const list = (n) => (arr) => {
-  if (arr.length > n) return `
+  if (typeof n === "number" && arr.length > n) return `
 	${arr.join(",\n	")}
 `;
   return arr.join(", ");
@@ -12,6 +12,7 @@ const array = (n) => (arr) => `[${list(n)(arr)}]`;
 const id = (id2) => typeof id2 === "string" ? id2 : "null";
 const weight = (weight2) => (id2) => `${id2}.weight(${weight2})`;
 const stack = (stack2) => `${stack2.id} * ${stack2.n}`;
+const aspect = (stack2) => `${stack2.id} ${stack2.n}`;
 const bonus$1 = (bonus2) => `${bonus2.id} % ${Math.round(bonus2.p * 100)}`;
 const liquid = (liquid2) => {
   if (!liquid2.id.startsWith("<liquid:")) throw new Error("ID is not a liquid");
@@ -896,4 +897,559 @@ const addRitualMeteor = (recipe$1) => {
 const removeRitualMeteor = (input) => `mods.bloodmagic.FallingTower.removeFocus(${input});`;
 const addRitualHarvest = (output) => (input) => `mods.bloodmagic.HarvestMoon.addHarvestable(${recipe(output, input)});`;
 
-export { COLOR, ENCHANTMENT, FOCI, HARVESTER_TYPE, MATERIAL, MODIFIER, STYLE, add, addAlchemy, addAltar, addBiomeRubberTree, addBlacklistAutospawner, addBloodOrb, addBloodOrbShaped, addBloodOrbShapeless, addCarpenter, addCastingBasin, addCastingTable, addCentrifuge, addChestLoot, addComposter, addCompressor, addCrucible, addCrucibleFuel, addDryingRack, addExtreme, addFabricator, addFabricatorGlass, addFermenter, addFermenterFuel, addFurnace, addFurnaceFuel, addGrinder, addHammer, addHarvester, addInductionSmelter, addInscriber, addInsolator, addLaser, addLaserFoci, addLaserOre, addMagmaCrucible, addMirror, addMoistener, addOreDict, addPlanter, addPress, addPulverizer, addQED, addRedstoneFurnace, addRepairMaterial, addRitualBinding, addRitualHarvest, addRitualMeteor, addSawmill, addSeed, addShaped, addShapeless, addSieve, addSludgeBoiler, addSmelteryAlloy, addSmelteryFluid, addSmelteryFuel, addSqueezer, addStill, addTransposerExtract, addTransposerFill, createBlock, createItem, createLiquid, createMaterial, hide, joinOreDict, mirrorOreDict, remove, removeAlchemy, removeAltar, removeBiomeRubberTree, removeBlacklistAutospawner, removeCarpenter, removeCastingBasin, removeCastingTable, removeCentrifuge, removeChestLoot, removeComposter, removeCompressor, removeCrucible, removeCrucibleFuel, removeDryingRack, removeExtreme, removeFabricator, removeFabricatorGlass, removeFermenter, removeFermenterFuel, removeFurnace, removeFurnaceFuel, removeGrinder, removeHammer, removeInductionSmelter, removeInsolator, removeLaserFoci, removeLaserOre, removeMagmaCrucible, removeModifier, removeMoistener, removeOreDict, removePressInscriber, removePulverizer, removeQED, removeRedstoneFurnace, removeRepairMaterial, removeRitualBinding, removeRitualMeteor, removeSawmill, removeSeed, removeShaped, removeShapeless, removeSieve, removeSludgeBoiler, removeSmelteryAlloy, removeSmelteryFluid, removeSmelteryFuel, removeSqueezer, removeStill, removeTransposerExtract, removeTransposerFill, rename, setArrowAccuracy, setArrowBreakChance, setArrowMass, setArrowStats, setBowMaterialDrawspeed, setBowMaterialDurability, setBowMaterialFlightSpeed, setBowMaterialStats, setLocalisation, setMaterialDamage, setMaterialDurability, setMaterialHandleModifier, setMaterialLevelStonebound, setMaterialMiningLevel, setMaterialName, setMaterialReinforcedLevel, setMaterialSpeed, setMaterialStats, setMaterialStyle, show, withEnchantment, withName, withTag, withTooltip, withTooltipShift, withWeight };
+const formatAspects = (aspects) => literal(list()(aspects.map(aspect)));
+const RESEARCH_CATEGORY = {
+  basics: "BASICS",
+  thaumaturgy: "THAUMATURGY",
+  alchemy: "ALCHEMY",
+  artifice: "ARTIFICE",
+  golemancy: "GOLEMANCY",
+  eldritch: "ELDRITCH",
+  automagy: "AUTOMAGY",
+  forbidden: "FORBIDDEN"
+};
+const RESEARCH = {
+  [RESEARCH_CATEGORY.basics]: {
+    warp: "WARP",
+    research: "RESEARCH",
+    enchant: "ENCHANT",
+    nodes: "NODES",
+    researchDupe: "RESEARCHDUPE",
+    ore: "ORE",
+    aspects: "ASPECTS",
+    knowfrag: "KNOWFRAG",
+    researcher2: "RESEARCHER2",
+    crimson: "CRIMSON",
+    chestScan: "salisarcana:CHESTSCAN",
+    nodeJar: "NODEJAR",
+    researcher: "RESEARCHER1",
+    nodeTapper2: "NODETAPPER2",
+    deconstructor: "DECONSTRUCTOR",
+    nodeTapper1: "NODETAPPER1",
+    thaumonomicon: "THAUMONOMICON",
+    plants: "PLANTS",
+    nodePreserve: "NODEPRESERVE",
+    pech: "PECH"
+  },
+  [RESEARCH_CATEGORY.thaumaturgy]: {
+    nodeStabilizer: "NODESTABILIZER",
+    replaceWandCore: "salisarcana:REPLACEWANDCORE",
+    wandPedFoc: "WANDPEDFOC",
+    vampBat: "VAMPBAT",
+    rodBone: "ROD_bone",
+    basicThaumaturgy: "BASICTHAUMATURGY",
+    focusExcavation: "FOCUSEXCAVATION",
+    sceptre: "SCEPTRE",
+    replaceWandCaps: "salisarcana:REPLACEWANDCAPS",
+    rodQuartzStaff: "ROD_quartz_staff",
+    focusHellBat: "FOCUSHELLBAT",
+    visChargeRelay: "VISCHARGERELAY",
+    rodIce: "ROD_ice",
+    nodeStabilizeRadV: "NODESTABILIZERADV",
+    rodReed: "ROD_reed",
+    rodGreatwoodStaff: "ROD_greatwood_staff",
+    focusDisenchanting: "salisarcana:FOCUS_DISENCHANTING",
+    rodSilverwoodStaff: "ROD_silverwood_staff",
+    focusFrost: "FOCUSFROST",
+    visAmulet: "VISAMULET",
+    focusManipulation: "FOCALMANIPULATION",
+    focusFire: "FOCUSFIRE",
+    capGold: "CAP_gold",
+    rodSilverwood: "ROD_silverwood",
+    visPower: "VISPOWER",
+    focusPouch: "FOCUSPOUCH",
+    capCopper: "CAP_copper",
+    rodReedStaff: "ROD_reed_staff",
+    focusShock: "FOCUSSHOCK",
+    capSilver: "CAP_silver",
+    rodQuartz: "ROD_quartz",
+    capIron: "CAP_iron",
+    focusWarding: "FOCUSWARDING",
+    rodObsidian: "ROD_obsidian",
+    focusPortableHole: "FOCUSPORTABLEHOLE",
+    capThaumium: "CAP_thaumium",
+    rodWood: "ROD_wood",
+    rodGreatwood: "ROD_greatwood",
+    rodBlaze: "ROD_blaze",
+    rodBoneStaff: "ROD_bone_staff",
+    rodObsidianStaff: "ROD_obsidian_staff",
+    focusTrade: "FOCUSTRADE",
+    rodIceStaff: "ROD_ice_staff",
+    wandPed: "WANDPED",
+    rodBlazeStaff: "ROD_blaze_staff"
+  },
+  [RESEARCH_CATEGORY.alchemy]: {
+    alumentum: "ALUMENTUM",
+    bathSalts: "BATHSALTS",
+    crucible: "CRUCIBLE",
+    entropicProcessing: "ENTROPICPROCESSING",
+    transIron: "TRANSIRON",
+    thaumatorium: "THAUMATORIUM",
+    alchemicManufacture: "ALCHEMICALMANUFACTURE",
+    liquidDeath: "LIQUIDDEATH",
+    tubes: "TUBES",
+    transTin: "TRANSTIN",
+    saneSoap: "SANESOAP",
+    etherealBloom: "ETHEREALBLOOM",
+    tallow: "TALLOW",
+    pureSilver: "PURESILVER",
+    pureTin: "PURETIN",
+    transCopper: "TRANSCOPPER",
+    essentiaCrystal: "ESSENTIACRYSTAL",
+    arcaneSpa: "ARCANESPA",
+    centrifuge: "CENTRIFUGE",
+    transSilver: "TRANSSILVER",
+    pureIron: "PUREIRON",
+    alchemicaDuplication: "ALCHEMICALDUPLICATION",
+    jarVoid: "JARVOID",
+    nitor: "NITOR",
+    bottleTaint: "BOTTLETAINT",
+    pureGold: "PUREGOLD",
+    distillEssentia: "DISTILESSENTIA",
+    phial: "PHIAL",
+    tubeFilter: "TUBEFILTER",
+    pureLead: "PURELEAD",
+    thaumium: "THAUMIUM",
+    transLead: "TRANSLEAD",
+    transGold: "TRANSGOLD",
+    pureCopper: "PURECOPPER",
+    jarLabel: "JARLABEL"
+  },
+  [RESEARCH_CATEGORY.artifice]: {
+    runicEmergency: "RUNICEMERGENCY",
+    goggles: "GOGGLES",
+    enchFabric: "ENCHFABRIC",
+    elementalPick: "ELEMENTALPICK",
+    elementalAxe: "ELEMENTALAXE",
+    table: "TABLE",
+    infernalFurnace: "INFERNALFURNACE",
+    banners: "BANNERS",
+    elementalShovel: "ELEMENTALSHOVEL",
+    levitator: "LEVITATOR",
+    hoverGirdle: "HOVERGIRDLE",
+    wardenArcana: "WARDEDARCANA",
+    basicArtifice: "BASICARTIFACE",
+    fluxScrub: "FLUXSCRUB",
+    thaumometer: "THAUMOMETER",
+    bootsTraveller: "BOOTSTRAVELLER",
+    restable: "RESTABLE",
+    mirrorEssentia: "MIRRORESSENTIA",
+    primalArrow: "PRIMALARROW",
+    arcaneEar: "ARCANEEAR",
+    grate: "GRATE",
+    runicCharged: "RUNICCHARGED",
+    runicHealing: "RUNICHEALING",
+    hoverHarness: "HOVERHARNESS",
+    mirror: "MIRROR",
+    lampGrowth: "LAMPGROWTH",
+    maskGrinningDevil: "MASKGRINNINGDEVIL",
+    elementalHoe: "ELEMENTALHOE",
+    mirrorHand: "MIRRORHAND",
+    arcTable: "ARCTABLE",
+    infusion: "INFUSION",
+    runicKinetic: "RUNICKINETIC",
+    paveWard: "PAVEWARD",
+    maskAngryGhost: "MASKANGRYGHOST",
+    maskSippingFiend: "MASKSIPPINGFIEND",
+    arcaneLamp: "ARCANELAMP",
+    armorFortress: "ARMORFORTRESS",
+    bellow: "BELLOWS",
+    helmGoggles: "HELMGOGGLES",
+    runicArmor: "RUNICARMOR",
+    runicAugmentation: "RUNICAUGMENTATION",
+    lampFertility: "LAMPFERTILITY",
+    boneBow: "BONEBOW",
+    arcaneStone: "ARCANESTONE",
+    sinStone: "SINSTONE",
+    elementalSword: "ELEMENTALSWORD",
+    paveTravel: "PAVETRAVEL",
+    jarBrain: "JARBRAIN",
+    arcaneBore: "ARCANEBORE",
+    infusionEnchantment: "INFUSIONENCHANTMENT"
+  },
+  [RESEARCH_CATEGORY.golemancy]: {
+    golemClay: "GOLEMCLAY",
+    upgradeWater: "UPGRADEWATER",
+    hungryChest: "HUNGRYCHEST",
+    golemTallow: "GOLEMTALLOW",
+    golemWood: "GOLEMWOOD",
+    golemFlesh: "GOLEMFLESH",
+    upgradeEarth: "UPGRADEEARTH",
+    tinyDart: "TINYDART",
+    upgradeFire: "UPGRADEFIRE",
+    upgradeEntropy: "UPGRADEENTROPY",
+    coreUse: "COREUSE",
+    tinyHammer: "TINYHAMMER",
+    travelTrunk: "TRAVELTRUNK",
+    tinyBowtie: "TINYBOWTIE",
+    golemBell: "GOLEMBELL",
+    coreSorting: "CORESORTING",
+    golemThaumium: "GOLEMTHAUMIUM",
+    tinyHat: "TINYHAT",
+    tinyFez: "TINYFEZ",
+    coreLumber: "CORELUMBER",
+    tinyGlasses: "TINYGLASSES",
+    tinyVisor: "TINYVISOR",
+    upgradeAir: "UPGRADEAIR",
+    coreFishing: "COREFISHING",
+    coreGather: "COREGATHER",
+    coreHarvest: "COREHARVEST",
+    coreButcher: "COREBUTCHER",
+    coreGuard: "COREGUARD",
+    advancedGolem: "ADVANCEDGOLEM",
+    tinyArmor: "TINYARMOR",
+    coreFill: "COREFILL",
+    golemFetter: "GOLEMFETTER",
+    golemStraw: "GOLEMSTRAW",
+    corealAlchemy: "COREALCHEMY",
+    golemStone: "GOLEMSTONE",
+    golemIron: "GOLEMIRON",
+    coreLiquid: "CORELIQUID",
+    coreEmpty: "COREEMPTY",
+    upgradeOrder: "UPGRADEORDER"
+  },
+  [RESEARCH_CATEGORY.eldritch]: {
+    eldritchMajor: "ELDRITCHMAJOR",
+    advAlchemyFurnace: "ADVALCHEMYFURNACE",
+    armorVoidFortress: "ARMORVOIDFORTRESS",
+    eldritchMinor: "ELDRITCHMINOR",
+    enterOuter: "ENTEROUTER",
+    focusPrimal: "FOCUSPRIMAL",
+    essentiaReservoir: "ESSENTIARESERVOIR",
+    sanityCheck: "SANITYCHECK",
+    rodPrimalStaff: "ROD_primal_staff",
+    oculus: "OCULUS",
+    outerRev: "OUTERREV",
+    primalCrusher: "PRIMALCRUSHER",
+    primPearl: "PRIMPEARL",
+    primNode: "PRIMNODE",
+    capVoid: "CAP_void",
+    voidMetal: "VOIDMETAL"
+  },
+  [RESEARCH_CATEGORY.automagy]: {
+    redCrystal: "REDCRYSTAL",
+    golemLinker: "GOLEMLINKER",
+    netherruneWisp: "NETHERRUNE_WISP",
+    mobLure: "MOBLURE",
+    dimensionLUre: "DIMENSIONLURE",
+    advNodeJar: "ADVNODEJAR",
+    tallyBlockLens: "TALLYBLOCK_LENS",
+    netherruneGhast: "NETHERRUNE_GHAST",
+    netherruneBat: "NETHERRUNE_BAT",
+    sliversTravel: "SLIVERS_TRAVEL",
+    remoteComparator: "REMOTECOMPARATOR",
+    essentiaLocusAggregator: "ESSENTIALOCUSAGGREGATOR",
+    mirrorInput: "MIRRORINPUT",
+    redCrystalDim: "REDCRYSTAL_DIM",
+    redCrystalMirrorbound: "REDCRYSTAL_MIRRORBOUND",
+    thirstyTank: "THIRSTYTANK",
+    eagerChest: "EAGERCHEST",
+    thirstyTankGlyphBovine: "THIRSTYTANK_GLYPH_BOVINE",
+    netherruneLight: "NETHERRUNE_LIGHT",
+    hungryMaw: "HUNGRYMAW",
+    alchemyBoiler: "ALCHEMYBOILER",
+    entitySignal: "ENTITYSIGNAL",
+    netherruneSlime: "NETHERRUNE_SLIME",
+    netherruneZombie: "NETHERRUNE_ZOMBIE",
+    xpStone: "XPSTONE",
+    greedyChest: "GREEDYCHEST",
+    golemWorkbench: "GOLEMWORKBENCH",
+    netherruneSoul: "NETHERRUNE_SOUL",
+    mirrorMultiDest: "MIRRORMULTIDEST",
+    enderDisjunction: "ENDERDISJUNCTION",
+    invetariumDelivery: "INVENTARIUM_DELIVERY",
+    slivers: "SLIVERS",
+    enchantFishing: "ENCHANT_FISHING",
+    netherruneCelerity: "NETHERRUNE_CELERITY",
+    thirstyTankGlyp: "THIRSTYTANK_GLYPH",
+    crystalBrain: "CRYSTALBRAIN",
+    vishroomSoup: "VISHROOMSOUP",
+    nitorLight: "NITORLIGHT",
+    inventarium: "INVENTARIUM",
+    inventariumPointer: "INVENTARIUM_POINTER",
+    redCrystalRez: "REDCRYSTAL_RES",
+    entropicRefining: "ENTROPICREFINING",
+    golemWorkbenchUpgrade: "GOLEMWORKBENCH_UPGRADE",
+    focusCrafting: "FOCUSCRAFTING",
+    enchantedPaper: "ENCHANTEDPAPER",
+    autoHandMirror: "AUTOHANDMIRROR",
+    redstoneTheory: "REDSTONETHEORY",
+    netherruneSkeleton: "NETHERRUNE_SKELETON",
+    essentiaLocus: "ESSENTIALOCUS",
+    magicHourglass: "MAGICHOURGLASS",
+    amnesiaStone: "AMNESIASTONE",
+    focusCraftingUpgrade: "FOCUSCRAFTING_UPGRADE",
+    redCrystalAmp: "REDCRYSTAL_AMP",
+    inventarumExtra: "INVENTARIUM_EXTRA",
+    netherruneCrystal: "NETHERRUNE_CRYSTAL",
+    thaumostaticRefueler: "THAUMOSTATICREFUELER",
+    tallyBlock: "TALLYBLOCK",
+    netherMind: "NETHERMIND",
+    visReader: "VISREADER",
+    finiCalMaw: "FINICALMAW",
+    avaricious: "AVARICIOUS",
+    tenaciousChest: "TENACIOUSCHEST",
+    redCrystalDense: "REDCRYSTAL_DENSE",
+    sliversWarding: "SLIVERS_WARDING",
+    golemInhibitor: "GOLEMINHIBITOR"
+  },
+  [RESEARCH_CATEGORY.forbidden]: {
+    skullAxe: "SKULLAXE",
+    bloodRapier: "BLOODRAPIER",
+    arcaneCake: "ARCANECAKE",
+    taintPick: "TAINTPICK",
+    taintTree: "TAINTTREE",
+    wrath: "WRATH",
+    schools: "SCHOOLS",
+    transEmerald: "TRANSEMERALD",
+    hellFire: "HELLFIRE",
+    voidToucher: "VOIDTOUCHED",
+    rodTainted: "ROD_tainted",
+    eldritchOrb: "ELDRITCHORB",
+    bloodWell: "BLOODWELL",
+    consuming: "CONSUMING",
+    cluster: "CLUSTER",
+    subCollar: "SUBCOLLAR",
+    bloodMagic: "BLOODMAGIC",
+    rodInfernal: "ROD_infernal",
+    crystalWell: "CRYSTALWELL",
+    fork: "FORK",
+    rodBloodStaff: "ROD_blood_staff",
+    ringFood: "RINGFOOD",
+    corrupting: "CORRUPTING",
+    taintStone: "TAINTSTONE",
+    rodBlood: "ROD_blood",
+    capAlchemical: "CAP_alchemical",
+    ridingCrop: "RIDINGCROP",
+    netherShards: "NETHERSHARDS",
+    primeWell: "PRIMEWELL",
+    greedy: "GREEDY",
+    educational: "EDUCATIONAL",
+    rodProfane: "ROD_profane",
+    impact: "IMPACT",
+    wrathCage: "WRATHCAGE",
+    blackFlower: "BLACKFLOWER",
+    morphTools: "MORPHTOOLS",
+    taintShovel: "TAINTSHOVEL",
+    focusBlink: "FOCUSBLINK"
+  }
+};
+const ASPECT = {
+  aer: "aer",
+  terra: "terra",
+  ignis: "ignis",
+  aqua: "aqua",
+  ordo: "ordo",
+  perditio: "perditio",
+  vacuos: "vacuos",
+  lux: "lux",
+  tempestas: "tempestas",
+  motus: "motus",
+  gelum: "gelum",
+  vitreus: "vitreus",
+  victus: "victus",
+  venenum: "venenum",
+  potentia: "potentia",
+  permutatio: "permutatio",
+  metallum: "metallum",
+  mortuus: "mortuus",
+  volatus: "volatus",
+  tenebrae: "tenebrae",
+  spiritus: "spiritus",
+  sano: "sano",
+  iter: "iter",
+  alienis: "alienis",
+  praecantatio: "praecantatio",
+  auram: "auram",
+  vitium: "vitium",
+  limus: "limus",
+  herba: "herba",
+  arbor: "arbor",
+  bestia: "bestia",
+  corpus: "corpus",
+  exanimis: "exanimis",
+  cognitio: "cognitio",
+  sensus: "sensus",
+  humanus: "humanus",
+  messis: "messis",
+  perfodio: "perfodio",
+  instrumentum: "instrumentum",
+  meto: "meto",
+  telum: "telum",
+  tutamen: "tutamen",
+  fames: "fames",
+  lucrum: "lucrum",
+  fabrico: "fabrico",
+  pannus: "pannus",
+  machina: "machina",
+  vinculum: "vinculum",
+  luxuria: "luxuria",
+  infernus: "infernus",
+  superbia: "superbia",
+  gula: "gula",
+  invidia: "invidia",
+  desidia: "desidia",
+  ira: "ira"
+};
+const addArcaneShaped = (recipe$1) => {
+  const out = recipe(
+    literal(recipe$1.research ?? RESEARCH[RESEARCH_CATEGORY.basics].aspects),
+    ingredient(recipe$1.output),
+    formatAspects(recipe$1.aspects),
+    shaped(recipe$1.input)
+  );
+  return `mods.thaumcraft.Arcane.addShaped(${out});`;
+};
+const addArcaneShapeless = (recipe$1) => {
+  const out = recipe(
+    literal(recipe$1.research ?? "ASPECTS"),
+    ingredient(recipe$1.output),
+    formatAspects(recipe$1.aspects),
+    array(3)(recipe$1.input)
+  );
+  return `mods.thaumcraft.Arcane.addShapeless(${out});`;
+};
+const addArcane = (recipe) => {
+  if (Array.isArray(recipe.input)) return addArcaneShapeless(recipe);
+  return addArcaneShaped(recipe);
+};
+const removeArcane = (output) => `mods.thaumcraft.Arcane.removeRecipe(${output});`;
+const addAspectItem = (id) => (aspects) => `mods.thaumcraft.Aspects.add(${recipe(id, formatAspects(aspects))});`;
+const setAspectItem = (id) => (aspects) => `mods.thaumcraft.Aspects.set(${recipe(id, formatAspects(aspects))});`;
+const removeAspectItem = (id) => (aspects) => `mods.thaumcraft.Aspects.remove(${recipe(id, formatAspects(aspects))});`;
+const addAspectEntity = (id) => (aspects) => `mods.thaumcraft.Aspects.addEntity(${recipe(literal(id), formatAspects(aspects))});`;
+const setAspectEntity = (id) => (aspects) => `mods.thaumcraft.Aspects.setEntity(${recipe(literal(id), formatAspects(aspects))});`;
+const removeAspectEntity = (id) => (aspects) => `mods.thaumcraft.Aspects.removeEntity(${recipe(literal(id), formatAspects(aspects))});`;
+const addCrucibleAlchemy = (recipe$1) => {
+  const out = recipe(
+    literal(recipe$1.research),
+    ingredient(recipe$1.output),
+    ingredient(recipe$1.input),
+    formatAspects(recipe$1.aspects)
+  );
+  return `mods.thaumcraft.Crucible.addRecipe(${out});`;
+};
+const removeCrucibleAlchemy = (output) => `mods.thaumcraft.Crucible.removeRecipe(${output});`;
+const addInfusion = (recipe$1) => {
+  const out = recipe(
+    literal(recipe$1.research),
+    recipe$1.input,
+    array(3)(recipe$1.catalysts),
+    formatAspects(recipe$1.aspects),
+    ingredient(recipe$1.output),
+    recipe$1.instability
+  );
+  return `mods.thaumcraft.Infusion.addRecipe(${out});`;
+};
+const removeInfusion = (id) => `mods.thaumcraft.Infusion.removeRecipe(${id});`;
+const addInfusionEnchantment = (recipe$1) => {
+  const out = recipe(
+    literal(recipe$1.research),
+    recipe$1.enchantment,
+    recipe$1.instability,
+    formatAspects(recipe$1.aspects),
+    array(3)(recipe$1.catalysts)
+  );
+  return `mods.thaumcraft.Infusion.addEnchantment(${out});`;
+};
+const removeInfusionEnchantment = (id) => `mods.thaumcraft.Infusion.removeEnchant(${id});`;
+const addLoot = (type) => (bonus) => `mods.thaumcraft.Loot.add${type}Loot(${recipe(bonus.id, Math.round(bonus.p * 100))});`;
+const addLootCommon = addLoot("Common");
+const addLootUncommon = addLoot("Uncommon");
+const addLootRare = addLoot("Rare");
+const removeLoot = (type) => (id) => `mods.thaumcraft.Loot.remove${type}Loot(${id});`;
+const removeLootCommon = removeLoot("Common");
+const removeLootUncommon = removeLoot("Uncommon");
+const removeLootRare = removeLoot("Rare");
+const addWarpResearch = (research) => (warp) => `mods.thaumcraft.Warp.addToResearch(${recipe(literal(research), warp)});`;
+const addWarpItem = (id) => (warp) => `mods.thaumcraft.Warp.addToItem(${recipe(id, warp)});`;
+const removeWarpResearch = (research) => {
+  if (typeof research !== "string") return "mods.thaumcraft.Warp.removeAllResearch();";
+  return `mods.thaumcraft.Warp.removeFromResearch(${literal(research)});`;
+};
+const removeWarpItem = (id) => {
+  if (typeof id !== "string") return "mods.thaumcraft.Warp.removeAllItems();";
+  return `mods.thaumcraft.Warp.removeFromItem(${id});`;
+};
+const removeWarp = () => "mods.thaumcraft.Warp.removeAll();";
+const orphanResearch = (research) => `mods.thaumcraft.Research.orphanResearch(${literal(research)});`;
+const removeResearch = (research) => `mods.thaumcraft.Research.removeResearch(${literal(research)});`;
+const removeResearchTab = (tab) => `mods.thaumcraft.Research.removeTab(${literal(tab)});`;
+const addResearchTab = (recipe$1) => {
+  const out = recipe(
+    literal(recipe$1.id),
+    literal(recipe$1.icon.domain),
+    literal(recipe$1.icon.path),
+    maybe(literal)(recipe$1.bg?.domain),
+    maybe(literal)(recipe$1.bg?.path)
+  );
+  return `mods.thaumcraft.Research.addTab(${out});`;
+};
+const addResearch = (recipe$1) => {
+  const out = recipe(
+    literal(recipe$1.id),
+    literal(recipe$1.tab),
+    maybe(formatAspects)(recipe$1.aspects),
+    recipe$1.x,
+    recipe$1.y,
+    recipe$1.complexity,
+    recipe$1.icon
+  );
+  return `mods.thaumcraft.Research.addResearch(${out});`;
+};
+const addResearchPage = (id) => `mods.thaumcraft.Research.addPage(${recipe(literal(id), literal(`tc.research_page.${id}`))});`;
+const formatResearchPage = (...lines) => lines.map((line) => {
+  if (typeof line === "string") return "<LINE>";
+  return line.map((text) => {
+    if (typeof text === "string") return text;
+    return `<IMG>${[
+      text.src.domain,
+      text.src.path,
+      text.x ?? 0,
+      text.y ?? 0,
+      text.w ?? 255,
+      text.h ?? 255,
+      text.scale ?? 0.0625
+    ].join(":")}</IMG>`;
+  }).join("");
+}).join("<BR>");
+const addResearchPageCraftable = (type) => (research) => (id) => `mods.thaumcraft.Research.add${type}Page(${recipe(literal(research), id)});`;
+const addResearchPageCrafting = addResearchPageCraftable("Crafting");
+const addResearchPageArcane = addResearchPageCraftable("Arcane");
+const addResearchPageCrucible = addResearchPageCraftable("Crucible");
+const addResearchPageInfusion = addResearchPageCraftable("Infusion");
+const addResearchPageEnchantment = (research) => (enchantment) => `mods.thaumcraft.Research.addEnchantmentPage(${recipe(literal(research), enchantment)});`;
+const addResearchRequirement = (research) => (requirement) => {
+  const out = recipe(
+    literal(research),
+    literal(typeof requirement === "string" ? requirement : requirement.id),
+    typeof requirement === "string" ? false : requirement.hidden
+  );
+  return `mods.thaumcraft.Research.addPrereq(${out});`;
+};
+const addResearchSibling = (research) => (sibling) => `mods.thaumcraft.Research.addSibling(${recipe(literal(research), literal(sibling))});`;
+const removeResearchRequirement = (research) => `mods.thaumcraft.Research.clearPrereqs(${literal(research)});`;
+const removeResearchSibling = (research) => `mods.thaumcraft.Research.clearSiblings(${literal(research)});`;
+const setResearchType = (type) => (research) => (enabled) => `mods.thaumcraft.Research.set${type}(${recipe(literal(research), enabled)});`;
+const setResearchTypeRound = setResearchType("Round");
+const setResearchTypeSpikey = setResearchType("Spikey");
+const setResearchTypeStub = setResearchType("Stub");
+const setResearchTypeSecondary = setResearchType("Secondary");
+const setResearchTypeVirtual = setResearchType("Virtual");
+const setResearchTypeAuto = setResearchType("AutoUnlock");
+const setResearchTypeHidden = setResearchType("Concealed");
+const setResearchAspects = (research) => (aspects) => `mods.thaumcraft.Research.setAspects(${recipe(literal(research), formatAspects(aspects))});`;
+const setResearchComplexity = (research) => (complexity) => `mods.thaumcraft.Research.setComplexity(${recipe(literal(research), complexity)});`;
+const resetResearch = (research) => `mods.thaumcraft.Research.clearPages(${literal(research)});`;
+const refreshResearch = (research) => `mods.thaumcraft.Research.refreshResearchRecipe(${literal(research)});`;
+const moveResearch = (recipe$1) => {
+  const out = recipe(
+    literal(recipe$1.research),
+    literal(recipe$1.category),
+    recipe$1.x,
+    recipe$1.y
+  );
+  return `mods.thaumcraft.Research.moveResearch(${out});`;
+};
+
+export { ASPECT, COLOR, ENCHANTMENT, FOCI, HARVESTER_TYPE, MATERIAL, MODIFIER, RESEARCH, RESEARCH_CATEGORY, STYLE, add, addAlchemy, addAltar, addArcane, addArcaneShaped, addArcaneShapeless, addAspectEntity, addAspectItem, addBiomeRubberTree, addBlacklistAutospawner, addBloodOrb, addBloodOrbShaped, addBloodOrbShapeless, addCarpenter, addCastingBasin, addCastingTable, addCentrifuge, addChestLoot, addComposter, addCompressor, addCrucible, addCrucibleAlchemy, addCrucibleFuel, addDryingRack, addExtreme, addFabricator, addFabricatorGlass, addFermenter, addFermenterFuel, addFurnace, addFurnaceFuel, addGrinder, addHammer, addHarvester, addInductionSmelter, addInfusion, addInfusionEnchantment, addInscriber, addInsolator, addLaser, addLaserFoci, addLaserOre, addLootCommon, addLootRare, addLootUncommon, addMagmaCrucible, addMirror, addMoistener, addOreDict, addPlanter, addPress, addPulverizer, addQED, addRedstoneFurnace, addRepairMaterial, addResearch, addResearchPage, addResearchPageArcane, addResearchPageCrafting, addResearchPageCrucible, addResearchPageEnchantment, addResearchPageInfusion, addResearchRequirement, addResearchSibling, addResearchTab, addRitualBinding, addRitualHarvest, addRitualMeteor, addSawmill, addSeed, addShaped, addShapeless, addSieve, addSludgeBoiler, addSmelteryAlloy, addSmelteryFluid, addSmelteryFuel, addSqueezer, addStill, addTransposerExtract, addTransposerFill, addWarpItem, addWarpResearch, createBlock, createItem, createLiquid, createMaterial, formatResearchPage, hide, joinOreDict, mirrorOreDict, moveResearch, orphanResearch, refreshResearch, remove, removeAlchemy, removeAltar, removeArcane, removeAspectEntity, removeAspectItem, removeBiomeRubberTree, removeBlacklistAutospawner, removeCarpenter, removeCastingBasin, removeCastingTable, removeCentrifuge, removeChestLoot, removeComposter, removeCompressor, removeCrucible, removeCrucibleAlchemy, removeCrucibleFuel, removeDryingRack, removeExtreme, removeFabricator, removeFabricatorGlass, removeFermenter, removeFermenterFuel, removeFurnace, removeFurnaceFuel, removeGrinder, removeHammer, removeInductionSmelter, removeInfusion, removeInfusionEnchantment, removeInsolator, removeLaserFoci, removeLaserOre, removeLootCommon, removeLootRare, removeLootUncommon, removeMagmaCrucible, removeModifier, removeMoistener, removeOreDict, removePressInscriber, removePulverizer, removeQED, removeRedstoneFurnace, removeRepairMaterial, removeResearch, removeResearchRequirement, removeResearchSibling, removeResearchTab, removeRitualBinding, removeRitualMeteor, removeSawmill, removeSeed, removeShaped, removeShapeless, removeSieve, removeSludgeBoiler, removeSmelteryAlloy, removeSmelteryFluid, removeSmelteryFuel, removeSqueezer, removeStill, removeTransposerExtract, removeTransposerFill, removeWarp, removeWarpItem, removeWarpResearch, rename, resetResearch, setArrowAccuracy, setArrowBreakChance, setArrowMass, setArrowStats, setAspectEntity, setAspectItem, setBowMaterialDrawspeed, setBowMaterialDurability, setBowMaterialFlightSpeed, setBowMaterialStats, setLocalisation, setMaterialDamage, setMaterialDurability, setMaterialHandleModifier, setMaterialLevelStonebound, setMaterialMiningLevel, setMaterialName, setMaterialReinforcedLevel, setMaterialSpeed, setMaterialStats, setMaterialStyle, setResearchAspects, setResearchComplexity, setResearchTypeAuto, setResearchTypeHidden, setResearchTypeRound, setResearchTypeSecondary, setResearchTypeSpikey, setResearchTypeStub, setResearchTypeVirtual, show, withEnchantment, withName, withTag, withTooltip, withTooltipShift, withWeight };
