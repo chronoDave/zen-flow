@@ -122,7 +122,7 @@ test('[minecraft]', t => {
   );
 
   t.assert.equal(
-    setLocalisation('en_US')({ id: 'botania.entry.colour', value: 'Modtweaker Guide' }),
+    setLocalisation('en_US')('botania.entry.colour')('Modtweaker Guide'),
     'game.setLocalization("en_US", "botania.entry.colour", "Modtweaker Guide");',
     'setLocalisation'
   );
