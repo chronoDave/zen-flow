@@ -1399,7 +1399,7 @@ const addResearch = (recipe$1) => {
   const out = recipe(
     literal(recipe$1.id),
     literal(recipe$1.tab),
-    maybe(aspects)(recipe$1.aspects),
+    maybe(aspects)(recipe$1.aspects) ?? null,
     recipe$1.x,
     recipe$1.y,
     recipe$1.complexity,
