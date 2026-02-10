@@ -465,11 +465,11 @@ const removeFurnace = (output, input) => {
 };
 const addFurnaceFuel = (fuel) => (n) => `furnace.setFuel(${recipe(fuel, n)});`;
 const removeFurnaceFuel = (fuel) => addFurnaceFuel(fuel)(0);
-const setLocalisation = (locale) => (recipe$1) => {
+const setLocalisation = (locale) => (id) => (text) => {
   const out = recipe(
     literal(locale),
-    literal(recipe$1.id),
-    literal(recipe$1.value)
+    literal(id),
+    literal(text)
   );
   return `game.setLocalization(${out});`;
 };
