@@ -116,10 +116,7 @@ export {
   removeSeed
 } from './recipes/loot.ts';
 
-export type {
-  RecipeFurnace,
-  RecipeLocalisation
-} from './recipes/minecraft.ts';
+export type { RecipeFurnace } from './recipes/minecraft.ts';
 
 export {
   addShaped,
