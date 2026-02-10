@@ -1,7 +1,9 @@
 import util from 'node:util';
 
+const nullable = (x) => x ?? "null";
 const float = (n) => `${n}F`;
 const literal = (x) => `"${x}"`;
+const weight = (weight2) => (id) => `${id}.weight(${weight2})`;
 const list = (n) => (arr) => {
   if (typeof n === "number" && arr.length > n) return `
 	${arr.join(",\n	")}
@@ -9,15 +11,13 @@ const list = (n) => (arr) => {
   return arr.join(", ");
 };
 const array = (n) => (arr) => `[${list(n)(arr)}]`;
-const id = (id2) => typeof id2 === "string" ? id2 : "null";
-const weight = (weight2) => (id2) => `${id2}.weight(${weight2})`;
+const join = (x) => list()(Object.values(x));
 const stack = (stack2) => `${stack2.id} * ${stack2.n}`;
 const aspect = (stack2) => `${stack2.id} ${stack2.n}`;
-const bonus$1 = (bonus2) => `${bonus2.id} % ${Math.round(bonus2.p * 100)}`;
-const liquid = (liquid2) => {
-  if (!liquid2.id.startsWith("<liquid:")) throw new Error("ID is not a liquid");
-  return `${liquid2.id} * ${liquid2.mb}`;
-};
+const aspects = (stacks) => literal(list()(stacks.map(aspect)));
+const bonus = (bonus2) => `${bonus2.id} % ${bonus2.p * 100}`;
+const bonusThermal = (bonus2) => join({ id: bonus2.id, p: bonus2.p * 100 });
+const liquid = (liquid2) => `${liquid2.id} * ${liquid2.mb}`;
 const ingredient = (ingredient2) => typeof ingredient2 === "string" ? ingredient2 : stack(ingredient2);
 const cast = (cast2) => {
   if (typeof cast2 === "string") return [cast2, false];
@@ -49,7 +49,7 @@ const shaped = (recipe2) => {
     matrix[1].splice(-1);
     matrix.splice(-1);
   }
-  return array(2)(matrix.map((row) => array(3)(row.map(id))));
+  return array(2)(matrix.map((row) => array(3)(row.map(nullable))));
 };
 const COLOR = {
   black: "\\u00A70",
@@ -76,7 +76,7 @@ const STYLE = {
   underline: "\\u00A7n",
   italic: "\\u00A7o"
 };
-const name = (...texts) => literal(texts.map((text) => {
+const name = (...lines) => literal(lines.map((text) => {
   if (typeof text === "string") return text;
   return [
     text.color && COLOR[text.color],
@@ -92,20 +92,25 @@ const tooltip = (...tooltips) => tooltips.map((tooltip2) => {
   if (tooltip2.color) out = `format.${tooltip2.color}(${out})`;
   return out;
 }).join(" + ");
-const recipe = (...args) => list(3)(args.filter((x) => x !== void 0).map((x) => {
-  if (Array.isArray(x)) return array(3)(x);
-  if (x === null) return "null";
-  return x;
-}));
+const recipe = (...args) => list(3)(
+  args.filter((x) => x !== void 0).map((x) => {
+    if (Array.isArray(x)) return array(3)(x);
+    return nullable(x);
+  })
+);
 
-const clamp = (min, max, n) => Math.max(min, Math.min(max, n));
+const maybe = (fn) => (x) => {
+  if (x === null || x === void 0) return void 0;
+  return fn(x);
+};
 
 const addGrinder = (recipe$1) => {
   const out = recipe(
     ingredient(recipe$1.input),
     ingredient(recipe$1.output),
-    Math.max(1, Math.round(recipe$1.turns)),
-    ...(recipe$1.bonus ?? []).map((bonus) => `${bonus.id}, ${clamp(0, 1, bonus.p)}`)
+    recipe$1.turns,
+    maybe(join)(recipe$1.bonus?.primary),
+    maybe(join)(recipe$1.bonus?.secondary)
   );
   return `mods.appeng.Grinder.addRecipe(${out});`;
 };
@@ -127,7 +132,7 @@ const removePressInscriber = (output) => `mods.appeng.Inscriber.removeRecipe(${o
 const addCompressor = (recipe$1) => {
   const out = recipe(
     recipe$1.output,
-    Math.max(1, recipe$1.input.n),
+    recipe$1.input.n,
     recipe$1.input.id,
     recipe$1.exact
   );
@@ -137,7 +142,7 @@ const removeCompressor = (id) => `mods.avaritia.Compressor.remove(${id});`;
 const addExtreme = (output) => (input) => {
   const out = recipe(
     ingredient(output),
-    input.map((row) => array(9)(row.map(id)))
+    input.map((row) => array(9)(row.map(nullable)))
   );
   return `mods.avaritia.ExtremeCrafting.addShaped(${out});`;
 };
@@ -149,12 +154,12 @@ const createBlock = (id) => (recipe$1) => {
     literal(id),
     literal(recipe$1.material),
     typeof recipe$1.texture === "string" ? literal(recipe$1.texture) : literal(id),
-    typeof recipe$1.creativeTab === "string" && literal(recipe$1.creativeTab),
+    maybe(literal)(recipe$1.creativeTab),
     typeof recipe$1.renderType === "number" ? recipe$1.renderType : 1,
     recipe$1.drops,
     recipe$1.unbreakable,
-    typeof recipe$1.hardness === "number" && float(recipe$1.hardness),
-    typeof recipe$1.lightLevel === "number" && float(recipe$1.lightLevel),
+    maybe(float)(recipe$1.hardness),
+    maybe(float)(recipe$1.lightLevel),
     recipe$1.opacity
   );
   return `mods.content.Block.registerBlock(${out});`;
@@ -223,7 +228,7 @@ const addComposter = (recipe$1) => {
   const out = recipe(
     recipe$1.id,
     recipe$1.fill,
-    typeof recipe$1.color === "string" && literal(recipe$1.color)
+    maybe(literal)(recipe$1.color)
   );
   return `mods.exnihilo.Composting.addRecipe(${out});`;
 };
@@ -271,8 +276,8 @@ const addCarpenter = (recipe$1) => {
   const out = recipe(
     ingredient(recipe$1.output),
     shaped(recipe$1.input),
-    recipe$1.liquid && liquid(recipe$1.liquid),
-    Math.max(1, Math.round(recipe$1.ticks)),
+    maybe(liquid)(recipe$1.liquid),
+    recipe$1.ticks,
     recipe$1.top
   );
   return `mods.forestry.Carpenter.addRecipe(${out});`;
@@ -280,7 +285,7 @@ const addCarpenter = (recipe$1) => {
 const removeCarpenter = (output, liquid) => `mods.forestry.Carpenter.removeRecipe(${recipe(output, liquid)});`;
 const addCentrifuge = (recipe$1) => {
   const out = recipe(
-    recipe$1.output.map(bonus$1),
+    recipe$1.output.map(bonus),
     recipe$1.input,
     recipe$1.ticks
   );
@@ -319,7 +324,7 @@ const removeMoistener = (output) => `mods.forestry.Moistener.removeRecipe(${outp
 const addSqueezer = (recipe$1) => {
   const out = recipe(
     liquid(recipe$1.output),
-    bonus$1(recipe$1.bonus),
+    bonus(recipe$1.bonus),
     recipe$1.input.map(ingredient),
     recipe$1.ticks
   );
@@ -391,7 +396,7 @@ const withEnchantment = (...enchantments) => withTag({
 const withTooltip = (...tooltip$1) => (id) => `${id}.addTooltip(${tooltip(...tooltip$1)});`;
 const withTooltipShift = (...tooltip$1) => (id) => `${id}.addShiftTooltip(${tooltip(...tooltip$1)});`;
 
-const addChestLoot = (id) => (...loots) => loots.map((loot) => {
+const addChestLoot = (id) => (loot) => {
   const out = recipe(
     literal(id),
     withWeight(typeof loot.p === "number" ? loot.p * 100 : 100)(loot.id),
@@ -399,15 +404,16 @@ const addChestLoot = (id) => (...loots) => loots.map((loot) => {
     loot.max
   );
   return `vanilla.loot.addChestLoot(${out});`;
-}).join("\n");
-const removeChestLoot = (chest) => (...ids) => ids.map((id) => `vanilla.loot.removeChestLoot(${recipe(literal(chest), id)});`).join("\n");
-const addSeed = (seed) => `vanilla.seeds.addSeed(${withWeight(typeof seed.p === "number" ? seed.p * 100 : 100)(seed.id)});`;
-const removeSeed = (id) => `vanilla.seeds.removeSeed(${id});`;
-
-const maybe = (fn) => (x) => {
-  if (x === null || x === void 0) return void 0;
-  return fn(x);
 };
+const removeChestLoot = (chest) => (id) => {
+  const out = recipe(literal(chest), id);
+  return `vanilla.loot.removeChestLoot(${out});`;
+};
+const addSeed = (seed) => {
+  const out = withWeight(typeof seed.p === "number" ? seed.p * 100 : 100)(seed.id);
+  return `vanilla.seeds.addSeed(${out});`;
+};
+const removeSeed = (id) => `vanilla.seeds.removeSeed(${id});`;
 
 const addShaped = (output) => (input) => {
   const out = recipe(
@@ -449,7 +455,10 @@ const addMirror = (output) => (input) => {
   );
   return `recipes.addShapedMirrored(${out});`;
 };
-const addFurnace = (recipe$1) => `furnace.addRecipe(${recipe(recipe$1.output, recipe$1.input, recipe$1.xp)});`;
+const addFurnace = (recipe$1) => {
+  const out = recipe(recipe$1.output, recipe$1.input, recipe$1.xp);
+  return `furnace.addRecipe(${out});`;
+};
 const removeFurnace = (output, input) => {
   if (typeof input === "string") return `furnace.remove(${recipe(output, input)});`;
   return `furnace.remove(${recipe(output)});`;
@@ -480,13 +489,16 @@ const addHarvester = (recipe$1) => {
     recipe$1.bonus && array(3)(recipe$1.bonus.map((x) => {
       if (typeof x === "string") return x;
       if ("n" in x) return stack(x);
-      return bonus$1(x);
+      return bonus(x);
     })),
     literal(HARVESTER_TYPE[recipe$1.type])
   );
   return `mods.mfr.Harvester.addHarvestable(${out});`;
 };
-const addLaserOre = (id) => (n) => `mods.mfr.MiningLaser.addOre(${recipe(weight(n)(id))});`;
+const addLaserOre = (id) => (n) => {
+  const out = recipe(weight(n)(id));
+  return `mods.mfr.MiningLaser.addOre(${out});`;
+};
 const removeLaserOre = (id) => `mods.mfr.MiningLaser.removeOre(${recipe(id)});`;
 const FOCI = {
   white: 0,
@@ -508,10 +520,6 @@ const FOCI = {
 };
 const addLaserFoci = (id) => (foci) => `mods.mfr.MiningLaser.addPreferredOre(${recipe(FOCI[foci], id)});`;
 const removeLaserFoci = (id) => (foci) => `mods.mfr.MiningLaser.removePreferredOre(${recipe(FOCI[foci], id)});`;
-const addLaser = (recipe) => [
-  addLaserOre(recipe.id)(recipe.weight),
-  addLaserFoci(recipe.id)(recipe.foci)
-].join("\n");
 const addPlanter = (id) => `mods.mfr.Planter.addPlantable(${id});`;
 const addBiomeRubberTree = (id) => `mods.mfr.RubberTree.addBiome(${recipe(literal(id))});`;
 const removeBiomeRubberTree = (id) => `mods.mfr.RubberTree.removeBiome(${recipe(literal(id))});`;
@@ -527,7 +535,6 @@ const removeOreDict = (dict) => (id) => `${dict}.remove(${id});`;
 const joinOreDict = (a) => (b) => `${a}.addAll(${b});`;
 const mirrorOreDict = (a) => (b) => `${a}.mirror(${b});`;
 
-const bonus = (bonus2) => bonus2 ? [bonus2.id, Math.round(bonus2.p * 100)] : [];
 const addMagmaCrucible = (recipe$1) => {
   const out = recipe(
     recipe$1.rf,
@@ -552,7 +559,7 @@ const addInsolator = (recipe$1) => {
     ingredient(recipe$1.input.left),
     ingredient(recipe$1.input.right),
     ingredient(recipe$1.output),
-    ...bonus(recipe$1.bonus)
+    maybe(bonusThermal)(recipe$1.bonus)
   );
   return `mods.thermalexpansion.Insolator.addRecipe(${out});`;
 };
@@ -562,7 +569,7 @@ const addPulverizer = (recipe$1) => {
     recipe$1.rf,
     recipe$1.input,
     ingredient(recipe$1.output),
-    ...bonus(recipe$1.bonus)
+    maybe(bonusThermal)(recipe$1.bonus)
   );
   return `mods.thermalexpansion.Pulverizer.addRecipe(${out});`;
 };
@@ -572,7 +579,7 @@ const addSawmill = (recipe$1) => {
     recipe$1.rf,
     recipe$1.input,
     ingredient(recipe$1.output),
-    ...bonus(recipe$1.bonus)
+    maybe(bonusThermal)(recipe$1.bonus)
   );
   return `mods.thermalexpansion.Sawmill.addRecipe(${out});`;
 };
@@ -583,7 +590,7 @@ const addInductionSmelter = (recipe$1) => {
     ingredient(recipe$1.input.left),
     ingredient(recipe$1.input.right),
     ingredient(recipe$1.output),
-    ...bonus(recipe$1.bonus)
+    maybe(bonusThermal)(recipe$1.bonus)
   );
   return `mods.thermalexpansion.Smelter.addRecipe(${out});`;
 };
@@ -603,7 +610,7 @@ const addTransposerExtract = (recipe$1) => {
     recipe$1.rf,
     recipe$1.input,
     liquid(recipe$1.output),
-    ...bonus(recipe$1.bonus)
+    maybe(bonusThermal)(recipe$1.bonus)
   );
   return `mods.thermalexpansion.Transposer.addExtractRecipe(${out});`;
 };
@@ -725,10 +732,7 @@ const addRepairMaterial = (id) => (recipe$1) => {
   return `mods.tconstruct.Tweaks.addRepairMaterial(${out});`;
 };
 const removeRepairMaterial = (id, material) => {
-  const out = recipe(
-    id,
-    typeof material === "string" && literal(material)
-  );
+  const out = recipe(id, maybe(literal)(material));
   return `mods.tconstruct.Tweaks.removeRepairMaterial(${out});`;
 };
 const setMaterialStats = (id) => (stats) => {
@@ -884,20 +888,26 @@ const addAlchemy = (recipe$1) => {
   return `mods.bloodmagic.Alchemy.addRecipe(${out});`;
 };
 const removeAlchemy = (output) => `mods.bloodmagic.Alchemy.removeRecipe(${output});`;
-const addRitualBinding = (output) => (input) => `mods.bloodmagic.Binding.addRecipe(${recipe(input, output)});`;
+const addRitualBinding = (output) => (input) => {
+  const out = recipe(input, output);
+  return `mods.bloodmagic.Binding.addRecipe(${out});`;
+};
 const removeRitualBinding = (output) => `mods.bloodmagic.Binding.removeRecipe(${output});`;
 const addRitualMeteor = (recipe$1) => {
+  const bonus = recipe$1.output.map((bonus2) => join({ id: bonus2.id, p: bonus2.p * 100 }));
   const out = recipe(
     recipe$1.input,
     recipe$1.radius,
-    literal(list(Number.MAX_SAFE_INTEGER)(recipe$1.output.map((bonus) => `${bonus.id}, ${bonus.p * 100}`)))
+    literal(list()(bonus))
   );
   return `mods.bloodmagic.FallingTower.addFocus(${out});`;
 };
 const removeRitualMeteor = (input) => `mods.bloodmagic.FallingTower.removeFocus(${input});`;
-const addRitualHarvest = (output) => (input) => `mods.bloodmagic.HarvestMoon.addHarvestable(${recipe(output, input)});`;
+const addRitualHarvest = (output) => (input) => {
+  const out = recipe(output, input);
+  return `mods.bloodmagic.HarvestMoon.addHarvestable(${out});`;
+};
 
-const formatAspects = (aspects) => literal(list()(aspects.map(aspect)));
 const RESEARCH_CATEGORY = {
   basics: "BASICS",
   thaumaturgy: "THAUMATURGY",
@@ -1295,7 +1305,7 @@ const addArcaneShaped = (recipe$1) => {
   const out = recipe(
     literal(recipe$1.research ?? RESEARCH[RESEARCH_CATEGORY.basics].aspects),
     ingredient(recipe$1.output),
-    formatAspects(recipe$1.aspects),
+    aspects(recipe$1.aspects),
     shaped(recipe$1.input)
   );
   return `mods.thaumcraft.Arcane.addShaped(${out});`;
@@ -1304,7 +1314,7 @@ const addArcaneShapeless = (recipe$1) => {
   const out = recipe(
     literal(recipe$1.research ?? "ASPECTS"),
     ingredient(recipe$1.output),
-    formatAspects(recipe$1.aspects),
+    aspects(recipe$1.aspects),
     array(3)(recipe$1.input)
   );
   return `mods.thaumcraft.Arcane.addShapeless(${out});`;
@@ -1314,18 +1324,18 @@ const addArcane = (recipe) => {
   return addArcaneShaped(recipe);
 };
 const removeArcane = (output) => `mods.thaumcraft.Arcane.removeRecipe(${output});`;
-const addAspectItem = (id) => (aspects) => `mods.thaumcraft.Aspects.add(${recipe(id, formatAspects(aspects))});`;
-const setAspectItem = (id) => (aspects) => `mods.thaumcraft.Aspects.set(${recipe(id, formatAspects(aspects))});`;
-const removeAspectItem = (id) => (aspects) => `mods.thaumcraft.Aspects.remove(${recipe(id, formatAspects(aspects))});`;
-const addAspectEntity = (id) => (aspects) => `mods.thaumcraft.Aspects.addEntity(${recipe(literal(id), formatAspects(aspects))});`;
-const setAspectEntity = (id) => (aspects) => `mods.thaumcraft.Aspects.setEntity(${recipe(literal(id), formatAspects(aspects))});`;
-const removeAspectEntity = (id) => (aspects) => `mods.thaumcraft.Aspects.removeEntity(${recipe(literal(id), formatAspects(aspects))});`;
+const addAspectItem = (id) => (aspects$1) => `mods.thaumcraft.Aspects.add(${recipe(id, aspects(aspects$1))});`;
+const setAspectItem = (id) => (aspects$1) => `mods.thaumcraft.Aspects.set(${recipe(id, aspects(aspects$1))});`;
+const removeAspectItem = (id) => (aspects$1) => `mods.thaumcraft.Aspects.remove(${recipe(id, aspects(aspects$1))});`;
+const addAspectEntity = (id) => (aspects$1) => `mods.thaumcraft.Aspects.addEntity(${recipe(literal(id), aspects(aspects$1))});`;
+const setAspectEntity = (id) => (aspects$1) => `mods.thaumcraft.Aspects.setEntity(${recipe(literal(id), aspects(aspects$1))});`;
+const removeAspectEntity = (id) => (aspects$1) => `mods.thaumcraft.Aspects.removeEntity(${recipe(literal(id), aspects(aspects$1))});`;
 const addCrucibleAlchemy = (recipe$1) => {
   const out = recipe(
     literal(recipe$1.research),
     ingredient(recipe$1.output),
     ingredient(recipe$1.input),
-    formatAspects(recipe$1.aspects)
+    aspects(recipe$1.aspects)
   );
   return `mods.thaumcraft.Crucible.addRecipe(${out});`;
 };
@@ -1335,7 +1345,7 @@ const addInfusion = (recipe$1) => {
     literal(recipe$1.research),
     recipe$1.input,
     array(3)(recipe$1.catalysts),
-    formatAspects(recipe$1.aspects),
+    aspects(recipe$1.aspects),
     ingredient(recipe$1.output),
     recipe$1.instability
   );
@@ -1347,13 +1357,13 @@ const addInfusionEnchantment = (recipe$1) => {
     literal(recipe$1.research),
     recipe$1.enchantment,
     recipe$1.instability,
-    formatAspects(recipe$1.aspects),
+    aspects(recipe$1.aspects),
     array(3)(recipe$1.catalysts)
   );
   return `mods.thaumcraft.Infusion.addEnchantment(${out});`;
 };
 const removeInfusionEnchantment = (id) => `mods.thaumcraft.Infusion.removeEnchant(${id});`;
-const addLoot = (type) => (bonus) => `mods.thaumcraft.Loot.add${type}Loot(${recipe(bonus.id, Math.round(bonus.p * 100))});`;
+const addLoot = (type) => (bonus) => `mods.thaumcraft.Loot.add${type}Loot(${recipe(bonus.id, bonus.p * 100)});`;
 const addLootCommon = addLoot("Common");
 const addLootUncommon = addLoot("Uncommon");
 const addLootRare = addLoot("Rare");
@@ -1389,7 +1399,7 @@ const addResearch = (recipe$1) => {
   const out = recipe(
     literal(recipe$1.id),
     literal(recipe$1.tab),
-    maybe(formatAspects)(recipe$1.aspects),
+    maybe(aspects)(recipe$1.aspects),
     recipe$1.x,
     recipe$1.y,
     recipe$1.complexity,
@@ -1438,7 +1448,7 @@ const setResearchTypeSecondary = setResearchType("Secondary");
 const setResearchTypeVirtual = setResearchType("Virtual");
 const setResearchTypeAuto = setResearchType("AutoUnlock");
 const setResearchTypeHidden = setResearchType("Concealed");
-const setResearchAspects = (research) => (aspects) => `mods.thaumcraft.Research.setAspects(${recipe(literal(research), formatAspects(aspects))});`;
+const setResearchAspects = (research) => (aspects$1) => `mods.thaumcraft.Research.setAspects(${recipe(literal(research), aspects(aspects$1))});`;
 const setResearchComplexity = (research) => (complexity) => `mods.thaumcraft.Research.setComplexity(${recipe(literal(research), complexity)});`;
 const resetResearch = (research) => `mods.thaumcraft.Research.clearPages(${literal(research)});`;
 const refreshResearch = (research) => `mods.thaumcraft.Research.refreshResearchRecipe(${literal(research)});`;
@@ -1452,4 +1462,4 @@ const moveResearch = (recipe$1) => {
   return `mods.thaumcraft.Research.moveResearch(${out});`;
 };
 
-export { ASPECT, COLOR, ENCHANTMENT, FOCI, HARVESTER_TYPE, MATERIAL, MODIFIER, RESEARCH, RESEARCH_CATEGORY, STYLE, add, addAlchemy, addAltar, addArcane, addArcaneShaped, addArcaneShapeless, addAspectEntity, addAspectItem, addBiomeRubberTree, addBlacklistAutospawner, addBloodOrb, addBloodOrbShaped, addBloodOrbShapeless, addCarpenter, addCastingBasin, addCastingTable, addCentrifuge, addChestLoot, addComposter, addCompressor, addCrucible, addCrucibleAlchemy, addCrucibleFuel, addDryingRack, addExtreme, addFabricator, addFabricatorGlass, addFermenter, addFermenterFuel, addFurnace, addFurnaceFuel, addGrinder, addHammer, addHarvester, addInductionSmelter, addInfusion, addInfusionEnchantment, addInscriber, addInsolator, addLaser, addLaserFoci, addLaserOre, addLootCommon, addLootRare, addLootUncommon, addMagmaCrucible, addMirror, addMoistener, addOreDict, addPlanter, addPress, addPulverizer, addQED, addRedstoneFurnace, addRepairMaterial, addResearch, addResearchPage, addResearchPageArcane, addResearchPageCrafting, addResearchPageCrucible, addResearchPageEnchantment, addResearchPageInfusion, addResearchRequirement, addResearchSibling, addResearchTab, addRitualBinding, addRitualHarvest, addRitualMeteor, addSawmill, addSeed, addShaped, addShapeless, addSieve, addSludgeBoiler, addSmelteryAlloy, addSmelteryFluid, addSmelteryFuel, addSqueezer, addStill, addTransposerExtract, addTransposerFill, addWarpItem, addWarpResearch, createBlock, createItem, createLiquid, createMaterial, formatResearchPage, hide, joinOreDict, mirrorOreDict, moveResearch, orphanResearch, refreshResearch, remove, removeAlchemy, removeAltar, removeArcane, removeAspectEntity, removeAspectItem, removeBiomeRubberTree, removeBlacklistAutospawner, removeCarpenter, removeCastingBasin, removeCastingTable, removeCentrifuge, removeChestLoot, removeComposter, removeCompressor, removeCrucible, removeCrucibleAlchemy, removeCrucibleFuel, removeDryingRack, removeExtreme, removeFabricator, removeFabricatorGlass, removeFermenter, removeFermenterFuel, removeFurnace, removeFurnaceFuel, removeGrinder, removeHammer, removeInductionSmelter, removeInfusion, removeInfusionEnchantment, removeInsolator, removeLaserFoci, removeLaserOre, removeLootCommon, removeLootRare, removeLootUncommon, removeMagmaCrucible, removeModifier, removeMoistener, removeOreDict, removePressInscriber, removePulverizer, removeQED, removeRedstoneFurnace, removeRepairMaterial, removeResearch, removeResearchRequirement, removeResearchSibling, removeResearchTab, removeRitualBinding, removeRitualMeteor, removeSawmill, removeSeed, removeShaped, removeShapeless, removeSieve, removeSludgeBoiler, removeSmelteryAlloy, removeSmelteryFluid, removeSmelteryFuel, removeSqueezer, removeStill, removeTransposerExtract, removeTransposerFill, removeWarp, removeWarpItem, removeWarpResearch, rename, resetResearch, setArrowAccuracy, setArrowBreakChance, setArrowMass, setArrowStats, setAspectEntity, setAspectItem, setBowMaterialDrawspeed, setBowMaterialDurability, setBowMaterialFlightSpeed, setBowMaterialStats, setLocalisation, setMaterialDamage, setMaterialDurability, setMaterialHandleModifier, setMaterialLevelStonebound, setMaterialMiningLevel, setMaterialName, setMaterialReinforcedLevel, setMaterialSpeed, setMaterialStats, setMaterialStyle, setResearchAspects, setResearchComplexity, setResearchTypeAuto, setResearchTypeHidden, setResearchTypeRound, setResearchTypeSecondary, setResearchTypeSpikey, setResearchTypeStub, setResearchTypeVirtual, show, withEnchantment, withName, withTag, withTooltip, withTooltipShift, withWeight };
+export { ASPECT, COLOR, ENCHANTMENT, FOCI, HARVESTER_TYPE, MATERIAL, MODIFIER, RESEARCH, RESEARCH_CATEGORY, STYLE, add, addAlchemy, addAltar, addArcane, addArcaneShaped, addArcaneShapeless, addAspectEntity, addAspectItem, addBiomeRubberTree, addBlacklistAutospawner, addBloodOrb, addBloodOrbShaped, addBloodOrbShapeless, addCarpenter, addCastingBasin, addCastingTable, addCentrifuge, addChestLoot, addComposter, addCompressor, addCrucible, addCrucibleAlchemy, addCrucibleFuel, addDryingRack, addExtreme, addFabricator, addFabricatorGlass, addFermenter, addFermenterFuel, addFurnace, addFurnaceFuel, addGrinder, addHammer, addHarvester, addInductionSmelter, addInfusion, addInfusionEnchantment, addInscriber, addInsolator, addLaserFoci, addLaserOre, addLootCommon, addLootRare, addLootUncommon, addMagmaCrucible, addMirror, addMoistener, addOreDict, addPlanter, addPress, addPulverizer, addQED, addRedstoneFurnace, addRepairMaterial, addResearch, addResearchPage, addResearchPageArcane, addResearchPageCrafting, addResearchPageCrucible, addResearchPageEnchantment, addResearchPageInfusion, addResearchRequirement, addResearchSibling, addResearchTab, addRitualBinding, addRitualHarvest, addRitualMeteor, addSawmill, addSeed, addShaped, addShapeless, addSieve, addSludgeBoiler, addSmelteryAlloy, addSmelteryFluid, addSmelteryFuel, addSqueezer, addStill, addTransposerExtract, addTransposerFill, addWarpItem, addWarpResearch, createBlock, createItem, createLiquid, createMaterial, formatResearchPage, hide, joinOreDict, mirrorOreDict, moveResearch, orphanResearch, refreshResearch, remove, removeAlchemy, removeAltar, removeArcane, removeAspectEntity, removeAspectItem, removeBiomeRubberTree, removeBlacklistAutospawner, removeCarpenter, removeCastingBasin, removeCastingTable, removeCentrifuge, removeChestLoot, removeComposter, removeCompressor, removeCrucible, removeCrucibleAlchemy, removeCrucibleFuel, removeDryingRack, removeExtreme, removeFabricator, removeFabricatorGlass, removeFermenter, removeFermenterFuel, removeFurnace, removeFurnaceFuel, removeGrinder, removeHammer, removeInductionSmelter, removeInfusion, removeInfusionEnchantment, removeInsolator, removeLaserFoci, removeLaserOre, removeLootCommon, removeLootRare, removeLootUncommon, removeMagmaCrucible, removeModifier, removeMoistener, removeOreDict, removePressInscriber, removePulverizer, removeQED, removeRedstoneFurnace, removeRepairMaterial, removeResearch, removeResearchRequirement, removeResearchSibling, removeResearchTab, removeRitualBinding, removeRitualMeteor, removeSawmill, removeSeed, removeShaped, removeShapeless, removeSieve, removeSludgeBoiler, removeSmelteryAlloy, removeSmelteryFluid, removeSmelteryFuel, removeSqueezer, removeStill, removeTransposerExtract, removeTransposerFill, removeWarp, removeWarpItem, removeWarpResearch, rename, resetResearch, setArrowAccuracy, setArrowBreakChance, setArrowMass, setArrowStats, setAspectEntity, setAspectItem, setBowMaterialDrawspeed, setBowMaterialDurability, setBowMaterialFlightSpeed, setBowMaterialStats, setLocalisation, setMaterialDamage, setMaterialDurability, setMaterialHandleModifier, setMaterialLevelStonebound, setMaterialMiningLevel, setMaterialName, setMaterialReinforcedLevel, setMaterialSpeed, setMaterialStats, setMaterialStyle, setResearchAspects, setResearchComplexity, setResearchTypeAuto, setResearchTypeHidden, setResearchTypeRound, setResearchTypeSecondary, setResearchTypeSpikey, setResearchTypeStub, setResearchTypeVirtual, show, withEnchantment, withName, withTag, withTooltip, withTooltipShift, withWeight };
