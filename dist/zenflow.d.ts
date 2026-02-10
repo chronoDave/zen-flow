@@ -2483,7 +2483,7 @@ declare const addResearch: (recipe: RecipeResearch) => string;
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
  */
-declare const addResearchPage: (id: string) => string;
+declare const addResearchPage: (research: string) => (id: string) => string;
 type TextResearchImage = {
     src: Texture;
     x?: number;

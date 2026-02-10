@@ -1407,7 +1407,7 @@ const addResearch = (recipe$1) => {
   );
   return `mods.thaumcraft.Research.addResearch(${out});`;
 };
-const addResearchPage = (id) => `mods.thaumcraft.Research.addPage(${recipe(literal(id), literal(`tc.research_page.${id}`))});`;
+const addResearchPage = (research) => (id) => `mods.thaumcraft.Research.addPage(${recipe(literal(research), literal(`tc.research_page.${id}`))});`;
 const formatResearchPage = (...lines) => lines.map((line) => {
   if (typeof line === "string") return "<LINE>";
   return line.map((text) => {
