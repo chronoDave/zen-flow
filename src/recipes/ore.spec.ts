@@ -5,9 +5,9 @@ import {
   removeOreDict,
   joinOreDict,
   mirrorOreDict
-} from './oreDictionary.ts';
+} from './ore.ts';
 
-test('[oreDictionary]', t => {
+test('[ore]', t => {
   t.assert.equal(
     addOreDict('<ore:myOwnEntry>')('<minecraft:iron_ingot>'),
     '<ore:myOwnEntry>.add(<minecraft:iron_ingot>);',

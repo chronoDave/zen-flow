@@ -1,5 +1,6 @@
 import type { Cast, Liquid, COLOR } from '../lib/format.ts';
 
+import { maybe } from '../lib/fn.ts';
 import * as format from '../lib/format.ts';
 
 export type RecipeCastingBasin = {
@@ -304,10 +305,7 @@ export const addRepairMaterial = (id: string) =>
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
 export const removeRepairMaterial = (id: string, material?: string) => {
-  const out = format.recipe(
-    id,
-    typeof material === 'string' && format.literal(material)
-  );
+  const out = format.recipe(id, maybe(format.literal)(material));
 
   return `mods.tconstruct.Tweaks.removeRepairMaterial(${out});`;
 };

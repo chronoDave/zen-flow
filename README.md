@@ -50,12 +50,9 @@ import { add, remove, hide } from 'zen-flow';
  *  [null, null, null]
  * ]);
  **/
-add({
-  input: {
-    1: '<minecraft:leather>', 2: '<minecraft:leather>', 3: '<minecraft:leather>',
-    4: '<ore:ingotIron', 5: '<minecraft:string>', 6: '<ore:ingotIron>'
-  },
-  output: '<minecraft:saddle>'
+add('<minecraft:saddle>')({
+  1: '<minecraft:leather>', 2: '<minecraft:leather>', 3: '<minecraft:leather>',
+  4: '<ore:ingotIron', 5: '<minecraft:string>', 6: '<ore:ingotIron>'
 });
 
 /**
@@ -65,10 +62,7 @@ add({
  *  [null, <minecraft:leather>, null]
  * ]);
  **/
-add({
-  input: { edge: '<minecraft:leather>' },
-  output: '<minecraft:saddle>'
-});
+add('<minecraft:saddle>')({ edge: '<minecraft:leather>'});
 
 // Remove & hide Extra Utility generators
 

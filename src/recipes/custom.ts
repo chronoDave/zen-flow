@@ -1,5 +1,6 @@
 import type { Ingredient, COLOR } from '../lib/format.ts';
 
+import { maybe } from '../lib/fn.ts';
 import * as format from '../lib/format.ts';
 
 export type RecipeBlock = {
@@ -34,14 +35,14 @@ export const createBlock = (id: string) =>
       typeof recipe.texture === 'string' ?
         format.literal(recipe.texture) :
         format.literal(id),
-      typeof recipe.creativeTab === 'string' && format.literal(recipe.creativeTab),
+      maybe(format.literal)(recipe.creativeTab),
       typeof recipe.renderType === 'number' ?
         recipe.renderType :
         1,
       recipe.drops,
       recipe.unbreakable,
-      typeof recipe.hardness === 'number' && format.float(recipe.hardness),
-      typeof recipe.lightLevel === 'number' && format.float(recipe.lightLevel),
+      maybe(format.float)(recipe.hardness),
+      maybe(format.float)(recipe.lightLevel),
       recipe.opacity
     );
 

@@ -62,7 +62,7 @@ test('[thermalExpanion]', t => {
       bonus: { id: '<minecraft:brown_mushroom>', p: 0.5 },
       rf: 9600
     }),
-    'mods.thermalexpansion.Insolator.addRecipe(\n\t9600,\n\t<ThermalExpansion:material:517>,\n\t<minecraft:mycelium>,\n\t<minecraft:mycelium> * 3,\n\t<minecraft:brown_mushroom>,\n\t50\n);',
+    'mods.thermalexpansion.Insolator.addRecipe(\n\t9600,\n\t<ThermalExpansion:material:517>,\n\t<minecraft:mycelium>,\n\t<minecraft:mycelium> * 3,\n\t<minecraft:brown_mushroom>, 50\n);',
     'addInsolator'
   );
 
@@ -82,7 +82,7 @@ test('[thermalExpanion]', t => {
       bonus: { id: '<minecraft:iron_ingot>', p: 0.8 },
       rf: 3000
     }),
-    'mods.thermalexpansion.Pulverizer.addRecipe(\n\t3000,\n\t<minecraft:flint_and_steel>,\n\t<minecraft:flint>,\n\t<minecraft:iron_ingot>,\n\t80\n);',
+    'mods.thermalexpansion.Pulverizer.addRecipe(\n\t3000,\n\t<minecraft:flint_and_steel>,\n\t<minecraft:flint>,\n\t<minecraft:iron_ingot>, 80\n);',
     'addPulverizer'
   );
 
@@ -99,7 +99,7 @@ test('[thermalExpanion]', t => {
       bonus: { id: '<ThermalExpansion:material:512>', p: 1 },
       rf: 2400
     }),
-    'mods.thermalexpansion.Sawmill.addRecipe(\n\t2400,\n\t<minecraft:ladder>,\n\t<minecraft:stick> * 5,\n\t<ThermalExpansion:material:512>,\n\t100\n);',
+    'mods.thermalexpansion.Sawmill.addRecipe(\n\t2400,\n\t<minecraft:ladder>,\n\t<minecraft:stick> * 5,\n\t<ThermalExpansion:material:512>, 100\n);',
     'addSawmill'
   );
 
@@ -119,7 +119,7 @@ test('[thermalExpanion]', t => {
       bonus: { id: '<ThermalExpansion:material:514>', p: 0.25 },
       rf: 800
     }),
-    'mods.thermalexpansion.Smelter.addRecipe(\n\t800,\n\t<minecraft:dye:1>,\n\t<minecraft:sand>,\n\t<minecraft:stained_glass:14>,\n\t<ThermalExpansion:material:514>,\n\t25\n);',
+    'mods.thermalexpansion.Smelter.addRecipe(\n\t800,\n\t<minecraft:dye:1>,\n\t<minecraft:sand>,\n\t<minecraft:stained_glass:14>,\n\t<ThermalExpansion:material:514>, 25\n);',
     'addInductionSmelter'
   );
 
@@ -159,7 +159,7 @@ test('[thermalExpanion]', t => {
       output: { id: '<liquid:water>', mb: 50 },
       bonus: { id: '<minecraft:stick>', p: 1 }
     }),
-    'mods.thermalexpansion.Transposer.addExtractRecipe(\n\t2000,\n\t<minecraft:leaves>,\n\t<liquid:water> * 50,\n\t<minecraft:stick>,\n\t100\n);',
+    'mods.thermalexpansion.Transposer.addExtractRecipe(\n\t2000,\n\t<minecraft:leaves>,\n\t<liquid:water> * 50,\n\t<minecraft:stick>, 100\n);',
     'addTransposerExtract'
   );
 

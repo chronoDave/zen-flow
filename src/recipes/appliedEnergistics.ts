@@ -1,13 +1,15 @@
 import type { Ingredient, Bonus } from '../lib/format.ts';
 
+import { maybe } from '../lib/fn.ts';
 import * as format from '../lib/format.ts';
-import { clamp } from '../lib/math.ts';
 
 export type RecipeGrinder = {
   input: string;
   output: Ingredient;
-  bonus?: [Bonus] | [Bonus, Bonus];
-  /** Integer larger than or equal to 1 */
+  bonus?: {
+    primary: Bonus;
+    secondary?: Bonus;
+  };
   turns: number;
 };
 
@@ -24,8 +26,9 @@ export const addGrinder = (recipe: RecipeGrinder) => {
   const out = format.recipe(
     format.ingredient(recipe.input),
     format.ingredient(recipe.output),
-    Math.max(1, Math.round(recipe.turns)),
-    ...(recipe.bonus ?? []).map(bonus => `${bonus.id}, ${clamp(0, 1, bonus.p)}`)
+    recipe.turns,
+    maybe(format.join)(recipe.bonus?.primary),
+    maybe(format.join)(recipe.bonus?.secondary)
   );
 
   return `mods.appeng.Grinder.addRecipe(${out});`;

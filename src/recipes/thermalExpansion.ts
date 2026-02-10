@@ -1,10 +1,7 @@
 import type { Ingredient, Bonus, Liquid } from '../lib/format.ts';
 
+import { maybe } from '../lib/fn.ts';
 import * as format from '../lib/format.ts';
-
-const bonus = (bonus?: Bonus): [string, number] | [] => bonus ?
-  [bonus.id, Math.round(bonus.p * 100)] :
-  [];
 
 export type RecipeMagmaCrucible = {
   input: string;
@@ -124,7 +121,7 @@ export const addInsolator = (recipe: RecipeInsolator) => {
     format.ingredient(recipe.input.left),
     format.ingredient(recipe.input.right),
     format.ingredient(recipe.output),
-    ...bonus(recipe.bonus)
+    maybe(format.bonusThermal)(recipe.bonus)
   );
 
   return `mods.thermalexpansion.Insolator.addRecipe(${out});`;
@@ -169,7 +166,7 @@ export const addPulverizer = (recipe: RecipePulverizer) => {
     recipe.rf,
     recipe.input,
     format.ingredient(recipe.output),
-    ...bonus(recipe.bonus)
+    maybe(format.bonusThermal)(recipe.bonus)
   );
 
   return `mods.thermalexpansion.Pulverizer.addRecipe(${out});`;
@@ -212,7 +209,7 @@ export const addSawmill = (recipe: RecipeSawmill) => {
     recipe.rf,
     recipe.input,
     format.ingredient(recipe.output),
-    ...bonus(recipe.bonus)
+    maybe(format.bonusThermal)(recipe.bonus)
   );
 
   return `mods.thermalexpansion.Sawmill.addRecipe(${out});`;
@@ -259,7 +256,7 @@ export const addInductionSmelter = (recipe: RecipeInductionSmelter) => {
     format.ingredient(recipe.input.left),
     format.ingredient(recipe.input.right),
     format.ingredient(recipe.output),
-    ...bonus(recipe.bonus)
+    maybe(format.bonusThermal)(recipe.bonus)
   );
 
   return `mods.thermalexpansion.Smelter.addRecipe(${out});`;
@@ -340,7 +337,7 @@ export const addTransposerExtract = (recipe: RecipeTransposerExtract) => {
     recipe.rf,
     recipe.input,
     format.liquid(recipe.output),
-    ...bonus(recipe.bonus)
+    maybe(format.bonusThermal)(recipe.bonus)
   );
 
   return `mods.thermalexpansion.Transposer.addExtractRecipe(${out});`;

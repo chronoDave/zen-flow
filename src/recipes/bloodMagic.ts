@@ -125,8 +125,11 @@ export const removeAlchemy = (output: string) =>
  * @see https://minetweaker3.aizistral.com/wiki/Mods:Blood_Magic_Support:Rituals
  */
 export const addRitualBinding = (output: string) =>
-  (input: string) =>
-    `mods.bloodmagic.Binding.addRecipe(${format.recipe(input, output)});`;
+  (input: string) => {
+    const out = format.recipe(input, output);
+
+    return `mods.bloodmagic.Binding.addRecipe(${out});`;
+  };
 
 /**
  * Remove [Ritual of Binding](https://ftbwiki.org/Ritual_of_Binding) recipe
@@ -151,10 +154,11 @@ export type RecipeMeteor = {
  * @see https://minetweaker3.aizistral.com/wiki/Mods:Blood_Magic_Support:Rituals
  */
 export const addRitualMeteor = (recipe: RecipeMeteor) => {
+  const bonus = recipe.output.map(bonus => format.join({ id: bonus.id, p: bonus.p * 100 }));
   const out = format.recipe(
     recipe.input,
     recipe.radius,
-    format.literal(format.list(Number.MAX_SAFE_INTEGER)(recipe.output.map(bonus => `${bonus.id}, ${bonus.p * 100}`)))
+    format.literal(format.list()(bonus))
   );
 
   return `mods.bloodmagic.FallingTower.addFocus(${out});`;
@@ -176,5 +180,9 @@ export const removeRitualMeteor = (input: string) =>
  * @see https://minetweaker3.aizistral.com/wiki/Mods:Blood_Magic_Support:Rituals
  */
 export const addRitualHarvest = (output: string) =>
-  (input: string) =>
-    `mods.bloodmagic.HarvestMoon.addHarvestable(${format.recipe(output, input)});`;
+  (input: string) => {
+    const out = format.recipe(output, input);
+
+    return `mods.bloodmagic.HarvestMoon.addHarvestable(${out});`;
+  };
+    

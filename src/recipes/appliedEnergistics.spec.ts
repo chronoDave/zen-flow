@@ -14,10 +14,10 @@ test('[appliedEnergistics]', t => {
       input: '<minecraft:sandstone>',
       output: { id: '<minecraft:sand>', n: 2 },
       turns: 4,
-      bonus: [
-        { id: '<minecraft:sand>', p: 0.8 },
-        { id: '<minecraft:sand>', p: 0.6 }
-      ]
+      bonus: {
+        primary: { id: '<minecraft:sand>', p: 0.8 },
+        secondary: { id: '<minecraft:sand>', p: 0.6 }
+      }
     }),
     'mods.appeng.Grinder.addRecipe(\n\t<minecraft:sandstone>,\n\t<minecraft:sand> * 2,\n\t4,\n\t<minecraft:sand>, 0.8,\n\t<minecraft:sand>, 0.6\n);',
     'addGrinder'

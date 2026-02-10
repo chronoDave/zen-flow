@@ -2,6 +2,14 @@ import test from 'node:test';
 
 import * as format from './format.ts';
 
+test('[format.nullable] formats float', t => {
+  t.assert.equal(format.nullable('a'), 'a', 'string');
+  t.assert.equal(format.nullable(null), 'null', 'null');
+  t.assert.equal(format.nullable(''), '', 'string (empty)');
+  t.assert.equal(format.nullable(undefined), 'null', 'undefined');
+  t.assert.equal(format.nullable(false), false, 'false');
+});
+
 test('[format.float] formats float', t => {
   t.assert.equal(format.float(3), '3F', 'int');
   t.assert.equal(format.float(3.5), '3.5F', 'float');
@@ -21,14 +29,12 @@ test('[format.list] formats list', t => {
   t.assert.equal(format.list(1)(['a', 'b', 'c']), '\n\ta,\n\tb,\n\tc\n');
 });
 
-test('[format.id] formats id', t => {
-  t.assert.equal(format.id('id'), 'id', 'string');
-  t.assert.equal(format.id(''), '', 'empty');
-  t.assert.equal(format.id(), 'null', 'undefined');
-});
-
 test('[format.bonus] formats bonus', t => {
   t.assert.equal(format.bonus({ id: 'bonus', p: 0.25 }), 'bonus % 25');
+});
+
+test('[format.bonusThermal] formats bonus', t => {
+  t.assert.equal(format.bonusThermal({ id: 'bonus', p: 0.25 }), 'bonus, 25');
 });
 
 test('[format.liquid] formats liquid', t => {

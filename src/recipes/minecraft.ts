@@ -117,8 +117,11 @@ export type RecipeFurnace = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/Tutorial:Furnace
  */
-export const addFurnace = (recipe: RecipeFurnace) =>
-  `furnace.addRecipe(${format.recipe(recipe.output, recipe.input, recipe.xp)});`;
+export const addFurnace = (recipe: RecipeFurnace) => {
+  const out = format.recipe(recipe.output, recipe.input, recipe.xp);
+
+  return `furnace.addRecipe(${out});`;
+};
 
 /**
  * Remove furnace recipe

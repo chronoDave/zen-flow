@@ -1,5 +1,6 @@
 import type { Bonus, Liquid, Stack } from '../lib/format.ts';
 
+import { maybe } from '../lib/fn.ts';
 import * as format from '../lib/format.ts';
 
 export type RecipeComposter = {
@@ -17,7 +18,7 @@ export const addComposter = (recipe: RecipeComposter) => {
   const out = format.recipe(
     recipe.id,
     recipe.fill,
-    typeof recipe.color === 'string' && format.literal(recipe.color)
+    maybe(format.literal)(recipe.color)
   );
 
   return `mods.exnihilo.Composting.addRecipe(${out});`;

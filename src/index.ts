@@ -151,7 +151,6 @@ export {
   removeLaserOre,
   addLaserFoci,
   removeLaserFoci,
-  addLaser,
   addPlanter,
   addBiomeRubberTree,
   removeBiomeRubberTree,
@@ -170,7 +169,7 @@ export {
   removeOreDict,
   joinOreDict,
   mirrorOreDict
-} from './recipes/oreDictionary.ts';
+} from './recipes/ore.ts';
 
 export type { Enchantment } from './recipes/tag.ts';
 

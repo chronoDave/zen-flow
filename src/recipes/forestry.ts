@@ -5,6 +5,7 @@ import type {
   Liquid
 } from '../lib/format.ts';
 
+import { maybe } from '../lib/fn.ts';
 import * as format from '../lib/format.ts';
 
 export type RecipeCarpenter = {
@@ -33,8 +34,8 @@ export const addCarpenter = (recipe: RecipeCarpenter) => {
   const out = format.recipe(
     format.ingredient(recipe.output),
     format.shaped(recipe.input),
-    recipe.liquid && format.liquid(recipe.liquid),
-    Math.max(1, Math.round(recipe.ticks)),
+    maybe(format.liquid)(recipe.liquid),
+    recipe.ticks,
     recipe.top
   );
 

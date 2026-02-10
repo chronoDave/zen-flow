@@ -1,30 +1,35 @@
+export const nullable = <T>(x: T) => x ?? 'null';
 export const float = (n: number) => `${n}F`;
 export const short = (n: number) => `${n} as short`;
 export const literal = (x: string) => `"${x}"`;
+export const weight = (weight: number) =>
+  (id: string) =>
+    `${id}.weight(${weight})`;
+
 export const list = (n?: number) =>
   (arr: unknown[]) => {
     if (typeof n === 'number' && arr.length > n) return `\n\t${arr.join(',\n\t')}\n`;
     return arr.join(', ');
   };
-export const array = (n: number) =>
-  (arr: Array<string | number>) => `[${list(n)(arr)}]`;
 
-export const id = (id?: string | null) => typeof id === 'string' ? id : 'null';
-export const weight = (weight: number) =>
-  (id: string) => `${id}.weight(${weight})`;
+export const array = (n: number) =>
+  (arr: Array<string | number>) =>
+    `[${list(n)(arr)}]`;
+
+export const join = (x: Record<string, string | number>) =>
+  list()(Object.values(x));
 
 export type Stack = { id: string; n: number };
 export const stack = (stack: Stack) => `${stack.id} * ${stack.n}`;
 export const aspect = (stack: Stack) => `${stack.id} ${stack.n}`;
+export const aspects = (stacks: Stack[]) => literal(list()(stacks.map(aspect)));
 
 export type Bonus = { id: string; p: number };
-export const bonus = (bonus: Bonus) => `${bonus.id} % ${Math.round(bonus.p * 100)}`;
+export const bonus = (bonus: Bonus) => `${bonus.id} % ${bonus.p * 100}`;
+export const bonusThermal = (bonus: Bonus) => join({ id: bonus.id, p: bonus.p * 100 });
 
 export type Liquid = { id: string; mb: number };
-export const liquid = (liquid: Liquid) => {
-  if (!liquid.id.startsWith('<liquid:')) throw new Error('ID is not a liquid');
-  return `${liquid.id} * ${liquid.mb}`;
-};
+export const liquid = (liquid: Liquid) => `${liquid.id} * ${liquid.mb}`;
 
 export type Ingredient = string | Stack;
 export const ingredient = (ingredient: Ingredient) => typeof ingredient === 'string' ?
@@ -38,6 +43,7 @@ export const cast = (cast?: Cast): [string | null, boolean] => {
   return [cast.id, cast.consume];
 };
 
+export type Shapeless = string[];
 export type Shaped = Partial<{
   1: string;
   2: string;
@@ -55,7 +61,6 @@ export type Shaped = Partial<{
   center: string;
   fill: string;
 }>;
-export type Shapeless = string[];
 
 export const shaped = (recipe: Shaped) => {
   const f = (...arr: Array<string | undefined>): string | null => {
@@ -91,7 +96,7 @@ export const shaped = (recipe: Shaped) => {
     matrix.splice(-1);
   }
 
-  return array(2)(matrix.map(row => array(3)(row.map(id))));
+  return array(2)(matrix.map(row => array(3)(row.map(nullable))));
 };
 
 export const COLOR = {
@@ -128,7 +133,7 @@ export type TextRich = {
 };
 export type Text = string | TextRich;
 
-export const name = (...texts: Text[]) => literal(texts
+export const name = (...lines: Text[]) => literal(lines
   .map(text => {
     if (typeof text === 'string') return text;
     return [
@@ -159,6 +164,6 @@ export const recipe = (...args: Array<undefined | string | number | boolean | nu
   .filter(x => x !== undefined)
   .map(x => {
     if (Array.isArray(x)) return array(3)(x);
-    if (x === null) return 'null';
-    return x;
-  }));
+    return nullable(x);
+  })
+);

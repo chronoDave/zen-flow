@@ -1,4 +1,3 @@
-import { maybe } from '../lib/fn.ts';
 import type {
   Bonus,
   Ingredient,
@@ -8,9 +7,7 @@ import type {
 } from '../lib/format.ts';
 
 import * as format from '../lib/format.ts';
-
-const formatAspects = (aspects: Stack[]) =>
-  format.literal(format.list()(aspects.map(format.aspect)));
+import { maybe } from '../lib/fn.ts';
 
 export type RecipeArcane = {
   input: Shaped | Shapeless;
@@ -427,7 +424,7 @@ export const addArcaneShaped = (recipe: RecipeArcaneShaped) => {
   const out = format.recipe(
     format.literal(recipe.research ?? RESEARCH[RESEARCH_CATEGORY.basics].aspects),
     format.ingredient(recipe.output),
-    formatAspects(recipe.aspects),
+    format.aspects(recipe.aspects),
     format.shaped(recipe.input)
   );
 
@@ -445,7 +442,7 @@ export const addArcaneShapeless = (recipe: RecipeArcaneShapeless) => {
   const out = format.recipe(
     format.literal(recipe.research ?? 'ASPECTS'),
     format.ingredient(recipe.output),
-    formatAspects(recipe.aspects),
+    format.aspects(recipe.aspects),
     format.array(3)(recipe.input)
   );
 
@@ -479,7 +476,7 @@ export const removeArcane = (output: string) =>
  */
 export const addAspectItem = (id: string) =>
   (aspects: Stack[]) =>
-    `mods.thaumcraft.Aspects.add(${format.recipe(id, formatAspects(aspects))});`;
+    `mods.thaumcraft.Aspects.add(${format.recipe(id, format.aspects(aspects))});`;
 
 /**
  * Set item [Aspects](https://ftbwiki.org/List_of_Aspects_(Thaumcraft_4))
@@ -488,7 +485,7 @@ export const addAspectItem = (id: string) =>
  */
 export const setAspectItem = (id: string) =>
   (aspects: Stack[]) =>
-    `mods.thaumcraft.Aspects.set(${format.recipe(id, formatAspects(aspects))});`;
+    `mods.thaumcraft.Aspects.set(${format.recipe(id, format.aspects(aspects))});`;
 
 /**
  * Remove item [Aspects](https://ftbwiki.org/List_of_Aspects_(Thaumcraft_4))
@@ -497,7 +494,7 @@ export const setAspectItem = (id: string) =>
  */
 export const removeAspectItem = (id: string) =>
   (aspects: Stack[]) =>
-    `mods.thaumcraft.Aspects.remove(${format.recipe(id, formatAspects(aspects))});`;
+    `mods.thaumcraft.Aspects.remove(${format.recipe(id, format.aspects(aspects))});`;
 
 /**
  * Add entity [Aspects](https://ftbwiki.org/List_of_Aspects_(Thaumcraft_4))
@@ -506,7 +503,7 @@ export const removeAspectItem = (id: string) =>
  */
 export const addAspectEntity = (id: string) =>
   (aspects: Stack[]) =>
-    `mods.thaumcraft.Aspects.addEntity(${format.recipe(format.literal(id), formatAspects(aspects))});`;
+    `mods.thaumcraft.Aspects.addEntity(${format.recipe(format.literal(id), format.aspects(aspects))});`;
 
 /**
  * Set entity [Aspects](https://ftbwiki.org/List_of_Aspects_(Thaumcraft_4))
@@ -515,7 +512,7 @@ export const addAspectEntity = (id: string) =>
  */
 export const setAspectEntity = (id: string) =>
   (aspects: Stack[]) =>
-    `mods.thaumcraft.Aspects.setEntity(${format.recipe(format.literal(id), formatAspects(aspects))});`;
+    `mods.thaumcraft.Aspects.setEntity(${format.recipe(format.literal(id), format.aspects(aspects))});`;
 
 /**
  * Remove entity [Aspects](https://ftbwiki.org/List_of_Aspects_(Thaumcraft_4))
@@ -524,7 +521,7 @@ export const setAspectEntity = (id: string) =>
  */
 export const removeAspectEntity = (id: string) =>
   (aspects: Stack[]) =>
-    `mods.thaumcraft.Aspects.removeEntity(${format.recipe(format.literal(id), formatAspects(aspects))});`;
+    `mods.thaumcraft.Aspects.removeEntity(${format.recipe(format.literal(id), format.aspects(aspects))});`;
 
 export type RecipeCrucibleAlchemy = {
   input: Ingredient;
@@ -543,7 +540,7 @@ export const addCrucibleAlchemy = (recipe: RecipeCrucibleAlchemy) => {
     format.literal(recipe.research),
     format.ingredient(recipe.output),
     format.ingredient(recipe.input),
-    formatAspects(recipe.aspects)
+    format.aspects(recipe.aspects)
   );
 
   return `mods.thaumcraft.Crucible.addRecipe(${out});`;
@@ -576,7 +573,7 @@ export const addInfusion = (recipe: RecipeInfusion) => {
     format.literal(recipe.research),
     recipe.input,
     format.array(3)(recipe.catalysts),
-    formatAspects(recipe.aspects),
+    format.aspects(recipe.aspects),
     format.ingredient(recipe.output),
     recipe.instability
   );
@@ -610,7 +607,7 @@ export const addInfusionEnchantment = (recipe: RecipeInfusionEnchantment) => {
     format.literal(recipe.research),
     recipe.enchantment,
     recipe.instability,
-    formatAspects(recipe.aspects),
+    format.aspects(recipe.aspects),
     format.array(3)(recipe.catalysts)
   );
 
@@ -627,7 +624,7 @@ export const removeInfusionEnchantment = (id: number) =>
 
 const addLoot = (type: string) =>
   (bonus: Bonus) =>
-    `mods.thaumcraft.Loot.add${type}Loot(${format.recipe(bonus.id, Math.round(bonus.p * 100))});`;
+    `mods.thaumcraft.Loot.add${type}Loot(${format.recipe(bonus.id, bonus.p * 100)});`;
 
 /**
  * Add to [Common Treasure](https://ftbwiki.org/Common_Treasure) loot table
@@ -809,7 +806,7 @@ export const addResearch = (recipe: RecipeResearch) => {
   const out = format.recipe(
     format.literal(recipe.id),
     format.literal(recipe.tab),
-    maybe(formatAspects)(recipe.aspects),
+    maybe(format.aspects)(recipe.aspects),
     recipe.x,
     recipe.y,
     recipe.complexity,
@@ -1017,7 +1014,7 @@ export const setResearchTypeHidden = setResearchType('Concealed');
  */
 export const setResearchAspects = (research: string) =>
   (aspects: Stack[]) =>
-    `mods.thaumcraft.Research.setAspects(${format.recipe(format.literal(research), formatAspects(aspects))});`;
+    `mods.thaumcraft.Research.setAspects(${format.recipe(format.literal(research), format.aspects(aspects))});`;
 
 /**
  * Set [Research](https://thaumcraft-4.fandom.com/wiki/Research) complexity

@@ -8,7 +8,6 @@ import {
   removeLaserOre,
   addLaserFoci,
   removeLaserFoci,
-  addLaser,
   addPlanter,
   addBiomeRubberTree,
   removeBiomeRubberTree,
@@ -70,12 +69,6 @@ test('[mineFactoryReloaded]', t => {
     removeLaserFoci('<tile.oreIron>')('orange'),
     'mods.mfr.MiningLaser.removePreferredOre(1, <tile.oreIron>);',
     'removeLaserFoci'
-  );
-
-  t.assert.equal(
-    addLaser({ id: '<tile.stone>', weight: 1000, foci: 'orange' }),
-    'mods.mfr.MiningLaser.addOre(<tile.stone>.weight(1000));\nmods.mfr.MiningLaser.addPreferredOre(1, <tile.stone>);',
-    'addLaser'
   );
 
   t.assert.equal(

@@ -87,8 +87,11 @@ export const addHarvester = (recipe: RecipeHarvester) => {
  * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
  */
 export const addLaserOre = (id: string) =>
-  (n: number) =>
-    `mods.mfr.MiningLaser.addOre(${format.recipe(format.weight(n)(id))});`;
+  (n: number) => {
+    const out = format.recipe(format.weight(n)(id));
+    
+    return `mods.mfr.MiningLaser.addOre(${out});`;
+  };
 
 /**
  * Remove item from [Laser Drill](https://ftb.fandom.com/wiki/Laser_Drill_(MineFactory_Reloaded))
@@ -163,35 +166,6 @@ export type RecipeLaser = {
   foci: keyof typeof FOCI;
   weight: number;
 };
-
-/**
- * Add item to [Laser Drill](https://ftb.fandom.com/wiki/Laser_Drill_(MineFactory_Reloaded)) and Foci. Combines `addLaserOre` and `addLaserFoci`
- * 
- * Common values:
- *  - Coal => `175 (black)`
- *  - Iron => `150 (brown)`
- *  - Redstone => `100 (red)`
- *  - Copper => `90 (orange)`
- *  - Tin => `85 (silver)`
- *  - Glowstone => `80 (yellow)`
- *  - Lapis => `80 (blue)`
- *  - Gold => `70 (yellow)`
- *  - Lead => `60 (purple)`
- *  - Diamond => `55 (lightBlue)`
- *  - Sulfur => `40 (yellow)`
- *  - Salpeter => `40 (white)`
- *  - Emerald => `35 (lime)`
- *  - Silver => `30 (gray)`
- *  - Platinum => `15 (lightBlue)`
- * 
- * A list of laser ores can be generated using `/mt mfr laserores`
- * 
- * @see https://minetweaker3.aizistral.com/wiki/Mods:MFR_Support
- */
-export const addLaser = (recipe: RecipeLaser) => [
-  addLaserOre(recipe.id)(recipe.weight),
-  addLaserFoci(recipe.id)(recipe.foci)
-].join('\n');
 
 /**
  * Add [Planter](https://ftb.fandom.com/wiki/Planter_(MineFactory_Reloaded)) recipe
