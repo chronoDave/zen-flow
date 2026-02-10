@@ -69,7 +69,7 @@ type RecipeGrinder = {
     input: string;
     output: Ingredient;
     bonus?: {
-        primary: Bonus;
+        primary?: Bonus;
         secondary?: Bonus;
     };
     turns: number;
