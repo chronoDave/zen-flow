@@ -392,7 +392,7 @@ test('[thaumcraft]', t => {
   );
 
   t.assert.equal(
-    addResearchPage('WTFPLANTS'),
+    addResearchPage('WTFPLANTS')('WTFPLANTS'),
     'mods.thaumcraft.Research.addPage("WTFPLANTS", "tc.research_page.WTFPLANTS");',
     'addResearchPage'
   );

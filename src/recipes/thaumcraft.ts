@@ -823,8 +823,9 @@ export const addResearch = (recipe: RecipeResearch) => {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
  */
-export const addResearchPage = (id: string) =>
-  `mods.thaumcraft.Research.addPage(${format.recipe(format.literal(id), format.literal(`tc.research_page.${id}`))});`;
+export const addResearchPage = (research: string) =>
+  (id: string) =>
+    `mods.thaumcraft.Research.addPage(${format.recipe(format.literal(research), format.literal(`tc.research_page.${id}`))});`;
 
 export type TextResearchImage = {
   src: Texture;
