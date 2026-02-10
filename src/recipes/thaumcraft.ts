@@ -806,7 +806,7 @@ export const addResearch = (recipe: RecipeResearch) => {
   const out = format.recipe(
     format.literal(recipe.id),
     format.literal(recipe.tab),
-    maybe(format.aspects)(recipe.aspects),
+    maybe(format.aspects)(recipe.aspects) ?? null,
     recipe.x,
     recipe.y,
     recipe.complexity,
