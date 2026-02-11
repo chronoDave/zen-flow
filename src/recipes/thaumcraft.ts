@@ -355,7 +355,7 @@ export const RESEARCH = {
     taintShovel: 'TAINTSHOVEL',
     focusBlink: 'FOCUSBLINK'
   }
-};
+} as const;
 
 export const ASPECT = {
   aer: 'aer',
@@ -1040,7 +1040,7 @@ export const resetResearch = (research: string) =>
   `mods.thaumcraft.Research.clearPages(${format.literal(research)});`;
 
 /**
- * Clear [Research](https://thaumcraft-4.fandom.com/wiki/Research) cache.
+ * Clear [Research](https://thaumcraft-4.fandom.com/wiki/Research) cache
  * 
  * **Note**: This only works when the page type is unchanged, otherwise use `resetResearch` and manually add back missing pages.
  * 
@@ -1056,6 +1056,13 @@ export type RecipeResearchMove = {
   y: number;
 };
 
+/**
+ * Move [Research](https://thaumcraft-4.fandom.com/wiki/Research)
+ * 
+ * **Note**: This only works when the page type is unchanged, otherwise use `resetResearch` and manually add back missing pages.
+ * 
+ * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
+ */
 export const moveResearch = (recipe: RecipeResearchMove) => {
   const out = format.recipe(
     format.literal(recipe.research),
