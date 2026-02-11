@@ -2151,7 +2151,7 @@ declare const RESEARCH: {
         readonly slivers: "SLIVERS";
         readonly enchantFishing: "ENCHANT_FISHING";
         readonly netherruneCelerity: "NETHERRUNE_CELERITY";
-        readonly thirstyTankGlyp: "THIRSTYTANK_GLYPH";
+        readonly thirstyTankGlyph: "THIRSTYTANK_GLYPH";
         readonly crystalBrain: "CRYSTALBRAIN";
         readonly vishroomSoup: "VISHROOMSOUP";
         readonly nitorLight: "NITORLIGHT";

@@ -1232,7 +1232,7 @@ const RESEARCH = {
     slivers: "SLIVERS",
     enchantFishing: "ENCHANT_FISHING",
     netherruneCelerity: "NETHERRUNE_CELERITY",
-    thirstyTankGlyp: "THIRSTYTANK_GLYPH",
+    thirstyTankGlyph: "THIRSTYTANK_GLYPH",
     crystalBrain: "CRYSTALBRAIN",
     vishroomSoup: "VISHROOMSOUP",
     nitorLight: "NITORLIGHT",
