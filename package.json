@@ -1,6 +1,6 @@
 {
   "name": "zen-flow",
-  "version": "16.3.1",
+  "version": "16.4.0",
   "description": "MineTweaker ZenScript made easy.",
   "type": "module",
   "exports": {
