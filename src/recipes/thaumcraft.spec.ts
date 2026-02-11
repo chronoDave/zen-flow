@@ -63,7 +63,7 @@ test('[thaumcraft]', t => {
     addArcaneShaped({
       input: { square: '<minecraft:stonebrick>' },
       output: { id: '<minecraft:stonebrick:3>', n: 4 },
-      aspects: [{ id: 'ordo', n: 1 }]
+      aspects: { ordo: 1 }
     }),
     'mods.thaumcraft.Arcane.addShaped(\n\t"ASPECTS",\n\t<minecraft:stonebrick:3> * 4,\n\t"ordo 1",\n\t[[<minecraft:stonebrick>, <minecraft:stonebrick>], [<minecraft:stonebrick>, <minecraft:stonebrick>]]\n);',
     'addArcaneShaped'
@@ -74,14 +74,14 @@ test('[thaumcraft]', t => {
       input: ['<minecraft:ender_pearl>', '<Thaumcraft:ItemResource:17>'],
       output: '<minecraft:ghast_tear>',
       research: 'VOIDMETAL',
-      aspects: [
-        { id: 'aqua', n: 6 },
-        { id: 'terra', n: 6 },
-        { id: 'perditio', n: 6 },
-        { id: 'ordo', n: 6 },
-        { id: 'aer', n: 6 },
-        { id: 'ignis', n: 6 }
-      ]
+      aspects: {
+        aqua: 6,
+        terra: 6,
+        perditio: 6,
+        ordo: 6,
+        aer: 6,
+        ignis: 6
+      }
     }),
     'mods.thaumcraft.Arcane.addShapeless(\n\t"VOIDMETAL",\n\t<minecraft:ghast_tear>,\n\t"aqua 6, terra 6, perditio 6, ordo 6, aer 6, ignis 6",\n\t[<minecraft:ender_pearl>, <Thaumcraft:ItemResource:17>]\n);',
     'addArcaneShapeless'
@@ -91,7 +91,7 @@ test('[thaumcraft]', t => {
     addArcane({
       input: { square: '<minecraft:stonebrick>' },
       output: { id: '<minecraft:stonebrick:3>', n: 4 },
-      aspects: [{ id: 'ordo', n: 1 }]
+      aspects: { ordo: 1 }
     }),
     'mods.thaumcraft.Arcane.addShaped(\n\t"ASPECTS",\n\t<minecraft:stonebrick:3> * 4,\n\t"ordo 1",\n\t[[<minecraft:stonebrick>, <minecraft:stonebrick>], [<minecraft:stonebrick>, <minecraft:stonebrick>]]\n);',
     'addArcane (shaped)'
@@ -102,14 +102,14 @@ test('[thaumcraft]', t => {
       input: ['<minecraft:ender_pearl>', '<Thaumcraft:ItemResource:17>'],
       output: '<minecraft:ghast_tear>',
       research: 'VOIDMETAL',
-      aspects: [
-        { id: 'aqua', n: 6 },
-        { id: 'terra', n: 6 },
-        { id: 'perditio', n: 6 },
-        { id: 'ordo', n: 6 },
-        { id: 'aer', n: 6 },
-        { id: 'ignis', n: 6 }
-      ]
+      aspects: {
+        aqua: 6,
+        terra: 6,
+        perditio: 6,
+        ordo: 6,
+        aer: 6,
+        ignis: 6
+      }
     }),
     'mods.thaumcraft.Arcane.addShapeless(\n\t"VOIDMETAL",\n\t<minecraft:ghast_tear>,\n\t"aqua 6, terra 6, perditio 6, ordo 6, aer 6, ignis 6",\n\t[<minecraft:ender_pearl>, <Thaumcraft:ItemResource:17>]\n);',
     'addArcane (shapeless)'

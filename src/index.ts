@@ -283,6 +283,7 @@ export {
 } from './recipes/bloodMagic.ts';
 
 export type {
+  AspectShaped,
   RecipeArcane,
   RecipeArcaneShaped,
   RecipeArcaneShapeless,

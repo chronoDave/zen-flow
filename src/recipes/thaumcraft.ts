@@ -9,12 +9,86 @@ import type {
 import * as format from '../lib/format.ts';
 import { maybe } from '../lib/fn.ts';
 
+export const ASPECT = {
+  aer: 'aer',
+  terra: 'terra',
+  ignis: 'ignis',
+  aqua: 'aqua',
+  ordo: 'ordo',
+  perditio: 'perditio',
+  vacuos: 'vacuos',
+  lux: 'lux',
+  tempestas: 'tempestas',
+  motus: 'motus',
+  gelum: 'gelum',
+  vitreus: 'vitreus',
+  victus: 'victus',
+  venenum: 'venenum',
+  potentia: 'potentia',
+  permutatio: 'permutatio',
+  metallum: 'metallum',
+  mortuus: 'mortuus',
+  volatus: 'volatus',
+  tenebrae: 'tenebrae',
+  spiritus: 'spiritus',
+  sano: 'sano',
+  iter: 'iter',
+  alienis: 'alienis',
+  praecantatio: 'praecantatio',
+  auram: 'auram',
+  vitium: 'vitium',
+  limus: 'limus',
+  herba: 'herba',
+  arbor: 'arbor',
+  bestia: 'bestia',
+  corpus: 'corpus',
+  exanimis: 'exanimis',
+  cognitio: 'cognitio',
+  sensus: 'sensus',
+  humanus: 'humanus',
+  messis: 'messis',
+  perfodio: 'perfodio',
+  instrumentum: 'instrumentum',
+  meto: 'meto',
+  telum: 'telum',
+  tutamen: 'tutamen',
+  fames: 'fames',
+  lucrum: 'lucrum',
+  fabrico: 'fabrico',
+  pannus: 'pannus',
+  machina: 'machina',
+  vinculum: 'vinculum',
+  luxuria: 'luxuria',
+  infernus: 'infernus',
+  superbia: 'superbia',
+  gula: 'gula',
+  invidia: 'invidia',
+  desidia: 'desidia',
+  ira: 'ira'
+} as const;
+
+export type AspectShaped = {
+  [ASPECT.aer]: number;
+  [ASPECT.terra]: number;
+  [ASPECT.ignis]: number;
+  [ASPECT.aqua]: number;
+  [ASPECT.ordo]: number;
+  [ASPECT.perditio]: number;
+};
+
+const aspectShaped = (x: Partial<AspectShaped>): string => {
+  const aspects = Object.entries(x)
+    .map(([id, n]) => format.aspect({ id, n }));
+
+  return format.literal(format.list()(aspects));
+};
+
 export type RecipeArcane = {
   input: Shaped | Shapeless;
   output: Ingredient;
   /** Defaults to `"ASPECTS"` as this does not require research */
   research?: string;
-  aspects: Stack[];
+  aspects?: Partial<AspectShaped>;
 };
 
 export type RecipeArcaneShaped = RecipeArcane & { input: Shaped };
@@ -357,64 +431,6 @@ export const RESEARCH = {
   }
 } as const;
 
-export const ASPECT = {
-  aer: 'aer',
-  terra: 'terra',
-  ignis: 'ignis',
-  aqua: 'aqua',
-  ordo: 'ordo',
-  perditio: 'perditio',
-  vacuos: 'vacuos',
-  lux: 'lux',
-  tempestas: 'tempestas',
-  motus: 'motus',
-  gelum: 'gelum',
-  vitreus: 'vitreus',
-  victus: 'victus',
-  venenum: 'venenum',
-  potentia: 'potentia',
-  permutatio: 'permutatio',
-  metallum: 'metallum',
-  mortuus: 'mortuus',
-  volatus: 'volatus',
-  tenebrae: 'tenebrae',
-  spiritus: 'spiritus',
-  sano: 'sano',
-  iter: 'iter',
-  alienis: 'alienis',
-  praecantatio: 'praecantatio',
-  auram: 'auram',
-  vitium: 'vitium',
-  limus: 'limus',
-  herba: 'herba',
-  arbor: 'arbor',
-  bestia: 'bestia',
-  corpus: 'corpus',
-  exanimis: 'exanimis',
-  cognitio: 'cognitio',
-  sensus: 'sensus',
-  humanus: 'humanus',
-  messis: 'messis',
-  perfodio: 'perfodio',
-  instrumentum: 'instrumentum',
-  meto: 'meto',
-  telum: 'telum',
-  tutamen: 'tutamen',
-  fames: 'fames',
-  lucrum: 'lucrum',
-  fabrico: 'fabrico',
-  pannus: 'pannus',
-  machina: 'machina',
-  vinculum: 'vinculum',
-  luxuria: 'luxuria',
-  infernus: 'infernus',
-  superbia: 'superbia',
-  gula: 'gula',
-  invidia: 'invidia',
-  desidia: 'desidia',
-  ira: 'ira'
-} as const;
-
 /**
  * Add shaped [Arcane Worktable](https://ftbwiki.org/Arcane_Worktable_(Thaumcraft_4)) recipe
  * 
@@ -424,7 +440,7 @@ export const addArcaneShaped = (recipe: RecipeArcaneShaped) => {
   const out = format.recipe(
     format.literal(recipe.research ?? RESEARCH[RESEARCH_TAB.basics].aspects),
     format.ingredient(recipe.output),
-    format.aspects(recipe.aspects),
+    maybe(aspectShaped)(recipe.aspects),
     format.shaped(recipe.input)
   );
 
@@ -440,9 +456,9 @@ export type RecipeArcaneShapeless = RecipeArcane & { input: Shapeless };
  */
 export const addArcaneShapeless = (recipe: RecipeArcaneShapeless) => {
   const out = format.recipe(
-    format.literal(recipe.research ?? 'ASPECTS'),
+    format.literal(recipe.research ?? RESEARCH[RESEARCH_TAB.basics].aspects),
     format.ingredient(recipe.output),
-    format.aspects(recipe.aspects),
+    maybe(aspectShaped)(recipe.aspects),
     format.array(3)(recipe.input)
   );
 
