@@ -2121,7 +2121,7 @@ declare const RESEARCH: {
         readonly golemLinker: "GOLEMLINKER";
         readonly netherruneWisp: "NETHERRUNE_WISP";
         readonly mobLure: "MOBLURE";
-        readonly dimensionLUre: "DIMENSIONLURE";
+        readonly dimensionLure: "DIMENSIONLURE";
         readonly advNodeJar: "ADVNODEJAR";
         readonly tallyBlockLens: "TALLYBLOCK_LENS";
         readonly netherruneGhast: "NETHERRUNE_GHAST";
