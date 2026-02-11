@@ -298,7 +298,7 @@ export type {
 } from './recipes/thaumcraft.ts';
 
 export {
-  RESEARCH_CATEGORY,
+  RESEARCH_TAB,
   RESEARCH,
   ASPECT,
   addArcaneShaped,

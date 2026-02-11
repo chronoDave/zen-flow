@@ -19,7 +19,7 @@ export type RecipeArcane = {
 
 export type RecipeArcaneShaped = RecipeArcane & { input: Shaped };
 
-export const RESEARCH_CATEGORY = {
+export const RESEARCH_TAB = {
   basics: 'BASICS',
   thaumaturgy: 'THAUMATURGY',
   alchemy: 'ALCHEMY',
@@ -31,7 +31,7 @@ export const RESEARCH_CATEGORY = {
 } as const;
 
 export const RESEARCH = {
-  [RESEARCH_CATEGORY.basics]: {
+  [RESEARCH_TAB.basics]: {
     warp: 'WARP',
     research: 'RESEARCH',
     enchant: 'ENCHANT',
@@ -53,7 +53,7 @@ export const RESEARCH = {
     nodePreserve: 'NODEPRESERVE',
     pech: 'PECH'
   },
-  [RESEARCH_CATEGORY.thaumaturgy]: {
+  [RESEARCH_TAB.thaumaturgy]: {
     nodeStabilizer: 'NODESTABILIZER',
     replaceWandCore: 'salisarcana:REPLACEWANDCORE',
     wandPedFoc: 'WANDPEDFOC',
@@ -100,7 +100,7 @@ export const RESEARCH = {
     wandPed: 'WANDPED',
     rodBlazeStaff: 'ROD_blaze_staff'
   },
-  [RESEARCH_CATEGORY.alchemy]: {
+  [RESEARCH_TAB.alchemy]: {
     alumentum: 'ALUMENTUM',
     bathSalts: 'BATHSALTS',
     crucible: 'CRUCIBLE',
@@ -137,7 +137,7 @@ export const RESEARCH = {
     pureCopper: 'PURECOPPER',
     jarLabel: 'JARLABEL'
   },
-  [RESEARCH_CATEGORY.artifice]: {
+  [RESEARCH_TAB.artifice]: {
     runicEmergency: 'RUNICEMERGENCY',
     goggles: 'GOGGLES',
     enchFabric: 'ENCHFABRIC',
@@ -189,7 +189,7 @@ export const RESEARCH = {
     arcaneBore: 'ARCANEBORE',
     infusionEnchantment: 'INFUSIONENCHANTMENT'
   },
-  [RESEARCH_CATEGORY.golemancy]: {
+  [RESEARCH_TAB.golemancy]: {
     golemClay: 'GOLEMCLAY',
     upgradeWater: 'UPGRADEWATER',
     hungryChest: 'HUNGRYCHEST',
@@ -230,7 +230,7 @@ export const RESEARCH = {
     coreEmpty: 'COREEMPTY',
     upgradeOrder: 'UPGRADEORDER'
   },
-  [RESEARCH_CATEGORY.eldritch]: {
+  [RESEARCH_TAB.eldritch]: {
     eldritchMajor: 'ELDRITCHMAJOR',
     advAlchemyFurnace: 'ADVALCHEMYFURNACE',
     armorVoidFortress: 'ARMORVOIDFORTRESS',
@@ -248,7 +248,7 @@ export const RESEARCH = {
     capVoid: 'CAP_void',
     voidMetal: 'VOIDMETAL'
   },
-  [RESEARCH_CATEGORY.automagy]: {
+  [RESEARCH_TAB.automagy]: {
     redCrystal: 'REDCRYSTAL',
     golemLinker: 'GOLEMLINKER',
     netherruneWisp: 'NETHERRUNE_WISP',
@@ -315,7 +315,7 @@ export const RESEARCH = {
     sliversWarding: 'SLIVERS_WARDING',
     golemInhibitor: 'GOLEMINHIBITOR'
   },
-  [RESEARCH_CATEGORY.forbidden]: {
+  [RESEARCH_TAB.forbidden]: {
     skullAxe: 'SKULLAXE',
     bloodRapier: 'BLOODRAPIER',
     arcaneCake: 'ARCANECAKE',
@@ -422,7 +422,7 @@ export const ASPECT = {
  */
 export const addArcaneShaped = (recipe: RecipeArcaneShaped) => {
   const out = format.recipe(
-    format.literal(recipe.research ?? RESEARCH[RESEARCH_CATEGORY.basics].aspects),
+    format.literal(recipe.research ?? RESEARCH[RESEARCH_TAB.basics].aspects),
     format.ingredient(recipe.output),
     format.aspects(recipe.aspects),
     format.shaped(recipe.input)
@@ -761,7 +761,7 @@ export type RecipeResearchTab = {
 /**
  * Add [Research](https://thaumcraft-4.fandom.com/wiki/Research) tab
  * 
- * Creates `tc.research_category.<id>` localization key
+ * Creates `tc.RESEARCH_TAB.<id>` localization key
  * 
  * Texture paths are formatted as `/textures/` + `<texture.domain>` + `/` + `<texture.path>`
  *
@@ -1051,7 +1051,7 @@ export const refreshResearch = (research: string) =>
 
 export type RecipeResearchMove = {
   research: string;
-  category: string;
+  tab: string;
   x: number;
   y: number;
 };
@@ -1059,7 +1059,7 @@ export type RecipeResearchMove = {
 export const moveResearch = (recipe: RecipeResearchMove) => {
   const out = format.recipe(
     format.literal(recipe.research),
-    format.literal(recipe.category),
+    format.literal(recipe.tab),
     recipe.x,
     recipe.y
   );
