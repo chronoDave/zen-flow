@@ -392,6 +392,22 @@ test('[thaumcraft]', t => {
   );
 
   t.assert.equal(
+    addResearch({
+      id: 'WTFPLANTS',
+      tab: 'BASICS',
+      x: 1,
+      y: 0,
+      complexity: 8,
+      icon: {
+        domain: 'thaumcraft',
+        path: 'textures/items/brain.png'
+      }
+    }),
+    'mods.thaumcraft.Research.addResearch(\n\t"WTFPLANTS",\n\t"BASICS",\n\tnull,\n\t1,\n\t0,\n\t8,\n\t"thaumcraft",\n\t"textures/items/brain.png"\n);',
+    'addResearch (icon texture)'
+  );
+
+  t.assert.equal(
     addResearchPage('WTFPLANTS')('WTFPLANTS'),
     'mods.thaumcraft.Research.addPage("WTFPLANTS", "tc.research_page.WTFPLANTS");',
     'addResearchPage'

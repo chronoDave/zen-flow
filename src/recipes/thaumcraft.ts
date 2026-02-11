@@ -790,7 +790,7 @@ export type RecipeResearch = {
   /** Typically between 0 and 15 */
   complexity: number;
   /** Item ID */
-  icon: string;
+  icon: string | Texture;
 };
 
 /**
@@ -798,7 +798,7 @@ export type RecipeResearch = {
  * 
  * Creates `tc.research_name.<id>` (title) and `tc.research_text.<id>` (tooltip) localization keys
  * 
- * **Note**: Requires pages, will crash otherwise
+ * **Note**: Requires pages, will crash otherwise. Will also crash if `x` or `y` collides with existing research.
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
  */
@@ -810,7 +810,12 @@ export const addResearch = (recipe: RecipeResearch) => {
     recipe.x,
     recipe.y,
     recipe.complexity,
-    recipe.icon
+    typeof recipe.icon === 'string' ?
+      recipe.icon :
+      format.literal(recipe.icon.domain),
+    typeof recipe.icon !== 'string' ?
+      format.literal(recipe.icon.path) :
+      undefined
   );
 
   return `mods.thaumcraft.Research.addResearch(${out});`;
