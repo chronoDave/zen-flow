@@ -1403,7 +1403,8 @@ const addResearch = (recipe$1) => {
     recipe$1.x,
     recipe$1.y,
     recipe$1.complexity,
-    recipe$1.icon
+    typeof recipe$1.icon === "string" ? recipe$1.icon : literal(recipe$1.icon.domain),
+    typeof recipe$1.icon !== "string" ? literal(recipe$1.icon.path) : void 0
   );
   return `mods.thaumcraft.Research.addResearch(${out});`;
 };
