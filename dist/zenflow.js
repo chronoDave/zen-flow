@@ -908,6 +908,67 @@ const addRitualHarvest = (output) => (input) => {
   return `mods.bloodmagic.HarvestMoon.addHarvestable(${out});`;
 };
 
+const ASPECT = {
+  aer: "aer",
+  terra: "terra",
+  ignis: "ignis",
+  aqua: "aqua",
+  ordo: "ordo",
+  perditio: "perditio",
+  vacuos: "vacuos",
+  lux: "lux",
+  tempestas: "tempestas",
+  motus: "motus",
+  gelum: "gelum",
+  vitreus: "vitreus",
+  victus: "victus",
+  venenum: "venenum",
+  potentia: "potentia",
+  permutatio: "permutatio",
+  metallum: "metallum",
+  mortuus: "mortuus",
+  volatus: "volatus",
+  tenebrae: "tenebrae",
+  spiritus: "spiritus",
+  sano: "sano",
+  iter: "iter",
+  alienis: "alienis",
+  praecantatio: "praecantatio",
+  auram: "auram",
+  vitium: "vitium",
+  limus: "limus",
+  herba: "herba",
+  arbor: "arbor",
+  bestia: "bestia",
+  corpus: "corpus",
+  exanimis: "exanimis",
+  cognitio: "cognitio",
+  sensus: "sensus",
+  humanus: "humanus",
+  messis: "messis",
+  perfodio: "perfodio",
+  instrumentum: "instrumentum",
+  meto: "meto",
+  telum: "telum",
+  tutamen: "tutamen",
+  fames: "fames",
+  lucrum: "lucrum",
+  fabrico: "fabrico",
+  pannus: "pannus",
+  machina: "machina",
+  vinculum: "vinculum",
+  luxuria: "luxuria",
+  infernus: "infernus",
+  superbia: "superbia",
+  gula: "gula",
+  invidia: "invidia",
+  desidia: "desidia",
+  ira: "ira"
+};
+const aspectShaped = (x) => {
+  const aspects = Object.entries(x).map(([id, n]) => aspect({ id, n }));
+  return literal(list()(aspects));
+};
 const RESEARCH_TAB = {
   basics: "BASICS",
   thaumaturgy: "THAUMATURGY",
@@ -1244,77 +1305,20 @@ const RESEARCH = {
     focusBlink: "FOCUSBLINK"
   }
 };
-const ASPECT = {
-  aer: "aer",
-  terra: "terra",
-  ignis: "ignis",
-  aqua: "aqua",
-  ordo: "ordo",
-  perditio: "perditio",
-  vacuos: "vacuos",
-  lux: "lux",
-  tempestas: "tempestas",
-  motus: "motus",
-  gelum: "gelum",
-  vitreus: "vitreus",
-  victus: "victus",
-  venenum: "venenum",
-  potentia: "potentia",
-  permutatio: "permutatio",
-  metallum: "metallum",
-  mortuus: "mortuus",
-  volatus: "volatus",
-  tenebrae: "tenebrae",
-  spiritus: "spiritus",
-  sano: "sano",
-  iter: "iter",
-  alienis: "alienis",
-  praecantatio: "praecantatio",
-  auram: "auram",
-  vitium: "vitium",
-  limus: "limus",
-  herba: "herba",
-  arbor: "arbor",
-  bestia: "bestia",
-  corpus: "corpus",
-  exanimis: "exanimis",
-  cognitio: "cognitio",
-  sensus: "sensus",
-  humanus: "humanus",
-  messis: "messis",
-  perfodio: "perfodio",
-  instrumentum: "instrumentum",
-  meto: "meto",
-  telum: "telum",
-  tutamen: "tutamen",
-  fames: "fames",
-  lucrum: "lucrum",
-  fabrico: "fabrico",
-  pannus: "pannus",
-  machina: "machina",
-  vinculum: "vinculum",
-  luxuria: "luxuria",
-  infernus: "infernus",
-  superbia: "superbia",
-  gula: "gula",
-  invidia: "invidia",
-  desidia: "desidia",
-  ira: "ira"
-};
 const addArcaneShaped = (recipe$1) => {
   const out = recipe(
     literal(recipe$1.research ?? RESEARCH[RESEARCH_TAB.basics].aspects),
     ingredient(recipe$1.output),
-    aspects(recipe$1.aspects),
+    maybe(aspectShaped)(recipe$1.aspects),
     shaped(recipe$1.input)
   );
   return `mods.thaumcraft.Arcane.addShaped(${out});`;
 };
 const addArcaneShapeless = (recipe$1) => {
   const out = recipe(
-    literal(recipe$1.research ?? "ASPECTS"),
+    literal(recipe$1.research ?? RESEARCH[RESEARCH_TAB.basics].aspects),
     ingredient(recipe$1.output),
-    aspects(recipe$1.aspects),
+    maybe(aspectShaped)(recipe$1.aspects),
     array(3)(recipe$1.input)
   );
   return `mods.thaumcraft.Arcane.addShapeless(${out});`;
