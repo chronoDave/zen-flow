@@ -327,7 +327,7 @@ export const RESEARCH = {
     golemLinker: 'GOLEMLINKER',
     netherruneWisp: 'NETHERRUNE_WISP',
     mobLure: 'MOBLURE',
-    dimensionLUre: 'DIMENSIONLURE',
+    dimensionLure: 'DIMENSIONLURE',
     advNodeJar: 'ADVNODEJAR',
     tallyBlockLens: 'TALLYBLOCK_LENS',
     netherruneGhast: 'NETHERRUNE_GHAST',
