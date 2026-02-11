@@ -40,9 +40,9 @@ import {
   addResearchPageCrucible,
   addResearchPageInfusion,
   addResearchPageEnchantment,
-  addResearchRequirement,
+  addResearchParent,
   addResearchSibling,
-  removeResearchRequirement,
+  removeResearchParent,
   removeResearchSibling,
   setResearchTypeRound,
   setResearchTypeSpikey,
@@ -461,15 +461,15 @@ test('[thaumcraft]', t => {
   );
 
   t.assert.equal(
-    addResearchRequirement('WTFPLANTS')('ICHOR'),
+    addResearchParent('WTFPLANTS')('ICHOR'),
     'mods.thaumcraft.Research.addPrereq("WTFPLANTS", "ICHOR", false);',
-    'addResearchRequirement'
+    'addResearchParent'
   );
 
   t.assert.equal(
-    addResearchRequirement('WTFPLANTS')({ id: 'ICHOR', hidden: true }),
+    addResearchParent('WTFPLANTS')({ id: 'ICHOR', hidden: true }),
     'mods.thaumcraft.Research.addPrereq("WTFPLANTS", "ICHOR", true);',
-    'addResearchRequirement (hidden)'
+    'addResearchParent (hidden)'
   );
 
   t.assert.equal(
@@ -479,9 +479,9 @@ test('[thaumcraft]', t => {
   );
 
   t.assert.equal(
-    removeResearchRequirement('ICHOR'),
+    removeResearchParent('ICHOR'),
     'mods.thaumcraft.Research.clearPrereqs("ICHOR");',
-    'removeResearchRequirement'
+    'removeResearchParent'
   );
 
   t.assert.equal(

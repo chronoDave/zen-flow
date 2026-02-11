@@ -928,16 +928,16 @@ export const addResearchPageEnchantment = (research: string) =>
     `mods.thaumcraft.Research.addEnchantmentPage(${format.recipe(format.literal(research), enchantment)});`;
 
 /**
- * Add [Research](https://thaumcraft-4.fandom.com/wiki/Research) requirement
+ * Add [Research](https://thaumcraft-4.fandom.com/wiki/Research) parent research
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
  */
-export const addResearchRequirement = (research: string) =>
-  (requirement: string | { id: string; hidden: boolean }) => {
+export const addResearchParent = (research: string) =>
+  (parent: string | { id: string; hidden: boolean }) => {
     const out = format.recipe(
       format.literal(research),
-      format.literal(typeof requirement === 'string' ? requirement : requirement.id),
-      typeof requirement === 'string' ? false : requirement.hidden
+      format.literal(typeof parent === 'string' ? parent : parent.id),
+      typeof parent === 'string' ? false : parent.hidden
     );
 
     return `mods.thaumcraft.Research.addPrereq(${out});`;
@@ -953,11 +953,11 @@ export const addResearchSibling = (research: string) =>
     `mods.thaumcraft.Research.addSibling(${format.recipe(format.literal(research), format.literal(sibling))});`;
 
 /**
- * Remove [Research](https://thaumcraft-4.fandom.com/wiki/Research) requirement
+ * Remove [Research](https://thaumcraft-4.fandom.com/wiki/Research) parent research
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
  */
-export const removeResearchRequirement = (research: string) =>
+export const removeResearchParent = (research: string) =>
   `mods.thaumcraft.Research.clearPrereqs(${format.literal(research)});`;
 
 /**
