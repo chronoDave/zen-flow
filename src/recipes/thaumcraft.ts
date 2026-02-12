@@ -1077,6 +1077,8 @@ export type RecipeResearchMove = {
  * 
  * **Note**: This only works when the page type is unchanged, otherwise use `resetResearch` and manually add back missing pages.
  * 
+ * **Note**: Will throw `NullPointerException` if called after `addResearchParent`
+ * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
  */
 export const moveResearch = (recipe: RecipeResearchMove) => {
