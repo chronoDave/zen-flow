@@ -1016,7 +1016,7 @@ const RESEARCH = {
     focusHellBat: "FOCUSHELLBAT",
     visChargeRelay: "VISCHARGERELAY",
     rodIce: "ROD_ice",
-    nodeStabilizeRadV: "NODESTABILIZERADV",
+    nodeStabilizerAdv: "NODESTABILIZERADV",
     rodReed: "ROD_reed",
     rodGreatwoodStaff: "ROD_greatwood_staff",
     focusDisenchanting: "salisarcana:FOCUS_DISENCHANTING",

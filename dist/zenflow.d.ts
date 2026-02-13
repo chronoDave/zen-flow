@@ -1935,7 +1935,7 @@ declare const RESEARCH: {
         readonly focusHellBat: "FOCUSHELLBAT";
         readonly visChargeRelay: "VISCHARGERELAY";
         readonly rodIce: "ROD_ice";
-        readonly nodeStabilizeRadV: "NODESTABILIZERADV";
+        readonly nodeStabilizerAdv: "NODESTABILIZERADV";
         readonly rodReed: "ROD_reed";
         readonly rodGreatwoodStaff: "ROD_greatwood_staff";
         readonly focusDisenchanting: "salisarcana:FOCUS_DISENCHANTING";
