@@ -1942,7 +1942,7 @@ declare const RESEARCH: {
         readonly rodSilverwoodStaff: "ROD_silverwood_staff";
         readonly focusFrost: "FOCUSFROST";
         readonly visAmulet: "VISAMULET";
-        readonly focusManipulation: "FOCALMANIPULATION";
+        readonly focalManipulation: "FOCALMANIPULATION";
         readonly focusFire: "FOCUSFIRE";
         readonly capGold: "CAP_gold";
         readonly rodSilverwood: "ROD_silverwood";

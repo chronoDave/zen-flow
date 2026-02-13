@@ -1023,7 +1023,7 @@ const RESEARCH = {
     rodSilverwoodStaff: "ROD_silverwood_staff",
     focusFrost: "FOCUSFROST",
     visAmulet: "VISAMULET",
-    focusManipulation: "FOCALMANIPULATION",
+    focalManipulation: "FOCALMANIPULATION",
     focusFire: "FOCUSFIRE",
     capGold: "CAP_gold",
     rodSilverwood: "ROD_silverwood",
