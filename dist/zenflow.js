@@ -1196,7 +1196,7 @@ const RESEARCH = {
     coreFill: "COREFILL",
     golemFetter: "GOLEMFETTER",
     golemStraw: "GOLEMSTRAW",
-    corealAlchemy: "COREALCHEMY",
+    coreAlchemy: "COREALCHEMY",
     golemStone: "GOLEMSTONE",
     golemIron: "GOLEMIRON",
     coreLiquid: "CORELIQUID",
@@ -1466,10 +1466,10 @@ const setResearchAspects = (research) => (aspects$1) => `mods.thaumcraft.Researc
 const setResearchComplexity = (research) => (complexity) => `mods.thaumcraft.Research.setComplexity(${recipe(literal(research), complexity)});`;
 const resetResearch = (research) => `mods.thaumcraft.Research.clearPages(${literal(research)});`;
 const refreshResearch = (research) => `mods.thaumcraft.Research.refreshResearchRecipe(${literal(research)});`;
-const moveResearch = (tab) => (recipe$1) => {
+const moveResearch = (recipe$1) => {
   const out = recipe(
     literal(recipe$1.research),
-    literal(tab),
+    literal(recipe$1.tab),
     recipe$1.x,
     recipe$1.y
   );
