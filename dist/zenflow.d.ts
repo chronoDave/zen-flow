@@ -34,29 +34,30 @@ type Shaped = Partial<{
     fill: string;
 }>;
 declare const COLOR: {
-    readonly black: "\\u00A70";
-    readonly darkBlue: "\\u00A71";
-    readonly darkGreen: "\\u00A72";
-    readonly darkAqua: "\\u00A73";
-    readonly darkRed: "\\u00A74";
-    readonly darkPurple: "\\u00A75";
-    readonly gold: "\\u00A76";
-    readonly gray: "\\u00A77";
-    readonly darkGray: "\\u00A78";
-    readonly blue: "\\u00A79";
-    readonly green: "\\u00A7a";
-    readonly aqua: "\\u00A7b";
-    readonly red: "\\u00A7c";
-    readonly lightPurple: "\\u00A7d";
-    readonly yellow: "\\u00A7e";
-    readonly white: "\\u00A7f";
+    readonly black: "§0";
+    readonly darkBlue: "§1";
+    readonly darkGreen: "§2";
+    readonly darkAqua: "§3";
+    readonly darkRed: "§4";
+    readonly darkPurple: "§5";
+    readonly gold: "§6";
+    readonly gray: "§7";
+    readonly darkGray: "§8";
+    readonly blue: "§9";
+    readonly green: "§a";
+    readonly aqua: "§b";
+    readonly red: "§c";
+    readonly lightPurple: "§d";
+    readonly yellow: "§e";
+    readonly white: "§f";
 };
 declare const STYLE: {
-    readonly obfuscated: "\\u00A7k";
-    readonly bold: "\\u00A7l";
-    readonly strikethrough: "\\u00A7m";
-    readonly underline: "\\u00A7n";
-    readonly italic: "\\u00A7o";
+    readonly obfuscated: "§k";
+    readonly bold: "§l";
+    readonly strikethrough: "§m";
+    readonly underline: "§n";
+    readonly italic: "§o";
+    readonly reset: "§r";
 };
 type TextRich = {
     text: string;
@@ -64,6 +65,20 @@ type TextRich = {
     style?: keyof typeof STYLE;
 };
 type Text = string | TextRich;
+type Texture = {
+    domain: string;
+    path: string;
+};
+type TextResearchImage = {
+    src: Texture;
+    x?: number;
+    y?: number;
+    w?: number;
+    h?: number;
+    scale?: number;
+};
+type TextResearch = Text | TextResearchImage;
+declare const research: (...lines: Array<string | TextResearch[]>) => string;
 
 type RecipeGrinder = {
     input: string;
@@ -2438,10 +2453,6 @@ declare const removeResearch: (research: string) => string;
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
  */
 declare const removeResearchTab: (tab: string) => string;
-type Texture = {
-    domain: string;
-    path: string;
-};
 type RecipeResearchTab = {
     id: string;
     icon: Texture;
@@ -2488,16 +2499,6 @@ declare const addResearch: (recipe: RecipeResearch) => string;
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
  */
 declare const addResearchPage: (research: string) => (id: string) => string;
-type TextResearchImage = {
-    src: Texture;
-    x?: number;
-    y?: number;
-    w?: number;
-    h?: number;
-    scale?: number;
-};
-type TextResearch = string | TextResearchImage;
-declare const formatResearchPage: (...lines: Array<string | TextResearch[]>) => string;
 /**
  * Add crafting [Research](https://thaumcraft-4.fandom.com/wiki/Research) page
  *
@@ -2654,5 +2655,5 @@ type RecipeResearchMove = {
  */
 declare const moveResearch: (tab: string) => (recipe: RecipeResearchMove) => string;
 
-export { ASPECT, COLOR, ENCHANTMENT, FOCI, HARVESTER_TYPE, MATERIAL, MODIFIER, RESEARCH, RESEARCH_TAB, STYLE, add, addAlchemy, addAltar, addArcane, addArcaneShaped, addArcaneShapeless, addAspectEntity, addAspectItem, addBiomeRubberTree, addBlacklistAutospawner, addBloodOrb, addBloodOrbShaped, addBloodOrbShapeless, addCarpenter, addCastingBasin, addCastingTable, addCentrifuge, addChestLoot, addComposter, addCompressor, addCrucible, addCrucibleAlchemy, addCrucibleFuel, addDryingRack, addExtreme, addFabricator, addFabricatorGlass, addFermenter, addFermenterFuel, addFurnace, addFurnaceFuel, addGrinder, addHammer, addHarvester, addInductionSmelter, addInfusion, addInfusionEnchantment, addInscriber, addInsolator, addLaserFoci, addLaserOre, addLootCommon, addLootRare, addLootUncommon, addMagmaCrucible, addMirror, addMoistener, addOreDict, addPlanter, addPress, addPulverizer, addQED, addRedstoneFurnace, addRepairMaterial, addResearch, addResearchPage, addResearchPageArcane, addResearchPageCrafting, addResearchPageCrucible, addResearchPageEnchantment, addResearchPageInfusion, addResearchParent, addResearchSibling, addResearchTab, addRitualBinding, addRitualHarvest, addRitualMeteor, addSawmill, addSeed, addShaped, addShapeless, addSieve, addSludgeBoiler, addSmelteryAlloy, addSmelteryFluid, addSmelteryFuel, addSqueezer, addStill, addTransposerExtract, addTransposerFill, addWarpItem, addWarpResearch, createBlock, createItem, createLiquid, createMaterial, formatResearchPage, hide, joinOreDict, mirrorOreDict, moveResearch, orphanResearch, refreshResearch, remove, removeAlchemy, removeAltar, removeArcane, removeAspectEntity, removeAspectItem, removeBiomeRubberTree, removeBlacklistAutospawner, removeCarpenter, removeCastingBasin, removeCastingTable, removeCentrifuge, removeChestLoot, removeComposter, removeCompressor, removeCrucible, removeCrucibleAlchemy, removeCrucibleFuel, removeDryingRack, removeExtreme, removeFabricator, removeFabricatorGlass, removeFermenter, removeFermenterFuel, removeFurnace, removeFurnaceFuel, removeGrinder, removeHammer, removeInductionSmelter, removeInfusion, removeInfusionEnchantment, removeInsolator, removeLaserFoci, removeLaserOre, removeLootCommon, removeLootRare, removeLootUncommon, removeMagmaCrucible, removeModifier, removeMoistener, removeOreDict, removePressInscriber, removePulverizer, removeQED, removeRedstoneFurnace, removeRepairMaterial, removeResearch, removeResearchParent, removeResearchSibling, removeResearchTab, removeRitualBinding, removeRitualMeteor, removeSawmill, removeSeed, removeShaped, removeShapeless, removeSieve, removeSludgeBoiler, removeSmelteryAlloy, removeSmelteryFluid, removeSmelteryFuel, removeSqueezer, removeStill, removeTransposerExtract, removeTransposerFill, removeWarp, removeWarpItem, removeWarpResearch, rename, resetResearch, setArrowAccuracy, setArrowBreakChance, setArrowMass, setArrowStats, setAspectEntity, setAspectItem, setBowMaterialDrawspeed, setBowMaterialDurability, setBowMaterialFlightSpeed, setBowMaterialStats, setLocalisation, setMaterialDamage, setMaterialDurability, setMaterialHandleModifier, setMaterialLevelStonebound, setMaterialMiningLevel, setMaterialName, setMaterialReinforcedLevel, setMaterialSpeed, setMaterialStats, setMaterialStyle, setResearchAspects, setResearchComplexity, setResearchTypeAuto, setResearchTypeHidden, setResearchTypeRound, setResearchTypeSecondary, setResearchTypeSpikey, setResearchTypeStub, setResearchTypeVirtual, show, withEnchantment, withName, withTag, withTooltip, withTooltipShift, withWeight };
+export { ASPECT, COLOR, ENCHANTMENT, FOCI, HARVESTER_TYPE, MATERIAL, MODIFIER, RESEARCH, RESEARCH_TAB, STYLE, add, addAlchemy, addAltar, addArcane, addArcaneShaped, addArcaneShapeless, addAspectEntity, addAspectItem, addBiomeRubberTree, addBlacklistAutospawner, addBloodOrb, addBloodOrbShaped, addBloodOrbShapeless, addCarpenter, addCastingBasin, addCastingTable, addCentrifuge, addChestLoot, addComposter, addCompressor, addCrucible, addCrucibleAlchemy, addCrucibleFuel, addDryingRack, addExtreme, addFabricator, addFabricatorGlass, addFermenter, addFermenterFuel, addFurnace, addFurnaceFuel, addGrinder, addHammer, addHarvester, addInductionSmelter, addInfusion, addInfusionEnchantment, addInscriber, addInsolator, addLaserFoci, addLaserOre, addLootCommon, addLootRare, addLootUncommon, addMagmaCrucible, addMirror, addMoistener, addOreDict, addPlanter, addPress, addPulverizer, addQED, addRedstoneFurnace, addRepairMaterial, addResearch, addResearchPage, addResearchPageArcane, addResearchPageCrafting, addResearchPageCrucible, addResearchPageEnchantment, addResearchPageInfusion, addResearchParent, addResearchSibling, addResearchTab, addRitualBinding, addRitualHarvest, addRitualMeteor, addSawmill, addSeed, addShaped, addShapeless, addSieve, addSludgeBoiler, addSmelteryAlloy, addSmelteryFluid, addSmelteryFuel, addSqueezer, addStill, addTransposerExtract, addTransposerFill, addWarpItem, addWarpResearch, createBlock, createItem, createLiquid, createMaterial, research as formatResearch, hide, joinOreDict, mirrorOreDict, moveResearch, orphanResearch, refreshResearch, remove, removeAlchemy, removeAltar, removeArcane, removeAspectEntity, removeAspectItem, removeBiomeRubberTree, removeBlacklistAutospawner, removeCarpenter, removeCastingBasin, removeCastingTable, removeCentrifuge, removeChestLoot, removeComposter, removeCompressor, removeCrucible, removeCrucibleAlchemy, removeCrucibleFuel, removeDryingRack, removeExtreme, removeFabricator, removeFabricatorGlass, removeFermenter, removeFermenterFuel, removeFurnace, removeFurnaceFuel, removeGrinder, removeHammer, removeInductionSmelter, removeInfusion, removeInfusionEnchantment, removeInsolator, removeLaserFoci, removeLaserOre, removeLootCommon, removeLootRare, removeLootUncommon, removeMagmaCrucible, removeModifier, removeMoistener, removeOreDict, removePressInscriber, removePulverizer, removeQED, removeRedstoneFurnace, removeRepairMaterial, removeResearch, removeResearchParent, removeResearchSibling, removeResearchTab, removeRitualBinding, removeRitualMeteor, removeSawmill, removeSeed, removeShaped, removeShapeless, removeSieve, removeSludgeBoiler, removeSmelteryAlloy, removeSmelteryFluid, removeSmelteryFuel, removeSqueezer, removeStill, removeTransposerExtract, removeTransposerFill, removeWarp, removeWarpItem, removeWarpResearch, rename, resetResearch, setArrowAccuracy, setArrowBreakChance, setArrowMass, setArrowStats, setAspectEntity, setAspectItem, setBowMaterialDrawspeed, setBowMaterialDurability, setBowMaterialFlightSpeed, setBowMaterialStats, setLocalisation, setMaterialDamage, setMaterialDurability, setMaterialHandleModifier, setMaterialLevelStonebound, setMaterialMiningLevel, setMaterialName, setMaterialReinforcedLevel, setMaterialSpeed, setMaterialStats, setMaterialStyle, setResearchAspects, setResearchComplexity, setResearchTypeAuto, setResearchTypeHidden, setResearchTypeRound, setResearchTypeSecondary, setResearchTypeSpikey, setResearchTypeStub, setResearchTypeVirtual, show, withEnchantment, withName, withTag, withTooltip, withTooltipShift, withWeight };
 export type { ArrowStats, AspectShaped, Bonus, BonusHammer, BowStats, Cast, ChestLoot, Enchantment, Ingredient, Liquid, MaterialStats, RecipeAlchemy, RecipeAltar, RecipeArcane, RecipeArcaneShaped, RecipeArcaneShapeless, RecipeBlock, RecipeCarpenter, RecipeCastingBasin, RecipeCastingTable, RecipeCentrifuge, RecipeComposter, RecipeCompressor, RecipeCrucibleAlchemy, RecipeDryingRack, RecipeFabricator, RecipeFabricatorGlass, RecipeFermenter, RecipeFermenterFuel, RecipeFurnace, RecipeGrinder, RecipeHarvester, RecipeInductionSmelter, RecipeInfusion, RecipeInfusionEnchantment, RecipeInsolator, RecipeItem, RecipeLaser, RecipeLiquid, RecipeMagmaCrucible, RecipeMaterial, RecipeMeteor, RecipeMoistener, RecipePressInscriber, RecipePulverizer, RecipeRedstoneFurnace, RecipeRepairMaterial, RecipeResearch, RecipeResearchMove, RecipeResearchTab, RecipeSawmill, RecipeSmelteryAlloy, RecipeSmelteryFluid, RecipeSmelteryFuel, RecipeSqueezer, RecipeStill, RecipeTransposerExtract, RecipeTransposerFill, Shaped, ShapedExtreme, Shapeless, Stack, Text, TextResearch, TextResearchImage, TextRich, Texture };
