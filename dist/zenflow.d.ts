@@ -2305,7 +2305,7 @@ declare const setAspectEntity: (id: string) => (aspects: Stack[]) => string;
  */
 declare const removeAspectEntity: (id: string) => (aspects: Stack[]) => string;
 type RecipeCrucibleAlchemy = {
-    input: Ingredient;
+    input: string;
     output: Ingredient;
     research: string;
     aspects: Stack[];

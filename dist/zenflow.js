@@ -1362,7 +1362,7 @@ const addCrucibleAlchemy = (recipe$1) => {
   const out = recipe(
     literal(recipe$1.research),
     ingredient(recipe$1.output),
-    ingredient(recipe$1.input),
+    recipe$1.input,
     aspects(recipe$1.aspects)
   );
   return `mods.thaumcraft.Crucible.addRecipe(${out});`;
