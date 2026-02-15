@@ -561,9 +561,8 @@ test('[thaumcraft]', t => {
   );
 
   t.assert.equal(
-    moveResearch({
+    moveResearch('FORBIDDEN')({
       research: 'INFERNALFURNACE',
-      tab: 'FORBIDDEN',
       x: 1,
       y: 0
     }),

@@ -1067,7 +1067,6 @@ export const refreshResearch = (research: string) =>
 
 export type RecipeResearchMove = {
   research: string;
-  tab: string;
   x: number;
   y: number;
 };
@@ -1081,13 +1080,14 @@ export type RecipeResearchMove = {
  * 
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:Thaumcraft_4_Support:Research
  */
-export const moveResearch = (recipe: RecipeResearchMove) => {
-  const out = format.recipe(
-    format.literal(recipe.research),
-    format.literal(recipe.tab),
-    recipe.x,
-    recipe.y
-  );
+export const moveResearch = (tab: string) =>
+  (recipe: RecipeResearchMove) => {
+    const out = format.recipe(
+      format.literal(recipe.research),
+      format.literal(tab),
+      recipe.x,
+      recipe.y
+    );
 
-  return `mods.thaumcraft.Research.moveResearch(${out});`;
-};
+    return `mods.thaumcraft.Research.moveResearch(${out});`;
+  };
