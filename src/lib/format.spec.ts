@@ -97,7 +97,7 @@ test('[format.shaped] formats shaped recipe', t => {
 test('[format.name] formats name', t => {
   t.assert.equal(
     format.name({ text: 'Longbow of the Heavens', color: 'red' }),
-    '"\\u00A7cLongbow of the Heavens\\u00A7r"'
+    '"§cLongbow of the Heavens§r"'
   );
 });
 
@@ -105,5 +105,23 @@ test('[format.tooltip] formats tooltip', t => {
   t.assert.equal(
     format.tooltip({ text: 'This is a stick', style: 'italic', color: 'green' }, ' with ', { text: 'text', style: 'strikethrough' }, ' in multiple styles'),
     'format.green(format.italic("This is a stick")) + " with " + format.strikethrough("text") + " in multiple styles"'
+  );
+});
+
+test('[format.research] formats Thaumcraft research', t => {
+  t.assert.equal(
+    format.research(
+      ['Plants! What are they?'],
+      ['The Thaumometer doesn\'t know!']
+    ),
+    'Plants! What are they?<BR>The Thaumometer doesn\'t know!'
+  );
+
+  t.assert.equal(
+    format.research(
+      [{ src: { domain: 'thaumcraft', path: 'textures/items/alumentum.png' } }]
+    ),
+    '<IMG>thaumcraft:textures/items/alumentum.png:0:0:255:255:0.0625</IMG>',
+    'Plants! What are they?<BR>The Thaumometer doesn\'t know!'
   );
 });

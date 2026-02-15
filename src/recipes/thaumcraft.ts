@@ -3,7 +3,8 @@ import type {
   Ingredient,
   Shaped,
   Shapeless,
-  Stack
+  Stack,
+  Texture
 } from '../lib/format.ts';
 
 import * as format from '../lib/format.ts';
@@ -766,7 +767,7 @@ export const removeResearch = (research: string) =>
 export const removeResearchTab = (tab: string) =>
   `mods.thaumcraft.Research.removeTab(${format.literal(tab)});`;
 
-export type Texture = { domain: string; path: string };
+
 
 export type RecipeResearchTab = {
   id: string;
@@ -847,35 +848,6 @@ export const addResearch = (recipe: RecipeResearch) => {
 export const addResearchPage = (research: string) =>
   (id: string) =>
     `mods.thaumcraft.Research.addPage(${format.recipe(format.literal(research), format.literal(`tc.research_page.${id}`))});`;
-
-export type TextResearchImage = {
-  src: Texture;
-  x?: number;
-  y?: number;
-  w?: number;
-  h?: number;
-  scale?: number;
-};
-
-export type TextResearch = string | TextResearchImage;
-
-export const formatResearchPage = (...lines: Array<string | TextResearch[]>): string => lines
-  .map(line => {
-    if (typeof line === 'string') return '<LINE>';
-    return line.map(text => {
-      if (typeof text === 'string') return text;
-      return `<IMG>${[
-        text.src.domain,
-        text.src.path,
-        text.x ?? 0,
-        text.y ?? 0,
-        text.w ?? 255,
-        text.h ?? 255,
-        text.scale ?? 0.0625
-      ].join(':')}</IMG>`;
-    }).join('');
-  })
-  .join('<BR>');
 
 const addResearchPageCraftable = (type: string) =>
   (research: string) =>

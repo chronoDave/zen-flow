@@ -100,30 +100,31 @@ export const shaped = (recipe: Shaped) => {
 };
 
 export const COLOR = {
-  black: '\\u00A70',
-  darkBlue: '\\u00A71',
-  darkGreen: '\\u00A72',
-  darkAqua: '\\u00A73',
-  darkRed: '\\u00A74',
-  darkPurple: '\\u00A75',
-  gold: '\\u00A76',
-  gray: '\\u00A77',
-  darkGray: '\\u00A78',
-  blue: '\\u00A79',
-  green: '\\u00A7a',
-  aqua: '\\u00A7b',
-  red: '\\u00A7c',
-  lightPurple: '\\u00A7d',
-  yellow: '\\u00A7e',
-  white: '\\u00A7f'
+  black: '§0',
+  darkBlue: '§1',
+  darkGreen: '§2',
+  darkAqua: '§3',
+  darkRed: '§4',
+  darkPurple: '§5',
+  gold: '§6',
+  gray: '§7',
+  darkGray: '§8',
+  blue: '§9',
+  green: '§a',
+  aqua: '§b',
+  red: '§c',
+  lightPurple: '§d',
+  yellow: '§e',
+  white: '§f'
 } as const;
 
 export const STYLE = {
-  obfuscated: '\\u00A7k',
-  bold: '\\u00A7l',
-  strikethrough: '\\u00A7m',
-  underline: '\\u00A7n',
-  italic: '\\u00A7o'
+  obfuscated: '§k',
+  bold: '§l',
+  strikethrough: '§m',
+  underline: '§n',
+  italic: '§o',
+  reset: '§r'
 } as const;
 
 export type TextRich = {
@@ -140,7 +141,7 @@ export const name = (...lines: Text[]) => literal(lines
       text.color && COLOR[text.color],
       text.style && STYLE[text.style],
       text.text,
-      (text.color ?? text.style) && '\\u00A7r'
+      (text.color ?? text.style) && STYLE.reset
     ]
       .filter(x => x !== undefined)
       .join('');
@@ -167,3 +168,44 @@ export const recipe = (...args: Array<undefined | string | number | boolean | nu
     return nullable(x);
   })
 );
+
+export type Texture = { domain: string; path: string };
+
+export type TextResearchImage = {
+  src: Texture;
+  x?: number;
+  y?: number;
+  w?: number;
+  h?: number;
+  scale?: number;
+};
+
+export type TextResearch = Text | TextResearchImage;
+
+export const research = (...lines: Array<string | TextResearch[]>) => lines.map(line => {
+  if (typeof line === 'string') return '<LINE>';
+
+  return line.map(text => {
+    if (typeof text === 'string') return text;
+    if ('src' in text) {
+      return `<IMG>${[
+        text.src.domain,
+        text.src.path,
+        text.x ?? 0,
+        text.y ?? 0,
+        text.w ?? 255,
+        text.h ?? 255,
+        text.scale ?? 0.0625
+      ].join(':')}</IMG>`;
+    }
+
+    return [
+      text.color && COLOR[text.color],
+      text.style && STYLE[text.style],
+      text.text,
+      (text.color ?? text.style) && '§r'
+    ]
+      .filter(x => x !== undefined)
+      .join('');
+  }).join('');
+}).join('<BR>');

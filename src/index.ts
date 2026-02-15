@@ -7,10 +7,13 @@ export type {
   Shaped,
   Shapeless,
   TextRich,
-  Text
+  Text,
+  Texture,
+  TextResearchImage,
+  TextResearch
 } from './lib/format.ts';
 
-export { COLOR, STYLE } from './lib/format.ts';
+export { COLOR, STYLE, research as formatResearch } from './lib/format.ts';
 
 export type {
   RecipeGrinder,
@@ -290,11 +293,8 @@ export type {
   RecipeCrucibleAlchemy,
   RecipeInfusion,
   RecipeInfusionEnchantment,
-  Texture,
   RecipeResearchTab,
   RecipeResearch,
-  TextResearchImage,
-  TextResearch,
   RecipeResearchMove
 } from './recipes/thaumcraft.ts';
 
@@ -335,7 +335,6 @@ export {
   addResearchTab,
   addResearch,
   addResearchPage,
-  formatResearchPage,
   addResearchPageCrafting,
   addResearchPageArcane,
   addResearchPageCrucible,

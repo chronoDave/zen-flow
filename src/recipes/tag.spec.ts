@@ -11,7 +11,7 @@ import {
 test('[tag]', t => {
   t.assert.equal(
     withName({ text: 'Longbow of the Heavens', color: 'red' })('<Avaritia:Infinity_Bow>'),
-    '<Avaritia:Infinity_Bow>.displayName = "\\u00A7cLongbow of the Heavens\\u00A7r";',
+    '<Avaritia:Infinity_Bow>.displayName = "§cLongbow of the Heavens§r";',
     'withName'
   );
 

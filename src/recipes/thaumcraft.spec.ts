@@ -34,7 +34,6 @@ import {
   addResearchTab,
   addResearch,
   addResearchPage,
-  formatResearchPage,
   addResearchPageCrafting,
   addResearchPageArcane,
   addResearchPageCrucible,
@@ -411,23 +410,6 @@ test('[thaumcraft]', t => {
     addResearchPage('WTFPLANTS')('WTFPLANTS'),
     'mods.thaumcraft.Research.addPage("WTFPLANTS", "tc.research_page.WTFPLANTS");',
     'addResearchPage'
-  );
-
-  t.assert.equal(
-    formatResearchPage(
-      ['Plants! What are they?'],
-      ['The Thaumometer doesn\'t know!']
-    ),
-    'Plants! What are they?<BR>The Thaumometer doesn\'t know!',
-    'formatResearchPage'
-  );
-
-  t.assert.equal(
-    formatResearchPage(
-      [{ src: { domain: 'thaumcraft', path: 'textures/items/alumentum.png' } }]
-    ),
-    '<IMG>thaumcraft:textures/items/alumentum.png:0:0:255:255:0.0625</IMG>',
-    'formatResearchPage (image)'
   );
 
   t.assert.equal(
