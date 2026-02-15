@@ -541,7 +541,7 @@ export const removeAspectEntity = (id: string) =>
     `mods.thaumcraft.Aspects.removeEntity(${format.recipe(format.literal(id), format.aspects(aspects))});`;
 
 export type RecipeCrucibleAlchemy = {
-  input: Ingredient;
+  input: string;
   output: Ingredient;
   research: string;
   aspects: Stack[];
@@ -556,7 +556,7 @@ export const addCrucibleAlchemy = (recipe: RecipeCrucibleAlchemy) => {
   const out = format.recipe(
     format.literal(recipe.research),
     format.ingredient(recipe.output),
-    format.ingredient(recipe.input),
+    recipe.input,
     format.aspects(recipe.aspects)
   );
 
