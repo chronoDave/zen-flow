@@ -17,7 +17,7 @@
 npm i zen-flow -D
 ```
 
-***Note**: `zen-flow` only works with Minecraft **1.7.10.***
+**Note**: `zen-flow` only works with Minecraft **1.7.10.**
 
 ## Features
 
@@ -37,6 +37,7 @@ npm i zen-flow -D
   - Thaumcraft 4
   - Thermal Expansion
   - Tinkers' Construct
+  - Chisel 2
 
 ## Example
 

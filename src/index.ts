@@ -357,3 +357,10 @@ export {
   refreshResearch,
   moveResearch
 } from './recipes/thaumcraft.ts';
+
+export {
+  addChisel,
+  addChiselGroup,
+  removeChisel,
+  removeChiselGroup
+} from './recipes/chisel.ts';
