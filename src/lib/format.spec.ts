@@ -92,6 +92,11 @@ test('[format.shaped] formats shaped recipe', t => {
     '[\n\t[ring, ring, ring],\n\t[ring, null, ring],\n\t[ring, ring, ring]\n]',
     '3x3 (ring)'
   );
+  t.assert.deepEqual(
+    format.shaped({ cross: 'cross' }),
+    '[\n\t[null, cross, null],\n\t[cross, cross, cross],\n\t[null, cross, null]\n]',
+    '3x3 (cross)'
+  );
 });
 
 test('[format.name] formats name', t => {

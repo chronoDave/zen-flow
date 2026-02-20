@@ -60,6 +60,7 @@ export type Shaped = Partial<{
   square: string;
   center: string;
   fill: string;
+  cross: string;
 }>;
 
 export const shaped = (recipe: Shaped) => {
@@ -73,15 +74,15 @@ export const shaped = (recipe: Shaped) => {
 
   const matrix = [[
     f(recipe.fill, recipe.square, recipe.ring, recipe.corner, recipe[1]),
-    f(recipe.fill, recipe.square, recipe.ring, recipe.edge, recipe[2]),
+    f(recipe.fill, recipe.square, recipe.ring, recipe.cross, recipe.edge, recipe[2]),
     f(recipe.fill, recipe.ring, recipe.corner, recipe[3])
   ], [
-    f(recipe.fill, recipe.square, recipe.ring, recipe.edge, recipe[4]),
-    f(recipe.fill, recipe.square, recipe.center, recipe[5]),
-    f(recipe.fill, recipe.ring, recipe.edge, recipe[6])
+    f(recipe.fill, recipe.square, recipe.ring, recipe.cross, recipe.edge, recipe[4]),
+    f(recipe.fill, recipe.square, recipe.cross, recipe.center, recipe[5]),
+    f(recipe.fill, recipe.ring, recipe.cross, recipe.edge, recipe[6])
   ], [
     f(recipe.fill, recipe.ring, recipe.corner, recipe[7]),
-    f(recipe.fill, recipe.ring, recipe.edge, recipe[8]),
+    f(recipe.fill, recipe.ring, recipe.cross, recipe.edge, recipe[8]),
     f(recipe.fill, recipe.ring, recipe.corner, recipe[9])
   ]];
 
