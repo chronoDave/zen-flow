@@ -32,6 +32,7 @@ type Shaped = Partial<{
     square: string;
     center: string;
     fill: string;
+    cross: string;
 }>;
 declare const COLOR: {
     readonly black: "§0";

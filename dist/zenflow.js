@@ -33,15 +33,15 @@ const shaped = (recipe2) => {
   };
   const matrix = [[
     f(recipe2.fill, recipe2.square, recipe2.ring, recipe2.corner, recipe2[1]),
-    f(recipe2.fill, recipe2.square, recipe2.ring, recipe2.edge, recipe2[2]),
+    f(recipe2.fill, recipe2.square, recipe2.ring, recipe2.cross, recipe2.edge, recipe2[2]),
     f(recipe2.fill, recipe2.ring, recipe2.corner, recipe2[3])
   ], [
-    f(recipe2.fill, recipe2.square, recipe2.ring, recipe2.edge, recipe2[4]),
-    f(recipe2.fill, recipe2.square, recipe2.center, recipe2[5]),
-    f(recipe2.fill, recipe2.ring, recipe2.edge, recipe2[6])
+    f(recipe2.fill, recipe2.square, recipe2.ring, recipe2.cross, recipe2.edge, recipe2[4]),
+    f(recipe2.fill, recipe2.square, recipe2.cross, recipe2.center, recipe2[5]),
+    f(recipe2.fill, recipe2.ring, recipe2.cross, recipe2.edge, recipe2[6])
   ], [
     f(recipe2.fill, recipe2.ring, recipe2.corner, recipe2[7]),
-    f(recipe2.fill, recipe2.ring, recipe2.edge, recipe2[8]),
+    f(recipe2.fill, recipe2.ring, recipe2.cross, recipe2.edge, recipe2[8]),
     f(recipe2.fill, recipe2.ring, recipe2.corner, recipe2[9])
   ]];
   if (matrix[0][2] === null && matrix[1][2] === null && matrix[2].every((x) => x === null)) {
