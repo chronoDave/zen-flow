@@ -1409,6 +1409,11 @@ type RecipeSmelteryFluid = {
  *
  * A list of recipes can be generated from `/mt tconstruct Smeltery`
  *
+ * Common temperature values:
+ *
+ * - Lava => `1300`
+ * - Pyrotheum => `5000`
+ *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
 declare const addSmelteryFluid: (recipe: RecipeSmelteryFluid) => string;
@@ -1444,8 +1449,8 @@ type RecipeSmelteryFuel = {
  * Add [Smeltery](https://tinkers-construct.fandom.com/wiki/Smeltery) fuel
  *
  * Common values:
- *  - Lava => `1000`
- *  - Pyrotheum => `5000`
+ *  - Lava => `1300`, `80` (lasts 4 seconds per 15 mb)
+ *  - Pyrotheum => `5000`, `70` (lasts 3.5 seconds per 15 mb)
  *
  * @see https://minetweaker3.aizistral.com/wiki/ModTweaker:TConstruct_Support
  */
